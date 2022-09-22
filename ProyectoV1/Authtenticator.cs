@@ -20,11 +20,11 @@ namespace ProyectoV1
         {
             Scrabble99Entities context = new Scrabble99Entities();
             var user = from player in context.players where player.username == username && player.password == password select player;
-            if (user.get)
+            if (user.Count()>0)
             {
-
+                return AuthLoginError.AUTH_LOGIN_ERROR_SUCCESS;
             }
-            return AuthLoginError.AUTH_LOGIN_ERROR_SUCCESS;
+            return AuthLoginError.AUTH_LOGIN_ERROR_INVALID_CREDENTIALS;
         }
     }
 }
