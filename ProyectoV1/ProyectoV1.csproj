@@ -71,15 +71,12 @@
     <Compile Include="friendships.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs" />
-    <Compile Include="GameResult.cs" />
     <Compile Include="gameResults.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
     <Compile Include="games.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
     <Compile Include="players.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
