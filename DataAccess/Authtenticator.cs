@@ -14,16 +14,14 @@ namespace DataAccess
             SUCCESS = 0,
             INVALID_CREDENTIALS,
             INCORRECT_PASSWORD,
-            DATABASE_ERROR,
-            UNKNOWN
+            DATABASE_ERROR
         }
 
         public enum AuthRegisterResult
         {
             SUCCESS = 0,
             USER_ALREADY_EXISTS,
-            DATABASE_ERROR,
-            UNKNOWN
+            DATABASE_ERROR
         }
 
         private static String hashPassword(String password)
@@ -32,12 +30,12 @@ namespace DataAccess
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] hashedPassword = sha256.ComputeHash(passwordBytes);
 
-            StringBuilder builder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < hashedPassword.Length; i++)
             {
-                builder.Append(hashedPassword[i].ToString("x2"));
+                stringBuilder.Append(hashedPassword[i].ToString("x2"));
             }
-            return builder.ToString();
+            return stringBuilder.ToString();
         }
 
         private static bool checkPassword(String password, String hashedPassword)
@@ -64,7 +62,6 @@ namespace DataAccess
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 return AuthLoginResult.DATABASE_ERROR;
             }
         }
