@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authtenticator.cs" />
+    <Compile Include="Authenticator.cs" />
     <Compile Include="friendships.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
@@ -104,6 +104,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Scrabble99Model.edmx.diagram">
