@@ -118,69 +118,69 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="buttonCancelSignUp" xml:space="preserve">
-    <value>CANCEL</value>
+    <value>CANCELAR</value>
   </data>
   <data name="buttonExitMain" xml:space="preserve">
-    <value>EXIT</value>
+    <value>SALIR</value>
   </data>
   <data name="buttonLogin" xml:space="preserve">
-    <value>LOGIN</value>
+    <value>ACEPTAR</value>
   </data>
   <data name="buttonOkSignUp" xml:space="preserve">
-    <value>OK</value>
+    <value>ACEPTAR</value>
   </data>
   <data name="buttonPlayMain" xml:space="preserve">
-    <value>PLAY</value>
+    <value>JUGAR</value>
   </data>
   <data name="buttonSettingsMain" xml:space="preserve">
-    <value>SETTINGS</value>
+    <value>CONFIGURACIONES</value>
   </data>
   <data name="buttonSignUp" xml:space="preserve">
-    <value>SIGN UP</value>
+    <value>REGISTRARSE</value>
   </data>
   <data name="emailSignUp" xml:space="preserve">
-    <value>EMAIL</value>
+    <value>CORREO</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>LOGIN</value>
+    <value>INICIAR SESION</value>
   </data>
   <data name="nameSignUp" xml:space="preserve">
-    <value>NAME</value>
+    <value>NOMBRE</value>
   </data>
   <data name="NewUser" xml:space="preserve">
-    <value>NEWUSER</value>
+    <value>NUEVO USUARIO</value>
   </data>
   <data name="nicknameSignUp" xml:space="preserve">
-    <value>NICKNAME</value>
+    <value>APODO</value>
   </data>
   <data name="passwordSignUp" xml:space="preserve">
-    <value>PASSWORD</value>
+    <value>CONTRASEÑA</value>
   </data>
   <data name="paswordLogin" xml:space="preserve">
-    <value>PASWORD</value>
+    <value>CONTRASEÑA</value>
   </data>
   <data name="requiredLogin" xml:space="preserve">
-    <value>Required*</value>
+    <value>Requerido*</value>
   </data>
   <data name="requiredSignUp" xml:space="preserve">
-    <value>Required*</value>
+    <value>Requerido*</value>
   </data>
   <data name="surnameSignUp" xml:space="preserve">
-    <value>SURNAME</value>
+    <value>APELLIDO</value>
   </data>
   <data name="titleLogin" xml:space="preserve">
-    <value>Login</value>
+    <value>Inicio de sesion</value>
   </data>
   <data name="titleSignUp" xml:space="preserve">
-    <value>Sign up</value>
+    <value>Registrar usuario</value>
   </data>
   <data name="tittleMain" xml:space="preserve">
-    <value>Main</value>
+    <value>Menu</value>
   </data>
   <data name="unknowUserLogin" xml:space="preserve">
-    <value>Unknow user</value>
+    <value>Usuario desconocido</value>
   </data>
   <data name="userLogin" xml:space="preserve">
-    <value>USER</value>
+    <value>USUARIO</value>
   </data>
 </root>

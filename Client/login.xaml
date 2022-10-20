@@ -4,16 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
+        xmlns:p = "clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="login" Height="450" Width="800">
+        Title="{x:Static p:Resources.titleLogin}" Height="450" Width="800">
     <Grid Background="#FF058813">
         <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Foreground="White" Height="74" Width="336" MaxWidth="336" FontSize="48" FontWeight="Bold" AutomationProperties.IsRequiredForForm="True" FontFamily="Bahnschrift"/>
-        <Label Content="LOGIN" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" FontWeight="SemiBold"/>
-        <Label Content="USER" HorizontalAlignment="Left" Margin="171,184,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <Label Content="PASWORD" HorizontalAlignment="Left" Margin="171,244,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="{x:Static p:Resources.Login}" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" FontWeight="SemiBold"/>
+        <Label Content="{x:Static p:Resources.userLogin}" HorizontalAlignment="Left" Margin="171,184,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="{x:Static p:Resources.paswordLogin}" HorizontalAlignment="Left" Margin="171,244,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <PasswordBox HorizontalAlignment="Left" Margin="171,280,0,0" VerticalAlignment="Top" Width="450" Height="32"/>
         <TextBox HorizontalAlignment="Left" Margin="171,215,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="450" Height="29"/>
-        <Button Content="LOGIN" HorizontalAlignment="Left" Margin="374,331,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="14" Click="Button_Click">
+        <Button Content="{x:Static p:Resources.buttonLogin}" HorizontalAlignment="Left" Margin="374,331,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="14" Click="Button_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -21,9 +22,9 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Content="SIGN UP" HorizontalAlignment="Left" Margin="368,372,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False" Click="Button_Click_1" RenderTransformOrigin="4.537,0.223"/>
-        <Label Content="Unknown user" HorizontalAlignment="Left" Margin="171,329,0,0" VerticalAlignment="Top" Foreground="Red"/>
-        <Label Content="Required*" HorizontalAlignment="Left" Margin="560,186,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Label Content="Required*" HorizontalAlignment="Left" Margin="560,253,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
+        <Button Content="{x:Static p:Resources.buttonSignUp}" HorizontalAlignment="Left" Margin="368,372,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False" Click="Button_Click_1" RenderTransformOrigin="4.537,0.223"/>
+        <Label Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="171,329,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Label Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="560,186,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
+        <Label Content="{x:Static p:Resources.requiredLogin}*" HorizontalAlignment="Left" Margin="560,253,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
     </Grid>
 </Window>

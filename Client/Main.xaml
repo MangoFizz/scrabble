@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
+        xmlns:p ="clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="Main" Height="450" Width="800">
+        Title="{x:Static p:Resources.tittleMain}" Height="450" Width="800">
     <Grid Background="#FF08821A">
         <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="74" Width="336" MaxWidth="336" FontSize="48" FontWeight="Bold" AutomationProperties.IsRequiredForForm="True" FontFamily="Bahnschrift"/>
-        <Button Content="PLAY" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
-        <Button Content="SETTINGS" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
-        <Button Content="EXIT" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="Button_Click"/>
+        <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
+        <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
+        <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="Button_Click"/>
 
     </Grid>
 </Window>
