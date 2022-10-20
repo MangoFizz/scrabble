@@ -71,7 +71,7 @@ namespace Client {
                     break;
 
                 default:
-                    this.resultText.Content = "Unknown error";
+                    this.resultText.Content = Properties.Resources.unknownError;
                     break;
             }
 
