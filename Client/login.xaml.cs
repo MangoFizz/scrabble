@@ -16,7 +16,7 @@ namespace Client {
         }
 
         public login() {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+           
             InitializeComponent();
             this.hideTextMessages();
         }
