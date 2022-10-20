@@ -1,18 +1,7 @@
 ﻿using Client.Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Client {
     /// <summary>
@@ -27,6 +16,7 @@ namespace Client {
         }
 
         public login() {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
             InitializeComponent();
             this.hideTextMessages();
         }
@@ -62,7 +52,7 @@ namespace Client {
             this.resultText.Visibility = Visibility.Visible;
             switch(loginResult) {
                 case AuthenticatorUserAuthResult.Success:
-                    this.resultText.Content = "Success!";        
+                    this.resultText.Content = "Success!";
                     break;
 
                 case AuthenticatorUserAuthResult.InvalidCredentials:
