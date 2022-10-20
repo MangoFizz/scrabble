@@ -133,6 +133,24 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect password.
+        /// </summary>
+        public static string incorrectPassword {
+            get {
+                return ResourceManager.GetString("incorrectPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid credentials.
+        /// </summary>
+        public static string invalidCredentials {
+            get {
+                return ResourceManager.GetString("invalidCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LOGIN.
         /// </summary>
         public static string Login {
@@ -241,11 +259,29 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown error.
+        /// </summary>
+        public static string unknownError {
+            get {
+                return ResourceManager.GetString("unknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknow user.
         /// </summary>
         public static string unknowUserLogin {
             get {
                 return ResourceManager.GetString("unknowUserLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already exists.
+        /// </summary>
+        public static string userAlreadyExists {
+            get {
+                return ResourceManager.GetString("userAlreadyExists", resourceCulture);
             }
         }
         
