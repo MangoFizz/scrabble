@@ -2,13 +2,14 @@
 using System;
 using System.ServiceModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Client {
     /// <summary>
     /// Lógica de interacción para login.xaml
     /// </summary>
 
-    public partial class login : Window, Service.IAuthManagerCallback {
+    public partial class login : Page, Service.IAuthManagerCallback {
         private void hideTextMessages() {
             this.usernameRequiredText.Visibility = Visibility.Hidden;
             this.passwordRequiredText.Visibility = Visibility.Hidden;
@@ -52,7 +53,8 @@ namespace Client {
             this.resultText.Visibility = Visibility.Visible;
             switch(loginResult) {
                 case AuthenticatorUserAuthResult.Success:
-                    this.resultText.Content = "Success!";
+                    SignUp signupScreen = new SignUp();
+                    this.NavigationService.Navigate(signupScreen);
                     break;
 
                 case AuthenticatorUserAuthResult.InvalidCredentials:

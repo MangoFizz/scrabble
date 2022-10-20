@@ -1,4 +1,4 @@
-﻿<Window x:Class="Client.login"
+﻿<Page x:Class="Client.login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,4 +27,4 @@
         <Label Name="usernameRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="560,186,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
         <Label Name="passwordRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="560,253,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
     </Grid>
-</Window>
+</Page>

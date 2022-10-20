@@ -1,10 +1,11 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Client {
     /// <summary>
     /// Lógica de interacción para Main.xaml
     /// </summary>
-    public partial class Main : Window {
+    public partial class Main : Page {
         public Main() {
             InitializeComponent();
         }
