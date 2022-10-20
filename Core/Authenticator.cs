@@ -3,8 +3,9 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using System.Data.Common;
+using DataAccess;
 
-namespace DataAccess {
+namespace Core {
     public class Authenticator {
         public enum UserAuthResult {
             Success = 0,

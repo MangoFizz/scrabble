@@ -1,9 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataAccess;
 using System;
 using System.Linq;
+using Core;
+using DataAccess;
 
-using static DataAccess.Authenticator;
+using static Core.Authenticator;
 
 namespace Tests {
     [TestClass]
@@ -20,8 +21,8 @@ namespace Tests {
         [ClassInitialize]
         public static void ClassInit(TestContext context) {
             // Create dummy users
-            var dbContext = new DataAccess.Scrabble99Entities();
-            var player = new DataAccess.players();
+            var dbContext = new Scrabble99Entities();
+            var player = new players();
             player.password = superPasswordHash;
 
             player.username = authTestsUser;
@@ -36,7 +37,7 @@ namespace Tests {
         [ClassCleanup]
         public static void ClassCleanup() {
             // Set up db context
-            var dbContext = new DataAccess.Scrabble99Entities();
+            var dbContext = new Scrabble99Entities();
 
             Func<String, bool> unregisterDummyUser = username => {
                 try {
@@ -71,53 +72,53 @@ namespace Tests {
 
         [TestMethod]
         public void testLoginSuccess() {
-            var loginResult = Authenticator.validateUser(authTestsUser, superPassword);
+            var loginResult = validateUser(authTestsUser, superPassword);
             Assert.AreEqual(UserAuthResult.Success, loginResult);
         }
 
         [TestMethod]
         public void testLoginInvalidCredentials() {
             String nonexistentUser = "tacosdemango";
-            var loginResult = Authenticator.validateUser(nonexistentUser, superPassword);
+            var loginResult = validateUser(nonexistentUser, superPassword);
             Assert.AreEqual(UserAuthResult.InvalidCredentials, loginResult);
         }
 
         [TestMethod]
         public void testLoginIncorrectPassword() {
             String wrongPassword = "wrongPassword";
-            var loginResult = Authenticator.validateUser(authTestsUser, wrongPassword);
+            var loginResult = validateUser(authTestsUser, wrongPassword);
             Assert.AreEqual(UserAuthResult.IncorrectPassword, loginResult);
         }
 
         [TestMethod]
         public void testRegisterSuccess() {
             String somePassword = "passwd123";
-            var registerResult = Authenticator.registerUser(registerTestsUser, somePassword);
+            var registerResult = registerUser(registerTestsUser, somePassword);
             Assert.AreEqual(UserResgisterResult.Success, registerResult);
         }
 
         [TestMethod]
         public void testRegisterUserAlreadyExists() {
-            var registerResult = Authenticator.registerUser(authTestsUser, superPassword);
+            var registerResult = registerUser(authTestsUser, superPassword);
             Assert.AreEqual(UserResgisterResult.UserAlreadyExists, registerResult);
         }
 
         [TestMethod]
         public void testUnregisterSuccess() {
-            var unregisterResult = Authenticator.unregisterUser(unregisterTestsUser, superPassword);
+            var unregisterResult = unregisterUser(unregisterTestsUser, superPassword);
             Assert.AreEqual(UserUnregisterResult.Success, unregisterResult);
         }
 
         [TestMethod]
         public void testUnregisterUserDoesNotExist() {
             String nonexistentUser = "tacossinmango";
-            var unregisterResult = Authenticator.unregisterUser(nonexistentUser, superPassword);
+            var unregisterResult = unregisterUser(nonexistentUser, superPassword);
             Assert.AreEqual(UserUnregisterResult.UserDoesNotExists, unregisterResult);
         }
 
         [TestMethod]
         public void testUnregisterAuthFailed() {
-            var unregisterResult = Authenticator.unregisterUser(authTestsUser, "wrongPassword");
+            var unregisterResult = unregisterUser(authTestsUser, "wrongPassword");
             Assert.AreEqual(UserUnregisterResult.AuthFailed, unregisterResult);
         }
     }

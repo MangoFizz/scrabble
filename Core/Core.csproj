@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BBC73631-E211-499B-AF87-E95C19823340}</ProjectGuid>
+    <ProjectGuid>{026B5204-DBDF-45D3-A8C2-029E5A3F2E3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataAccess</RootNamespace>
-    <AssemblyName>DataAccess</AssemblyName>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,66 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="friendships.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="gameResults.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="games.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="players.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Authenticator.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scrabble99Model.Context.cs">
-      <DependentUpon>Scrabble99Model.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Scrabble99Model.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Scrabble99Model.Designer.cs">
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="settings.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Scrabble99Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Scrabble99Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scrabble99Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-      <LastGenOutput>Scrabble99Model.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scrabble99Model.edmx.sql" />
-    <Content Include="Scrabble99Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-      <LastGenOutput>Scrabble99Model.cs</LastGenOutput>
-    </Content>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{bbc73631-e211-499b-af87-e95c19823340}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Scrabble99Model.edmx.diagram">
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

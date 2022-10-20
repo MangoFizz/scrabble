@@ -61,13 +61,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{026b5204-dbdf-45d3-a8c2-029e5a3f2e3b}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{BBC73631-E211-499B-AF87-E95C19823340}</Project>
+      <Project>{bbc73631-e211-499b-af87-e95c19823340}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
