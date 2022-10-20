@@ -21,8 +21,8 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Content="NEW USER" HorizontalAlignment="Left" Margin="400,356,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False" Click="Button_Click_1" RenderTransformOrigin="4.537,0.223"/>
-        <Label Content="Unknown user" HorizontalAlignment="Left" Margin="443,330,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Button Content="SIGN UP" HorizontalAlignment="Left" Margin="368,372,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False" Click="Button_Click_1" RenderTransformOrigin="4.537,0.223"/>
+        <Label Content="Unknown user" HorizontalAlignment="Left" Margin="171,329,0,0" VerticalAlignment="Top" Foreground="Red"/>
         <Label Content="Required*" HorizontalAlignment="Left" Margin="560,186,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
         <Label Content="Required*" HorizontalAlignment="Left" Margin="560,253,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
     </Grid>
