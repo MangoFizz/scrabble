@@ -141,6 +141,12 @@
   <data name="emailSignUp" xml:space="preserve">
     <value>EMAIL</value>
   </data>
+  <data name="incorrectPassword" xml:space="preserve">
+    <value>Incorrect password</value>
+  </data>
+  <data name="invalidCredentials" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>LOGIN</value>
   </data>
@@ -177,8 +183,14 @@
   <data name="tittleMain" xml:space="preserve">
     <value>Main</value>
   </data>
+  <data name="unknownError" xml:space="preserve">
+    <value>UnknownError</value>
+  </data>
   <data name="unknowUserLogin" xml:space="preserve">
     <value>Unknow user</value>
+  </data>
+  <data name="userAlreadyExists" xml:space="preserve">
+    <value>User already exists</value>
   </data>
   <data name="userLogin" xml:space="preserve">
     <value>USER</value>

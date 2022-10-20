@@ -11,7 +11,7 @@
         <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="74" Width="336" MaxWidth="336" FontSize="48" FontWeight="Bold" AutomationProperties.IsRequiredForForm="True" FontFamily="Bahnschrift"/>
         <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
         <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
-        <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="Button_Click"/>
+        <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="exitButtonClick"/>
 
     </Grid>
 </Page>

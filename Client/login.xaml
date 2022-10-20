@@ -22,7 +22,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Content="{x:Static p:Resources.buttonSignUp}" HorizontalAlignment="Left" Margin="368,372,0,0" VerticalAlignment="Top" FontSize="14" IsEnabled="False" RenderTransformOrigin="4.537,0.223"/>
+        <Button Content="{x:Static p:Resources.buttonSignUp}" HorizontalAlignment="Left" Margin="368,372,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="4.537,0.223" Click="registerButtonClick"/>
         <Label Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="171,329,0,0" VerticalAlignment="Top" Foreground="Red"/>
         <Label Name="usernameRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="560,186,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
         <Label Name="passwordRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="560,253,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />

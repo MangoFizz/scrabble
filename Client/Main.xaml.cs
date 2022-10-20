@@ -10,6 +10,10 @@ namespace Client {
             InitializeComponent();
         }
 
+        private void exitButtonClick(object sender, RoutedEventArgs e) {
+            Application.Current.Shutdown();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e) {
 
         }

@@ -49,20 +49,25 @@ namespace Client {
             }
         }
 
+        private void registerButtonClick(object sender, RoutedEventArgs e) {
+            SignUp signupScreen = new SignUp();
+            this.NavigationService.Navigate(signupScreen);
+        }
+
         public void loginResponse(AuthenticatorUserAuthResult loginResult) {
             this.resultText.Visibility = Visibility.Visible;
             switch(loginResult) {
                 case AuthenticatorUserAuthResult.Success:
-                    SignUp signupScreen = new SignUp();
-                    this.NavigationService.Navigate(signupScreen);
+                    Main mainMenu = new Main();
+                    this.NavigationService.Navigate(mainMenu);
                     break;
 
                 case AuthenticatorUserAuthResult.InvalidCredentials:
-                    this.resultText.Content = "Invalid credentials";
+                    this.resultText.Content = Properties.Resources.invalidCredentials;
                     break;
 
                 case AuthenticatorUserAuthResult.IncorrectPassword:
-                    this.resultText.Content = "Incorrect password";
+                    this.resultText.Content = Properties.Resources.incorrectPassword;
                     break;
 
                 default:
