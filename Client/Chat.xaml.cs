@@ -16,11 +16,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Client {
-    internal class Message {
-        public String User { get; set; }
-        public String Content { get; set; }
-    }
-
     public partial class Chat : Page, IGameChatCallback {
         private GameChatClient chatClient;
         private List<ChatUser> chatUsers;
