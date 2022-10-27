@@ -1,4 +1,4 @@
-﻿using Client.Service;
+﻿using Client.AuthManagerService;
 using System;
 using System.ServiceModel;
 using System.Windows;
@@ -9,7 +9,7 @@ namespace Client {
     /// Lógica de interacción para login.xaml
     /// </summary>
 
-    public partial class login : Page, Service.IAuthManagerCallback {
+    public partial class login : Page, AuthManagerService.IAuthManagerCallback {
         private void hideTextMessages() {
             this.usernameRequiredText.Visibility = Visibility.Hidden;
             this.passwordRequiredText.Visibility = Visibility.Hidden;
@@ -17,7 +17,6 @@ namespace Client {
         }
 
         public login() {
-           
             InitializeComponent();
             this.hideTextMessages();
         }
@@ -44,7 +43,7 @@ namespace Client {
                 var password = this.passwordPasswordBox.Password;
 
                 var context = new InstanceContext(this);
-                var service = new Service.AuthManagerClient(context);
+                var service = new AuthManagerService.AuthManagerClient(context);
                 service.login(username, password);
             }
         }
@@ -59,6 +58,7 @@ namespace Client {
             switch(loginResult) {
                 case AuthenticatorUserAuthResult.Success:
                     Main mainMenu = new Main();
+                    MainWindow.username = this.usernameTextBox.Text;
                     this.NavigationService.Navigate(mainMenu);
                     break;
 
@@ -76,7 +76,6 @@ namespace Client {
             }
 
         }
-
         public void registerUserResponse(AuthenticatorUserResgisterResult registrationResult) {
             throw new NotImplementedException();
         }

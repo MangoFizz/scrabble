@@ -61,6 +61,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string buttonBack {
+            get {
+                return ResourceManager.GetString("buttonBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CANCEL.
         /// </summary>
         public static string buttonCancelSignUp {
@@ -120,6 +129,24 @@ namespace Client.Properties {
         public static string buttonSignUp {
             get {
                 return ResourceManager.GetString("buttonSignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        public static string chatLabel {
+            get {
+                return ResourceManager.GetString("chatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string chatUsersLabel {
+            get {
+                return ResourceManager.GetString("chatUsersLabel", resourceCulture);
             }
         }
         
@@ -223,6 +250,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string sendButton {
+            get {
+                return ResourceManager.GetString("sendButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SURNAME.
         /// </summary>
         public static string surnameSignUp {
@@ -282,6 +318,24 @@ namespace Client.Properties {
         public static string userAlreadyExists {
             get {
                 return ResourceManager.GetString("userAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has entered the chat!.
+        /// </summary>
+        public static string userJoinChatMessageFormat {
+            get {
+                return ResourceManager.GetString("userJoinChatMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} just leave the chat.
+        /// </summary>
+        public static string userLeaveChatMessageFormat {
+            get {
+                return ResourceManager.GetString("userLeaveChatMessageFormat", resourceCulture);
             }
         }
         

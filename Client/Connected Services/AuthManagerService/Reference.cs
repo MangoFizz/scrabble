@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Client.Service {
+namespace Client.AuthManagerService {
     using System.Runtime.Serialization;
     
     
@@ -44,7 +44,7 @@ namespace Client.Service {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.IAuthManager", CallbackContract=typeof(Client.Service.IAuthManagerCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AuthManagerService.IAuthManager", CallbackContract=typeof(Client.AuthManagerService.IAuthManagerCallback))]
     public interface IAuthManager {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IAuthManager/login")]
@@ -64,19 +64,19 @@ namespace Client.Service {
     public interface IAuthManagerCallback {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthManager/loginResponse", ReplyAction="http://tempuri.org/IAuthManager/loginResponseResponse")]
-        void loginResponse(Client.Service.AuthenticatorUserAuthResult loginResult);
+        void loginResponse(Client.AuthManagerService.AuthenticatorUserAuthResult loginResult);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthManager/registerUserResponse", ReplyAction="http://tempuri.org/IAuthManager/registerUserResponseResponse")]
-        void registerUserResponse(Client.Service.AuthenticatorUserResgisterResult registrationResult);
+        void registerUserResponse(Client.AuthManagerService.AuthenticatorUserResgisterResult registrationResult);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAuthManagerChannel : Client.Service.IAuthManager, System.ServiceModel.IClientChannel {
+    public interface IAuthManagerChannel : Client.AuthManagerService.IAuthManager, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AuthManagerClient : System.ServiceModel.DuplexClientBase<Client.Service.IAuthManager>, Client.Service.IAuthManager {
+    public partial class AuthManagerClient : System.ServiceModel.DuplexClientBase<Client.AuthManagerService.IAuthManager>, Client.AuthManagerService.IAuthManager {
         
         public AuthManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {

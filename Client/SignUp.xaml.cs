@@ -1,4 +1,4 @@
-﻿using Client.Service;
+﻿using Client.AuthManagerService;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +7,7 @@ namespace Client {
     /// <summary>
     /// Lógica de interacción para SignUp.xaml
     /// </summary>
-    public partial class SignUp : Page, Service.IAuthManagerCallback {
+    public partial class SignUp : Page, AuthManagerService.IAuthManagerCallback {
         private void hideTextMessages() {
             this.nameFieldRequiredText.Visibility = Visibility.Hidden;
             this.surnameFieldRequiredText.Visibility = Visibility.Hidden;
@@ -64,7 +64,7 @@ namespace Client {
                 var password = this.passwordPasswordBox.Password;
 
                 var context = new InstanceContext(this);
-                var service = new Service.AuthManagerClient(context);
+                var service = new AuthManagerService.AuthManagerClient(context);
                 service.registerUser(name, password);
             }
         }

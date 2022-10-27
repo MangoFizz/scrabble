@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 namespace Server {
     internal class Program {
         static void Main(string[] args) {
-            using(ServiceHost host = new ServiceHost(typeof(Service.AuthManager))) {
-                host.Open();
-                Console.WriteLine("Server is running");
-                Console.ReadLine();
-            }
+            ServiceHost authManagerHost = new ServiceHost(typeof(Service.AuthManager));
+            authManagerHost.Open();
+
+            ServiceHost gameChatHost = new ServiceHost(typeof(Service.GameChat));
+            gameChatHost.Open();
+
+            Console.WriteLine("Server is running");
+            Console.ReadLine();
         }
     }
 }

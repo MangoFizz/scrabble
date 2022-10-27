@@ -12,6 +12,7 @@
         <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
         <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
         <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="exitButtonClick"/>
+        <Button Content="Chat" HorizontalAlignment="Left" Margin="695,401,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
 
     </Grid>
 </Page>

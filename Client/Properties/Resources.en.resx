@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="buttonBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="buttonCancelSignUp" xml:space="preserve">
     <value>CANCEL</value>
   </data>
@@ -137,6 +140,12 @@
   </data>
   <data name="buttonSignUp" xml:space="preserve">
     <value>SIGN UP</value>
+  </data>
+  <data name="chatLabel" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="chatUsersLabel" xml:space="preserve">
+    <value>Users</value>
   </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>EMAIL</value>
@@ -171,6 +180,9 @@
   <data name="requiredSignUp" xml:space="preserve">
     <value>Required*</value>
   </data>
+  <data name="sendButton" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="surnameSignUp" xml:space="preserve">
     <value>SURNAME</value>
   </data>
@@ -191,6 +203,12 @@
   </data>
   <data name="userAlreadyExists" xml:space="preserve">
     <value>User already exists</value>
+  </data>
+  <data name="userJoinChatMessageFormat" xml:space="preserve">
+    <value>{0} has entered the chat!</value>
+  </data>
+  <data name="userLeaveChatMessageFormat" xml:space="preserve">
+    <value>{0} just leave the chat</value>
   </data>
   <data name="userLogin" xml:space="preserve">
     <value>USER</value>

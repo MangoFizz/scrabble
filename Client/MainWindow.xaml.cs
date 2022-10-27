@@ -17,8 +17,11 @@ namespace Client {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        public static String username;
+
         public MainWindow() {
             InitializeComponent();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
         }
     }
 }
