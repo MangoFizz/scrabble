@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Client"
         xmlns:p ="clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.tittleMain}" Height="450" Width="800">
-    <Grid Background="#FF08821A">
-        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="74" Width="336" MaxWidth="336" FontSize="48" FontWeight="Bold" AutomationProperties.IsRequiredForForm="True" FontFamily="Bahnschrift"/>
-        <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
-        <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24"/>
-        <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Height="48" Width="286" FontSize="24" Click="exitButtonClick"/>
-        <Button Content="Chat" HorizontalAlignment="Left" Margin="695,401,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        Title="{x:Static p:Resources.tittleMain}" Height="768" Width="1366">
+    <Grid Background="#FF058813">
+        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502"  FontSize="60" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black"/>
+        <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="67" Width="392" FontSize="30"/>
+        <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="68" Width="392" FontSize="30" Margin="0,359,0,0"/>
+        <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,485,0,0" VerticalAlignment="Top" Height="68" Width="392" FontSize="30" Click="exitButtonClick"/>
+        <Button Content="Chat" HorizontalAlignment="Left" Margin="1201,679,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="54" Width="112" FontSize="22"/>
 
     </Grid>
 </Page>

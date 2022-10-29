@@ -6,26 +6,26 @@
         xmlns:local="clr-namespace:Client"
         xmlns:p ="clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.titleSignUp}" Height="450" Width="800">
-    <Grid Background="#FF058813" >
-        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" Height="74" Width="336" MaxWidth="336" FontSize="48" FontWeight="Bold" AutomationProperties.IsRequiredForForm="True" FontFamily="Bahnschrift"/>
-        <Label Content="{x:Static p:Resources.NewUser}" HorizontalAlignment="Center" Margin="0,84,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" FontWeight="SemiBold"/>
-        <Label Content="{x:Static p:Resources.nameSignUp}" HorizontalAlignment="Left" Margin="78,139,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Name="nameTextBox" HorizontalAlignment="Left" Margin="78,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="26"/>
-        <Label Content="{x:Static p:Resources.surnameSignUp}" HorizontalAlignment="Left" Margin="419,139,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Name="surnameTextBox" HorizontalAlignment="Left" Margin="419,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="26"/>
-        <Label Content="{x:Static p:Resources.emailSignUp}" HorizontalAlignment="Left" Margin="78,211,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Name="emailTextBox" HorizontalAlignment="Left" Margin="78,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="26"/>
-        <Label Content="{x:Static p:Resources.nicknameSignUp}" HorizontalAlignment="Left" Margin="419,211,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <TextBox Name="nicknameTextBox" HorizontalAlignment="Left" Margin="419,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Height="26"/>
-        <Label Content="{x:Static p:Resources.passwordSignUp}" HorizontalAlignment="Left" Margin="78,290,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="78,321,0,0" VerticalAlignment="Top" Width="250" Height="26"/>
-        <Label Name="nameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="267,143,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Label Name="surnameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="608,143,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Label Name="emailFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="267,213,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Label Name="nicknameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="608,213,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Label Name="passwordFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="267,288,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="27" Width="61" />
-        <Button Name="acceptButton" Content="{x:Static p:Resources.buttonOkSignUp}" HorizontalAlignment="Left" Margin="78,376,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="14" Click="acceptButtonClick" Height="26" Width="70" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+        Title="{x:Static p:Resources.titleSignUp}" Height="768" Width="1366">
+    <Grid Background="#FF058813" Margin="0,28,0,-18" Width = "1366">
+        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502" FontSize="60" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black"/>
+        <Label Content="{x:Static p:Resources.NewUser}" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="30" FontWeight="SemiBold"/>
+        <Label Content="{x:Static p:Resources.nameSignUp}" HorizontalAlignment="Left" Margin="83,232,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
+        <TextBox Name="nameTextBox" HorizontalAlignment="Left" Margin="78,285,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54"/>
+        <Label Content="{x:Static p:Resources.surnameSignUp}" HorizontalAlignment="Left" Margin="800,228,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
+        <TextBox Name="surnameTextBox" HorizontalAlignment="Left" Margin="788,285,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54"/>
+        <Label Content="{x:Static p:Resources.emailSignUp}" HorizontalAlignment="Left" Margin="84,377,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
+        <TextBox Name="emailTextBox" HorizontalAlignment="Left" Margin="78,431,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54"/>
+        <Label Content="{x:Static p:Resources.nicknameSignUp}" HorizontalAlignment="Left" Margin="800,375,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
+        <TextBox Name="nicknameTextBox" HorizontalAlignment="Left" Margin="788,429,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54"/>
+        <Label Content="{x:Static p:Resources.passwordSignUp}" HorizontalAlignment="Left" Margin="84,523,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
+        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="78,581,0,0" VerticalAlignment="Top" Width="450" Height="54"/>
+        <Label Name="nameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="433,228,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
+        <Label Name="surnameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="1143,231,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
+        <Label Name="emailFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="433,380,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
+        <Label Name="nicknameFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="1143,380,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
+        <Label Name="passwordFieldRequiredText" Content="{x:Static p:Resources.requiredSignUp}" HorizontalAlignment="Left" Margin="433,526,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
+        <Button Name="acceptButton" Content="{x:Static p:Resources.buttonOkSignUp}" HorizontalAlignment="Left" Margin="78,677,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="acceptButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -33,7 +33,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button Name="cancelButton" Content="{x:Static p:Resources.buttonCancelSignUp}" HorizontalAlignment="Left" Margin="599,376,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="14" Click="cancelButtonClick" Height="26" Width="70" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+        <Button Name="cancelButton" Content="{x:Static p:Resources.buttonCancelSignUp}" HorizontalAlignment="Left" Margin="1120,677,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="cancelButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -41,7 +41,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Label x:Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="163,377,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Label x:Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="403,678,0,0" VerticalAlignment="Top" Foreground="Red" FontSize="20" />
 
     </Grid>
 </Page>
