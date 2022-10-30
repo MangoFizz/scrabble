@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="friendships.cs">
+    <Compile Include="Friendship.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
     <Compile Include="gameResults.cs">
@@ -60,7 +60,7 @@
     <Compile Include="games.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="players.cs">
+    <Compile Include="Player.cs">
       <DependentUpon>Scrabble99Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

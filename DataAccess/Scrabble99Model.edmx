@@ -14,13 +14,15 @@
   </EntityContainer>
   <EntityType Name="friendships">
     <Key>
-      <PropertyRef Name="idFriendship" />
-      <PropertyRef Name="player1Id" />
-      <PropertyRef Name="player2Id" />
+      <PropertyRef Name="FriendshipId" />
+      <PropertyRef Name="Sender" />
+      <PropertyRef Name="Receiver" />
+      <PropertyRef Name="Status" />
     </Key>
-    <Property Name="idFriendship" Type="int" Nullable="false" />
-    <Property Name="player1Id" Type="int" Nullable="false" />
-    <Property Name="player2Id" Type="int" Nullable="false" />
+    <Property Name="FriendshipId" Type="int" Nullable="false" />
+    <Property Name="Sender" Type="int" Nullable="false" />
+    <Property Name="Receiver" Type="int" Nullable="false" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="gameResults">
     <Key>
@@ -50,13 +52,17 @@
   </EntityType>
   <EntityType Name="players">
     <Key>
-      <PropertyRef Name="idUser" />
-      <PropertyRef Name="username" />
-      <PropertyRef Name="password" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="Password" />
+      <PropertyRef Name="Avatar" />
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="Nickname" />
     </Key>
-    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="password" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nickname" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Avatar" Type="smallint" Nullable="false" DefaultValue="0" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="64" />
   </EntityType>
   <EntityType Name="settings">
     <Key>
@@ -78,15 +84,17 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Scrabble99Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="friendships">
+        <EntityType Name="Friendship">
           <Key>
-            <PropertyRef Name="idFriendship" />
-            <PropertyRef Name="player1Id" />
-            <PropertyRef Name="player2Id" />
+            <PropertyRef Name="FriendshipId" />
+            <PropertyRef Name="Sender" />
+            <PropertyRef Name="Receiver" />
+            <PropertyRef Name="Status" />
           </Key>
-          <Property Name="idFriendship" Type="Int32" Nullable="false" />
-          <Property Name="player1Id" Type="Int32" Nullable="false" />
-          <Property Name="player2Id" Type="Int32" Nullable="false" />
+          <Property Name="FriendshipId" Type="Int32" Nullable="false" />
+          <Property Name="Sender" Type="Int32" Nullable="false" />
+          <Property Name="Receiver" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="gameResults">
           <Key>
@@ -114,15 +122,19 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="idWinner" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="players">
+        <EntityType Name="Player">
           <Key>
-            <PropertyRef Name="idUser" />
-            <PropertyRef Name="username" />
-            <PropertyRef Name="password" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="Avatar" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="Nickname" />
           </Key>
-          <Property Name="idUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" FixedLength="false" Unicode="false" Nullable="false" MaxLength="255" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" FixedLength="false" Unicode="false" Nullable="false" MaxLength="255" />
+          <Property Name="Avatar" Type="Int16" Nullable="false" DefaultValue="0" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="64" />
         </EntityType>
         <EntityType Name="settings">
           <Key>
@@ -141,10 +153,10 @@
           <Property Name="audioEffects" Type="Int32" />
         </EntityType>
         <EntityContainer Name="Scrabble99Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="friendships" EntityType="Self.friendships" />
+          <EntitySet Name="friendships" EntityType="Scrabble99Model.Friendship" />
           <EntitySet Name="gameResults" EntityType="Self.gameResults" />
           <EntitySet Name="games" EntityType="Self.games" />
-          <EntitySet Name="players" EntityType="Self.players" />
+          <EntitySet Name="players" EntityType="Scrabble99Model.Player" />
           <EntitySet Name="settings" EntityType="Self.settings" />
         </EntityContainer>
       </Schema>
@@ -154,11 +166,12 @@
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="Scrabble99ModelStoreContainer" CdmEntityContainer="Scrabble99Entities">
     <EntitySetMapping Name="friendships">
-      <EntityTypeMapping TypeName="IsTypeOf(Scrabble99Model.friendships)">
+      <EntityTypeMapping TypeName="IsTypeOf(Scrabble99Model.Friendship)">
         <MappingFragment StoreEntitySet="friendships">
-          <ScalarProperty Name="idFriendship" ColumnName="idFriendship" />
-          <ScalarProperty Name="player1Id" ColumnName="player1Id" />
-          <ScalarProperty Name="player2Id" ColumnName="player2Id" />
+          <ScalarProperty Name="FriendshipId" ColumnName="FriendshipId" />
+          <ScalarProperty Name="Sender" ColumnName="Sender" />
+          <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -184,11 +197,13 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="players">
-      <EntityTypeMapping TypeName="IsTypeOf(Scrabble99Model.players)">
+      <EntityTypeMapping TypeName="IsTypeOf(Scrabble99Model.Player)">
         <MappingFragment StoreEntitySet="players">
-          <ScalarProperty Name="idUser" ColumnName="idUser" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

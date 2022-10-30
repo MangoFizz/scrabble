@@ -12,10 +12,18 @@ namespace DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class players
+    public partial class Player
     {
-        public int idUser { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Player()
+        {
+            this.Avatar = 0;
+        }
+    
+        public int UserId { get; set; }
+        public string Nickname { get; set; }
+        public string Password { get; set; }
+        public short Avatar { get; set; }
+        public string Email { get; set; }
     }
 }

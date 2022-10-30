@@ -12,10 +12,11 @@ namespace DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class friendships
+    public partial class Friendship
     {
-        public int idFriendship { get; set; }
-        public int player1Id { get; set; }
-        public int player2Id { get; set; }
+        public int FriendshipId { get; set; }
+        public int Sender { get; set; }
+        public int Receiver { get; set; }
+        public short Status { get; set; }
     }
 }
