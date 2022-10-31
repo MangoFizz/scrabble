@@ -1,4 +1,4 @@
-﻿using Client.AuthManagerService;
+﻿using Client.GameService;
 using System;
 using System.ServiceModel;
 using System.Windows;
@@ -9,22 +9,22 @@ namespace Client {
     /// Lógica de interacción para login.xaml
     /// </summary>
 
-    public partial class login : Page, AuthManagerService.IAuthManagerCallback {
-        private void hideTextMessages() {
+    public partial class LoginPage : Page {
+        private void HideTextMessages() {
             this.usernameRequiredText.Visibility = Visibility.Hidden;
             this.passwordRequiredText.Visibility = Visibility.Hidden;
             this.resultText.Visibility = Visibility.Hidden;
         }
 
-        public login() {
+        public LoginPage() {
             InitializeComponent();
-            this.hideTextMessages();
+            this.HideTextMessages();
         }
 
-        private void loginButtonClick(object sender, RoutedEventArgs e) {
+        private void LoginButtonClick(object sender, RoutedEventArgs e) {
             bool isInputValid = true;
 
-            this.hideTextMessages();
+            this.HideTextMessages();
 
             // Show text message if user leaves the username field empty
             if(this.usernameTextBox.Text.Length == 0) {
@@ -42,31 +42,29 @@ namespace Client {
                 var username = this.usernameTextBox.Text;
                 var password = this.passwordPasswordBox.Password;
 
-                var context = new InstanceContext(this);
-                var service = new AuthManagerService.AuthManagerClient(context);
-                service.login(username, password);
+                var app = (App)Application.Current;
+                var context = new InstanceContext(app);
+                var service = new GameService.PlayerManagerClient(context);
+                service.Login(username, password);
             }
         }
 
-        private void registerButtonClick(object sender, RoutedEventArgs e) {
-            SignUp signupScreen = new SignUp();
+        private void RegisterButtonClick(object sender, RoutedEventArgs e) {
+            var signupScreen = new SignUpPage();
             this.NavigationService.Navigate(signupScreen);
         }
 
-        public void loginResponse(AuthenticatorUserAuthResult loginResult) {
+        public void LoginResponse(PlayerManagerPlayerAuthResult loginResult) {
             this.resultText.Visibility = Visibility.Visible;
             switch(loginResult) {
-                case AuthenticatorUserAuthResult.Success:
-                    Main mainMenu = new Main();
-                    MainWindow.username = this.usernameTextBox.Text;
-                    this.NavigationService.Navigate(mainMenu);
+                case PlayerManagerPlayerAuthResult.Success:
                     break;
 
-                case AuthenticatorUserAuthResult.InvalidCredentials:
+                case PlayerManagerPlayerAuthResult.InvalidCredentials:
                     this.resultText.Content = Properties.Resources.invalidCredentials;
                     break;
 
-                case AuthenticatorUserAuthResult.IncorrectPassword:
+                case PlayerManagerPlayerAuthResult.IncorrectPassword:
                     this.resultText.Content = Properties.Resources.incorrectPassword;
                     break;
 
@@ -74,10 +72,6 @@ namespace Client {
                     this.resultText.Content = Properties.Resources.unknownError;
                     break;
             }
-
-        }
-        public void registerUserResponse(AuthenticatorUserResgisterResult registrationResult) {
-            throw new NotImplementedException();
         }
     }
 }

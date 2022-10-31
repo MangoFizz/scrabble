@@ -9,7 +9,7 @@ using Core;
 using static Core.PlayerManager;
 
 namespace Service {
-    [ServiceContract(CallbackContract = typeof(IPlayerManagerCallback))]
+    [ServiceContract(CallbackContract = typeof(IPlayerManagerCallback), SessionMode = SessionMode.Required)]
     public interface IPlayerManager {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
         void Login(string nickname, string password);

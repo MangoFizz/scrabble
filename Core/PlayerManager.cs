@@ -146,7 +146,7 @@ namespace Core {
                     var friendship = new Friendship() {
                         Sender = player.UserId,
                         Receiver = receiverPlayer.UserId,
-                        Status = (int)PlayerFriendshipStatus.Pending
+                        Status = (short)PlayerFriendshipStatus.Pending
                     };
                     context.friendships.Add(friendship);
                     context.SaveChanges();

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Client.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -56,21 +59,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Chat.xaml.cs">
-      <DependentUpon>Chat.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\AuthManagerService\Reference.cs">
+    <Compile Include="Connected Services\GameService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\GameChatService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="login.xaml.cs">
-      <DependentUpon>login.xaml</DependentUpon>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
@@ -101,27 +96,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SignUp.xaml.cs">
-      <DependentUpon>SignUp.xaml</DependentUpon>
+    <Compile Include="SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
-    <None Include="Connected Services\AuthManagerService\AuthManager.wsdl" />
-    <None Include="Connected Services\AuthManagerService\item.xsd">
+    <None Include="Connected Services\GameService\GameService.wsdl" />
+    <None Include="Connected Services\GameService\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AuthManagerService\item1.xsd">
+    <None Include="Connected Services\GameService\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AuthManagerService\item2.xsd">
+    <None Include="Connected Services\GameService\item2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameChatService\GameChat.wsdl" />
-    <None Include="Connected Services\GameChatService\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GameChatService\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GameChatService\item2.xsd">
+    <None Include="Connected Services\GameService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
@@ -137,11 +125,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Chat.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="login.xaml">
+    <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,7 +137,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignUp.xaml">
+    <Page Include="SignUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,23 +146,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\AuthManagerService\" />
-    <WCFMetadataStorage Include="Connected Services\GameChatService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AuthManagerService\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AuthManagerService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AuthManagerService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AuthManagerService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <WCFMetadataStorage Include="Connected Services\GameService\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.en.resx">
@@ -195,16 +163,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameChatService\item.disco" />
+    <None Include="Connected Services\GameService\item.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameChatService\configuration91.svcinfo" />
+    <None Include="Connected Services\GameService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameChatService\configuration.svcinfo" />
+    <None Include="Connected Services\GameService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GameChatService\Reference.svcmap">
+    <None Include="Connected Services\GameService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
