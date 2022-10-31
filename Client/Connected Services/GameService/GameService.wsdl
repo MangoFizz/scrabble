@@ -75,6 +75,12 @@
   <wsdl:message name="IPlayerManager_Logout_InputMessage">
     <wsdl:part name="parameters" element="tns:Logout" />
   </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendList" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequests" />
+  </wsdl:message>
   <wsdl:message name="IPlayerManager_SendFriendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:SendFriendRequest" />
   </wsdl:message>
@@ -101,6 +107,18 @@
   </wsdl:message>
   <wsdl:message name="IPlayerManager_SendFriendRequestResponseHandler_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendFriendRequestResponseHandlerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendListResponseHandler_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendListResponseHandler" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendListResponseHandler_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendListResponseHandlerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendRequestsResponseHandler_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequestsResponseHandler" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_GetFriendRequestsResponseHandler_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequestsResponseHandlerResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_ReceiveFriendRequest_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveFriendRequest" />
@@ -142,6 +160,12 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="true" name="Logout">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/Logout" message="tns:IPlayerManager_Logout_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendList" message="tns:IPlayerManager_GetFriendList_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendRequests" message="tns:IPlayerManager_GetFriendRequests_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/SendFriendRequest" message="tns:IPlayerManager_SendFriendRequest_InputMessage" />
     </wsdl:operation>
@@ -162,6 +186,14 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendFriendRequestResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler" message="tns:IPlayerManager_SendFriendRequestResponseHandler_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandlerResponse" message="tns:IPlayerManager_SendFriendRequestResponseHandler_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendListResponseHandler">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler" message="tns:IPlayerManager_GetFriendListResponseHandler_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandlerResponse" message="tns:IPlayerManager_GetFriendListResponseHandler_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendRequestsResponseHandler">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler" message="tns:IPlayerManager_GetFriendRequestsResponseHandler_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandlerResponse" message="tns:IPlayerManager_GetFriendRequestsResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ReceiveFriendRequest">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequest" message="tns:IPlayerManager_ReceiveFriendRequest_OutputCallbackMessage" />
@@ -209,6 +241,18 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="GetFriendList">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetFriendRequests">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="SendFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/SendFriendRequest" style="document" />
       <wsdl:input>
@@ -247,6 +291,24 @@
     </wsdl:operation>
     <wsdl:operation name="SendFriendRequestResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFriendListResponseHandler">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFriendRequestsResponseHandler">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -313,7 +375,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
+          <Upn>BLOO\aiwass</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -322,7 +384,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
+          <Upn>BLOO\aiwass</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

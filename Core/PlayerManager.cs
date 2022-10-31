@@ -4,6 +4,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Data.Common;
 using DataAccess;
+using System.Collections.Generic;
 
 namespace Core {
     public class PlayerManager {
@@ -191,6 +192,47 @@ namespace Core {
             catch(DbException ex) {
                 Console.WriteLine(ex.Message);
                 return PlayerFriendshipRequestAnswer.DatabaseError;
+            }
+        }
+
+        public static List<Player> GetPlayerFriendsList(string playerNickname) {
+            try {
+                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                    var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
+                    var friendships = context.friendships.Where(f => (f.Sender == player.UserId || f.Receiver == player.UserId) && f.Status == (short)PlayerFriendshipStatus.Accepted).ToList();
+                    var friends = new List<Player>();
+                    foreach(var friendship in friendships) {
+                        if(friendship.Sender == player.UserId) {
+                            friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Receiver));
+                        }
+                        else {
+                            friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
+                        }
+                    }
+                    return friends;
+                }
+            }
+            catch(DbException ex) {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public static List<Player> GetPrendingFriendRequest(string playerNickname) {
+            try {
+                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                    var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
+                    var friendships = context.friendships.Where(f => f.Receiver == player.UserId && f.Status == (short)PlayerFriendshipStatus.Pending).ToList();
+                    var friends = new List<Player>();
+                    foreach(var friendship in friendships) {
+                        friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
+                    }
+                    return friends;
+                }
+            }
+            catch(DbException ex) {
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }

@@ -1,4 +1,6 @@
 ﻿using Client.GameService;
+using System.Linq;
+using System.ServiceModel;
 using System.Windows;
 
 namespace Client {
@@ -29,8 +31,33 @@ namespace Client {
         }
     }
 
-    public partial class App : GameService.IPlayerManagerCallback {
+    public partial class App : IPlayerManagerCallback {
+        private PlayerManagerClient _PlayerManagerClient = null;
+
         public Player LoggedPlayer { get; set; }
+        
+        public PlayerManagerClient PlayerManagerClient { 
+            get {
+                if(_PlayerManagerClient == null) {
+                    var context = new InstanceContext(App.Current);
+                    var service = new PlayerManagerClient(context);
+                    _PlayerManagerClient = service;
+                }
+                return _PlayerManagerClient;
+            }
+        }
+
+        public void GetFriendListResponseHandler(Player[] friends) {
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            friendListPage.FriendList = friends.ToList();
+            friendListPage.RefreshFriendList();
+        }
+
+        public void GetFriendRequestsResponseHandler(Player[] friendRequests) {
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            friendListPage.FriendRequests = friendRequests.ToList();
+            friendListPage.RefreshFriendList();
+        }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player) {
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
@@ -57,7 +84,7 @@ namespace Client {
         }
 
         public void SendFriendRequestResponseHandler(PlayerManagerPlayerFriendRequestResult result) {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

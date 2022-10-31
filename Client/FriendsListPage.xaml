@@ -4,16 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Client"
+      xmlns:p = "clr-namespace:Client.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="Friends list">
 
     <Grid>
-        <Rectangle MouseLeftButtonUp="Grid_MouseLeftButtonUp" Fill="#4C000000"  />
+        <Rectangle MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#4C000000"  />
         <Grid Background="Azure" Width="400" HorizontalAlignment="Left">
             <Label Content="Friends list" HorizontalAlignment="Left" Margin="29,19,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-            <TextBox HorizontalAlignment="Left" Margin="29,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" Height="29"/>
-            <Button Content="Add" HorizontalAlignment="Left" Margin="303,69,0,0" VerticalAlignment="Top" Height="29" Width="68" FontSize="16"/>
+            <TextBox Name="NicknameTextBox" HorizontalAlignment="Left" Margin="29,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" Height="29"/>
+            <Button Name="AddFriendButton" Content="Add" HorizontalAlignment="Left" Margin="303,69,0,0" VerticalAlignment="Top" Height="29" Width="68" FontSize="16" Click="AddFriendButtonClick"/>
             <ListBox Name="FriendsListBox" Margin="29,103,29,27" FontSize="16">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -21,6 +22,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Label Name="ListMessage" Content="{x:Static p:Resources.loadingLabel}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="164,358,164,322"/>
         </Grid>
     </Grid>
 </Page>

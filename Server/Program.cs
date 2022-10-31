@@ -11,7 +11,7 @@ namespace Server {
             ServiceHost host = new ServiceHost(typeof(Service.GameService));
             host.Open();
 
-            Console.WriteLine("Server is running");
+            Console.WriteLine("Server is running...");
             Console.ReadLine();
         }
     }

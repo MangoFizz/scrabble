@@ -12,9 +12,6 @@
         <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="67" Width="392" FontSize="30"/>
         <Button Content="{x:Static p:Resources.buttonSettingsMain}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="68" Width="392" FontSize="30" Margin="0,359,0,0"/>
         <Button Content="{x:Static p:Resources.buttonExitMain}" HorizontalAlignment="Center" Margin="0,485,0,0" VerticalAlignment="Top" Height="68" Width="392" FontSize="30" Click="exitButtonClick"/>
-        <Button HorizontalAlignment="Left" Margin="51,54,0,0" VerticalAlignment="Top" FontSize="18">
-            <Button Content="Button" Click="Button_Click_2"/>
-        </Button>
-
+        <Button HorizontalAlignment="Left" Margin="37,38,0,0" VerticalAlignment="Top" FontSize="18" Click="Button_Click_2" Content="Friends" Height="44" Width="92" />
     </Grid>
 </Page>

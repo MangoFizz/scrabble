@@ -150,11 +150,17 @@
   <data name="emailSignUp" xml:space="preserve">
     <value>CORREO</value>
   </data>
+  <data name="empty" xml:space="preserve">
+    <value>Vacío</value>
+  </data>
   <data name="incorrectPassword" xml:space="preserve">
     <value>Contraseña incorrecta</value>
   </data>
   <data name="invalidCredentials" xml:space="preserve">
     <value>Credenciales inválidas</value>
+  </data>
+  <data name="loadingLabel" xml:space="preserve">
+    <value>Cargando...</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>INICIAR SESION</value>

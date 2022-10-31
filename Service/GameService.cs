@@ -25,6 +25,13 @@ namespace Service {
                         Avatar = playerData.Avatar,
                         PlayerManagerCallbackChannel = callbackChannel
                     };
+
+                    var playerFriendsData = PlayerManager.GetPlayerFriendsList(nickname);
+                    player.Friends = playerFriendsData.Select(f => new Player() {
+                        Nickname = f.Nickname,
+                        Avatar = f.Avatar
+                    }).ToList();
+
                     Players.Add(player);
                     callbackChannel.LoginResponseHandler(result, player);
                 }
@@ -58,12 +65,35 @@ namespace Service {
             var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
             var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, true);
+            player.Friends.Add(Players.Find(p => p.Nickname == nickname));
         }
 
         public void DeclineFriendRequest(string nickname) {
             var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
             var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
+        }
+
+        public void GetFriendList() {
+            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var playerFriendsData = PlayerManager.GetPlayerFriendsList(player.Nickname);
+            var friends = playerFriendsData.Select(f => new Player() {
+                Nickname = f.Nickname,
+                Avatar = f.Avatar
+            });
+            callbackChannel.GetFriendListResponseHandler(friends.ToArray());
+        }
+
+        public void GetFriendRequests() {
+            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(player.Nickname);
+            var friendRequests = playerFriendRequestsData.Select(f => new Player() {
+                Nickname = f.Nickname,
+                Avatar = f.Avatar
+            });
+            callbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
         }
     }
 

@@ -160,6 +160,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string empty {
+            get {
+                return ResourceManager.GetString("empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect password.
         /// </summary>
         public static string incorrectPassword {
@@ -174,6 +183,15 @@ namespace Client.Properties {
         public static string invalidCredentials {
             get {
                 return ResourceManager.GetString("invalidCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string loadingLabel {
+            get {
+                return ResourceManager.GetString("loadingLabel", resourceCulture);
             }
         }
         

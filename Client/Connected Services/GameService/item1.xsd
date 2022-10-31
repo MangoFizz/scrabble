@@ -4,8 +4,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Avatar" type="xs:int" />
       <xs:element minOccurs="0" name="CurrentParty" nillable="true" type="tns:Party" />
-      <xs:element minOccurs="0" name="FriendRequest" nillable="true" type="tns:ArrayOfPlayer" />
-      <xs:element minOccurs="0" name="Friends" nillable="true" type="tns:ArrayOfPlayer" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

@@ -46,12 +46,6 @@ namespace Client.GameService {
         private Client.GameService.Party CurrentPartyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.Player[] FriendRequestField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.Player[] FriendsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -86,32 +80,6 @@ namespace Client.GameService {
                 if ((object.ReferenceEquals(this.CurrentPartyField, value) != true)) {
                     this.CurrentPartyField = value;
                     this.RaisePropertyChanged("CurrentParty");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.Player[] FriendRequest {
-            get {
-                return this.FriendRequestField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FriendRequestField, value) != true)) {
-                    this.FriendRequestField = value;
-                    this.RaisePropertyChanged("FriendRequest");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.Player[] Friends {
-            get {
-                return this.FriendsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
-                    this.FriendsField = value;
-                    this.RaisePropertyChanged("Friends");
                 }
             }
         }
@@ -253,6 +221,18 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, Action="http://tempuri.org/IPlayerManager/Logout")]
         System.Threading.Tasks.Task LogoutAsync();
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendList")]
+        void GetFriendList();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendList")]
+        System.Threading.Tasks.Task GetFriendListAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendRequests")]
+        void GetFriendRequests();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendRequests")]
+        System.Threading.Tasks.Task GetFriendRequestsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/SendFriendRequest")]
         void SendFriendRequest(string nickname);
         
@@ -283,6 +263,12 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandlerResponse")]
         void SendFriendRequestResponseHandler(Client.GameService.PlayerManagerPlayerFriendRequestResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/GetFriendListResponseHandlerResponse")]
+        void GetFriendListResponseHandler(Client.GameService.Player[] friends);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandlerResponse")]
+        void GetFriendRequestsResponseHandler(Client.GameService.Player[] friendRequests);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequest", ReplyAction="http://tempuri.org/IPlayerManager/ReceiveFriendRequestResponse")]
         void ReceiveFriendRequest(Client.GameService.Player player);
@@ -341,6 +327,22 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task LogoutAsync() {
             return base.Channel.LogoutAsync();
+        }
+        
+        public void GetFriendList() {
+            base.Channel.GetFriendList();
+        }
+        
+        public System.Threading.Tasks.Task GetFriendListAsync() {
+            return base.Channel.GetFriendListAsync();
+        }
+        
+        public void GetFriendRequests() {
+            base.Channel.GetFriendRequests();
+        }
+        
+        public System.Threading.Tasks.Task GetFriendRequestsAsync() {
+            return base.Channel.GetFriendRequestsAsync();
         }
         
         public void SendFriendRequest(string nickname) {

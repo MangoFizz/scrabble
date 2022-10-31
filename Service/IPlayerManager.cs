@@ -21,6 +21,12 @@ namespace Service {
         void Logout();
 
         [OperationContract(IsOneWay = true)]
+        void GetFriendList();
+
+        [OperationContract(IsOneWay = true)]
+        void GetFriendRequests();
+
+        [OperationContract(IsOneWay = true)]
         void SendFriendRequest(string nickname);
 
         [OperationContract(IsOneWay = true)]
@@ -42,6 +48,12 @@ namespace Service {
         void SendFriendRequestResponseHandler(PlayerFriendRequestResult result);
 
         [OperationContract]
+        void GetFriendListResponseHandler(Player[] friends);
+
+        [OperationContract]
+        void GetFriendRequestsResponseHandler(Player[] friendRequests);
+
+        [OperationContract]
         void ReceiveFriendRequest(Player player);
 
         [OperationContract]
@@ -56,11 +68,8 @@ namespace Service {
         [DataMember]
         public int Avatar { get; set; }
 
-        [DataMember]
+        [IgnoreDataMember]
         public List<Player> Friends { get; set; }
-
-        [DataMember]
-        public List<Player> FriendRequest { get; set; }
 
         [IgnoreDataMember]
         public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.GameService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,43 @@ namespace Client {
     /// Interaction logic for FriendsListPage.xaml
     /// </summary>
     public partial class FriendsListPage : Page {
-        public FriendsListPage() {
-            InitializeComponent();
+        public List<Player> FriendList = new List<Player>();
+        public List<Player> FriendRequests = new List<Player>();
+
+        private void LoadFriendList() {
+            App.Current.PlayerManagerClient.GetFriendList();
+            App.Current.PlayerManagerClient.GetFriendRequests();
         }
 
-        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            App.Current.CloseFriendsList();
+        public void RefreshFriendList() {
+            FriendsListBox.Items.Clear();
 
+            foreach(var friend in FriendList) {
+                FriendsListBox.Items.Add(friend.Nickname);
+            }
+
+            foreach(var friendRequest in FriendRequests) {
+                FriendsListBox.Items.Add(friendRequest.Nickname);
+            }
+
+            if(FriendsListBox.Items.Count == 0) {
+                ListMessage.Content = Properties.Resources.empty;
+            }
+        }
+
+        public FriendsListPage() {
+            InitializeComponent();
+            LoadFriendList();
+        }
+
+        private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+            App.Current.CloseFriendsList();
+        }
+
+        private void AddFriendButtonClick(object sender, RoutedEventArgs e) {
+            if(NicknameTextBox.Text.Length > 0) {
+                App.Current.PlayerManagerClient.SendFriendRequest(NicknameTextBox.Text);
+            }
         }
     }
 }
