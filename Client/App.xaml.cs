@@ -3,8 +3,29 @@ using System.Windows;
 
 namespace Client {
     public partial class App : Application {
+        public static new App Current { 
+            get {
+                return (App)Application.Current;
+            }
+        }
+
+        public new MainWindow MainWindow {
+            get {
+                return (MainWindow)base.MainWindow;
+            }
+        }
+
         App() {
+            // Set locale
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+        }
+
+        public void OpenFriendsList() {
+            MainWindow.FriendListFrame.Content = new FriendsListPage();
+        }
+
+        public void CloseFriendsList() {
+            MainWindow.FriendListFrame.Content = null;
         }
     }
 
@@ -12,14 +33,12 @@ namespace Client {
         public Player LoggedPlayer { get; set; }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player) {
-            var mainWindow = ((MainWindow)this.MainWindow);
-            
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
                 LoggedPlayer = player;
-                mainWindow.MainFrame.Content = new Main();
+                MainWindow.MainFrame.Content = new Main();
             }
             else {
-                var loginPage = ((LoginPage)mainWindow.MainFrame.Content);
+                var loginPage = ((LoginPage)MainWindow.MainFrame.Content);
                 loginPage.LoginResponse(loginResult);
             }
         }
@@ -33,8 +52,7 @@ namespace Client {
         }
 
         public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
-            var mainWindow = ((MainWindow)this.MainWindow);
-            var signUpPage = ((SignUpPage)mainWindow.MainFrame.Content);
+            var signUpPage = ((SignUpPage)MainWindow.MainFrame.Content);
             signUpPage.RegisterPlayerResponse(registrationResult);
         }
 

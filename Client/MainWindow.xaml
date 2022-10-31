@@ -4,11 +4,12 @@
     xmlns:local="clr-namespace:Client"
     Title="MainWindow" 
     Name="myMainWindow">
-    
-    <Frame Name="MainFrame" 
-           SizeChanged="MainFrameSizeChanged" 
+
+    <Grid SizeChanged="MainFrameSizeChanged" 
            VerticalAlignment="Center" 
-           HorizontalAlignment="Center" 
-           NavigationUIVisibility="Hidden" />
+           HorizontalAlignment="Center">
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <Frame Name="FriendListFrame" NavigationUIVisibility="Hidden" />
+    </Grid>
 </Window>
     

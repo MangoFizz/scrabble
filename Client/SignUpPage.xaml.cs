@@ -46,8 +46,7 @@ namespace Client {
                 var nickname = this.nicknameTextBox.Text;
                 var password = this.passwordPasswordBox.Password;
 
-                var app = (App)Application.Current;
-                var context = new InstanceContext(app);
+                var context = new InstanceContext(App.Current);
                 var service = new GameService.PlayerManagerClient(context);
                 service.RegisterPlayer(nickname, password, email);
             }

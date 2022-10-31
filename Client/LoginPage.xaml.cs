@@ -42,8 +42,7 @@ namespace Client {
                 var username = this.usernameTextBox.Text;
                 var password = this.passwordPasswordBox.Password;
 
-                var app = (App)Application.Current;
-                var context = new InstanceContext(app);
+                var context = new InstanceContext(App.Current);
                 var service = new GameService.PlayerManagerClient(context);
                 service.Login(username, password);
             }
