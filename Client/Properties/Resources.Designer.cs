@@ -179,6 +179,16 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ficha_E {
+            get {
+                object obj = ResourceManager.GetObject("ficha_E", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Incorrect password.
         /// </summary>
         public static string incorrectPassword {

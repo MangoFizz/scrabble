@@ -30,5 +30,13 @@ namespace Client {
             cmWindowSize.Items.Add("Ventana");
             cmWindowSize.Items.Add("Pantalla completa");
         }
+
+        private void AcceptButtonClick(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            App.Current.MainWindow.MainFrame.GoBack();
+        }
     }
 }

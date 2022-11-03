@@ -25,5 +25,9 @@ namespace Client {
         private void Button_Click_2(object sender, RoutedEventArgs e) {
             App.Current.OpenFriendsList();
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e) {
+            App.Current.MainWindow.MainFrame.Navigate(new Setting());
+        }
     }
 }
