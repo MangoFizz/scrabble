@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Client"
         xmlns:p ="clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.tittleMain}" Height="720" Width="1280">
+        Title= "{x:Static p:Resources.tittleMain}" Height="720" Width="1280">
     <Grid Background="#FF058813">
         <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502"  FontSize="60" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black"/>
         <Button Content="{x:Static p:Resources.buttonPlayMain}" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="67" Width="392" FontSize="30"/>

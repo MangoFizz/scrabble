@@ -1,0 +1,39 @@
+﻿<Page x:Class="Client.Setting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client"
+      mc:Ignorable="d" 
+      xmlns:p ="clr-namespace:Client.Properties"
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title= "{x:Static p:Resources.tittleMain}">
+
+    <Grid Background="#FF058813">
+        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502"  FontSize="60" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black" />
+        <Label Content="SETTINGS" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="30" FontWeight="SemiBold"/>
+        <Label Content="SOUND" HorizontalAlignment="Left" Margin="196,275,0,0" VerticalAlignment="Top" FontSize="30" Background="#00000000" Foreground="White"/>
+        <Label Content="MUSIC" HorizontalAlignment="Left" Margin="196,396,0,0" VerticalAlignment="Top" FontSize="30" Background="#00000000" Foreground="White" />
+        <Label Content="WINDOW SIZE" HorizontalAlignment="Left" Margin="196,522,0,0" VerticalAlignment="Top" FontSize="30" Background="#00000000" Foreground="White" />
+        <Slider HorizontalAlignment="Left" Margin="568,287,0,0" VerticalAlignment="Top" Width="504" Height="25"/>
+        <Slider HorizontalAlignment="Left" Margin="568,408,0,0" VerticalAlignment="Top" Width="504" Height="25"/>
+        <ComboBox x:Name="cmWindowSize" HorizontalAlignment="Left" Margin="568,512,0,0" VerticalAlignment="Top" Width="504" Height="70"/>
+        <Button x:Name="cancelButton" Content="{x:Static p:Resources.buttonCancelSignUp}" HorizontalAlignment="Left" Margin="1068,640,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="CancelButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
+        <Button x:Name="acceptButton" Content="{x:Static p:Resources.buttonOkSignUp}" HorizontalAlignment="Left" Margin="856,640,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="AcceptButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
+
+    </Grid>
+</Page>
