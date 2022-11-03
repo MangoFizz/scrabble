@@ -29,5 +29,9 @@ namespace Client {
         private void Button_Click_3(object sender, RoutedEventArgs e) {
             App.Current.MainWindow.MainFrame.Navigate(new Setting());
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e) {
+            App.Current.MainWindow.MainFrame.Navigate(new Game());
+        }
     }
 }

@@ -21,5 +21,9 @@ namespace Client {
         public Game() {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            App.Current.MainWindow.MainFrame.GoBack();
+        }
     }
 }
