@@ -62,7 +62,7 @@ namespace Client {
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player) {
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
                 LoggedPlayer = player;
-                MainWindow.MainFrame.Content = new Main();
+                MainWindow.MainFrame.Content = new MainPage();
             }
             else {
                 var loginPage = ((LoginPage)MainWindow.MainFrame.Content);

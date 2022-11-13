@@ -14,11 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Client {
-    /// <summary>
-    /// Lógica de interacción para Setting.xaml
-    /// </summary>
-    public partial class Setting : Page {
-        public Setting() {
+    public partial class SettingsPage : Page {
+        public SettingsPage() {
             InitializeComponent();
         }
 

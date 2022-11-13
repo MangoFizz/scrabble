@@ -136,7 +136,7 @@
     <value>JUGAR</value>
   </data>
   <data name="buttonSettingsMain" xml:space="preserve">
-    <value>CONFIGURACIONES</value>
+    <value>AJUSTES</value>
   </data>
   <data name="buttonSignUp" xml:space="preserve">
     <value>REGISTRARSE</value>
