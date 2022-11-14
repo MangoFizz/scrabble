@@ -18,7 +18,7 @@
             <ListBox Name="FriendsListBox" Margin="29,103,29,27" FontSize="16">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Nickname}" FontWeight="Bold" Foreground="Black" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

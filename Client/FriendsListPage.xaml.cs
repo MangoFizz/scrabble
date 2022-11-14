@@ -31,16 +31,18 @@ namespace Client {
             FriendsListBox.Items.Clear();
 
             foreach(var friend in FriendList) {
-                FriendsListBox.Items.Add(friend.Nickname);
+                FriendsListBox.Items.Add(friend);
             }
 
             foreach(var friendRequest in FriendRequests) {
-                FriendsListBox.Items.Add(friendRequest.Nickname);
+                FriendsListBox.Items.Add(friendRequest);
             }
 
-            if(FriendsListBox.Items.Count == 0) {
-                ListMessage.Content = Properties.Resources.empty;
+            if(FriendsListBox.Items.Count > 0) {
+                ListMessage.Content = "";
             }
+
+
         }
 
         public FriendsListPage() {
