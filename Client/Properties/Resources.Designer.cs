@@ -71,7 +71,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Back.
+        ///   Busca una cadena traducida similar a BACK.
         /// </summary>
         public static string buttonBack {
             get {
@@ -175,16 +175,6 @@ namespace Client.Properties {
         public static string empty {
             get {
                 return ResourceManager.GetString("empty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap ficha_E {
-            get {
-                object obj = ResourceManager.GetObject("ficha_E", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

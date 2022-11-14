@@ -18,7 +18,7 @@
         <Slider HorizontalAlignment="Left" Margin="568,287,0,0" VerticalAlignment="Top" Width="504" Height="25"/>
         <Slider HorizontalAlignment="Left" Margin="568,408,0,0" VerticalAlignment="Top" Width="504" Height="25"/>
         <ComboBox x:Name="cmWindowSize" HorizontalAlignment="Left" Margin="568,512,0,0" VerticalAlignment="Top" Width="504" Height="70"/>
-        <Button Content="RETURN" HorizontalAlignment="Left" Margin="1099,640,0,0" VerticalAlignment="Top" Height="49" Width="150" Click="Button_Click" FontSize="22"/>
+        <Button Content="BACK" HorizontalAlignment="Left" Margin="1099,640,0,0" VerticalAlignment="Top" Height="49" Width="150" Click="Button_Click" FontSize="22"/>
         <Button Content="OK" HorizontalAlignment="Left" Margin="902,642,0,0" VerticalAlignment="Top" Height="46" Width="150" FontSize="22"/>
 
     </Grid>
