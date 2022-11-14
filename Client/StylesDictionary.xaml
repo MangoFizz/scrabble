@@ -13,7 +13,30 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="FormGrid" TargetType="Grid">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="Green" Offset="0.2" />
+                    <GradientStop Color="LimeGreen" Offset="1.0" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LoginTextBox" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="34"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
     <Style x:Key="ScrambleButton" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
@@ -43,9 +66,6 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="LightGray"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <!--<Setter Property="Opacity" TargetName="grid" Value="0.80"/>-->
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -54,5 +74,30 @@
         <Setter Property="FontSize" Value="70"/>
         <Setter Property="Opacity" Value="0.85"/>
         <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="BorderedButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="grid">
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Opacity" Value="0.85"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="BorderBrush" Value="White"/>
     </Style>
 </ResourceDictionary>

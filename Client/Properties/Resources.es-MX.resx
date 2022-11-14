@@ -147,6 +147,9 @@
   <data name="chatUsersLabel" xml:space="preserve">
     <value>Usuarios</value>
   </data>
+  <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
+    <value>Requerido*</value>
+  </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>CORREO</value>
   </data>
@@ -163,7 +166,16 @@
     <value>Cargando...</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>INICIAR SESION</value>
+    <value>INICIAR SESIÓN</value>
+  </data>
+  <data name="LOGIN_MENU_HEADER" xml:space="preserve">
+    <value>Iniciar sesión en Scrabble</value>
+  </data>
+  <data name="LOGIN_MENU_LOGIN_BUTTON" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="LOGIN_MENU_REGISTER_BUTTON" xml:space="preserve">
+    <value>Registrar</value>
   </data>
   <data name="nameSignUp" xml:space="preserve">
     <value>NOMBRE</value>
@@ -179,12 +191,6 @@
   </data>
   <data name="paswordLogin" xml:space="preserve">
     <value>CONTRASEÑA</value>
-  </data>
-  <data name="requiredLogin" xml:space="preserve">
-    <value>Requerido*</value>
-  </data>
-  <data name="requiredSignUp" xml:space="preserve">
-    <value>Requerido*</value>
   </data>
   <data name="sendButton" xml:space="preserve">
     <value>Enviar</value>

@@ -1,10 +1,23 @@
 ﻿using Client.GameService;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 
 namespace Client {
     public partial class App : Application {
+        private List<string> languages = new List<string>() { "en-US", "es-MX" };
+        private string _CurrentLanguage;
+        public string CurrentLanguage {
+            get {
+                return _CurrentLanguage;
+            }
+            private set {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(value);
+                _CurrentLanguage = value;
+            }
+        }
+
         public static new App Current { 
             get {
                 return (App)Application.Current;
@@ -18,8 +31,7 @@ namespace Client {
         }
 
         App() {
-            // Set locale
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+            CurrentLanguage = languages[0];
         }
 
         public void OpenFriendsList() {
@@ -28,6 +40,13 @@ namespace Client {
 
         public void CloseFriendsList() {
             MainWindow.FriendListFrame.Content = null;
+        }
+
+        public void SwitchLanguage() {
+            var currentLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+            var nextLanguage = languages[(languages.IndexOf(currentLanguage) + 1) % languages.Count];
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(nextLanguage);
+            CurrentLanguage = nextLanguage;
         }
     }
 

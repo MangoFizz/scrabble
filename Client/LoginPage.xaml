@@ -7,34 +7,27 @@
         xmlns:p = "clr-namespace:Client.Properties"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.titleLogin}" Height="720" Width="1280">
-    <Grid Background="#FF058813">
-        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black" FontSize="60"/>
-        <Label Content="{x:Static p:Resources.Login}" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="30" FontWeight="SemiBold"/>
-        <Label Content="{x:Static p:Resources.userLogin}" HorizontalAlignment="Left" Margin="171,231,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
-        <Label Content="{x:Static p:Resources.paswordLogin}" HorizontalAlignment="Left" Margin="171,392,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
 
-        <TextBox Name="usernameTextBox" HorizontalAlignment="Left" Margin="171,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1011" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center"/>
-        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="171,444,0,0" VerticalAlignment="Top" Width="1011" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center">
-            <PasswordBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.018"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </PasswordBox.RenderTransform>
-        </PasswordBox>
-        <Button Name="loginButton" Content="{x:Static p:Resources.buttonLogin}" HorizontalAlignment="Center" Margin="0,566,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="LoginButtonClick" RenderTransformOrigin="-0.045,0.392" Height="56" Width="156">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button Content="{x:Static p:Resources.buttonSignUp}" HorizontalAlignment="Center" Margin="0,637,0,0" VerticalAlignment="Top" FontSize="22" RenderTransformOrigin="4.537,0.223" Click="RegisterButtonClick" Height="56" Width="156"/>
-        <Label Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="171,514,0,0" VerticalAlignment="Top" Foreground="Red" FontSize="20"/>
-        <Label Name="usernameRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="1081,333,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="48" Width="101" FontSize="20"/>
-        <Label Name="passwordRequiredText" Content="{x:Static p:Resources.requiredLogin}" HorizontalAlignment="Left" Margin="1081,502,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="40" Width="101" FontSize="20" />
+    <Page.Resources>
+        <ResourceDictionary Source="StylesDictionary.xaml" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource FormGrid}">
+        <Image HorizontalAlignment="Left" Height="121" Margin="82,289,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
+        <Button Name="LanguageButton" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="37,38,0,0" VerticalAlignment="Top" FontSize="18" Content="🇲🇽" Height="44" Width="92" Click="LanguageButton_Click" />
+
+        <TextBox Text="{x:Static p:Resources.LOGIN_MENU_HEADER}" Style="{StaticResource LoginTextBox}" Margin="761,76,119,520" Width="400" Height="124"/>
+
+        <Label Content="{x:Static p:Resources.userLogin}" HorizontalAlignment="Left" Margin="761,239,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="usernameRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,239,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="101" FontSize="20"/>
+        <TextBox Name="usernameTextBox" HorizontalAlignment="Left" Margin="761,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Content="{x:Static p:Resources.paswordLogin}" HorizontalAlignment="Left" Margin="761,364,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="passwordRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,364,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="101" FontSize="20" />
+        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,410,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalContentAlignment="Left" Margin="761,474,302,210" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
+        <Button Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" Style="{StaticResource BorderedButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,329,130" Click="RegisterButtonClick" Height="56" Width="190"/>
+        <Button Name="loginButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_BUTTON}" HorizontalAlignment="Left" Margin="971,534,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="LoginButtonClick" Height="56" Width="190"/>
     </Grid>
 </Page>

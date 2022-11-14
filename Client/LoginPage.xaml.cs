@@ -18,6 +18,7 @@ namespace Client {
 
         public LoginPage() {
             InitializeComponent();
+            LanguageButton.Content = App.Current.CurrentLanguage;
             this.HideTextMessages();
         }
 
@@ -69,6 +70,12 @@ namespace Client {
                     this.resultText.Content = Properties.Resources.unknownError;
                     break;
             }
+        }
+
+        private void LanguageButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.SwitchLanguage();
+            LanguageButton.Content = App.Current.CurrentLanguage;
+            App.Current.MainWindow.MainFrame.Content = new LoginPage();
         }
     }
 }

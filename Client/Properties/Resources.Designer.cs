@@ -151,6 +151,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required*.
+        /// </summary>
+        public static string COMMON_REQUIRED_LABEL {
+            get {
+                return ResourceManager.GetString("COMMON_REQUIRED_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EMAIL.
         /// </summary>
         public static string emailSignUp {
@@ -205,6 +214,33 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log in to Scrabble.
+        /// </summary>
+        public static string LOGIN_MENU_HEADER {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string LOGIN_MENU_LOGIN_BUTTON {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_LOGIN_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up.
+        /// </summary>
+        public static string LOGIN_MENU_REGISTER_BUTTON {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_REGISTER_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NAME.
         /// </summary>
         public static string nameSignUp {
@@ -241,29 +277,11 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PASWORD.
+        ///   Looks up a localized string similar to PASSWORD.
         /// </summary>
         public static string paswordLogin {
             get {
                 return ResourceManager.GetString("paswordLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Required*.
-        /// </summary>
-        public static string requiredLogin {
-            get {
-                return ResourceManager.GetString("requiredLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Required*.
-        /// </summary>
-        public static string requiredSignUp {
-            get {
-                return ResourceManager.GetString("requiredSignUp", resourceCulture);
             }
         }
         
