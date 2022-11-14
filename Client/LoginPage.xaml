@@ -16,7 +16,9 @@
         <Image HorizontalAlignment="Left" Height="121" Margin="82,289,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
         <Button Name="LanguageButton" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="37,38,0,0" VerticalAlignment="Top" FontSize="18" Content="🇲🇽" Height="44" Width="92" Click="LanguageButton_Click" />
 
-        <TextBox Text="{x:Static p:Resources.LOGIN_MENU_HEADER}" Style="{StaticResource LoginTextBox}" Margin="761,76,119,520" Width="400" Height="124"/>
+        <Border Margin="761,95,119,525" Width="400" Height="100" >
+            <TextBlock Text="{x:Static p:Resources.LOGIN_MENU_HEADER}" Style="{StaticResource LoginTextBox}" VerticalAlignment="Bottom"/>
+        </Border>
 
         <Label Content="{x:Static p:Resources.userLogin}" HorizontalAlignment="Left" Margin="761,239,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         <Label Name="usernameRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,239,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="101" FontSize="20"/>

@@ -25,16 +25,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="LoginTextBox" TargetType="TextBox">
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+    <Style x:Key="LoginTextBox" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="36"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="34"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <Style x:Key="ScrambleButton" TargetType="Button">

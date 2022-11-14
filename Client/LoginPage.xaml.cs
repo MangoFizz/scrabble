@@ -5,10 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Client {
-    /// <summary>
-    /// Lógica de interacción para login.xaml
-    /// </summary>
-
     public partial class LoginPage : Page {
         private void HideTextMessages() {
             this.usernameRequiredText.Visibility = Visibility.Hidden;
