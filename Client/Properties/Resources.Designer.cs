@@ -79,15 +79,6 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EXIT.
-        /// </summary>
-        public static string buttonExitMain {
-            get {
-                return ResourceManager.GetString("buttonExitMain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to LOGIN.
         /// </summary>
         public static string buttonLogin {
@@ -102,24 +93,6 @@ namespace Client.Properties {
         public static string buttonOkSignUp {
             get {
                 return ResourceManager.GetString("buttonOkSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PLAY.
-        /// </summary>
-        public static string buttonPlayMain {
-            get {
-                return ResourceManager.GetString("buttonPlayMain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SETTINGS.
-        /// </summary>
-        public static string buttonSettingsMain {
-            get {
-                return ResourceManager.GetString("buttonSettingsMain", resourceCulture);
             }
         }
         
@@ -151,6 +124,51 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string COMMON_EMPTY {
+            get {
+                return ResourceManager.GetString("COMMON_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string COMMON_FRIENDS {
+            get {
+                return ResourceManager.GetString("COMMON_FRIENDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string COMMON_LOADING {
+            get {
+                return ResourceManager.GetString("COMMON_LOADING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USER.
+        /// </summary>
+        public static string COMMON_NICKNAME_LABEL {
+            get {
+                return ResourceManager.GetString("COMMON_NICKNAME_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PASSWORD.
+        /// </summary>
+        public static string COMMON_PASSWORD_LABEL {
+            get {
+                return ResourceManager.GetString("COMMON_PASSWORD_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Required*.
         /// </summary>
         public static string COMMON_REQUIRED_LABEL {
@@ -165,15 +183,6 @@ namespace Client.Properties {
         public static string emailSignUp {
             get {
                 return ResourceManager.GetString("emailSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empty.
-        /// </summary>
-        public static string empty {
-            get {
-                return ResourceManager.GetString("empty", resourceCulture);
             }
         }
         
@@ -241,6 +250,33 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EXIT.
+        /// </summary>
+        public static string MAIN_MENU_EXIT_BUTTON {
+            get {
+                return ResourceManager.GetString("MAIN_MENU_EXIT_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLAY.
+        /// </summary>
+        public static string MAIN_MENU_PLAY_BUTTON {
+            get {
+                return ResourceManager.GetString("MAIN_MENU_PLAY_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SETTINGS.
+        /// </summary>
+        public static string MAIN_MENU_SETTINGS_BUTTON {
+            get {
+                return ResourceManager.GetString("MAIN_MENU_SETTINGS_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NAME.
         /// </summary>
         public static string nameSignUp {
@@ -268,24 +304,6 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PASSWORD.
-        /// </summary>
-        public static string passwordSignUp {
-            get {
-                return ResourceManager.GetString("passwordSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PASSWORD.
-        /// </summary>
-        public static string paswordLogin {
-            get {
-                return ResourceManager.GetString("paswordLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string sendButton {
@@ -295,38 +313,11 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SURNAME.
-        /// </summary>
-        public static string surnameSignUp {
-            get {
-                return ResourceManager.GetString("surnameSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login.
-        /// </summary>
-        public static string titleLogin {
-            get {
-                return ResourceManager.GetString("titleLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sign up.
         /// </summary>
         public static string titleSignUp {
             get {
                 return ResourceManager.GetString("titleSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Main.
-        /// </summary>
-        public static string tittleMain {
-            get {
-                return ResourceManager.GetString("tittleMain", resourceCulture);
             }
         }
         
@@ -372,15 +363,6 @@ namespace Client.Properties {
         public static string userLeaveChatMessageFormat {
             get {
                 return ResourceManager.GetString("userLeaveChatMessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to USER.
-        /// </summary>
-        public static string userLogin {
-            get {
-                return ResourceManager.GetString("userLogin", resourceCulture);
             }
         }
     }

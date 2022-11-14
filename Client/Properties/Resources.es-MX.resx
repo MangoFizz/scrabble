@@ -123,20 +123,11 @@
   <data name="buttonCancelSignUp" xml:space="preserve">
     <value>CANCELAR</value>
   </data>
-  <data name="buttonExitMain" xml:space="preserve">
-    <value>SALIR</value>
-  </data>
   <data name="buttonLogin" xml:space="preserve">
     <value>ACEPTAR</value>
   </data>
   <data name="buttonOkSignUp" xml:space="preserve">
     <value>ACEPTAR</value>
-  </data>
-  <data name="buttonPlayMain" xml:space="preserve">
-    <value>JUGAR</value>
-  </data>
-  <data name="buttonSettingsMain" xml:space="preserve">
-    <value>AJUSTES</value>
   </data>
   <data name="buttonSignUp" xml:space="preserve">
     <value>REGISTRARSE</value>
@@ -147,14 +138,26 @@
   <data name="chatUsersLabel" xml:space="preserve">
     <value>Usuarios</value>
   </data>
+  <data name="COMMON_EMPTY" xml:space="preserve">
+    <value>Vacío</value>
+  </data>
+  <data name="COMMON_FRIENDS" xml:space="preserve">
+    <value>Amigos</value>
+  </data>
+  <data name="COMMON_LOADING" xml:space="preserve">
+    <value>Cargando...</value>
+  </data>
+  <data name="COMMON_NICKNAME_LABEL" xml:space="preserve">
+    <value>USUARIO</value>
+  </data>
+  <data name="COMMON_PASSWORD_LABEL" xml:space="preserve">
+    <value>CONTRASEÑA</value>
+  </data>
   <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
     <value>Requerido*</value>
   </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>CORREO</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>Vacío</value>
   </data>
   <data name="incorrectPassword" xml:space="preserve">
     <value>Contraseña incorrecta</value>
@@ -177,6 +180,15 @@
   <data name="LOGIN_MENU_REGISTER_BUTTON" xml:space="preserve">
     <value>Registrar</value>
   </data>
+  <data name="MAIN_MENU_EXIT_BUTTON" xml:space="preserve">
+    <value>SALIR</value>
+  </data>
+  <data name="MAIN_MENU_PLAY_BUTTON" xml:space="preserve">
+    <value>JUGAR</value>
+  </data>
+  <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
+    <value>AJUSTES</value>
+  </data>
   <data name="nameSignUp" xml:space="preserve">
     <value>NOMBRE</value>
   </data>
@@ -186,26 +198,11 @@
   <data name="nicknameSignUp" xml:space="preserve">
     <value>APODO</value>
   </data>
-  <data name="passwordSignUp" xml:space="preserve">
-    <value>CONTRASEÑA</value>
-  </data>
-  <data name="paswordLogin" xml:space="preserve">
-    <value>CONTRASEÑA</value>
-  </data>
   <data name="sendButton" xml:space="preserve">
     <value>Enviar</value>
   </data>
-  <data name="surnameSignUp" xml:space="preserve">
-    <value>APELLIDO</value>
-  </data>
-  <data name="titleLogin" xml:space="preserve">
-    <value>Inicio de sesion</value>
-  </data>
   <data name="titleSignUp" xml:space="preserve">
     <value>Registrar usuario</value>
-  </data>
-  <data name="tittleMain" xml:space="preserve">
-    <value>Menu</value>
   </data>
   <data name="unknownError" xml:space="preserve">
     <value>Error desconocido</value>
@@ -221,8 +218,5 @@
   </data>
   <data name="userLeaveChatMessageFormat" xml:space="preserve">
     <value>{0} abandonó el chat</value>
-  </data>
-  <data name="userLogin" xml:space="preserve">
-    <value>USUARIO</value>
   </data>
 </root>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Client"
         xmlns:p = "clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.titleLogin}" Height="720" Width="1280">
+        Height="720" Width="1280">
 
     <Page.Resources>
         <ResourceDictionary Source="StylesDictionary.xaml" />
@@ -20,11 +20,11 @@
             <TextBlock Text="{x:Static p:Resources.LOGIN_MENU_HEADER}" Style="{StaticResource LoginTextBox}" VerticalAlignment="Bottom"/>
         </Border>
 
-        <Label Content="{x:Static p:Resources.userLogin}" HorizontalAlignment="Left" Margin="761,239,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Content="{x:Static p:Resources.COMMON_NICKNAME_LABEL}" HorizontalAlignment="Left" Margin="761,239,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         <Label Name="usernameRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,239,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="101" FontSize="20"/>
         <TextBox Name="usernameTextBox" HorizontalAlignment="Left" Margin="761,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85"/>
 
-        <Label Content="{x:Static p:Resources.paswordLogin}" HorizontalAlignment="Left" Margin="761,364,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Content="{x:Static p:Resources.COMMON_PASSWORD_LABEL}" HorizontalAlignment="Left" Margin="761,364,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         <Label Name="passwordRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,364,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="101" FontSize="20" />
         <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,410,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
 

@@ -123,20 +123,11 @@
   <data name="buttonCancelSignUp" xml:space="preserve">
     <value>CANCEL</value>
   </data>
-  <data name="buttonExitMain" xml:space="preserve">
-    <value>EXIT</value>
-  </data>
   <data name="buttonLogin" xml:space="preserve">
     <value>LOGIN</value>
   </data>
   <data name="buttonOkSignUp" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="buttonPlayMain" xml:space="preserve">
-    <value>PLAY</value>
-  </data>
-  <data name="buttonSettingsMain" xml:space="preserve">
-    <value>SETTINGS</value>
   </data>
   <data name="buttonSignUp" xml:space="preserve">
     <value>SIGN UP</value>
@@ -147,14 +138,26 @@
   <data name="chatUsersLabel" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="COMMON_EMPTY" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="COMMON_FRIENDS" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="COMMON_LOADING" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="COMMON_NICKNAME_LABEL" xml:space="preserve">
+    <value>USER</value>
+  </data>
+  <data name="COMMON_PASSWORD_LABEL" xml:space="preserve">
+    <value>PASSWORD</value>
+  </data>
   <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
     <value>Required*</value>
   </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>EMAIL</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>Empty</value>
   </data>
   <data name="incorrectPassword" xml:space="preserve">
     <value>Incorrect password</value>
@@ -177,6 +180,15 @@
   <data name="LOGIN_MENU_REGISTER_BUTTON" xml:space="preserve">
     <value>Sign up</value>
   </data>
+  <data name="MAIN_MENU_EXIT_BUTTON" xml:space="preserve">
+    <value>EXIT</value>
+  </data>
+  <data name="MAIN_MENU_PLAY_BUTTON" xml:space="preserve">
+    <value>PLAY</value>
+  </data>
+  <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
   <data name="nameSignUp" xml:space="preserve">
     <value>NAME</value>
   </data>
@@ -186,26 +198,11 @@
   <data name="nicknameSignUp" xml:space="preserve">
     <value>NICKNAME</value>
   </data>
-  <data name="passwordSignUp" xml:space="preserve">
-    <value>PASSWORD</value>
-  </data>
-  <data name="paswordLogin" xml:space="preserve">
-    <value>PASSWORD</value>
-  </data>
   <data name="sendButton" xml:space="preserve">
     <value>Send</value>
   </data>
-  <data name="surnameSignUp" xml:space="preserve">
-    <value>SURNAME</value>
-  </data>
-  <data name="titleLogin" xml:space="preserve">
-    <value>Login</value>
-  </data>
   <data name="titleSignUp" xml:space="preserve">
     <value>Sign up</value>
-  </data>
-  <data name="tittleMain" xml:space="preserve">
-    <value>Main</value>
   </data>
   <data name="unknownError" xml:space="preserve">
     <value>Unknown error</value>
@@ -221,8 +218,5 @@
   </data>
   <data name="userLeaveChatMessageFormat" xml:space="preserve">
     <value>{0} just leave the chat</value>
-  </data>
-  <data name="userLogin" xml:space="preserve">
-    <value>USER</value>
   </data>
 </root>
