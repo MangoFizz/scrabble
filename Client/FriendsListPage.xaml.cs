@@ -15,9 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Client {
-    /// <summary>
-    /// Interaction logic for FriendsListPage.xaml
-    /// </summary>
     public partial class FriendsListPage : Page {
         public List<Player> FriendList = new List<Player>();
         public List<Player> FriendRequests = new List<Player>();
@@ -30,17 +27,17 @@ namespace Client {
         public void RefreshFriendList() {
             FriendsListBox.Items.Clear();
 
-            foreach(var friend in FriendList) {
+            Action<Player, bool> addItem = (player, pending) => {
                 Border border = new Border();
                 border.BorderBrush = Brushes.Gray;
                 border.BorderThickness = new Thickness(1);
-                
+
                 StackPanel stackPanel = new StackPanel();
                 stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Width = 328;
-                
+                stackPanel.Width = 325;
+
                 Image image = new Image();
-                image.Source = new BitmapImage(new Uri($"/Assets/images/avatars/default_{friend.Avatar}.png", UriKind.Relative));
+                image.Source = new BitmapImage(new Uri($"/Assets/images/avatars/default_{player.Avatar}.png", UriKind.Relative));
                 image.Width = 60;
                 image.Height = 60;
                 stackPanel.Children.Add(image);
@@ -48,29 +45,69 @@ namespace Client {
                 StackPanel text = new StackPanel();
                 text.VerticalAlignment = VerticalAlignment.Center;
                 text.Margin = new Thickness(10, 0, 0, 0);
+                text.Width = 160;
 
                 Label nickname = new Label();
-                nickname.Content = friend.Nickname;
+                nickname.Content = player.Nickname;
                 nickname.FontSize = 16;
                 nickname.FontWeight = FontWeights.Bold;
                 nickname.Padding = new Thickness(0);
                 text.Children.Add(nickname);
 
                 Label status = new Label();
-                status.Content = "Pending";
-                status.FontSize = 12;
+                status.FontSize = 14;
                 status.Padding = new Thickness(0);
+                
+                if(pending) {
+                    status.Content = "Pending";
+                }
+                else {
+                    status.Content = "Offline";
+                }
+
                 text.Children.Add(status);
 
                 stackPanel.Children.Add(text);
 
+                if(pending) {
+                    StackPanel buttons = new StackPanel();
+                    buttons.Orientation = Orientation.Horizontal;
+                    buttons.HorizontalAlignment = HorizontalAlignment.Right;
+
+                    Button accept = new Button();
+                    accept.Content = "✔";
+                    accept.Width = 30;
+                    accept.Height = 30;
+                    accept.Margin = new Thickness(10, 0, 0, 0);
+                    accept.Click += (sender, e) => {
+                        App.Current.PlayerManagerClient.AcceptFriendRequest(player.Nickname);
+                    };
+                    buttons.Children.Add(accept);
+
+                    Button decline = new Button();
+                    decline.Content = "❌";
+                    decline.Width = 30;
+                    decline.Height = 30;
+                    decline.Margin = new Thickness(10, 0, 0, 0);
+                    decline.Click += (sender, e) => {
+                        App.Current.PlayerManagerClient.DeclineFriendRequest(player.Nickname);
+                    };
+                    buttons.Children.Add(decline);
+
+                    stackPanel.Children.Add(buttons);
+                }
+
                 border.Child = stackPanel;
 
                 FriendsListBox.Items.Add(border);
-            }
+            };
 
             foreach(var friendRequest in FriendRequests) {
-                FriendsListBox.Items.Add(friendRequest);
+                addItem(friendRequest, true);
+            }
+
+            foreach(var friend in FriendList) {
+                addItem(friend, false);
             }
 
             if(FriendsListBox.Items.Count > 0) {
