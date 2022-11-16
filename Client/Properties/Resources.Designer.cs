@@ -62,6 +62,17 @@ namespace Client.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Back.
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BoardScrabble {
+            get {
+                object obj = ResourceManager.GetObject("BoardScrabble", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a BACK.
         /// </summary>
         public static string buttonBack {
             get {
