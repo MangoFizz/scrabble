@@ -165,9 +165,6 @@
   <data name="invalidCredentials" xml:space="preserve">
     <value>Invalid credentials</value>
   </data>
-  <data name="loadingLabel" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>LOGIN</value>
   </data>

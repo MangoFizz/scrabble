@@ -205,15 +205,6 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading....
-        /// </summary>
-        public static string loadingLabel {
-            get {
-                return ResourceManager.GetString("loadingLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to LOGIN.
         /// </summary>
         public static string Login {
