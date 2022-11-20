@@ -73,5 +73,12 @@ namespace Service {
 
         [IgnoreDataMember]
         public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }
+
+        public Player() { }
+
+        public Player(DataAccess.Player playerData) {
+            Nickname = playerData.Nickname;
+            Avatar = playerData.Avatar;
+        }
     }
 }

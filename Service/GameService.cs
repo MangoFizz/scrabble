@@ -15,92 +15,104 @@ namespace Service {
         private List<Player> Players = new List<Player>();
 
         public void Login(string nickname, string password) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var result = PlayerManager.AuthenticatePlayer(nickname, password);
             if(result == PlayerManager.PlayerAuthResult.Success) {
                 using(Scrabble99Entities context = new Scrabble99Entities()) {
-                    var playerData = context.players.First(p => p.Nickname == nickname);
-                    var player = new Player() {
-                        Nickname = playerData.Nickname,
-                        Avatar = playerData.Avatar,
-                        PlayerManagerCallbackChannel = callbackChannel
+                    // Fetch player data
+                    var playerData = PlayerManager.GetPlayerData(nickname);
+                    var player = new Player(playerData) {
+                        PlayerManagerCallbackChannel = currentCallbackChannel
                     };
 
-                    var playerFriendsData = PlayerManager.GetPlayerFriendsList(nickname);
-                    player.Friends = playerFriendsData.Select(f => new Player() {
-                        Nickname = f.Nickname,
-                        Avatar = f.Avatar
-                    }).ToList();
+                    // Fetch player friend list
+                    var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
+                    player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
                     Players.Add(player);
-                    callbackChannel.LoginResponseHandler(result, player);
+                    
+                    currentCallbackChannel.LoginResponseHandler(result, player);
                 }
             }
             else {
-                callbackChannel.LoginResponseHandler(result, null);
+                currentCallbackChannel.LoginResponseHandler(result, null);
             }
         }
 
         public void Logout() {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
             Players.Remove(player);
         }
 
         public void RegisterPlayer(string nickname, string password, string email) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var result = PlayerManager.RegisterPlayer(nickname, password, email);
-            callbackChannel.RegisterPlayerResponseHandler(result);
+            currentCallbackChannel.RegisterPlayerResponseHandler(result);
         }
 
         public void SendFriendRequest(string nickname) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
 
+            // Send it!!
             var result = PlayerManager.RequestFriendship(player.Nickname, nickname);
-            callbackChannel.SendFriendRequestResponseHandler(result);
+
+            // If success, send friend request notification to the other player if is connected
+            if(result == PlayerManager.PlayerFriendRequestResult.Success) {
+                var receiver = Players.Find(p => p.Nickname == nickname);
+                if(receiver != null) {
+                    receiver.PlayerManagerCallbackChannel.ReceiveFriendRequest(player);
+                }
+            }
+
+            // Answer to client
+            currentCallbackChannel.SendFriendRequestResponseHandler(result);
         }
 
         public void AcceptFriendRequest(string nickname) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, true);
-            player.Friends.Add(Players.Find(p => p.Nickname == nickname));
+
+            // Send notification to the other player if is connected
+            if(result == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
+                var receiver = Players.Find(p => p.Nickname == nickname);
+                if(receiver != null) {
+                    receiver.PlayerManagerCallbackChannel.ReceiveFriendAdd(player);
+                }
+            }
+
+            player.Friends.Add(Players.Find(data => data.Nickname == nickname));
         }
 
         public void DeclineFriendRequest(string nickname) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
         }
 
         public void GetFriendList() {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
-            var playerFriendsData = PlayerManager.GetPlayerFriendsList(player.Nickname);
-            var friends = playerFriendsData.Select(f => new Player() {
-                Nickname = f.Nickname,
-                Avatar = f.Avatar
-            });
-            callbackChannel.GetFriendListResponseHandler(friends.ToArray());
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+            var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
+            var friends = playerFriendsData.Select(data => new Player(data));
+            currentCallbackChannel.GetFriendListResponseHandler(friends.ToArray());
         }
 
         public void GetFriendRequests() {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(player.Nickname);
-            var friendRequests = playerFriendRequestsData.Select(f => new Player() {
-                Nickname = f.Nickname,
-                Avatar = f.Avatar
-            });
-            callbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
+            var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
+            currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
         }
     }
 
     public partial class GameService : IPartyChat {
         public void Say(string message) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
-            var player = Players.FirstOrDefault(u => u.PartyChatCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
+            var player = Players.FirstOrDefault(u => u.PartyChatCallbackChannel == currentCallbackChannel);
             if(player != null) {
                 foreach(var p in Players) {
                     p.PartyChatCallbackChannel.Receive(player, message);
@@ -109,8 +121,8 @@ namespace Service {
         }
 
         public void Whisper(Player receiver, string message) {
-            var callbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
-            var player = Players.FirstOrDefault(u => u.PartyChatCallbackChannel == callbackChannel);
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
+            var player = Players.FirstOrDefault(u => u.PartyChatCallbackChannel == currentCallbackChannel);
             if(player != null) {
                 receiver.PartyChatCallbackChannel.ReceiveWhisper(player, message);
             }

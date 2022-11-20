@@ -65,6 +65,11 @@ namespace Core {
             return HashPassword(password).Equals(hashedPassword);
         }
 
+        public static Player GetPlayerData(string nickname) {
+            Scrabble99Entities context = new Scrabble99Entities();
+            return context.players.First(p => p.Nickname == nickname);
+        } 
+
         public static PlayerAuthResult AuthenticatePlayer(string nickname, string password) {
             try {
                 Scrabble99Entities context = new Scrabble99Entities();
@@ -186,6 +191,8 @@ namespace Core {
                         context.friendships.Remove(friendship);
                     }
 
+                    context.SaveChanges();
+                    
                     return PlayerFriendshipRequestAnswer.Success;
                 }
             }
@@ -195,7 +202,7 @@ namespace Core {
             }
         }
 
-        public static List<Player> GetPlayerFriendsList(string playerNickname) {
+        public static List<Player> GetPlayerFriendsData(string playerNickname) {
             try {
                 using(Scrabble99Entities context = new Scrabble99Entities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
