@@ -17,7 +17,6 @@
       <PropertyRef Name="FriendshipId" />
       <PropertyRef Name="Sender" />
       <PropertyRef Name="Receiver" />
-      <PropertyRef Name="Status" />
     </Key>
     <Property Name="FriendshipId" Type="int" Nullable="false" />
     <Property Name="Sender" Type="int" Nullable="false" />
@@ -89,7 +88,6 @@
             <PropertyRef Name="FriendshipId" />
             <PropertyRef Name="Sender" />
             <PropertyRef Name="Receiver" />
-            <PropertyRef Name="Status" />
           </Key>
           <Property Name="FriendshipId" Type="Int32" Nullable="false" />
           <Property Name="Sender" Type="Int32" Nullable="false" />

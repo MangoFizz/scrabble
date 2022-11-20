@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/30/2022 05:15:56
+-- Date Created: 11/20/2022 05:28:44
 -- Generated from EDMX file: C:\Users\xjerr\source\repos\scrabble99\DataAccess\Scrabble99Model.edmx
 -- --------------------------------------------------
 
@@ -98,10 +98,10 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [FriendshipId], [Sender], [Receiver], [Status] in table 'friendships'
+-- Creating primary key on [FriendshipId], [Sender], [Receiver] in table 'friendships'
 ALTER TABLE [dbo].[friendships]
 ADD CONSTRAINT [PK_friendships]
-    PRIMARY KEY CLUSTERED ([FriendshipId], [Sender], [Receiver], [Status] ASC);
+    PRIMARY KEY CLUSTERED ([FriendshipId], [Sender], [Receiver] ASC);
 GO
 
 -- Creating primary key on [idGameResults], [playerId], [gameId], [points], [position] in table 'gameResults'

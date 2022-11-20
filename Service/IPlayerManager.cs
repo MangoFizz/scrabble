@@ -68,23 +68,11 @@ namespace Service {
         [DataMember]
         public string Nickname { get; set; }
 
-        /// <summary>
-        /// Avatar index for player.
-        /// </summary>
         [DataMember]
         public int Avatar { get; set; }
 
-        /// <summary>
-        /// Only avaiable for the client logged user. Other player contracts will have this field as null.
-        /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public List<Player> Friends { get; set; }
-
-        /// <summary>
-        /// Only avaiable for the client logged user. Other player contracts will have this field as null.
-        /// </summary>
-        [DataMember]
-        public List<Player> FriendRequests { get; set; }
 
         [IgnoreDataMember]
         public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }
@@ -93,7 +81,6 @@ namespace Service {
             Nickname = playerData.Nickname;
             Avatar = playerData.Avatar;
             Friends = null;
-            FriendRequests = null;
         }
     }
 }

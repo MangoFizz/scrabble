@@ -11,10 +11,11 @@
     <Grid>
         <Rectangle MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#4C000000"  />
         <Grid Background="Azure" Width="400" HorizontalAlignment="Left">
-            <Label Content="Friends list" HorizontalAlignment="Left" Margin="29,19,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-            <TextBox Name="NicknameTextBox" HorizontalAlignment="Left" Margin="29,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" Height="29"/>
-            <Button Name="AddFriendButton" Content="Add" HorizontalAlignment="Left" Margin="303,69,0,0" VerticalAlignment="Top" Height="29" Width="68" FontSize="16" Click="AddFriendButtonClick"/>
-            <ListBox Name="FriendsListBox" Margin="29,103,29,27" FontSize="16"/>
+            <Label Content="{x:Static p:Resources.FRIENDS_LIST_HEADER}" HorizontalAlignment="Left" Margin="29,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+            <TextBox Name="NicknameTextBox" HorizontalAlignment="Left" Margin="29,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="215" Height="35" FontSize="18"/>
+            <Button Name="AddFriendButton" Content="{x:Static p:Resources.FRIENDS_LIST_ADD_BUTTON}" HorizontalAlignment="Left" Margin="249,69,0,0" VerticalAlignment="Top" Height="35" Width="122" FontSize="18" Click="AddFriendButtonClick"/>
+            <Label Name="FriendRequestResultMessage" VerticalAlignment="Top" HorizontalAlignment="Center" VerticalContentAlignment="Top" Margin="0,109,0,0" Height="39" Width="342" Padding="5,0" FontSize="16"/>
+            <ListBox Name="FriendsListBox" Margin="29,157,29,27" FontSize="16"/>
             <Label Name="ListMessage" Content="{x:Static p:Resources.COMMON_LOADING}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="164,358,164,322"/>
         </Grid>
     </Grid>

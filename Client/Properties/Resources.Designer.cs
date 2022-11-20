@@ -62,17 +62,6 @@ namespace Client.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Back.
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap BoardScrabble {
-            get {
-                object obj = ResourceManager.GetObject("BoardScrabble", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a BACK.
         /// </summary>
         public static string buttonBack {
             get {
@@ -189,11 +178,83 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown Error :(.
+        /// </summary>
+        public static string COMMON_UNKNOWN_ERROR {
+            get {
+                return ResourceManager.GetString("COMMON_UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EMAIL.
         /// </summary>
         public static string emailSignUp {
             get {
                 return ResourceManager.GetString("emailSignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ➕ Add.
+        /// </summary>
+        public static string FRIENDS_LIST_ADD_BUTTON {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_ADD_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are already friends!.
+        /// </summary>
+        public static string FRIENDS_LIST_FRIEND_REQUEST_ALREADY_FRIENDS {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_FRIEND_REQUEST_ALREADY_FRIENDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you going to send a request to yourself?.
+        /// </summary>
+        public static string FRIENDS_LIST_FRIEND_REQUEST_AUTOREQUEST {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_FRIEND_REQUEST_AUTOREQUEST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You already have a pending friend request!.
+        /// </summary>
+        public static string FRIENDS_LIST_FRIEND_REQUEST_PENDING {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_FRIEND_REQUEST_PENDING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player does not exists!.
+        /// </summary>
+        public static string FRIENDS_LIST_FRIEND_REQUEST_PLAYER_DOES_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_FRIEND_REQUEST_PLAYER_DOES_NOT_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend request sent!.
+        /// </summary>
+        public static string FRIENDS_LIST_FRIEND_REQUEST_SUCCESS {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_FRIEND_REQUEST_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friends list.
+        /// </summary>
+        public static string FRIENDS_LIST_HEADER {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_HEADER", resourceCulture);
             }
         }
         

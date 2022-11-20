@@ -156,8 +156,32 @@
   <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
     <value>Required*</value>
   </data>
+  <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
+    <value>Unknown Error :(</value>
+  </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>EMAIL</value>
+  </data>
+  <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
+    <value>➕ Add</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_ALREADY_FRIENDS" xml:space="preserve">
+    <value>You are already friends!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_AUTOREQUEST" xml:space="preserve">
+    <value>Are you going to send a request to yourself?</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_PENDING" xml:space="preserve">
+    <value>You already have a pending friend request!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_PLAYER_DOES_NOT_EXISTS" xml:space="preserve">
+    <value>Player does not exists!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_SUCCESS" xml:space="preserve">
+    <value>Friend request sent!</value>
+  </data>
+  <data name="FRIENDS_LIST_HEADER" xml:space="preserve">
+    <value>Friends list</value>
   </data>
   <data name="incorrectPassword" xml:space="preserve">
     <value>Incorrect password</value>

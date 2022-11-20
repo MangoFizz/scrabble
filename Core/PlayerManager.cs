@@ -35,6 +35,9 @@ namespace Core {
 
         public enum PlayerFriendRequestResult {
             Success = 0,
+            SelfRequest,
+            AlreadyFriends,
+            PendingRequest,
             SenderPlayerDoesNotExists,
             ReceiverPlayerDoesNotExists,
             DatabaseError
@@ -137,6 +140,10 @@ namespace Core {
         }
 
         public static PlayerFriendRequestResult RequestFriendship(string playerNickname, string receiverPlayerNickname) {
+            if(playerNickname == receiverPlayerNickname) {
+                return PlayerFriendRequestResult.SelfRequest;
+            }
+
             try {
                 using(Scrabble99Entities context = new Scrabble99Entities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
@@ -149,7 +156,18 @@ namespace Core {
                         return PlayerFriendRequestResult.ReceiverPlayerDoesNotExists;
                     }
 
-                    var friendship = new Friendship() {
+                    var friendship = context.friendships.FirstOrDefault(f => (f.Sender == player.UserId && f.Receiver == receiverPlayer.UserId) || (f.Sender == receiverPlayer.UserId && f.Receiver == player.UserId));
+                    if(friendship != null) {
+                        if(friendship.Status == (short)PlayerFriendshipStatus.Pending) {
+                            return PlayerFriendRequestResult.PendingRequest;
+                        }
+                        else {
+                            return PlayerFriendRequestResult.AlreadyFriends;
+                        }
+                        
+                    }
+
+                    friendship = new Friendship() {
                         Sender = player.UserId,
                         Receiver = receiverPlayer.UserId,
                         Status = (short)PlayerFriendshipStatus.Pending

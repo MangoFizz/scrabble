@@ -84,7 +84,7 @@ namespace Client {
 
         public void GetFriendListResponseHandler(Player[] friends) {
             var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
-            friendListPage.FriendList = friends.ToList();
+            friendListPage.Friends = friends.ToList();
             friendListPage.RefreshFriendList();
         }
 
@@ -97,6 +97,7 @@ namespace Client {
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player) {
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
                 Player = player;
+                
                 MainWindow.MainFrame.Content = new MainPage();
             }
             else {
@@ -106,11 +107,17 @@ namespace Client {
         }
 
         public void ReceiveFriendAdd(Player player) {
-            throw new System.NotImplementedException();
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            if(friendListPage != null) {
+                friendListPage.FriendAddHandler(player);
+            }
         }
 
         public void ReceiveFriendRequest(Player player) {
-            throw new System.NotImplementedException();
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            if(friendListPage != null) {
+                friendListPage.FriendRequestReceiveHandler(player);
+            }
         }
 
         public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
@@ -119,7 +126,10 @@ namespace Client {
         }
 
         public void SendFriendRequestResponseHandler(PlayerManagerPlayerFriendRequestResult result) {
-            
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            if(friendListPage != null) {
+                friendListPage.SendFriendRequestResponseHandler(result);
+            }
         }
     }
 }

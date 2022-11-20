@@ -156,8 +156,32 @@
   <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
     <value>Requerido*</value>
   </data>
+  <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
+    <value>Error desconocido :(</value>
+  </data>
   <data name="emailSignUp" xml:space="preserve">
     <value>CORREO</value>
+  </data>
+  <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
+    <value>➕ Agregar</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_ALREADY_FRIENDS" xml:space="preserve">
+    <value>¡Ustedes ya son amigos!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_AUTOREQUEST" xml:space="preserve">
+    <value>¿Vas a enviarte una solicitud a ti mismo?</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_PENDING" xml:space="preserve">
+    <value>¡Ya tienes una solicitud de amistad pendiente!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_PLAYER_DOES_NOT_EXISTS" xml:space="preserve">
+    <value>¡El jugador no existe!</value>
+  </data>
+  <data name="FRIENDS_LIST_FRIEND_REQUEST_SUCCESS" xml:space="preserve">
+    <value>¡Solicitud de amistad enviada!</value>
+  </data>
+  <data name="FRIENDS_LIST_HEADER" xml:space="preserve">
+    <value>Lista de amigos</value>
   </data>
   <data name="incorrectPassword" xml:space="preserve">
     <value>Contraseña incorrecta</value>

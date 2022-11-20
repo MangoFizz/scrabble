@@ -16,8 +16,13 @@ using System.Windows.Shapes;
 
 namespace Client {
     public partial class FriendsListPage : Page {
-        public List<Player> FriendList = new List<Player>();
+        public List<Player> Friends = new List<Player>();
         public List<Player> FriendRequests = new List<Player>();
+
+        public void RequestFriendsList() {
+            App.Current.PlayerManagerClient.GetFriendRequests();
+            App.Current.PlayerManagerClient.GetFriendList();
+        }
 
         public void RefreshFriendList() {
             FriendsListBox.Items.Clear();
@@ -44,13 +49,13 @@ namespace Client {
 
                 Label nickname = new Label();
                 nickname.Content = player.Nickname;
-                nickname.FontSize = 16;
+                nickname.FontSize = 18;
                 nickname.FontWeight = FontWeights.Bold;
                 nickname.Padding = new Thickness(0);
                 text.Children.Add(nickname);
 
                 Label status = new Label();
-                status.FontSize = 14;
+                status.FontSize = 18;
                 status.Padding = new Thickness(0);
                 
                 if(pending) {
@@ -97,12 +102,16 @@ namespace Client {
                 FriendsListBox.Items.Add(border);
             };
 
-            foreach(var friendRequest in App.Current.Player.FriendRequests) {
-                addItem(friendRequest, true);
+            if(FriendRequests != null) {
+                foreach(var friendRequest in FriendRequests) {
+                    addItem(friendRequest, true);
+                }
             }
-
-            foreach(var friend in App.Current.Player.Friends) {
-                addItem(friend, false);
+            
+            if(Friends != null) {
+                foreach(var friend in Friends) {
+                    addItem(friend, false);
+                }
             }
 
             if(FriendsListBox.Items.Count > 0) {
@@ -115,6 +124,7 @@ namespace Client {
 
         public FriendsListPage() {
             InitializeComponent();
+            RequestFriendsList();
         }
 
         private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
@@ -125,6 +135,79 @@ namespace Client {
             if(NicknameTextBox.Text.Length > 0) {
                 App.Current.PlayerManagerClient.SendFriendRequest(NicknameTextBox.Text);
             }
+        }
+        
+        public void SendFriendRequestResponseHandler(GameService.PlayerManagerPlayerFriendRequestResult result) {
+            switch(result) {
+                case GameService.PlayerManagerPlayerFriendRequestResult.Success: 
+                    FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_SUCCESS;
+                    FriendRequestResultMessage.Foreground = Brushes.Green;
+                    NicknameTextBox.Text = "";
+                    break;
+
+                case PlayerManagerPlayerFriendRequestResult.SelfRequest:
+                    FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_AUTOREQUEST;
+                    FriendRequestResultMessage.Foreground = Brushes.Red;
+                    NicknameTextBox.Text = "";
+                    break;
+
+                case PlayerManagerPlayerFriendRequestResult.PendingRequest:
+                    FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_PENDING;
+                    FriendRequestResultMessage.Foreground = Brushes.Red;
+                    NicknameTextBox.Text = "";
+                    break;
+
+                case PlayerManagerPlayerFriendRequestResult.AlreadyFriends:
+                    FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_ALREADY_FRIENDS;
+                    FriendRequestResultMessage.Foreground = Brushes.Red;
+                    NicknameTextBox.Text = "";
+                    break;
+
+                case PlayerManagerPlayerFriendRequestResult.ReceiverPlayerDoesNotExists:
+                    FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_PLAYER_DOES_NOT_EXISTS;
+                    FriendRequestResultMessage.Foreground = Brushes.Red;
+                    break;
+
+                default:
+                    FriendRequestResultMessage.Content = Properties.Resources.COMMON_UNKNOWN_ERROR;
+                    FriendRequestResultMessage.Foreground = Brushes.Red;
+                    break;
+            }
+        }
+
+        public void FriendAddHandler(Player friend) {
+            if(Friends == null) {
+                Friends = new List<Player>();
+            }
+
+            if(FriendRequests == null) {
+                FriendRequests = new List<Player>();
+            }
+
+            var friendRequest = FriendRequests.Find(x => x.Nickname == friend.Nickname);
+            if(friendRequest != null) {
+                FriendRequests.Remove(friendRequest);
+            }
+
+            Friends.Add(friend);
+            RefreshFriendList();
+        }
+
+        public void FriendRequestReceiveHandler(Player friend) {
+            if(Friends == null) {
+                Friends = new List<Player>();
+            }
+
+            if(FriendRequests == null) {
+                FriendRequests = new List<Player>();
+            }
+
+            var friendRequest = FriendRequests.Find(x => x.Nickname == friend.Nickname);
+            if(friendRequest == null) {
+                FriendRequests.Add(friend);
+            }
+
+            RefreshFriendList();
         }
     }
 }

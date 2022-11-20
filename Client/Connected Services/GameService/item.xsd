@@ -20,6 +20,9 @@
   <xs:simpleType name="PlayerManager.PlayerFriendRequestResult">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Success" />
+      <xs:enumeration value="SelfRequest" />
+      <xs:enumeration value="AlreadyFriends" />
+      <xs:enumeration value="PendingRequest" />
       <xs:enumeration value="SenderPlayerDoesNotExists" />
       <xs:enumeration value="ReceiverPlayerDoesNotExists" />
       <xs:enumeration value="DatabaseError" />

@@ -20,7 +20,8 @@ namespace Client {
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e) {
-            Application.Current.Shutdown();
+            App.Current.PlayerManagerClient.Logout();
+            App.Current.Shutdown();
         }
     }
 }

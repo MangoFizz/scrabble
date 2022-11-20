@@ -46,12 +46,6 @@ namespace Client.GameService {
         private Client.GameService.Party CurrentPartyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.Player[] FriendRequestsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.Player[] FriendsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -86,32 +80,6 @@ namespace Client.GameService {
                 if ((object.ReferenceEquals(this.CurrentPartyField, value) != true)) {
                     this.CurrentPartyField = value;
                     this.RaisePropertyChanged("CurrentParty");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.Player[] FriendRequests {
-            get {
-                return this.FriendRequestsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FriendRequestsField, value) != true)) {
-                    this.FriendRequestsField = value;
-                    this.RaisePropertyChanged("FriendRequests");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.Player[] Friends {
-            get {
-                return this.FriendsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FriendsField, value) != true)) {
-                    this.FriendsField = value;
-                    this.RaisePropertyChanged("Friends");
                 }
             }
         }
@@ -222,13 +190,22 @@ namespace Client.GameService {
         Success = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SenderPlayerDoesNotExists = 1,
+        SelfRequest = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ReceiverPlayerDoesNotExists = 2,
+        AlreadyFriends = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        DatabaseError = 3,
+        PendingRequest = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SenderPlayerDoesNotExists = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ReceiverPlayerDoesNotExists = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DatabaseError = 6,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

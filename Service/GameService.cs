@@ -29,10 +29,6 @@ namespace Service {
                     var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
                     player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
-                    // Fetch player friend requests
-                    var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(nickname);
-                    player.FriendRequests = playerFriendRequestsData.Select(data => new Player(data)).ToList();
-
                     Players.Add(player);
                     
                     currentCallbackChannel.LoginResponseHandler(result, player);
@@ -76,18 +72,23 @@ namespace Service {
 
         public void AcceptFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, true);
+            var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+            var result = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
 
-            // Send notification to the other player if is connected
+            // Send notification to players
             if(result == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
-                var receiver = Players.Find(p => p.Nickname == nickname);
-                if(receiver != null) {
-                    receiver.PlayerManagerCallbackChannel.ReceiveFriendAdd(player);
+                var senderPlayer = Players.Find(p => p.Nickname == nickname);
+                if(senderPlayer != null) {
+                    senderPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(currentPlayer);
                 }
+                else {
+                    var senderPlayerData = PlayerManager.GetPlayerData(nickname);
+                    senderPlayer = new Player(senderPlayerData);
+                }
+        
+                currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
+                currentPlayer.Friends.Add(senderPlayer);
             }
-
-            player.Friends.Add(Players.Find(data => data.Nickname == nickname));
         }
 
         public void DeclineFriendRequest(string nickname) {
@@ -106,8 +107,8 @@ namespace Service {
 
         public void GetFriendRequests() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(player.Nickname);
+            var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+            var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(currentPlayer.Nickname);
             var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
             currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
         }
