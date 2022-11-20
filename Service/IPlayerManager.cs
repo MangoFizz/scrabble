@@ -81,7 +81,19 @@ namespace Service {
         public string Nickname { get; set; }
 
         [DataMember]
+        public string Email { get; set; }
+
+        [DataMember]
         public int Avatar { get; set; }
+
+        [DataMember]
+        public int GamesCount { get; set; }
+
+        [DataMember]
+        public int WinsCount { get; set; }
+
+        [DataMember]
+        public DateTime Registered { get; set; }
 
         [DataMember]
         public PlayerStatus status;
@@ -94,7 +106,11 @@ namespace Service {
 
         public Player(DataAccess.Player playerData) {
             Nickname = playerData.Nickname;
+            Email = playerData.Email;
             Avatar = playerData.Avatar;
+            GamesCount = 0;
+            WinsCount = 0;
+            Registered = new DateTime();
         }
     }
 }

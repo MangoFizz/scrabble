@@ -219,6 +219,21 @@
   <data name="nicknameSignUp" xml:space="preserve">
     <value>NICKNAME</value>
   </data>
+  <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
+    <value>✏ Edit</value>
+  </data>
+  <data name="PLAYER_PROFILE_HEADER" xml:space="preserve">
+    <value>Player profile</value>
+  </data>
+  <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
+    <value>Games played: </value>
+  </data>
+  <data name="PROFILE_PROFILE_REGISTERED_LABEL" xml:space="preserve">
+    <value>Registered: </value>
+  </data>
+  <data name="PROFILE_PROFILE_WINS_COUNT_LABEL" xml:space="preserve">
+    <value>Games won: </value>
+  </data>
   <data name="sendButton" xml:space="preserve">
     <value>Send</value>
   </data>

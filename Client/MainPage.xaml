@@ -11,9 +11,17 @@
     <Page.Resources>
         <ResourceDictionary Source="StylesDictionary.xaml" />
     </Page.Resources>
-    <Grid Style="{StaticResource MainGrid}">
+    <Grid Style="{StaticResource MainGrid}">        
         <Image HorizontalAlignment="Center" Height="121" Margin="0,93,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
-        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_FRIENDS}" HorizontalAlignment="Left" Margin="37,38,0,0" VerticalAlignment="Top" FontSize="18" Click="FriendsButton_Click" Height="44" Width="92" />
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_FRIENDS}" HorizontalAlignment="Left" Margin="50,55,0,0" VerticalAlignment="Top" FontSize="18" Click="FriendsButton_Click" Height="44" Width="92" />
+        <Button Style="{StaticResource BorderedButton}" HorizontalAlignment="Right" Margin="0,40,50,0" VerticalAlignment="Top" FontSize="18" Background="Azure" Click="ProfileButton_Click" Height="75">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="PlayerProfileAvatar" Source="Assets/images/avatars/default_0.png"/>
+                    <TextBlock Name="PlayerProfileName" Text="Profile" VerticalAlignment="Center" Padding="10,0" FontSize="22" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
         <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_PLAY_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="PlayButton_Click" Margin="0,290,0,0"/>
         <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_SETTINGS_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SettingsButton_Click" Margin="0,400,0,0"/>
         <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_EXIT_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ExitButton_Click" Margin="0,510,0,0"/>

@@ -367,6 +367,51 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ✏ Edit.
+        /// </summary>
+        public static string PLAYER_PROFILE_EDIT_BUTTON {
+            get {
+                return ResourceManager.GetString("PLAYER_PROFILE_EDIT_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player profile.
+        /// </summary>
+        public static string PLAYER_PROFILE_HEADER {
+            get {
+                return ResourceManager.GetString("PLAYER_PROFILE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games played: .
+        /// </summary>
+        public static string PROFILE_PROFILE_GAMES_COUNT_LABEL {
+            get {
+                return ResourceManager.GetString("PROFILE_PROFILE_GAMES_COUNT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registered: .
+        /// </summary>
+        public static string PROFILE_PROFILE_REGISTERED_LABEL {
+            get {
+                return ResourceManager.GetString("PROFILE_PROFILE_REGISTERED_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games won: .
+        /// </summary>
+        public static string PROFILE_PROFILE_WINS_COUNT_LABEL {
+            get {
+                return ResourceManager.GetString("PROFILE_PROFILE_WINS_COUNT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string sendButton {

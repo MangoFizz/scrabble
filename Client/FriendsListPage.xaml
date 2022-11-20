@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Client"
       xmlns:p = "clr-namespace:Client.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1280">
+      Height="720" Width="1280">
 
     <Grid>
         <Grid.Triggers>

@@ -9,6 +9,7 @@
            VerticalAlignment="Center" 
            HorizontalAlignment="Center">
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <Frame Name="SecondaryFrame" NavigationUIVisibility="Hidden" />
         <Frame Name="FriendListFrame" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

@@ -52,6 +52,14 @@ namespace Client {
             MainWindow.FriendListFrame.Content = null;
         }
 
+        public void OpenPlayerProfile() {
+            MainWindow.SecondaryFrame.Content = new PlayerProfilePage(Player);
+        }
+
+        public void CloseSecondaryPanel() {
+            MainWindow.SecondaryFrame.Content = null;
+        }
+
         public void SwitchLanguage() {
             var currentLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
             var nextLanguage = languages[(languages.IndexOf(currentLanguage) + 1) % languages.Count];

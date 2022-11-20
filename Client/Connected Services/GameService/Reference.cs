@@ -46,7 +46,19 @@ namespace Client.GameService {
         private Client.GameService.Party CurrentPartyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int GamesCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime RegisteredField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int WinsCountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Client.GameService.PlayerStatus statusField;
@@ -88,6 +100,32 @@ namespace Client.GameService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int GamesCount {
+            get {
+                return this.GamesCountField;
+            }
+            set {
+                if ((this.GamesCountField.Equals(value) != true)) {
+                    this.GamesCountField = value;
+                    this.RaisePropertyChanged("GamesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Nickname {
             get {
                 return this.NicknameField;
@@ -96,6 +134,32 @@ namespace Client.GameService {
                 if ((object.ReferenceEquals(this.NicknameField, value) != true)) {
                     this.NicknameField = value;
                     this.RaisePropertyChanged("Nickname");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Registered {
+            get {
+                return this.RegisteredField;
+            }
+            set {
+                if ((this.RegisteredField.Equals(value) != true)) {
+                    this.RegisteredField = value;
+                    this.RaisePropertyChanged("Registered");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int WinsCount {
+            get {
+                return this.WinsCountField;
+            }
+            set {
+                if ((this.WinsCountField.Equals(value) != true)) {
+                    this.WinsCountField = value;
+                    this.RaisePropertyChanged("WinsCount");
                 }
             }
         }

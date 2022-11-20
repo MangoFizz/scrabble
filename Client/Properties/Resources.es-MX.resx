@@ -222,6 +222,21 @@
   <data name="nicknameSignUp" xml:space="preserve">
     <value>APODO</value>
   </data>
+  <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
+    <value>✏ Edit</value>
+  </data>
+  <data name="PLAYER_PROFILE_HEADER" xml:space="preserve">
+    <value>Perfil del jugador</value>
+  </data>
+  <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
+    <value>Partidas jugadas: </value>
+  </data>
+  <data name="PROFILE_PROFILE_REGISTERED_LABEL" xml:space="preserve">
+    <value>Registrado: </value>
+  </data>
+  <data name="PROFILE_PROFILE_WINS_COUNT_LABEL" xml:space="preserve">
+    <value>Partidas ganadas:</value>
+  </data>
   <data name="sendButton" xml:space="preserve">
     <value>Enviar</value>
   </data>
