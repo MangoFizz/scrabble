@@ -131,5 +131,19 @@ namespace Client {
                 friendListPage.SendFriendRequestResponseHandler(result);
             }
         }
+
+        public void FriendConnect(Player player) {
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            if(friendListPage != null) {
+                friendListPage.FriendConnect(player);
+            }
+        }
+
+        public void FriendDisconnect(Player player) {
+            var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+            if(friendListPage != null) {
+                friendListPage.FriendDisconnect(player);
+            }
+        }
     }
 }

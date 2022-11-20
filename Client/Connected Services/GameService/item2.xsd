@@ -63,21 +63,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="LoginResponseHandlerResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="RegisterPlayerResponseHandler">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" name="registrationResult" type="q3:PlayerManager.PlayerResgisterResult" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RegisterPlayerResponseHandlerResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SendFriendRequestResponseHandler">
@@ -87,21 +77,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendFriendRequestResponseHandlerResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetFriendListResponseHandler">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="friends" nillable="true" type="q5:ArrayOfPlayer" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetFriendListResponseHandlerResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetFriendRequestsResponseHandler">
@@ -111,21 +91,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetFriendRequestsResponseHandlerResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ReceiveFriendRequest">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q7:Player" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ReceiveFriendRequestResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="ReceiveFriendAdd">
@@ -135,9 +105,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ReceiveFriendAddResponse">
+  <xs:element name="FriendConnect">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q9:Player" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FriendDisconnect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q10:Player" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Say">
@@ -150,7 +129,7 @@
   <xs:element name="Whisper">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="receiver" nillable="true" type="q9:Player" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="receiver" nillable="true" type="q11:Player" />
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -158,7 +137,7 @@
   <xs:element name="Receive">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="sender" nillable="true" type="q10:Player" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="sender" nillable="true" type="q12:Player" />
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -171,7 +150,7 @@
   <xs:element name="ReceiveWhisper">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="sender" nillable="true" type="q11:Player" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="sender" nillable="true" type="q13:Player" />
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

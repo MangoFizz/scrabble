@@ -93,44 +93,29 @@
   <wsdl:message name="IPlayerManager_LoginResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:LoginResponseHandler" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_LoginResponseHandler_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:LoginResponseHandlerResponse" />
-  </wsdl:message>
   <wsdl:message name="IPlayerManager_RegisterPlayerResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RegisterPlayerResponseHandler" />
-  </wsdl:message>
-  <wsdl:message name="IPlayerManager_RegisterPlayerResponseHandler_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:RegisterPlayerResponseHandlerResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_SendFriendRequestResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendFriendRequestResponseHandler" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_SendFriendRequestResponseHandler_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SendFriendRequestResponseHandlerResponse" />
-  </wsdl:message>
   <wsdl:message name="IPlayerManager_GetFriendListResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetFriendListResponseHandler" />
-  </wsdl:message>
-  <wsdl:message name="IPlayerManager_GetFriendListResponseHandler_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendListResponseHandlerResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_GetFriendRequestsResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetFriendRequestsResponseHandler" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_GetFriendRequestsResponseHandler_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequestsResponseHandlerResponse" />
-  </wsdl:message>
   <wsdl:message name="IPlayerManager_ReceiveFriendRequest_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveFriendRequest" />
-  </wsdl:message>
-  <wsdl:message name="IPlayerManager_ReceiveFriendRequest_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveFriendRequestResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_ReceiveFriendAdd_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveFriendAdd" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_ReceiveFriendAdd_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveFriendAddResponse" />
+  <wsdl:message name="IPlayerManager_FriendConnect_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:FriendConnect" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_FriendDisconnect_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:FriendDisconnect" />
   </wsdl:message>
   <wsdl:message name="IPartyChat_Say_InputMessage">
     <wsdl:part name="parameters" element="tns:Say" />
@@ -177,31 +162,30 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoginResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/LoginResponseHandler" message="tns:IPlayerManager_LoginResponseHandler_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/LoginResponseHandlerResponse" message="tns:IPlayerManager_LoginResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RegisterPlayerResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler" message="tns:IPlayerManager_RegisterPlayerResponseHandler_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandlerResponse" message="tns:IPlayerManager_RegisterPlayerResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendFriendRequestResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler" message="tns:IPlayerManager_SendFriendRequestResponseHandler_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandlerResponse" message="tns:IPlayerManager_SendFriendRequestResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendListResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler" message="tns:IPlayerManager_GetFriendListResponseHandler_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandlerResponse" message="tns:IPlayerManager_GetFriendListResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetFriendRequestsResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler" message="tns:IPlayerManager_GetFriendRequestsResponseHandler_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandlerResponse" message="tns:IPlayerManager_GetFriendRequestsResponseHandler_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ReceiveFriendRequest">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequest" message="tns:IPlayerManager_ReceiveFriendRequest_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequestResponse" message="tns:IPlayerManager_ReceiveFriendRequest_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ReceiveFriendAdd">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendAdd" message="tns:IPlayerManager_ReceiveFriendAdd_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendAddResponse" message="tns:IPlayerManager_ReceiveFriendAdd_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="FriendConnect">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/FriendConnect" message="tns:IPlayerManager_FriendConnect_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="FriendDisconnect">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/FriendDisconnect" message="tns:IPlayerManager_FriendDisconnect_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyChat">
@@ -273,63 +257,54 @@
     </wsdl:operation>
     <wsdl:operation name="LoginResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/LoginResponseHandler" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RegisterPlayerResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendFriendRequestResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetFriendListResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetFriendRequestsResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ReceiveFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/ReceiveFriendRequest" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ReceiveFriendAdd">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/ReceiveFriendAdd" style="document" />
-      <wsdl:input>
+      <wsdl:output>
         <soap12:body use="literal" />
-      </wsdl:input>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FriendConnect">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/FriendConnect" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FriendDisconnect">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/FriendDisconnect" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

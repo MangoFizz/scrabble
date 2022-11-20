@@ -5,6 +5,7 @@
       <xs:element minOccurs="0" name="Avatar" type="xs:int" />
       <xs:element minOccurs="0" name="CurrentParty" nillable="true" type="tns:Party" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="status" type="tns:PlayerStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />
@@ -21,4 +22,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
+  <xs:simpleType name="PlayerStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Offline" />
+      <xs:enumeration value="Online" />
+      <xs:enumeration value="InGame" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerStatus" nillable="true" type="tns:PlayerStatus" />
 </xs:schema>

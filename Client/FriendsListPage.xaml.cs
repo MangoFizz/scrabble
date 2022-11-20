@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -62,7 +63,18 @@ namespace Client {
                     status.Content = "Pending";
                 }
                 else {
-                    status.Content = "Offline";
+                    status.Content = player.status;
+                    switch(player.status) {
+                        case PlayerStatus.Online:
+                            status.Foreground = Brushes.Green;
+                            break;
+                        case PlayerStatus.Offline:
+                            status.Foreground = Brushes.Gray;
+                            break;
+                        case PlayerStatus.InGame:
+                            status.Foreground = Brushes.Blue;
+                            break;
+                    }
                 }
 
                 text.Children.Add(status);
@@ -205,6 +217,32 @@ namespace Client {
             var friendRequest = FriendRequests.Find(x => x.Nickname == friend.Nickname);
             if(friendRequest == null) {
                 FriendRequests.Add(friend);
+            }
+
+            RefreshFriendList();
+        }
+
+        public void FriendConnect(Player player) {
+            if(Friends == null) {
+                Friends = new List<Player>();
+            }
+
+            var friend = Friends.Find(x => x.Nickname == player.Nickname);
+            if(friend != null) {
+                friend.status = PlayerStatus.Online;
+            }
+
+            RefreshFriendList();
+        }
+
+        public void FriendDisconnect(Player player) {
+            if(Friends == null) {
+                Friends = new List<Player>();
+            }
+
+            var friend = Friends.Find(x => x.Nickname == player.Nickname);
+            if(friend != null) {
+                friend.status = PlayerStatus.Offline;
             }
 
             RefreshFriendList();

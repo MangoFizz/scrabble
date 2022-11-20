@@ -38,26 +38,38 @@ namespace Service {
 
     [ServiceContract]
     public interface IPlayerManagerCallback {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void LoginResponseHandler(PlayerAuthResult loginResult, Player player);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void RegisterPlayerResponseHandler(PlayerResgisterResult registrationResult);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SendFriendRequestResponseHandler(PlayerFriendRequestResult result);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void GetFriendListResponseHandler(Player[] friends);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void GetFriendRequestsResponseHandler(Player[] friendRequests);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void ReceiveFriendRequest(Player player);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void ReceiveFriendAdd(Player player);
+
+        [OperationContract(IsOneWay = true)]
+        void FriendConnect(Player player);
+
+        [OperationContract(IsOneWay = true)]
+        void FriendDisconnect(Player player);
+    }
+
+    public enum PlayerStatus {
+        Offline,
+        Online,
+        InGame
     }
 
     /// <summary>
@@ -71,6 +83,9 @@ namespace Service {
         [DataMember]
         public int Avatar { get; set; }
 
+        [DataMember]
+        public PlayerStatus status;
+
         [IgnoreDataMember]
         public List<Player> Friends { get; set; }
 
@@ -80,7 +95,6 @@ namespace Service {
         public Player(DataAccess.Player playerData) {
             Nickname = playerData.Nickname;
             Avatar = playerData.Avatar;
-            Friends = null;
         }
     }
 }

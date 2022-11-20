@@ -29,9 +29,17 @@ namespace Service {
                     var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
                     player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
+                    // Answer to client
                     Players.Add(player);
-                    
                     currentCallbackChannel.LoginResponseHandler(result, player);
+
+                    // Notify friends that player is online
+                    foreach(var friend in player.Friends) {
+                        var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                        if(connectedPlayer != null) {
+                            connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
+                        }
+                    }
                 }
             }
             else {
@@ -42,6 +50,15 @@ namespace Service {
         public void Logout() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            // Notify friends that player is offline
+            foreach(var friend in player.Friends) {
+                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                if(connectedPlayer != null) {
+                    connectedPlayer.PlayerManagerCallbackChannel.FriendDisconnect(player);
+                }
+            }
+
             Players.Remove(player);
         }
 
@@ -101,7 +118,22 @@ namespace Service {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
-            var friends = playerFriendsData.Select(data => new Player(data));
+            var friends = playerFriendsData.Select(data => new Player(data)).ToList();
+
+            // Set friends status
+            for(var i = 0; i < friends.Count(); i++) {
+                var friend = friends[i];
+                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                if(connectedPlayer != null) {
+                    if(connectedPlayer.CurrentParty != null) {
+                        friend.status = PlayerStatus.InGame;
+                    }
+                    else {
+                        friend.status = PlayerStatus.Online;
+                    }
+                }
+            }
+
             currentCallbackChannel.GetFriendListResponseHandler(friends.ToArray());
         }
 

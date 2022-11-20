@@ -48,6 +48,9 @@ namespace Client.GameService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.GameService.PlayerStatus statusField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -93,6 +96,19 @@ namespace Client.GameService {
                 if ((object.ReferenceEquals(this.NicknameField, value) != true)) {
                     this.NicknameField = value;
                     this.RaisePropertyChanged("Nickname");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.GameService.PlayerStatus status {
+            get {
+                return this.statusField;
+            }
+            set {
+                if ((this.statusField.Equals(value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
                 }
             }
         }
@@ -166,6 +182,20 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatus", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+    public enum PlayerStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Offline = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Online = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InGame = 2,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -264,26 +294,32 @@ namespace Client.GameService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IPlayerManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/LoginResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/LoginResponseHandlerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/LoginResponseHandler")]
         void LoginResponseHandler(Client.GameService.PlayerManagerPlayerAuthResult loginResult, Client.GameService.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandlerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler")]
         void RegisterPlayerResponseHandler(Client.GameService.PlayerManagerPlayerResgisterResult registrationResult);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandlerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/SendFriendRequestResponseHandler")]
         void SendFriendRequestResponseHandler(Client.GameService.PlayerManagerPlayerFriendRequestResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/GetFriendListResponseHandlerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendListResponseHandler")]
         void GetFriendListResponseHandler(Client.GameService.Player[] friends);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler", ReplyAction="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandlerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/GetFriendRequestsResponseHandler")]
         void GetFriendRequestsResponseHandler(Client.GameService.Player[] friendRequests);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequest", ReplyAction="http://tempuri.org/IPlayerManager/ReceiveFriendRequestResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/ReceiveFriendRequest")]
         void ReceiveFriendRequest(Client.GameService.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/ReceiveFriendAdd", ReplyAction="http://tempuri.org/IPlayerManager/ReceiveFriendAddResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/ReceiveFriendAdd")]
         void ReceiveFriendAdd(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/FriendConnect")]
+        void FriendConnect(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/FriendDisconnect")]
+        void FriendDisconnect(Client.GameService.Player player);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
