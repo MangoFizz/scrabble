@@ -60,25 +60,40 @@ namespace Service {
         void ReceiveFriendAdd(Player player);
     }
 
+    /// <summary>
+    /// Partial class for player data contract.
+    /// </summary>
     [DataContract]
     public partial class Player {
         [DataMember]
         public string Nickname { get; set; }
 
+        /// <summary>
+        /// Avatar index for player.
+        /// </summary>
         [DataMember]
         public int Avatar { get; set; }
 
-        [IgnoreDataMember]
+        /// <summary>
+        /// Only avaiable for the client logged user. Other player contracts will have this field as null.
+        /// </summary>
+        [DataMember]
         public List<Player> Friends { get; set; }
+
+        /// <summary>
+        /// Only avaiable for the client logged user. Other player contracts will have this field as null.
+        /// </summary>
+        [DataMember]
+        public List<Player> FriendRequests { get; set; }
 
         [IgnoreDataMember]
         public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }
 
-        public Player() { }
-
         public Player(DataAccess.Player playerData) {
             Nickname = playerData.Nickname;
             Avatar = playerData.Avatar;
+            Friends = null;
+            FriendRequests = null;
         }
     }
 }

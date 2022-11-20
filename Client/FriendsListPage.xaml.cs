@@ -19,11 +19,6 @@ namespace Client {
         public List<Player> FriendList = new List<Player>();
         public List<Player> FriendRequests = new List<Player>();
 
-        private void LoadFriendList() {
-            App.Current.PlayerManagerClient.GetFriendList();
-            App.Current.PlayerManagerClient.GetFriendRequests();
-        }
-
         public void RefreshFriendList() {
             FriendsListBox.Items.Clear();
 
@@ -102,11 +97,11 @@ namespace Client {
                 FriendsListBox.Items.Add(border);
             };
 
-            foreach(var friendRequest in FriendRequests) {
+            foreach(var friendRequest in App.Current.Player.FriendRequests) {
                 addItem(friendRequest, true);
             }
 
-            foreach(var friend in FriendList) {
+            foreach(var friend in App.Current.Player.Friends) {
                 addItem(friend, false);
             }
 
@@ -120,7 +115,6 @@ namespace Client {
 
         public FriendsListPage() {
             InitializeComponent();
-            LoadFriendList();
         }
 
         private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {

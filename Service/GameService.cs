@@ -29,6 +29,10 @@ namespace Service {
                     var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
                     player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
+                    // Fetch player friend requests
+                    var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(nickname);
+                    player.FriendRequests = playerFriendRequestsData.Select(data => new Player(data)).ToList();
+
                     Players.Add(player);
                     
                     currentCallbackChannel.LoginResponseHandler(result, player);

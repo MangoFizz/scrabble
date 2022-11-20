@@ -8,6 +8,10 @@ namespace Client {
     public partial class App : Application {
         private List<string> languages = new List<string>() { "en-US", "es-MX" };
         private string _CurrentLanguage;
+
+        /// <summary>
+        /// Current language reference
+        /// </summary>
         public string CurrentLanguage {
             get {
                 return _CurrentLanguage;
@@ -18,12 +22,18 @@ namespace Client {
             }
         }
 
+        /// <summary>
+        /// Application instance
+        /// </summary>
         public static new App Current { 
             get {
                 return (App)Application.Current;
             }
         }
 
+        /// <summary>
+        /// Main window instance
+        /// </summary>
         public new MainWindow MainWindow {
             get {
                 return (MainWindow)base.MainWindow;
@@ -53,8 +63,14 @@ namespace Client {
     public partial class App : IPlayerManagerCallback {
         private PlayerManagerClient _PlayerManagerClient = null;
 
-        public Player LoggedPlayer { get; set; }
-        
+        /// <summary>
+        /// Current logged in player
+        /// </summary>
+        public Player Player { get; set; }
+
+        /// <summary>
+        /// Service client for player manager
+        /// </summary>
         public PlayerManagerClient PlayerManagerClient { 
             get {
                 if(_PlayerManagerClient == null) {
@@ -80,7 +96,7 @@ namespace Client {
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player) {
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
-                LoggedPlayer = player;
+                Player = player;
                 MainWindow.MainFrame.Content = new MainPage();
             }
             else {
