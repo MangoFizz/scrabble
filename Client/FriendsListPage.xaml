@@ -9,8 +9,47 @@
       d:DesignHeight="720" d:DesignWidth="1280">
 
     <Grid>
-        <Rectangle MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#4C000000"  />
-        <Grid Background="Azure" Width="400" HorizontalAlignment="Left">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetName="CloseRectangle">
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.175"/>
+                    </Storyboard>
+                </BeginStoryboard>
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetName="FriendsListGrid">
+                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                            <EasingThicknessKeyFrame KeyTime="00:00:00" Value="-400,0,0,0" />
+                            <EasingThicknessKeyFrame KeyTime="00:00:00.175" Value="0,0,0,0">
+                                <EasingThicknessKeyFrame.EasingFunction>
+                                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                                </EasingThicknessKeyFrame.EasingFunction>
+                            </EasingThicknessKeyFrame>
+                        </ThicknessAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <Rectangle x:Name="CloseRectangle" MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#4C000000">
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.175"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="FriendsListGrid">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="0,0,0,0" />
+                                <EasingThicknessKeyFrame KeyTime="00:00:00.175" Value="-400,0,0,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+        <Grid x:Name="FriendsListGrid" Background="Azure" Width="400" HorizontalAlignment="Left">
             <Label Content="{x:Static p:Resources.FRIENDS_LIST_HEADER}" HorizontalAlignment="Left" Margin="29,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
             <TextBox Name="NicknameTextBox" HorizontalAlignment="Left" Margin="29,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="215" Height="35" FontSize="18"/>
             <Button Name="AddFriendButton" Content="{x:Static p:Resources.FRIENDS_LIST_ADD_BUTTON}" HorizontalAlignment="Left" Margin="249,69,0,0" VerticalAlignment="Top" Height="35" Width="122" FontSize="18" Click="AddFriendButtonClick"/>

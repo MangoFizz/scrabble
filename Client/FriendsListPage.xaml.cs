@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -140,7 +141,14 @@ namespace Client {
         }
 
         private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            App.Current.CloseFriendsList();
+            // Wait for animation to finish
+            // TODO: Find a better way to do this!
+            Task.Factory.StartNew(() => {
+                Thread.Sleep(175);
+                Dispatcher.Invoke(() => {
+                    App.Current.CloseFriendsList();
+                });
+            });
         }
 
         private void AddFriendButtonClick(object sender, RoutedEventArgs e) {
