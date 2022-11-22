@@ -108,9 +108,9 @@ namespace Service {
             Nickname = playerData.Nickname;
             Email = playerData.Email;
             Avatar = playerData.Avatar;
-            GamesCount = 0;
-            WinsCount = 0;
-            Registered = new DateTime();
+            GamesCount = playerData.Games;
+            WinsCount = playerData.Wins;
+            Registered = playerData.Registered;
         }
     }
 }

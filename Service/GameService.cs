@@ -95,8 +95,10 @@ namespace Service {
             // Send notification to players
             if(result == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
                 var senderPlayer = Players.Find(p => p.Nickname == nickname);
+                bool senderIsConnected = senderPlayer != null;
                 if(senderPlayer != null) {
                     senderPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(currentPlayer);
+                    senderPlayer.PlayerManagerCallbackChannel.FriendConnect(currentPlayer);
                 }
                 else {
                     var senderPlayerData = PlayerManager.GetPlayerData(nickname);
@@ -105,6 +107,10 @@ namespace Service {
         
                 currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
                 currentPlayer.Friends.Add(senderPlayer);
+                
+                if(senderIsConnected) {
+                    currentPlayer.PlayerManagerCallbackChannel.FriendConnect(senderPlayer);
+                }
             }
         }
 

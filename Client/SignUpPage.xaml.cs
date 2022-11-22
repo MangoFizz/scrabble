@@ -104,10 +104,6 @@ namespace Client {
             }
         }
 
-        private void CancelButtonClick() {
-            NavigationService.GoBack();
-        }
-
         public void RegisterPlayerResponse(GameService.PlayerManagerPlayerResgisterResult registrationResult) {
             resultMessage.Visibility = Visibility.Visible;
             switch(registrationResult) {

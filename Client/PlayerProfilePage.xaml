@@ -14,19 +14,19 @@
             <Border Margin="29,76,27,27" Background="White" BorderBrush="Gray" BorderThickness="1"></Border>
             <Label Name="ProfileNickname" Content="aiwass" HorizontalAlignment="Left" Margin="217,92,0,0" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" Width="267"/>
             <Label Name="ProfileEmail" Content="playeremail@gmail.com" HorizontalAlignment="Left" Margin="217,121,0,0" VerticalAlignment="Top" FontSize="20" Width="267"/>
-            <StackPanel Orientation="Horizontal" Margin="54,195,314,103">
+            <StackPanel Orientation="Horizontal" Margin="54,180,314,118">
                 <Label Content="{x:Static p:Resources.PROFILE_PROFILE_GAMES_COUNT_LABEL}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
                 <Label Name="ProfileGamesCount" Content="11" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="294,195,74,103">
+            <StackPanel Orientation="Horizontal" Margin="54,217,314,81">
                 <Label Content="{x:Static p:Resources.PROFILE_PROFILE_WINS_COUNT_LABEL}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
                 <Label Name="ProfileWinsCount" Content="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="54,238,52,61">
+            <StackPanel Orientation="Horizontal" Margin="54,254,52,45">
                 <Label Content="{x:Static p:Resources.PROFILE_PROFILE_REGISTERED_LABEL}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
                 <Label Name="ProfileRegisteredDate" Content="11/20/2022" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
             </StackPanel>
-            <Button Name="AddFriendButton" Content="{x:Static p:Resources.PLAYER_PROFILE_EDIT_BUTTON}" HorizontalAlignment="Left" Margin="413,25,0,0" VerticalAlignment="Top" Height="34" Width="122" FontSize="18"/>
+            <Button Name="AddFriendButton" Content="{x:Static p:Resources.PLAYER_PROFILE_EDIT_BUTTON}" HorizontalAlignment="Left" Margin="392,258,0,0" VerticalAlignment="Top" Height="34" Width="122" FontSize="18"/>
             <Image Name="ProfileAvatar" Margin="54,17,364,158" Source="Assets/Images/Avatars/default_0.png"></Image>
         </Grid>
     </Grid>

@@ -126,7 +126,8 @@ namespace Core {
                 Player player = new Player() {
                     Nickname = nickname,
                     Password = HashPassword(password),
-                    Email = email
+                    Email = email,
+                    Registered = DateTime.Now
                 };
                 context.players.Add(player);
                 context.SaveChanges();

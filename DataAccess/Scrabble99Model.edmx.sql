@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/21/2022 16:36:08
+-- Date Created: 11/21/2022 19:30:07
 -- Generated from EDMX file: C:\Users\xjerr\source\repos\scrabble99\DataAccess\Scrabble99Model.edmx
 -- --------------------------------------------------
 
@@ -76,7 +76,10 @@ CREATE TABLE [dbo].[players] (
     [Nickname] varchar(50)  NOT NULL,
     [Password] varchar(255)  NOT NULL,
     [Avatar] smallint  NOT NULL,
-    [Email] nvarchar(255)  NOT NULL
+    [Email] nvarchar(255)  NOT NULL,
+    [Registered] datetime  NOT NULL,
+    [Games] int  NOT NULL,
+    [Wins] int  NOT NULL
 );
 GO
 

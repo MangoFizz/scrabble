@@ -18,6 +18,8 @@ namespace DataAccess
         public Player()
         {
             this.Avatar = 0;
+            this.Games = 0;
+            this.Wins = 0;
         }
     
         public int UserId { get; set; }
@@ -25,5 +27,8 @@ namespace DataAccess
         public string Password { get; set; }
         public short Avatar { get; set; }
         public string Email { get; set; }
+        public System.DateTime Registered { get; set; }
+        public int Games { get; set; }
+        public int Wins { get; set; }
     }
 }
