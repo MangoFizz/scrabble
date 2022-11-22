@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Data.Common;
 using DataAccess;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Core {
     public class PlayerManager {
@@ -18,6 +19,7 @@ namespace Core {
         public enum PlayerResgisterResult {
             Success = 0,
             PlayerAlreadyExists,
+            InvalidInputs,
             DatabaseError
         }
 
@@ -93,6 +95,27 @@ namespace Core {
         }
 
         public static PlayerResgisterResult RegisterPlayer(string nickname, string password, string email) {
+            var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
+
+            if(nickname.Length == 0 || nickname.Length > 50 || !validCharactersRegex.IsMatch(nickname)) {
+                return PlayerResgisterResult.InvalidInputs;
+            }
+
+            if(password.Length == 0 || password.Length > 50 || !validCharactersRegex.IsMatch(password)) {
+                return PlayerResgisterResult.InvalidInputs;
+            }
+
+            if(email.Length == 0 || email.Length > 50) {
+                return PlayerResgisterResult.InvalidInputs;
+            }
+
+            try {
+                new System.Net.Mail.MailAddress(email);
+            }
+            catch(FormatException) {
+                return PlayerResgisterResult.InvalidInputs;
+            }
+
             try {
                 Scrabble99Entities context = new Scrabble99Entities();
                 

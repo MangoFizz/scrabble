@@ -6,36 +6,38 @@
         xmlns:local="clr-namespace:Client"
         xmlns:p ="clr-namespace:Client.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.titleSignUp}" Height="720" Width="1280">
-    <Grid Background="#FF058813">
-        <Label Content="SCRABBLE '99" HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Foreground="White" Height="87" Width="502" FontSize="60" FontWeight="SemiBold" AutomationProperties.IsRequiredForForm="True" FontFamily="Arial Black"/>
-        <Label Content="{x:Static p:Resources.NewUser}" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Foreground="White" FontSize="30" FontWeight="SemiBold"/>
-        <Label Content="{x:Static p:Resources.emailSignUp}" HorizontalAlignment="Left" Margin="70,211,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
-        <TextBox Name="emailTextBox" HorizontalAlignment="Left" Margin="64,265,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54" FontSize="24"/>
-        <Label Content="{x:Static p:Resources.COMMON_NICKNAME_LABEL}" HorizontalAlignment="Left" Margin="786,209,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
-        <TextBox Name="nicknameTextBox" HorizontalAlignment="Left" Margin="774,263,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="450" Height="54" FontSize="24"/>
-        <Label Content="{x:Static p:Resources.COMMON_PASSWORD_LABEL}" HorizontalAlignment="Left" Margin="70,357,0,0" VerticalAlignment="Top" Foreground="White" FontSize="26"/>
-        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="64,415,0,0" VerticalAlignment="Top" Width="450" Height="54" FontSize="24"/>
-        <Label Name="emailFieldRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="419,214,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
-        <Label Name="nicknameFieldRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1129,214,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
-        <Label Name="passwordFieldRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="419,360,0,0" VerticalAlignment="Top" Foreground="Red" FontStyle="Italic" Height="39" Width="95" FontSize="20" />
-        <Button Name="acceptButton" Content="{x:Static p:Resources.buttonOkSignUp}" HorizontalAlignment="Left" Margin="856,640,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="AcceptButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button Name="cancelButton" Content="{x:Static p:Resources.buttonCancelSignUp}" HorizontalAlignment="Left" Margin="1068,640,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="CancelButtonClick" Height="56" Width="156" ScrollViewer.HorizontalScrollBarVisibility="Visible">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Label x:Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalAlignment="Left" Margin="640,650,0,0" VerticalAlignment="Top" Foreground="Red" FontSize="20" />
+        Height="720" Width="1280">
+
+    <Page.Resources>
+        <ResourceDictionary Source="StylesDictionary.xaml" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource FormGrid}">
+        <Image HorizontalAlignment="Center" Height="121" Margin="0,82,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
+
+        <Border Margin="440,139,440,481" Width="400" Height="100" >
+            <TextBlock Text="{x:Static p:Resources.SIGN_UP_HEADER}" Style="{StaticResource LoginTextBox}" VerticalAlignment="Bottom"/>
+        </Border>
+
+        <Label Content="{x:Static p:Resources.COMMON_NICKNAME_LABEL}" HorizontalAlignment="Left" Margin="200,270,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="nicknameInvalidMessage" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="346,270,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="254" FontSize="20"/>
+        <TextBox Name="nicknameTextBox" HorizontalAlignment="Left" Margin="200,315,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Content="{x:Static p:Resources.COMMON_EMAIL_LABEL}" HorizontalAlignment="Left" Margin="200,394,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="emailInvalidMessage" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="361,394,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="239" FontSize="20"/>
+        <TextBox Name="emailTextBox" HorizontalAlignment="Left" Margin="200,440,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Content="{x:Static p:Resources.COMMON_PASSWORD_LABEL}" HorizontalAlignment="Left" Margin="680,269,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="passwordInvalidMessage" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="830,269,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="250" FontSize="20" />
+        <PasswordBox Name="passwordTextBox" HorizontalAlignment="Left" Margin="680,315,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Content="{x:Static p:Resources.SIGN_UP_CONFIRM_PASSWORD_LABEL}" HorizontalAlignment="Left" Margin="680,394,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
+        <Label Name="confirmPasswordInvalidMessage" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="924,394,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="156" FontSize="20" />
+        <PasswordBox Name="confirmPasswordTextBox" HorizontalAlignment="Left" Margin="680,440,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
+
+        <Label Name="resultMessage" Content="placeholder" HorizontalContentAlignment="Right" Margin="680,523,200,161" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,410,87" Click="RegisterButtonClick" Height="56" Width="190"/>
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_CANCEL_BUTTON}" HorizontalAlignment="Left" Margin="890,577,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="CancelButtonClick" Height="56" Width="190"/>
 
     </Grid>
 </Page>

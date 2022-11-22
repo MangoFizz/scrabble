@@ -117,26 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="buttonBack" xml:space="preserve">
-    <value>Volver</value>
+  <data name="COMMON_CANCEL_BUTTON" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
-  <data name="buttonCancelSignUp" xml:space="preserve">
-    <value>CANCELAR</value>
-  </data>
-  <data name="buttonLogin" xml:space="preserve">
-    <value>ACEPTAR</value>
-  </data>
-  <data name="buttonOkSignUp" xml:space="preserve">
-    <value>ACEPTAR</value>
-  </data>
-  <data name="buttonSignUp" xml:space="preserve">
-    <value>REGISTRARSE</value>
-  </data>
-  <data name="chatLabel" xml:space="preserve">
-    <value>Chat</value>
-  </data>
-  <data name="chatUsersLabel" xml:space="preserve">
-    <value>Usuarios</value>
+  <data name="COMMON_EMAIL_LABEL" xml:space="preserve">
+    <value>EMAIL</value>
   </data>
   <data name="COMMON_EMPTY" xml:space="preserve">
     <value>Vacío</value>
@@ -144,11 +129,14 @@
   <data name="COMMON_FRIENDS" xml:space="preserve">
     <value>Amigos</value>
   </data>
+  <data name="COMMON_INVALID_CHARACTERS_LABEL" xml:space="preserve">
+    <value>Caracteres inválidos</value>
+  </data>
   <data name="COMMON_LOADING" xml:space="preserve">
     <value>Cargando...</value>
   </data>
   <data name="COMMON_NICKNAME_LABEL" xml:space="preserve">
-    <value>USUARIO</value>
+    <value>APODO</value>
   </data>
   <data name="COMMON_PASSWORD_LABEL" xml:space="preserve">
     <value>CONTRASEÑA</value>
@@ -158,9 +146,6 @@
   </data>
   <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
     <value>Error desconocido :(</value>
-  </data>
-  <data name="emailSignUp" xml:space="preserve">
-    <value>CORREO</value>
   </data>
   <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
     <value>➕ Agregar</value>
@@ -183,17 +168,11 @@
   <data name="FRIENDS_LIST_HEADER" xml:space="preserve">
     <value>Lista de amigos</value>
   </data>
-  <data name="incorrectPassword" xml:space="preserve">
+  <data name="LOGIN_INCORRECT_PASSWORD_MESSAGE" xml:space="preserve">
     <value>Contraseña incorrecta</value>
   </data>
-  <data name="invalidCredentials" xml:space="preserve">
+  <data name="LOGIN_INVALID_CREDENTIALS_MESSAGE" xml:space="preserve">
     <value>Credenciales inválidas</value>
-  </data>
-  <data name="loadingLabel" xml:space="preserve">
-    <value>Cargando...</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>INICIAR SESIÓN</value>
   </data>
   <data name="LOGIN_MENU_HEADER" xml:space="preserve">
     <value>Iniciar sesión en Scrabble</value>
@@ -213,15 +192,6 @@
   <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
     <value>AJUSTES</value>
   </data>
-  <data name="nameSignUp" xml:space="preserve">
-    <value>NOMBRE</value>
-  </data>
-  <data name="NewUser" xml:space="preserve">
-    <value>NUEVO USUARIO</value>
-  </data>
-  <data name="nicknameSignUp" xml:space="preserve">
-    <value>APODO</value>
-  </data>
   <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
     <value>✏ Edit</value>
   </data>
@@ -237,25 +207,28 @@
   <data name="PROFILE_PROFILE_WINS_COUNT_LABEL" xml:space="preserve">
     <value>Partidas ganadas:</value>
   </data>
-  <data name="sendButton" xml:space="preserve">
-    <value>Enviar</value>
+  <data name="SIGNUP_EMAIL_TOO_LONG" xml:space="preserve">
+    <value>¡El email es demasiado largo!</value>
   </data>
-  <data name="titleSignUp" xml:space="preserve">
-    <value>Registrar usuario</value>
+  <data name="SIGNUP_NICKNAME_TOO_LONG" xml:space="preserve">
+    <value>¡Apodo demasiado largo!</value>
   </data>
-  <data name="unknownError" xml:space="preserve">
-    <value>Error desconocido</value>
+  <data name="SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
   </data>
-  <data name="unknowUserLogin" xml:space="preserve">
-    <value>Usuario desconocido</value>
+  <data name="SIGNUP_PASSWORD_TOO_LONG" xml:space="preserve">
+    <value>¡Contraseña demasiado larga!</value>
   </data>
-  <data name="userAlreadyExists" xml:space="preserve">
+  <data name="SIGN_UP_CONFIRM_PASSWORD_LABEL" xml:space="preserve">
+    <value>CONFIRMAR CONTRASEÑA</value>
+  </data>
+  <data name="SIGN_UP_HEADER" xml:space="preserve">
+    <value>Regístrate en Scrabble</value>
+  </data>
+  <data name="SIGN_UP_INVALID_EMAIL_LABEL" xml:space="preserve">
+    <value>Dirección no válida</value>
+  </data>
+  <data name="SIGN_UP_USER_ALREADY_EXISTS_MESSAGE" xml:space="preserve">
     <value>El usuario ya existe</value>
-  </data>
-  <data name="userJoinChatMessageFormat" xml:space="preserve">
-    <value>¡{0} ha entrado al chat!</value>
-  </data>
-  <data name="userLeaveChatMessageFormat" xml:space="preserve">
-    <value>{0} abandonó el chat</value>
   </data>
 </root>

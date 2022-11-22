@@ -96,7 +96,7 @@ namespace Service {
         public DateTime Registered { get; set; }
 
         [DataMember]
-        public PlayerStatus status;
+        public PlayerStatus status { get; set; }
 
         [IgnoreDataMember]
         public List<Player> Friends { get; set; }

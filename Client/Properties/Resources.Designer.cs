@@ -61,65 +61,20 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string buttonBack {
+        public static string COMMON_CANCEL_BUTTON {
             get {
-                return ResourceManager.GetString("buttonBack", resourceCulture);
+                return ResourceManager.GetString("COMMON_CANCEL_BUTTON", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CANCEL.
+        ///   Looks up a localized string similar to EMAIL.
         /// </summary>
-        public static string buttonCancelSignUp {
+        public static string COMMON_EMAIL_LABEL {
             get {
-                return ResourceManager.GetString("buttonCancelSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LOGIN.
-        /// </summary>
-        public static string buttonLogin {
-            get {
-                return ResourceManager.GetString("buttonLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OK.
-        /// </summary>
-        public static string buttonOkSignUp {
-            get {
-                return ResourceManager.GetString("buttonOkSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SIGN UP.
-        /// </summary>
-        public static string buttonSignUp {
-            get {
-                return ResourceManager.GetString("buttonSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chat.
-        /// </summary>
-        public static string chatLabel {
-            get {
-                return ResourceManager.GetString("chatLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users.
-        /// </summary>
-        public static string chatUsersLabel {
-            get {
-                return ResourceManager.GetString("chatUsersLabel", resourceCulture);
+                return ResourceManager.GetString("COMMON_EMAIL_LABEL", resourceCulture);
             }
         }
         
@@ -142,6 +97,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid characters.
+        /// </summary>
+        public static string COMMON_INVALID_CHARACTERS_LABEL {
+            get {
+                return ResourceManager.GetString("COMMON_INVALID_CHARACTERS_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string COMMON_LOADING {
@@ -151,7 +115,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to USER.
+        ///   Looks up a localized string similar to NICKNAME.
         /// </summary>
         public static string COMMON_NICKNAME_LABEL {
             get {
@@ -183,15 +147,6 @@ namespace Client.Properties {
         public static string COMMON_UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("COMMON_UNKNOWN_ERROR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to EMAIL.
-        /// </summary>
-        public static string emailSignUp {
-            get {
-                return ResourceManager.GetString("emailSignUp", resourceCulture);
             }
         }
         
@@ -261,27 +216,18 @@ namespace Client.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Incorrect password.
         /// </summary>
-        public static string incorrectPassword {
+        public static string LOGIN_INCORRECT_PASSWORD_MESSAGE {
             get {
-                return ResourceManager.GetString("incorrectPassword", resourceCulture);
+                return ResourceManager.GetString("LOGIN_INCORRECT_PASSWORD_MESSAGE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Invalid credentials.
         /// </summary>
-        public static string invalidCredentials {
+        public static string LOGIN_INVALID_CREDENTIALS_MESSAGE {
             get {
-                return ResourceManager.GetString("invalidCredentials", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LOGIN.
-        /// </summary>
-        public static string Login {
-            get {
-                return ResourceManager.GetString("Login", resourceCulture);
+                return ResourceManager.GetString("LOGIN_INVALID_CREDENTIALS_MESSAGE", resourceCulture);
             }
         }
         
@@ -340,33 +286,6 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NAME.
-        /// </summary>
-        public static string nameSignUp {
-            get {
-                return ResourceManager.GetString("nameSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NEWUSER.
-        /// </summary>
-        public static string NewUser {
-            get {
-                return ResourceManager.GetString("NewUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NICKNAME.
-        /// </summary>
-        public static string nicknameSignUp {
-            get {
-                return ResourceManager.GetString("nicknameSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ✏ Edit.
         /// </summary>
         public static string PLAYER_PROFILE_EDIT_BUTTON {
@@ -412,65 +331,74 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send.
+        ///   Looks up a localized string similar to CONFIRM PASSWORD.
         /// </summary>
-        public static string sendButton {
+        public static string SIGN_UP_CONFIRM_PASSWORD_LABEL {
             get {
-                return ResourceManager.GetString("sendButton", resourceCulture);
+                return ResourceManager.GetString("SIGN_UP_CONFIRM_PASSWORD_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign up.
+        ///   Looks up a localized string similar to Sign up for Scrabble.
         /// </summary>
-        public static string titleSignUp {
+        public static string SIGN_UP_HEADER {
             get {
-                return ResourceManager.GetString("titleSignUp", resourceCulture);
+                return ResourceManager.GetString("SIGN_UP_HEADER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown error.
+        ///   Looks up a localized string similar to Invalid email.
         /// </summary>
-        public static string unknownError {
+        public static string SIGN_UP_INVALID_EMAIL_LABEL {
             get {
-                return ResourceManager.GetString("unknownError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknow user.
-        /// </summary>
-        public static string unknowUserLogin {
-            get {
-                return ResourceManager.GetString("unknowUserLogin", resourceCulture);
+                return ResourceManager.GetString("SIGN_UP_INVALID_EMAIL_LABEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to User already exists.
         /// </summary>
-        public static string userAlreadyExists {
+        public static string SIGN_UP_USER_ALREADY_EXISTS_MESSAGE {
             get {
-                return ResourceManager.GetString("userAlreadyExists", resourceCulture);
+                return ResourceManager.GetString("SIGN_UP_USER_ALREADY_EXISTS_MESSAGE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has entered the chat!.
+        ///   Looks up a localized string similar to Email too long!.
         /// </summary>
-        public static string userJoinChatMessageFormat {
+        public static string SIGNUP_EMAIL_TOO_LONG {
             get {
-                return ResourceManager.GetString("userJoinChatMessageFormat", resourceCulture);
+                return ResourceManager.GetString("SIGNUP_EMAIL_TOO_LONG", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} just leave the chat.
+        ///   Looks up a localized string similar to Nickname too long!.
         /// </summary>
-        public static string userLeaveChatMessageFormat {
+        public static string SIGNUP_NICKNAME_TOO_LONG {
             get {
-                return ResourceManager.GetString("userLeaveChatMessageFormat", resourceCulture);
+                return ResourceManager.GetString("SIGNUP_NICKNAME_TOO_LONG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password too long!.
+        /// </summary>
+        public static string SIGNUP_PASSWORD_TOO_LONG {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORD_TOO_LONG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match.
+        /// </summary>
+        public static string SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL", resourceCulture);
             }
         }
     }

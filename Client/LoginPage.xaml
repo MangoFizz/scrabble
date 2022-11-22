@@ -28,7 +28,7 @@
         <Label Name="passwordRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,364,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="101" FontSize="20" />
         <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,410,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
 
-        <Label Name="resultText" Content="{x:Static p:Resources.unknowUserLogin}" HorizontalContentAlignment="Left" Margin="761,474,302,210" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
+        <Label Name="resultText" Content="placeholder" HorizontalContentAlignment="Left" Margin="761,474,302,210" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
         <Button Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" Style="{StaticResource BorderedButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,329,130" Click="RegisterButtonClick" Height="56" Width="190"/>
         <Button Name="loginButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_BUTTON}" HorizontalAlignment="Left" Margin="971,534,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="LoginButtonClick" Height="56" Width="190"/>
     </Grid>

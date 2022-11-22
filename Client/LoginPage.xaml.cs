@@ -55,15 +55,15 @@ namespace Client {
                     break;
 
                 case PlayerManagerPlayerAuthResult.InvalidCredentials:
-                    this.resultText.Content = Properties.Resources.invalidCredentials;
+                    this.resultText.Content = Properties.Resources.LOGIN_INVALID_CREDENTIALS_MESSAGE;
                     break;
 
                 case PlayerManagerPlayerAuthResult.IncorrectPassword:
-                    this.resultText.Content = Properties.Resources.incorrectPassword;
+                    this.resultText.Content = Properties.Resources.LOGIN_INCORRECT_PASSWORD_MESSAGE;
                     break;
 
                 default:
-                    this.resultText.Content = Properties.Resources.unknownError;
+                    this.resultText.Content = Properties.Resources.COMMON_UNKNOWN_ERROR;
                     break;
             }
         }
