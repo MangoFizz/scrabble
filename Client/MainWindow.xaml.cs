@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,12 @@ namespace Client {
 
         public MainWindow() {
             InitializeComponent();
+            Closing += OnWindowClosing;
             MainFrame.Content = new LoginPage();
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e) {
+            App.Current.OnMainWindowClose();
         }
 
         public void UpdateScale() {

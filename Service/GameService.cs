@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Service {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class GameService { }
-    
+
     public partial class GameService : IPlayerManager {
         private List<Player> Players = new List<Player>();
 
@@ -104,10 +104,10 @@ namespace Service {
                     var senderPlayerData = PlayerManager.GetPlayerData(nickname);
                     senderPlayer = new Player(senderPlayerData);
                 }
-        
+
                 currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
                 currentPlayer.Friends.Add(senderPlayer);
-                
+
                 if(senderIsConnected) {
                     currentPlayer.PlayerManagerCallbackChannel.FriendConnect(senderPlayer);
                 }
@@ -171,4 +171,52 @@ namespace Service {
             }
         }
     }
+
+    public partial class GameService : IPartyMananger {
+        public void CreateParty(string sessionId) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var player = Players.Find(p => p.SessionId == sessionId);
+            if(player != null) {
+                player.PartyCallbackChannel = currentCallbackChannel;
+                player.CurrentParty = new Party() {
+                    Leader = player
+                };
+                currentCallbackChannel.CreatePartyCallback(player.CurrentParty);
+            }
+        }
+
+        public void AcceptInvitation(Player player) {
+            throw new NotImplementedException();
+        }
+
+        public void CancelGame() {
+            throw new NotImplementedException();
+        }
+
+        public void DeclineInvitation(Player player) {
+            throw new NotImplementedException();
+        }
+
+        public void InvitePlayer(Player player) {
+            var targetPlayer = Players.FirstOrDefault(u => u.Nickname == player.Nickname);
+            //targetPlayer.PartyCallbackChannel.ReceiveInvitation()
+        }
+
+        public void KickPlayer(Player player) {
+            throw new NotImplementedException();
+        }
+
+        public void LeaveParty() {
+            throw new NotImplementedException();
+        }
+
+        public void StartGame() {
+            throw new NotImplementedException();
+        }
+
+        public void TransferLeadership(Player player) {
+            throw new NotImplementedException();
+        }
+    }
+
 }

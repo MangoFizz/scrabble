@@ -153,5 +153,11 @@ namespace Client {
                 friendListPage.FriendDisconnect(player);
             }
         }
+
+        public void OnMainWindowClose() {
+            if(Player != null) {
+                PlayerManagerClient.Logout();
+            }
+        }
     }
 }

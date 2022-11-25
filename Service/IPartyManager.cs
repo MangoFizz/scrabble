@@ -10,6 +10,9 @@ namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
     public interface IPartyMananger {
         [OperationContract(IsOneWay = true)]
+        void CreateParty(string sessionId);
+
+        [OperationContract(IsOneWay = true)]
         void LeaveParty();
 
         [OperationContract(IsOneWay = true)]
@@ -35,6 +38,9 @@ namespace Service {
     }
 
     public interface IPartyManagerCallback {
+        [OperationContract]
+        void CreatePartyCallback(Party party);
+
         [OperationContract]
         void ReceiveInvitation(Player player);
 
@@ -63,6 +69,9 @@ namespace Service {
     [DataContract]
     public class Party {
         [DataMember]
+        public string Id { get; set; }
+
+        [DataMember]
         public Player Leader { get; set; }
 
         [DataMember]
@@ -80,6 +89,10 @@ namespace Service {
                     p.PartyCallbackChannel.ReceivePartyLeaderTransfer(Leader);
                 }
             }
+        }
+
+        public Party() {
+            Id = Guid.NewGuid().ToString();
         }
     }
 

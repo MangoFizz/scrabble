@@ -78,6 +78,9 @@ namespace Service {
     [DataContract]
     public partial class Player {
         [DataMember]
+        public string SessionId { get; set; }
+
+        [DataMember]
         public string Nickname { get; set; }
 
         [DataMember]
@@ -104,6 +107,10 @@ namespace Service {
         [IgnoreDataMember]
         public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }
 
+        public Player() {
+            SessionId = Guid.NewGuid().ToString();
+        }
+
         public Player(DataAccess.Player playerData) {
             Nickname = playerData.Nickname;
             Email = playerData.Email;
@@ -111,6 +118,7 @@ namespace Service {
             GamesCount = playerData.Games;
             WinsCount = playerData.Wins;
             Registered = playerData.Registered;
+            SessionId = Guid.NewGuid().ToString();
         }
     }
 }
