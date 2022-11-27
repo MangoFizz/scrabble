@@ -1,0 +1,21 @@
+﻿<Page x:Class="Client.PartyInvitationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client"
+      xmlns:p = "clr-namespace:Client.Properties"
+      mc:Ignorable="d" 
+      Width="375" Height="75">
+
+    <Grid Background="Azure">
+        <Image Name="PlayerAvatar" Source="/Assets/images/avatars/default_0.png" Margin="10,8,303,8" />
+        <StackPanel Margin="81,6,6,1">
+            <TextBlock Name="InviteMessage" Text="{x:Static p:Resources.PARTY_INVITATION_TEXT}" Width="286" FontSize="18" HorizontalAlignment="Left" />
+            <StackPanel Orientation="Horizontal" Margin="0,8">
+                <Button Content="{x:Static p:Resources.COMMON_ACCEPT_BUTTON}" Margin="3,0,0,0" Padding="0,2" Width="80" FontSize="16" />
+                <Button Content="{x:Static p:Resources.COMMON_REJECT_BUTTON}" Margin="10,0,0,0" Padding="0,2" Width="80" FontSize="16" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -32,7 +32,6 @@ namespace Client {
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.PlayerManagerClient.Logout();
             App.Current.Shutdown();
         }
     }

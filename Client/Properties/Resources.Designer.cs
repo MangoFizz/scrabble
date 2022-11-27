@@ -61,6 +61,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string COMMON_ACCEPT_BUTTON {
+            get {
+                return ResourceManager.GetString("COMMON_ACCEPT_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string COMMON_BACK_BUTTON {
@@ -138,6 +147,15 @@ namespace Client.Properties {
         public static string COMMON_PASSWORD_LABEL {
             get {
                 return ResourceManager.GetString("COMMON_PASSWORD_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string COMMON_REJECT_BUTTON {
+            get {
+                return ResourceManager.GetString("COMMON_REJECT_BUTTON", resourceCulture);
             }
         }
         
@@ -363,6 +381,15 @@ namespace Client.Properties {
         public static string PARTY_CHAT_WHISPER_FORMAT {
             get {
                 return ResourceManager.GetString("PARTY_CHAT_WHISPER_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} invited you to play!.
+        /// </summary>
+        public static string PARTY_INVITATION_TEXT {
+            get {
+                return ResourceManager.GetString("PARTY_INVITATION_TEXT", resourceCulture);
             }
         }
         

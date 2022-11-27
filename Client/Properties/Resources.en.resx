@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="COMMON_ACCEPT_BUTTON" xml:space="preserve">
+    <value>Accept</value>
+  </data>
   <data name="COMMON_BACK_BUTTON" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="COMMON_PASSWORD_LABEL" xml:space="preserve">
     <value>PASSWORD</value>
+  </data>
+  <data name="COMMON_REJECT_BUTTON" xml:space="preserve">
+    <value>Reject</value>
   </data>
   <data name="COMMON_REQUIRED_LABEL" xml:space="preserve">
     <value>Required*</value>
@@ -222,6 +228,9 @@
   </data>
   <data name="PARTY_CHAT_WHISPER_FORMAT" xml:space="preserve">
     <value>{0} -&gt; You: {1}</value>
+  </data>
+  <data name="PARTY_INVITATION_TEXT" xml:space="preserve">
+    <value>{0} invited you to play!</value>
   </data>
   <data name="PARTY_LOBBY_CHAT_INPUT_WATERMARK" xml:space="preserve">
     <value>Type something...</value>

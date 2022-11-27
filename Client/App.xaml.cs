@@ -207,7 +207,7 @@ namespace Client {
 
         public void OnMainWindowClose() {
             if(Player != null) {
-                //PlayerManagerClient.Logout();
+                PlayerManagerClient.Logout();
             }
         }
     }
