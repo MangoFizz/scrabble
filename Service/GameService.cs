@@ -186,28 +186,86 @@ namespace Service {
         }
 
         public void AcceptInvitation(Player player) {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var inviteSender = Players.Find(p => p.Nickname == player.Nickname);
+                if(inviteSender != null) {
+                    var party = inviteSender.CurrentParty;
+                    if(party != null) {
+                        currentPlayer.CurrentParty = party;
+                        currentPlayer.PartyCallbackChannel = currentCallbackChannel;
+                        currentCallbackChannel.AcceptInvitationCallback(party);
+                        
+                        foreach(var p in party.Players) {
+                            p.PartyCallbackChannel.ReceivePartyPlayerJoin(currentPlayer);
+                        }
+
+                        party.Players.Add(currentPlayer);
+                    }
+                }
+            }
         }
 
         public void CancelGame() {
-            throw new NotImplementedException();
-        }
-
-        public void DeclineInvitation(Player player) {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var player = Players.Find(p => p.PartyCallbackChannel == currentCallbackChannel);
+            if(player != null) {
+                var party = player.CurrentParty;
+                if(party != null) {
+                    for(var i = 0; i < party.Players.Count(); i++) {
+                        var p = party.Players[i];
+                        p.PartyCallbackChannel.ReceiveGameCancel();
+                        p.CurrentParty = null;
+                    }
+                }
+            }
         }
 
         public void InvitePlayer(Player player) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyCallbackChannel == currentCallbackChannel);
             var targetPlayer = Players.FirstOrDefault(u => u.Nickname == player.Nickname);
-            //targetPlayer.PartyCallbackChannel.ReceiveInvitation()
+            if(targetPlayer != null && currentPlayer != null) {
+                if(currentPlayer.CurrentParty != null) {
+                    targetPlayer.PartyCallbackChannel.ReceiveInvitation(player, currentPlayer.CurrentParty.Id);
+                }
+            }
         }
 
         public void KickPlayer(Player player) {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
+                    if(targetPlayer != null) {
+                        party.Players.Remove(targetPlayer);
+                        targetPlayer.CurrentParty = null;
+                        targetPlayer.PartyCallbackChannel.ReceivePartyKick(targetPlayer);
+                        foreach(var p in party.Players) {
+                            p.PartyCallbackChannel.ReceivePartyPlayerLeave(targetPlayer);
+                        }
+                    }
+                }
+            }
         }
 
         public void LeaveParty() {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var player = Players.Find(p => p.PartyCallbackChannel == currentCallbackChannel);
+            if(player != null) {
+                var party = player.CurrentParty;
+                if(party != null) {
+                    party.Players.Remove(player);
+                    player.CurrentParty = null;
+                    for(var i = 0; i < party.Players.Count(); i++) {
+                        var p = party.Players[i];
+                        p.PartyCallbackChannel.ReceivePartyPlayerLeave(player);
+                    }
+                }
+            }
         }
 
         public void StartGame() {

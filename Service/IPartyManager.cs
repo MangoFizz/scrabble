@@ -28,9 +28,6 @@ namespace Service {
         void AcceptInvitation(Player player);
 
         [OperationContract(IsOneWay = true)]
-        void DeclineInvitation(Player player);
-
-        [OperationContract(IsOneWay = true)]
         void KickPlayer(Player player);
 
         [OperationContract(IsOneWay = true)]
@@ -42,7 +39,10 @@ namespace Service {
         void CreatePartyCallback(Party party);
 
         [OperationContract]
-        void ReceiveInvitation(Player player);
+        void ReceiveInvitation(Player player, string partyId);
+
+        [OperationContract]
+        void AcceptInvitationCallback(Party party);
 
         [OperationContract]
         void ReceiveInvitationDecline(Player player);
