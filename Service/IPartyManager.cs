@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
-    public interface IPartyMananger {
+    public interface IPartyManager {
+        [OperationContract(IsInitiating = true, IsOneWay = true)]
+        void Subscribe(string sessionId);
+
         [OperationContract(IsOneWay = true)]
-        void CreateParty(string sessionId);
+        void CreateParty();
 
         [OperationContract(IsOneWay = true)]
         void LeaveParty();
@@ -80,13 +83,13 @@ namespace Service {
         public void PlayerLeaves(Player player) {
             Players.Remove(player);
             foreach(var p in Players) {
-                p.PartyCallbackChannel.ReceivePartyPlayerLeave(player);
+                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
             }
             
             if(Leader == player) {
                 Leader = Players[0];
                 foreach(var p in Players) {
-                    p.PartyCallbackChannel.ReceivePartyLeaderTransfer(Leader);
+                    p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(Leader);
                 }
             }
         }
@@ -97,11 +100,11 @@ namespace Service {
     }
 
     public partial class Player {
-        [DataMember]
+        [IgnoreDataMember]
         public Party CurrentParty { get; set; }
 
         [IgnoreDataMember]
-        public IPartyManagerCallback PartyCallbackChannel { get; set; }
+        public IPartyManagerCallback PartyManagerCallbackChannel { get; set; }
 
         public void Dispose() {
             CurrentParty.PlayerLeaves(this);

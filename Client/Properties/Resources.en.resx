@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="COMMON_BACK_BUTTON" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="COMMON_CANCEL_BUTTON" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -168,6 +171,18 @@
   <data name="FRIENDS_LIST_HEADER" xml:space="preserve">
     <value>Friends list</value>
   </data>
+  <data name="FRIENDS_LIST_STATUS_IN_GAME" xml:space="preserve">
+    <value>In game</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_OFFLINE" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_ONLINE" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_PENDING" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="LOGIN_INCORRECT_PASSWORD_MESSAGE" xml:space="preserve">
     <value>Incorrect password</value>
   </data>
@@ -196,11 +211,62 @@
   <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
     <value>SETTINGS</value>
   </data>
+  <data name="PARTY_CHAT_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0} has joined the party.</value>
+  </data>
+  <data name="PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0} left the party.</value>
+  </data>
+  <data name="PARTY_CHAT_WHISPER_FORMAT" xml:space="preserve">
+    <value>{0} -&gt; You: {1}</value>
+  </data>
+  <data name="PARTY_LOBBY_CHAT_INPUT_WATERMARK" xml:space="preserve">
+    <value>Type something...</value>
+  </data>
+  <data name="PARTY_LOBBY_CHAT_LABEL" xml:space="preserve">
+    <value>CHAT</value>
+  </data>
+  <data name="PARTY_LOBBY_FRIENDS_LABEL" xml:space="preserve">
+    <value>FRIENDS</value>
+  </data>
+  <data name="PARTY_LOBBY_GAME_LANGUAGE_LABEL" xml:space="preserve">
+    <value>Game language: </value>
+  </data>
+  <data name="PARTY_LOBBY_GROUP_LABEL" xml:space="preserve">
+    <value>GROUP</value>
+  </data>
+  <data name="PARTY_LOBBY_HEADER" xml:space="preserve">
+    <value>PARTY LOBBY</value>
+  </data>
+  <data name="PARTY_LOBBY_LEADER_LABEL" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="PARTY_LOBBY_LOBBY_CODE_LABEL" xml:space="preserve">
+    <value>Your lobby code is: </value>
+  </data>
+  <data name="PARTY_LOBBY_START_GAME_BUTTON" xml:space="preserve">
+    <value>Start game</value>
+  </data>
+  <data name="PARTY_LOBBY_TIME_LIMIT_LABEL" xml:space="preserve">
+    <value>Time limit: </value>
+  </data>
   <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
     <value>✏ Edit</value>
   </data>
   <data name="PLAYER_PROFILE_HEADER" xml:space="preserve">
     <value>Player profile</value>
+  </data>
+  <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
+    <value>Join Game</value>
+  </data>
+  <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
+    <value>New game</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Games played: </value>

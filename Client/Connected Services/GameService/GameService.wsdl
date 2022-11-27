@@ -58,6 +58,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IPartyManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -117,6 +146,9 @@
   <wsdl:message name="IPlayerManager_FriendDisconnect_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:FriendDisconnect" />
   </wsdl:message>
+  <wsdl:message name="IPartyChat_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
+  </wsdl:message>
   <wsdl:message name="IPartyChat_Say_InputMessage">
     <wsdl:part name="parameters" element="tns:Say" />
   </wsdl:message>
@@ -134,6 +166,93 @@
   </wsdl:message>
   <wsdl:message name="IPartyChat_ReceiveWhisper_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveWhisperResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_CreateParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateParty" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_LeaveParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveParty" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_StartGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartGame" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_CancelGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelGame" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_InvitePlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvitePlayer" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_AcceptInvitation_InputMessage">
+    <wsdl:part name="parameters" element="tns:AcceptInvitation" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_KickPlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:KickPlayer" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_TransferLeadership_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransferLeadership" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_CreatePartyCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CreatePartyCallback" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_CreatePartyCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CreatePartyCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveInvitation_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveInvitation" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveInvitation_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveInvitationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_AcceptInvitationCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:AcceptInvitationCallback" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_AcceptInvitationCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:AcceptInvitationCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveInvitationDecline_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveInvitationDecline" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveInvitationDecline_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveInvitationDeclineResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyPlayerLeave_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyPlayerLeave" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyPlayerLeave_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyPlayerLeaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyPlayerJoin_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyPlayerJoin" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyPlayerJoin_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyPlayerJoinResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveGameStart_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveGameStart" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveGameStart_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveGameStartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveGameCancel_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveGameCancel" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceiveGameCancel_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveGameCancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyKick_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyKick" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyKick_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyKickResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyLeaderTransfer_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyLeaderTransfer" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyLeaderTransfer_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyLeaderTransferResponse" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="IPlayerManager">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Login">
@@ -189,6 +308,9 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyChat">
+    <wsdl:operation name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Connect" message="tns:IPartyChat_Connect_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Say">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Say" message="tns:IPartyChat_Say_InputMessage" />
     </wsdl:operation>
@@ -202,6 +324,75 @@
     <wsdl:operation name="ReceiveWhisper">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisper" message="tns:IPartyChat_ReceiveWhisper_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisperResponse" message="tns:IPartyChat_ReceiveWhisper_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IPartyManager">
+    <wsdl:operation name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/Subscribe" message="tns:IPartyManager_Subscribe_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CreateParty" message="tns:IPartyManager_CreateParty_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LeaveParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/LeaveParty" message="tns:IPartyManager_LeaveParty_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/StartGame" message="tns:IPartyManager_StartGame_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CancelGame" message="tns:IPartyManager_CancelGame_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvitePlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/InvitePlayer" message="tns:IPartyManager_InvitePlayer_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AcceptInvitation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/AcceptInvitation" message="tns:IPartyManager_AcceptInvitation_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KickPlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/KickPlayer" message="tns:IPartyManager_KickPlayer_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransferLeadership">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/TransferLeadership" message="tns:IPartyManager_TransferLeadership_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreatePartyCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/CreatePartyCallback" message="tns:IPartyManager_CreatePartyCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CreatePartyCallbackResponse" message="tns:IPartyManager_CreatePartyCallback_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveInvitation">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitation" message="tns:IPartyManager_ReceiveInvitation_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitationResponse" message="tns:IPartyManager_ReceiveInvitation_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AcceptInvitationCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/AcceptInvitationCallback" message="tns:IPartyManager_AcceptInvitationCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/AcceptInvitationCallbackResponse" message="tns:IPartyManager_AcceptInvitationCallback_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveInvitationDecline">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitationDecline" message="tns:IPartyManager_ReceiveInvitationDecline_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitationDeclineResponse" message="tns:IPartyManager_ReceiveInvitationDecline_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyPlayerLeave">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave" message="tns:IPartyManager_ReceivePartyPlayerLeave_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeaveResponse" message="tns:IPartyManager_ReceivePartyPlayerLeave_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyPlayerJoin">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoin" message="tns:IPartyManager_ReceivePartyPlayerJoin_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoinResponse" message="tns:IPartyManager_ReceivePartyPlayerJoin_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveGameStart">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameStart" message="tns:IPartyManager_ReceiveGameStart_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameStartResponse" message="tns:IPartyManager_ReceiveGameStart_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveGameCancel">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameCancel" message="tns:IPartyManager_ReceiveGameCancel_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameCancelResponse" message="tns:IPartyManager_ReceiveGameCancel_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyKick">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyKick" message="tns:IPartyManager_ReceivePartyKick_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyKickResponse" message="tns:IPartyManager_ReceivePartyKick_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyLeaderTransfer">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer" message="tns:IPartyManager_ReceivePartyLeaderTransfer_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransferResponse" message="tns:IPartyManager_ReceivePartyLeaderTransfer_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IPlayerManager" type="tns:IPlayerManager">
@@ -313,6 +504,12 @@
   <wsdl:binding name="NetTcpBinding_IPartyChat" type="tns:IPartyChat">
     <wsp:PolicyReference URI="#NetTcpBinding_IPartyChat_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/IPartyChat/Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="Say">
       <soap12:operation soapAction="http://tempuri.org/IPartyChat/Say" style="document" />
       <wsdl:input>
@@ -344,6 +541,154 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IPartyManager" type="tns:IPartyManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPartyManager_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Subscribe">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/Subscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateParty">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/CreateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveParty">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/LeaveParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="StartGame">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/StartGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CancelGame">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/CancelGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="InvitePlayer">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/InvitePlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AcceptInvitation">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/AcceptInvitation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="KickPlayer">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/KickPlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="TransferLeadership">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/TransferLeadership" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePartyCallback">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/CreatePartyCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveInvitation">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveInvitation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcceptInvitationCallback">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/AcceptInvitationCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveInvitationDecline">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveInvitationDecline" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyPlayerLeave">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyPlayerJoin">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveGameStart">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveGameStart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveGameCancel">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveGameCancel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyKick">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyKick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyLeaderTransfer">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="GameService">
     <wsdl:port name="NetTcpBinding_IPlayerManager" binding="tns:NetTcpBinding_IPlayerManager">
       <soap12:address location="net.tcp://localhost:8090/" />
@@ -355,6 +700,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyChat" binding="tns:NetTcpBinding_IPartyChat">
+      <soap12:address location="net.tcp://localhost:8090/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>WILT\xjerr</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IPartyManager" binding="tns:NetTcpBinding_IPartyManager">
       <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>

@@ -1,0 +1,44 @@
+﻿<Page x:Class="Client.PartyLobbyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client"
+      xmlns:p = "clr-namespace:Client.Properties"
+      mc:Ignorable="d" 
+      Height="720" Width="1280">
+
+    <Page.Resources>
+        <ResourceDictionary Source="StylesDictionary.xaml" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource MainGrid}">
+        <Border Margin="62,36,818,584" Width="400" Height="100" >
+            <TextBlock Text="{x:Static p:Resources.PARTY_LOBBY_HEADER}" Style="{StaticResource HeaderTextBox}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        </Border>
+
+        <Label Content="{x:Static p:Resources.PARTY_LOBBY_TIME_LIMIT_LABEL}" HorizontalAlignment="Left" Margin="109,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
+        <Slider Name="GameTimeLimitSlider" HorizontalAlignment="Left" Margin="295,130,0,0" VerticalAlignment="Top" Width="182" />
+        <Label Name="GameTimeLimitIndicator" Content="0m" HorizontalAlignment="Left" Margin="490,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
+
+        <Label Content="{x:Static p:Resources.PARTY_LOBBY_GAME_LANGUAGE_LABEL}" HorizontalAlignment="Left" Margin="109,175,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
+        <ComboBox HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32"/>
+
+        <StackPanel Orientation="Horizontal" Margin="109,278,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="430">
+            <Label Content="{x:Static p:Resources.PARTY_LOBBY_LOBBY_CODE_LABEL}" FontSize="28" Foreground="White" FontFamily="Consolas"/>
+            <Label Name="LobbyCode" Content="ABCD" FontSize="28" Foreground="White" FontFamily="Consolas" FontWeight="Bold" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <Grid x:Name="FriendsListGrid" Width="490" HorizontalAlignment="Left" Margin="758,50,0,129">
+            <Label Content="{x:Static p:Resources.PARTY_LOBBY_GROUP_LABEL}" HorizontalAlignment="Left" Margin="29,-4,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="188"/>
+            <ListBox Name="FriendsListBox" Margin="29,40,29,27" FontSize="16" Background="#26373737" BorderBrush="White"/>
+            <Label Name="FriendListMessage" Content="{x:Static p:Resources.COMMON_LOADING}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+        </Grid>
+
+        <Label Content="{x:Static p:Resources.PARTY_LOBBY_CHAT_LABEL}" HorizontalAlignment="Left" Margin="62,363,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="188"/>
+        <Frame Name="ChatFrame" Margin="62,407,741,79" Height="234" Width="477" VerticalContentAlignment="Top" />
+
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.PARTY_LOBBY_START_GAME_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,268,41" Height="56" Width="190"/>
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_BACK_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,56,41" Height="56" Width="190" Click="BackButton_Click"/>
+    </Grid>
+</Page>

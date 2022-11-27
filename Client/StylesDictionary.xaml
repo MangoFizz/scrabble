@@ -25,7 +25,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="LoginTextBox" TargetType="TextBlock">
+    <Style x:Key="HeaderTextBox" TargetType="TextBlock">
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
         <Setter Property="Foreground" Value="White"/>

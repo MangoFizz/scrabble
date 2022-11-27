@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameService.cs" />
+    <Compile Include="IPartyGame.cs" />
     <Compile Include="IPartyManager.cs" />
     <Compile Include="IPlayerManager.cs" />
     <Compile Include="IPartyChat.cs" />

@@ -13,6 +13,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Success" />
       <xs:enumeration value="PlayerAlreadyExists" />
+      <xs:enumeration value="InvalidInputs" />
       <xs:enumeration value="DatabaseError" />
     </xs:restriction>
   </xs:simpleType>

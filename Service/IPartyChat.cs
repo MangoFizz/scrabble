@@ -6,6 +6,9 @@ namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyChatCallback))]
     public interface IPartyChat {
         [OperationContract(IsOneWay = true)]
+        void Connect(string sessionId);
+
+        [OperationContract(IsOneWay = true)]
         void Say(string message);
 
         [OperationContract(IsOneWay = true)]

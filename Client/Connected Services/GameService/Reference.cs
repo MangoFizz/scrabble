@@ -43,9 +43,6 @@ namespace Client.GameService {
         private int AvatarField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.Party CurrentPartyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -82,19 +79,6 @@ namespace Client.GameService {
                 if ((this.AvatarField.Equals(value) != true)) {
                     this.AvatarField = value;
                     this.RaisePropertyChanged("Avatar");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.Party CurrentParty {
-            get {
-                return this.CurrentPartyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrentPartyField, value) != true)) {
-                    this.CurrentPartyField = value;
-                    this.RaisePropertyChanged("CurrentParty");
                 }
             }
         }
@@ -187,6 +171,63 @@ namespace Client.GameService {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatus", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+    public enum PlayerStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Offline = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Online = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InGame = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerManager.PlayerResgisterResult", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum PlayerManagerPlayerResgisterResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Success = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PlayerAlreadyExists = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvalidInputs = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DatabaseError = 3,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerManager.PlayerFriendRequestResult", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum PlayerManagerPlayerFriendRequestResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Success = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SelfRequest = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AlreadyFriends = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PendingRequest = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SenderPlayerDoesNotExists = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ReceiverPlayerDoesNotExists = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DatabaseError = 6,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Service")]
@@ -195,6 +236,9 @@ namespace Client.GameService {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Client.GameService.Player LeaderField;
@@ -209,6 +253,19 @@ namespace Client.GameService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
             }
         }
         
@@ -246,60 +303,6 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatus", Namespace="http://schemas.datacontract.org/2004/07/Service")]
-    public enum PlayerStatus : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Offline = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Online = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        InGame = 2,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerManager.PlayerResgisterResult", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    public enum PlayerManagerPlayerResgisterResult : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Success = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        PlayerAlreadyExists = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DatabaseError = 2,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerManager.PlayerFriendRequestResult", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    public enum PlayerManagerPlayerFriendRequestResult : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Success = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SelfRequest = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        AlreadyFriends = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        PendingRequest = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SenderPlayerDoesNotExists = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ReceiverPlayerDoesNotExists = 5,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DatabaseError = 6,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -359,7 +362,7 @@ namespace Client.GameService {
     public interface IPlayerManagerCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/LoginResponseHandler")]
-        void LoginResponseHandler(Client.GameService.PlayerManagerPlayerAuthResult loginResult, Client.GameService.Player player);
+        void LoginResponseHandler(Client.GameService.PlayerManagerPlayerAuthResult loginResult, Client.GameService.Player player, string sessionId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler")]
         void RegisterPlayerResponseHandler(Client.GameService.PlayerManagerPlayerResgisterResult registrationResult);
@@ -483,6 +486,12 @@ namespace Client.GameService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameService.IPartyChat", CallbackContract=typeof(Client.GameService.IPartyChatCallback))]
     public interface IPartyChat {
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Connect")]
+        void Connect(string sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Connect")]
+        System.Threading.Tasks.Task ConnectAsync(string sessionId);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Say")]
         void Say(string message);
         
@@ -534,6 +543,14 @@ namespace Client.GameService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
+        public void Connect(string sessionId) {
+            base.Channel.Connect(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task ConnectAsync(string sessionId) {
+            return base.Channel.ConnectAsync(sessionId);
+        }
+        
         public void Say(string message) {
             base.Channel.Say(message);
         }
@@ -548,6 +565,200 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task WhisperAsync(Client.GameService.Player receiver, string message) {
             return base.Channel.WhisperAsync(receiver, message);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameService.IPartyManager", CallbackContract=typeof(Client.GameService.IPartyManagerCallback))]
+    public interface IPartyManager {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/Subscribe")]
+        void Subscribe(string sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/Subscribe")]
+        System.Threading.Tasks.Task SubscribeAsync(string sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CreateParty")]
+        void CreateParty();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CreateParty")]
+        System.Threading.Tasks.Task CreatePartyAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/LeaveParty")]
+        void LeaveParty();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/LeaveParty")]
+        System.Threading.Tasks.Task LeavePartyAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
+        void StartGame();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
+        System.Threading.Tasks.Task StartGameAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CancelGame")]
+        void CancelGame();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CancelGame")]
+        System.Threading.Tasks.Task CancelGameAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InvitePlayer")]
+        void InvitePlayer(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InvitePlayer")]
+        System.Threading.Tasks.Task InvitePlayerAsync(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/AcceptInvitation")]
+        void AcceptInvitation(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/AcceptInvitation")]
+        System.Threading.Tasks.Task AcceptInvitationAsync(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/KickPlayer")]
+        void KickPlayer(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/KickPlayer")]
+        System.Threading.Tasks.Task KickPlayerAsync(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/TransferLeadership")]
+        void TransferLeadership(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/TransferLeadership")]
+        System.Threading.Tasks.Task TransferLeadershipAsync(Client.GameService.Player player);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IPartyManagerCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/CreatePartyCallback", ReplyAction="http://tempuri.org/IPartyManager/CreatePartyCallbackResponse")]
+        void CreatePartyCallback(Client.GameService.Party party);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveInvitation", ReplyAction="http://tempuri.org/IPartyManager/ReceiveInvitationResponse")]
+        void ReceiveInvitation(Client.GameService.Player player, string partyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/AcceptInvitationCallback", ReplyAction="http://tempuri.org/IPartyManager/AcceptInvitationCallbackResponse")]
+        void AcceptInvitationCallback(Client.GameService.Party party);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveInvitationDecline", ReplyAction="http://tempuri.org/IPartyManager/ReceiveInvitationDeclineResponse")]
+        void ReceiveInvitationDecline(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeaveResponse")]
+        void ReceivePartyPlayerLeave(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoin", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoinResponse")]
+        void ReceivePartyPlayerJoin(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveGameStart", ReplyAction="http://tempuri.org/IPartyManager/ReceiveGameStartResponse")]
+        void ReceiveGameStart();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveGameCancel", ReplyAction="http://tempuri.org/IPartyManager/ReceiveGameCancelResponse")]
+        void ReceiveGameCancel();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyKick", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyKickResponse")]
+        void ReceivePartyKick(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransferResponse")]
+        void ReceivePartyLeaderTransfer(Client.GameService.Player player);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IPartyManagerChannel : Client.GameService.IPartyManager, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class PartyManagerClient : System.ServiceModel.DuplexClientBase<Client.GameService.IPartyManager>, Client.GameService.IPartyManager {
+        
+        public PartyManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public PartyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public PartyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PartyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PartyManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void Subscribe(string sessionId) {
+            base.Channel.Subscribe(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeAsync(string sessionId) {
+            return base.Channel.SubscribeAsync(sessionId);
+        }
+        
+        public void CreateParty() {
+            base.Channel.CreateParty();
+        }
+        
+        public System.Threading.Tasks.Task CreatePartyAsync() {
+            return base.Channel.CreatePartyAsync();
+        }
+        
+        public void LeaveParty() {
+            base.Channel.LeaveParty();
+        }
+        
+        public System.Threading.Tasks.Task LeavePartyAsync() {
+            return base.Channel.LeavePartyAsync();
+        }
+        
+        public void StartGame() {
+            base.Channel.StartGame();
+        }
+        
+        public System.Threading.Tasks.Task StartGameAsync() {
+            return base.Channel.StartGameAsync();
+        }
+        
+        public void CancelGame() {
+            base.Channel.CancelGame();
+        }
+        
+        public System.Threading.Tasks.Task CancelGameAsync() {
+            return base.Channel.CancelGameAsync();
+        }
+        
+        public void InvitePlayer(Client.GameService.Player player) {
+            base.Channel.InvitePlayer(player);
+        }
+        
+        public System.Threading.Tasks.Task InvitePlayerAsync(Client.GameService.Player player) {
+            return base.Channel.InvitePlayerAsync(player);
+        }
+        
+        public void AcceptInvitation(Client.GameService.Player player) {
+            base.Channel.AcceptInvitation(player);
+        }
+        
+        public System.Threading.Tasks.Task AcceptInvitationAsync(Client.GameService.Player player) {
+            return base.Channel.AcceptInvitationAsync(player);
+        }
+        
+        public void KickPlayer(Client.GameService.Player player) {
+            base.Channel.KickPlayer(player);
+        }
+        
+        public System.Threading.Tasks.Task KickPlayerAsync(Client.GameService.Player player) {
+            return base.Channel.KickPlayerAsync(player);
+        }
+        
+        public void TransferLeadership(Client.GameService.Player player) {
+            base.Channel.TransferLeadership(player);
+        }
+        
+        public System.Threading.Tasks.Task TransferLeadershipAsync(Client.GameService.Player player) {
+            return base.Channel.TransferLeadershipAsync(player);
         }
     }
 }

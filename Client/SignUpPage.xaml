@@ -16,7 +16,7 @@
         <Image HorizontalAlignment="Center" Height="121" Margin="0,82,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
 
         <Border Margin="440,139,440,481" Width="400" Height="100" >
-            <TextBlock Text="{x:Static p:Resources.SIGN_UP_HEADER}" Style="{StaticResource LoginTextBox}" VerticalAlignment="Bottom"/>
+            <TextBlock Text="{x:Static p:Resources.SIGN_UP_HEADER}" Style="{StaticResource HeaderTextBox}" VerticalAlignment="Bottom"/>
         </Border>
 
         <Label Content="{x:Static p:Resources.COMMON_NICKNAME_LABEL}" HorizontalAlignment="Left" Margin="200,270,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>

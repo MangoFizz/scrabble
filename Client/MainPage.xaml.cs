@@ -24,7 +24,7 @@ namespace Client {
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.MainWindow.MainFrame.Navigate(new GameBoardPage());
+            App.Current.MainWindow.MainFrame.Navigate(new PlayPage());
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {

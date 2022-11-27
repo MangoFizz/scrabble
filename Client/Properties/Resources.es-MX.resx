@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="COMMON_BACK_BUTTON" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
   <data name="COMMON_CANCEL_BUTTON" xml:space="preserve">
     <value>Cancelar</value>
   </data>
@@ -168,6 +171,18 @@
   <data name="FRIENDS_LIST_HEADER" xml:space="preserve">
     <value>Lista de amigos</value>
   </data>
+  <data name="FRIENDS_LIST_STATUS_IN_GAME" xml:space="preserve">
+    <value>En partida</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_OFFLINE" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_ONLINE" xml:space="preserve">
+    <value>En línea</value>
+  </data>
+  <data name="FRIENDS_LIST_STATUS_PENDING" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
   <data name="LOGIN_INCORRECT_PASSWORD_MESSAGE" xml:space="preserve">
     <value>Contraseña incorrecta</value>
   </data>
@@ -192,11 +207,62 @@
   <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
     <value>AJUSTES</value>
   </data>
+  <data name="PARTY_CHAT_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0} se ha unido al grupo.</value>
+  </data>
+  <data name="PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0} dejó el grupo.</value>
+  </data>
+  <data name="PARTY_CHAT_WHISPER_FORMAT" xml:space="preserve">
+    <value>{0} -&gt; Tú: {1}</value>
+  </data>
+  <data name="PARTY_LOBBY_CHAT_INPUT_WATERMARK" xml:space="preserve">
+    <value>Escribe algo...</value>
+  </data>
+  <data name="PARTY_LOBBY_CHAT_LABEL" xml:space="preserve">
+    <value>CHAT</value>
+  </data>
+  <data name="PARTY_LOBBY_FRIENDS_LABEL" xml:space="preserve">
+    <value>AMIGOS</value>
+  </data>
+  <data name="PARTY_LOBBY_GAME_LANGUAGE_LABEL" xml:space="preserve">
+    <value>Idioma del juego: </value>
+  </data>
+  <data name="PARTY_LOBBY_GROUP_LABEL" xml:space="preserve">
+    <value>GRUPO</value>
+  </data>
+  <data name="PARTY_LOBBY_HEADER" xml:space="preserve">
+    <value>Sala del grupo</value>
+  </data>
+  <data name="PARTY_LOBBY_LEADER_LABEL" xml:space="preserve">
+    <value>Lider</value>
+  </data>
+  <data name="PARTY_LOBBY_LOBBY_CODE_LABEL" xml:space="preserve">
+    <value>El código de tu sala es: </value>
+  </data>
+  <data name="PARTY_LOBBY_START_GAME_BUTTON" xml:space="preserve">
+    <value>Iniciar partida</value>
+  </data>
+  <data name="PARTY_LOBBY_TIME_LIMIT_LABEL" xml:space="preserve">
+    <value>Tiempo límite: </value>
+  </data>
   <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
     <value>✏ Edit</value>
   </data>
   <data name="PLAYER_PROFILE_HEADER" xml:space="preserve">
     <value>Perfil del jugador</value>
+  </data>
+  <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
+    <value>Atras</value>
+  </data>
+  <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
+    <value>Unirse</value>
+  </data>
+  <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
+    <value>Nueva partida</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Partidas jugadas: </value>

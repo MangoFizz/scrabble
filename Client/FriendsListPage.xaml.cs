@@ -39,7 +39,8 @@ namespace Client {
                 stackPanel.Width = 325;
 
                 Image image = new Image();
-                image.Source = new BitmapImage(new Uri($"/Assets/images/avatars/default_{player.Avatar}.png", UriKind.Relative));
+                var avatarPath = string.Format(Properties.Resources.PROFILE_AVATAR_FILE_PATH_FORMAT, player.Avatar);
+                image.Source = new BitmapImage(new Uri(avatarPath, UriKind.Relative));
                 image.Width = 60;
                 image.Height = 60;
                 stackPanel.Children.Add(image);
@@ -61,18 +62,20 @@ namespace Client {
                 status.Padding = new Thickness(0);
                 
                 if(pending) {
-                    status.Content = "Pending";
+                    status.Content = Properties.Resources.FRIENDS_LIST_STATUS_PENDING;
                 }
                 else {
-                    status.Content = player.status;
                     switch(player.status) {
                         case PlayerStatus.Online:
+                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
                             status.Foreground = Brushes.Green;
                             break;
                         case PlayerStatus.Offline:
+                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_OFFLINE;
                             status.Foreground = Brushes.Gray;
                             break;
                         case PlayerStatus.InGame:
+                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_IN_GAME;
                             status.Foreground = Brushes.Blue;
                             break;
                     }

@@ -61,6 +61,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string COMMON_BACK_BUTTON {
+            get {
+                return ResourceManager.GetString("COMMON_BACK_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string COMMON_CANCEL_BUTTON {
@@ -214,6 +223,42 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In game.
+        /// </summary>
+        public static string FRIENDS_LIST_STATUS_IN_GAME {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_STATUS_IN_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string FRIENDS_LIST_STATUS_OFFLINE {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_STATUS_OFFLINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string FRIENDS_LIST_STATUS_ONLINE {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_STATUS_ONLINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string FRIENDS_LIST_STATUS_PENDING {
+            get {
+                return ResourceManager.GetString("FRIENDS_LIST_STATUS_PENDING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect password.
         /// </summary>
         public static string LOGIN_INCORRECT_PASSWORD_MESSAGE {
@@ -286,6 +331,159 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}: {1}.
+        /// </summary>
+        public static string PARTY_CHAT_MESSAGE_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_CHAT_MESSAGE_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has joined the party..
+        /// </summary>
+        public static string PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} left the party..
+        /// </summary>
+        public static string PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} -&gt; You: {1}.
+        /// </summary>
+        public static string PARTY_CHAT_WHISPER_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_CHAT_WHISPER_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type something....
+        /// </summary>
+        public static string PARTY_LOBBY_CHAT_INPUT_WATERMARK {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_CHAT_INPUT_WATERMARK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CHAT.
+        /// </summary>
+        public static string PARTY_LOBBY_CHAT_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_CHAT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRIENDS.
+        /// </summary>
+        public static string PARTY_LOBBY_FRIENDS_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_FRIENDS_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game language: .
+        /// </summary>
+        public static string PARTY_LOBBY_GAME_LANGUAGE_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_GAME_LANGUAGE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GROUP.
+        /// </summary>
+        public static string PARTY_LOBBY_GROUP_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_GROUP_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARTY LOBBY.
+        /// </summary>
+        public static string PARTY_LOBBY_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leader.
+        /// </summary>
+        public static string PARTY_LOBBY_LEADER_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_LEADER_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your lobby code is: .
+        /// </summary>
+        public static string PARTY_LOBBY_LOBBY_CODE_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_LOBBY_CODE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start game.
+        /// </summary>
+        public static string PARTY_LOBBY_START_GAME_BUTTON {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_START_GAME_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time limit: .
+        /// </summary>
+        public static string PARTY_LOBBY_TIME_LIMIT_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_TIME_LIMIT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string PLAY_MENU_BACK_BUTTON {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_BACK_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join Game.
+        /// </summary>
+        public static string PLAY_MENU_JOIN_GAME_BUTTON {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_JOIN_GAME_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New game.
+        /// </summary>
+        public static string PLAY_MENU_NEW_GAME_BUTTON {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_NEW_GAME_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ✏ Edit.
         /// </summary>
         public static string PLAYER_PROFILE_EDIT_BUTTON {
@@ -300,6 +498,15 @@ namespace Client.Properties {
         public static string PLAYER_PROFILE_HEADER {
             get {
                 return ResourceManager.GetString("PLAYER_PROFILE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Assets/images/avatars/default_{0}.png.
+        /// </summary>
+        public static string PROFILE_AVATAR_FILE_PATH_FORMAT {
+            get {
+                return ResourceManager.GetString("PROFILE_AVATAR_FILE_PATH_FORMAT", resourceCulture);
             }
         }
         

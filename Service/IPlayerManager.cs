@@ -39,7 +39,7 @@ namespace Service {
     [ServiceContract]
     public interface IPlayerManagerCallback {
         [OperationContract(IsOneWay = true)]
-        void LoginResponseHandler(PlayerAuthResult loginResult, Player player);
+        void LoginResponseHandler(PlayerAuthResult loginResult, Player player, string sessionId);
 
         [OperationContract(IsOneWay = true)]
         void RegisterPlayerResponseHandler(PlayerResgisterResult registrationResult);
@@ -77,7 +77,7 @@ namespace Service {
     /// </summary>
     [DataContract]
     public partial class Player {
-        [DataMember]
+        [IgnoreDataMember]
         public string SessionId { get; set; }
 
         [DataMember]
