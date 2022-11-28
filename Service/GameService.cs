@@ -274,12 +274,22 @@ namespace Service {
                     foreach(var p in party.Players) {
                         p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                     }
+
+                    // Notify leadership transfer if player was the leader
                     if(player.Nickname == party.Leader.Nickname) {
                         if(party.Players.Count() > 0) {
                             party.Leader = party.Players[0];
                             foreach(var p in party.Players) {
                                 p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
                             }
+                        }
+                    }
+
+                    // Notify friends that player is online
+                    foreach(var friend in player.Friends) {
+                        var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                        if(connectedPlayer != null) {
+                            connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
                         }
                     }
                 }
