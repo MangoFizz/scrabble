@@ -28,7 +28,10 @@ namespace Client {
             InitializeComponent();
             ChatPage = new PartyChatPage();
             ChatFrame.Content = ChatPage;
-            App.Current.PartyManagerClient.CreateParty();
+
+            if(App.Current.CurrentParty == null) {
+                App.Current.PartyManagerClient.CreateParty();
+            }
         }
 
         public void ReloadGroupList() {
@@ -110,17 +113,32 @@ namespace Client {
 
             var party = App.Current.CurrentParty;
 
-            addItem(party.Leader, false);
-
             if(party.Players != null) {
                 foreach(var player in party.Players) {
-                    addItem(player, true);
+                    addItem(player, false);
                 }
             }
 
             if(Friends != null) {
                 var onlineFriends = Friends.Where(f => f.status == PlayerStatus.Online).ToList();
-                
+
+                // Filter out players that are already in the party
+                onlineFriends = onlineFriends.Where(f => {
+                    if(f.Nickname == party.Leader.Nickname) {
+                        return false;
+                    }
+
+                    if(party.Players != null) {
+                        foreach(var player in party.Players) {
+                            if(f.Nickname == player.Nickname) {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }).ToList();
+
                 if(onlineFriends.Count > 0) {
                     var friendsSubheader = new Label();
                     friendsSubheader.Content = Properties.Resources.PARTY_LOBBY_FRIENDS_LABEL;
@@ -139,10 +157,12 @@ namespace Client {
 
         private void BackButton_Click(object sender, RoutedEventArgs e) {
             NavigationService.GoBack();
+            App.Current.CurrentParty = null;
             App.Current.PartyManagerClient.LeaveParty();
         }
 
         public void CreatePartyCallback(Party party) {
+            ChatPage.PrintPlayerJoinMessage(App.Current.CurrentParty.Leader.Nickname);
             ReloadGroupList();
             App.Current.PlayerManagerClient.GetFriendList();
         }
@@ -161,10 +181,14 @@ namespace Client {
 
         public void ReceivePartyPlayerLeave(Player player) {
             ChatPage.PrintPlayerLeaveMessage(player.Nickname);
+            ReloadGroupList();
+            App.Current.PlayerManagerClient.GetFriendList();
         }
 
         public void ReceivePartyPlayerJoin(Player player) {
             ChatPage.PrintPlayerJoinMessage(player.Nickname);
+            ReloadGroupList();
+            App.Current.PlayerManagerClient.GetFriendList();
         }
 
         public void ReceiveGameStart() {
@@ -180,7 +204,9 @@ namespace Client {
         }
 
         public void ReceivePartyLeaderTransfer(Player player) {
-            throw new NotImplementedException();
+            ChatPage.PrintPlayerIsLeaderMessage(player.Nickname);
+            ReloadGroupList();
+            App.Current.PlayerManagerClient.GetFriendList();
         }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {

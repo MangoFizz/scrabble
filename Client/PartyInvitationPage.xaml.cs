@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.GameService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,18 @@ namespace Client {
     /// Interaction logic for InviteNotificationPage.xaml
     /// </summary>
     public partial class PartyInvitationPage : Page {
-        public PartyInvitationPage() {
+        public Player Player { get; set; }
+
+        public PartyInvitationPage(Player player) {
             InitializeComponent();
+            Player = player;
+            InviteMessage.Text = string.Format(Properties.Resources.PARTY_INVITATION_TEXT, player.Nickname);
+            var avatarPath = string.Format(Properties.Resources.PROFILE_AVATAR_FILE_PATH_FORMAT, player.Avatar);
+            PlayerAvatar.Source = new BitmapImage(new Uri(avatarPath, UriKind.Relative));
+        }
+
+        private void AcceptButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.PartyManagerClient.AcceptInvitation(Player);
         }
     }
 }

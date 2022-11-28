@@ -92,6 +92,9 @@ namespace Client {
             Print(String.Format(Properties.Resources.PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT, nickname));
         }
 
+        public void PrintPlayerIsLeaderMessage(string nickname) {
+            Print(string.Format(Properties.Resources.PARTY_CHAT_LEADER_TRANSFER_MESSAGE_FORMAT, nickname));
+        }
         private void SendMessage() {
             if(this.MessageInput.Text.Length == 0) {
                 return;

@@ -349,6 +349,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is now the party leader.
+        /// </summary>
+        public static string PARTY_CHAT_LEADER_TRANSFER_MESSAGE_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_CHAT_LEADER_TRANSFER_MESSAGE_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}: {1}.
         /// </summary>
         public static string PARTY_CHAT_MESSAGE_FORMAT {

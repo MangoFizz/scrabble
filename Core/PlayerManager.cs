@@ -97,7 +97,7 @@ namespace Core {
         public static PlayerResgisterResult RegisterPlayer(string nickname, string password, string email) {
             var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
 
-            if(nickname.Length == 0 || nickname.Length > 50 || !validCharactersRegex.IsMatch(nickname)) {
+            if(nickname.Length == 0 || nickname.Length > 12 || !validCharactersRegex.IsMatch(nickname)) {
                 return PlayerResgisterResult.InvalidInputs;
             }
 

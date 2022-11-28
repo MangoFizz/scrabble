@@ -6,15 +6,40 @@
       xmlns:local="clr-namespace:Client"
       xmlns:p = "clr-namespace:Client.Properties"
       mc:Ignorable="d" 
-      Width="375" Height="75">
+      Width="335" Height="75">
 
-    <Grid Background="Azure">
-        <Image Name="PlayerAvatar" Source="/Assets/images/avatars/default_0.png" Margin="10,8,303,8" />
-        <StackPanel Margin="81,6,6,1">
-            <TextBlock Name="InviteMessage" Text="{x:Static p:Resources.PARTY_INVITATION_TEXT}" Width="286" FontSize="18" HorizontalAlignment="Left" />
-            <StackPanel Orientation="Horizontal" Margin="0,8">
-                <Button Content="{x:Static p:Resources.COMMON_ACCEPT_BUTTON}" Margin="3,0,0,0" Padding="0,2" Width="80" FontSize="16" />
-                <Button Content="{x:Static p:Resources.COMMON_REJECT_BUTTON}" Margin="10,0,0,0" Padding="0,2" Width="80" FontSize="16" />
+    <Grid>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                            <EasingThicknessKeyFrame KeyTime="00:00:00" Value="-335,0,0,0" />
+                            <EasingThicknessKeyFrame KeyTime="00:00:00.30" Value="0,0,0,0">
+                                <EasingThicknessKeyFrame.EasingFunction>
+                                    <ExponentialEase Exponent="4" EasingMode="EaseOut"/>
+                                </EasingThicknessKeyFrame.EasingFunction>
+                            </EasingThicknessKeyFrame>
+                            <EasingThicknessKeyFrame KeyTime="00:00:05.30" Value="0,0,0,0" />
+                            <EasingThicknessKeyFrame KeyTime="00:00:05.60" Value="-335,0,0,0">
+                                <EasingThicknessKeyFrame.EasingFunction>
+                                    <ExponentialEase Exponent="4" EasingMode="EaseIn"/>
+                                </EasingThicknessKeyFrame.EasingFunction>
+                            </EasingThicknessKeyFrame>
+                        </ThicknessAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <StackPanel Orientation="Horizontal">
+            <Rectangle Fill="Azure" Width="335" />
+            <Image Name="PlayerAvatar" Source="/Assets/images/avatars/default_0.png" Margin="-325,8,345,8" />
+            <StackPanel VerticalAlignment="Center" Margin="-335,0,335,0" Width="249">
+                <TextBlock Name="InviteMessage" Text="{x:Static p:Resources.PARTY_INVITATION_TEXT}" Width="286" FontSize="18" HorizontalAlignment="Left" />
+                <StackPanel Orientation="Horizontal" Margin="0,8">
+                    <Button Name="AcceptButton" Content="{x:Static p:Resources.COMMON_ACCEPT_BUTTON}" Margin="3,0,0,0" Padding="0,2" Width="80" FontSize="16" Click="AcceptButton_Click" />
+                    <Button Name="RejectButton" Content="{x:Static p:Resources.COMMON_REJECT_BUTTON}" Margin="10,0,0,0" Padding="0,2" Width="80" FontSize="16" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

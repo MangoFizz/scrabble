@@ -36,7 +36,7 @@ namespace Client {
                 nicknameInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
                 isInputValid = false;
             }
-            else if(nicknameTextBox.Text.Length > 50) {
+            else if(nicknameTextBox.Text.Length > 12) {
                 nicknameInvalidMessage.Visibility = Visibility.Visible;
                 nicknameInvalidMessage.Content = Properties.Resources.SIGNUP_NICKNAME_TOO_LONG;
                 isInputValid = false;

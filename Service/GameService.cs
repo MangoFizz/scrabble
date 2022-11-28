@@ -190,12 +190,10 @@ namespace Service {
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
                 currentPlayer.CurrentParty = new Party() {
-                    Leader = currentPlayer
+                    Leader = currentPlayer,
+                    Players = new List<Player>() { currentPlayer }
                 };
                 currentCallbackChannel.CreatePartyCallback(currentPlayer.CurrentParty);
-                if(currentPlayer.PartyChatCallbackChannel != null) {
-                    currentPlayer.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(currentPlayer);
-                }
             }
         }
 
@@ -211,11 +209,10 @@ namespace Service {
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
                         currentCallbackChannel.AcceptInvitationCallback(party);
 
+                        party.Players.Add(currentPlayer);
                         foreach(var p in party.Players) {
                             p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(currentPlayer);
                         }
-
-                        party.Players.Add(currentPlayer);
                     }
                 }
             }
@@ -242,7 +239,7 @@ namespace Service {
             var targetPlayer = Players.FirstOrDefault(u => u.Nickname == player.Nickname);
             if(targetPlayer != null && currentPlayer != null) {
                 if(currentPlayer.CurrentParty != null && targetPlayer.CurrentParty == null) {
-                    targetPlayer.PartyManagerCallbackChannel.ReceiveInvitation(player, currentPlayer.CurrentParty.Id);
+                    targetPlayer.PartyManagerCallbackChannel.ReceiveInvitation(currentPlayer, currentPlayer.CurrentParty.Id);
                 }
             }
         }
@@ -272,23 +269,16 @@ namespace Service {
             if(player != null) {
                 var party = player.CurrentParty;
                 if(party != null) {
-                    if(party.Leader.Nickname == player.Nickname) {
-                        player.CurrentParty = null;
-                        if(party.Players != null && party.Players.Count > 0) {
-                            party.Leader = party.Players[0];
-                            party.Players.Remove(party.Leader);
-                            foreach(var p in party.Players) {
-                                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
-                                p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
-                            }
-                        }
+                    player.CurrentParty = null;
+                    party.Players.Remove(player);
+                    foreach(var p in party.Players) {
+                        p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                     }
-                    else {
-                        player.CurrentParty = null;
-                        party.Players.Remove(player);
-                        if(party.Players != null) {
+                    if(player.Nickname == party.Leader.Nickname) {
+                        if(party.Players.Count() > 0) {
+                            party.Leader = party.Players[0];
                             foreach(var p in party.Players) {
-                                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
+                                p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
                             }
                         }
                     }

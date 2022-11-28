@@ -95,6 +95,7 @@ namespace Service {
         }
 
         public Party() {
+            Players = new List<Player>();
             Id = Guid.NewGuid().ToString();
         }
     }

@@ -68,6 +68,9 @@
     <Compile Include="FriendsListPage.xaml.cs">
       <DependentUpon>FriendsListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NotificationSidePage.xaml.cs">
+      <DependentUpon>NotificationSidePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PartyInvitationPage.xaml.cs">
       <DependentUpon>PartyInvitationPage.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="FriendsListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotificationSidePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

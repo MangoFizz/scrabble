@@ -213,6 +213,9 @@
   <data name="MAIN_MENU_SETTINGS_BUTTON" xml:space="preserve">
     <value>AJUSTES</value>
   </data>
+  <data name="PARTY_CHAT_LEADER_TRANSFER_MESSAGE_FORMAT" xml:space="preserve">
+    <value>{0} es ahora el lider del grupo</value>
+  </data>
   <data name="PARTY_CHAT_MESSAGE_FORMAT" xml:space="preserve">
     <value>{0}: {1}</value>
   </data>

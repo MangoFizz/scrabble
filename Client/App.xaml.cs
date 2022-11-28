@@ -229,7 +229,8 @@ namespace Client {
         }
 
         public void AcceptInvitationCallback(Party party) {
-            throw new System.NotImplementedException();
+            CurrentParty = party;
+            MainFrame.NavigationService.Navigate(new PartyLobbyPage());
         }
 
         public void CreatePartyCallback(Party party) {
@@ -249,7 +250,8 @@ namespace Client {
         }
 
         public void ReceiveInvitation(Player player, string partyId) {
-            throw new System.NotImplementedException();
+            var notificationsPage = (NotificationSidePage)MainWindow.NotificationsFrame.Content;
+            notificationsPage.PushInviteNotification(new PartyInvitationPage(player));
         }
 
         public void ReceiveInvitationDecline(Player player) {
@@ -261,10 +263,25 @@ namespace Client {
         }
 
         public void ReceivePartyLeaderTransfer(Player player) {
-            throw new System.NotImplementedException();
+            var localPlayer = CurrentParty.Players.FirstOrDefault(p => p.Nickname == Player.Nickname);
+            if(localPlayer != null) {
+                CurrentParty.Leader = localPlayer;
+            }
+
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.ReceivePartyLeaderTransfer(player);
+            }
         }
 
         public void ReceivePartyPlayerJoin(Player player) {
+            if(CurrentParty.Players != null) {
+                CurrentParty.Players = CurrentParty.Players.Concat(new[] { player }).ToArray();
+            }
+            else {
+                CurrentParty.Players = new[] { player };
+            }
+
             if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
                 var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
                 partyLobbyPage.ReceivePartyPlayerJoin(player);
@@ -272,7 +289,13 @@ namespace Client {
         }
 
         public void ReceivePartyPlayerLeave(Player player) {
-            throw new System.NotImplementedException();
+            var localPlayer = CurrentParty.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
+            CurrentParty.Players = CurrentParty.Players.Except(new[] { localPlayer }).ToArray();
+
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.ReceivePartyPlayerLeave(player);
+            }
         }
     }
 }

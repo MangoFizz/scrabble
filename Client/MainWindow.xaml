@@ -11,6 +11,11 @@
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" />
         <Frame Name="SecondaryFrame" NavigationUIVisibility="Hidden" />
         <Frame Name="FriendListFrame" NavigationUIVisibility="Hidden" />
+        <Frame Name="NotificationsFrame" NavigationUIVisibility="Hidden" >
+            <Frame.Content>
+                <local:NotificationSidePage />
+            </Frame.Content>
+        </Frame>
     </Grid>
 </Window>
     
