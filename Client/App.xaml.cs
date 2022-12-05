@@ -259,11 +259,12 @@ namespace Client {
         }
 
         public void ReceivePartyKick(Player player) {
-            throw new System.NotImplementedException();
+            MainFrame.Content = new MainPage();
+            CurrentParty = null;
         }
 
         public void ReceivePartyLeaderTransfer(Player player) {
-            var localPlayer = CurrentParty.Players.FirstOrDefault(p => p.Nickname == Player.Nickname);
+            var localPlayer = CurrentParty.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
             if(localPlayer != null) {
                 CurrentParty.Leader = localPlayer;
             }

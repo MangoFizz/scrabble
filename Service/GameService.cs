@@ -249,7 +249,7 @@ namespace Service {
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
                 var party = currentPlayer.CurrentParty;
-                if(party != null) {
+                if(party != null && currentPlayer.Nickname == party.Leader.Nickname) {
                     var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
                     if(targetPlayer != null) {
                         party.Players.Remove(targetPlayer);
@@ -301,7 +301,20 @@ namespace Service {
         }
 
         public void TransferLeadership(Player player) {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null && currentPlayer.Nickname == party.Leader.Nickname) {
+                    var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
+                    if(targetPlayer != null) {
+                        party.Leader = targetPlayer;
+                        foreach(var p in party.Players) {
+                            p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(targetPlayer);
+                        }
+                    }
+                }
+            }
         }
     }
 

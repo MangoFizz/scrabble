@@ -58,7 +58,7 @@ namespace Client {
                 StackPanel text = new StackPanel();
                 text.VerticalAlignment = VerticalAlignment.Center;
                 text.Margin = new Thickness(10, 0, 0, 0);
-                text.Width = 280;
+                text.Width = 230;
 
                 Label nickname = new Label();
                 nickname.Content = player.Nickname;
@@ -84,23 +84,54 @@ namespace Client {
 
                 stackPanel.Children.Add(text);
 
-                if(isFriend) {
-                    StackPanel buttons = new StackPanel();
-                    buttons.Orientation = Orientation.Horizontal;
-                    buttons.HorizontalAlignment = HorizontalAlignment.Right;
+                StackPanel buttons = new StackPanel();
+                buttons.Orientation = Orientation.Horizontal;
+                buttons.HorizontalAlignment = HorizontalAlignment.Right;
+                buttons.Visibility = Visibility.Hidden;
+                buttons.Width = 80;
 
+                border.MouseEnter += (sender, e) => {
+                    buttons.Visibility = Visibility.Visible;
+                };
+
+                border.MouseLeave += (sender, e) => {
+                    buttons.Visibility = Visibility.Hidden;
+                };
+
+                if(isFriend) {
                     Button invite = new Button();
                     invite.Content = "➕";
                     invite.Width = 30;
                     invite.Height = 30;
-                    invite.Margin = new Thickness(10, 0, 0, 0);
+                    invite.Margin = new Thickness(50, 0, 0, 0);
                     invite.Click += (sender, e) => {
                         App.Current.PartyManagerClient.InvitePlayer(player);
                     };
                     buttons.Children.Add(invite);
-
-                    stackPanel.Children.Add(buttons);
                 }
+                else if(!isLeader && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                    Button promote = new Button();
+                    promote.Content = "👑";
+                    promote.Width = 30;
+                    promote.Height = 30;
+                    promote.Margin = new Thickness(10, 0, 0, 0);
+                    promote.Click += (sender, e) => {
+                        App.Current.PartyManagerClient.TransferLeadership(player);
+                    };
+                    buttons.Children.Add(promote);
+                    
+                    Button kick = new Button();
+                    kick.Content = "❌";
+                    kick.Width = 30;
+                    kick.Height = 30;
+                    kick.Margin = new Thickness(10, 0, 0, 0);
+                    kick.Click += (sender, e) => {
+                        App.Current.PartyManagerClient.KickPlayer(player);
+                    };
+                    buttons.Children.Add(kick);
+                }
+
+                stackPanel.Children.Add(buttons);
 
                 border.Child = stackPanel;
 
@@ -120,6 +151,7 @@ namespace Client {
             }
 
             if(Friends != null) {
+                // Get online friends
                 var onlineFriends = Friends.Where(f => f.status == PlayerStatus.Online).ToList();
 
                 // Filter out players that are already in the party
@@ -235,12 +267,12 @@ namespace Client {
         }
 
         public void ReceiveFriendAdd(Player player) {
-            Friends.Add(player);
+            App.Current.PlayerManagerClient.GetFriendList();
             ReloadGroupList();
         }
 
         public void FriendConnect(Player player) {
-            Friends.Add(player);
+            App.Current.PlayerManagerClient.GetFriendList();
             ReloadGroupList();
         }
 
