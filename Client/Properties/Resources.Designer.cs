@@ -394,6 +394,24 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End turn.
+        /// </summary>
+        public static string PARTY_GAME_END_TURN_BUTTON {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_END_TURN_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pass.
+        /// </summary>
+        public static string PARTY_GAME_PASS_BUTTON {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_PASS_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} invited you to play!.
         /// </summary>
         public static string PARTY_INVITATION_TEXT {

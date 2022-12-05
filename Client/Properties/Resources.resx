@@ -228,6 +228,12 @@
   <data name="PARTY_CHAT_WHISPER_FORMAT" xml:space="preserve">
     <value>{0} -&gt; You: {1}</value>
   </data>
+  <data name="PARTY_GAME_END_TURN_BUTTON" xml:space="preserve">
+    <value>End turn</value>
+  </data>
+  <data name="PARTY_GAME_PASS_BUTTON" xml:space="preserve">
+    <value>Pass</value>
+  </data>
   <data name="PARTY_INVITATION_TEXT" xml:space="preserve">
     <value>{0} invited you to play!</value>
   </data>

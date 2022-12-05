@@ -18,8 +18,8 @@
         </Border>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_TIME_LIMIT_LABEL}" HorizontalAlignment="Left" Margin="109,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
-        <Slider Name="GameTimeLimitSlider" HorizontalAlignment="Left" Margin="295,130,0,0" VerticalAlignment="Top" Width="182" />
-        <Label Name="GameTimeLimitIndicator" Content="0m" HorizontalAlignment="Left" Margin="490,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
+        <Slider Name="GameTimeLimitSlider" HorizontalAlignment="Left" Margin="295,130,0,0" VerticalAlignment="Top" Width="182" Maximum="60" TickFrequency="5" Minimum="5" IsSnapToTickEnabled="True" ValueChanged="GameTimeLimitSlider_ValueChanged" />
+        <Label Name="GameTimeLimitIndicator" Content="5m" HorizontalAlignment="Left" Margin="490,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_GAME_LANGUAGE_LABEL}" HorizontalAlignment="Left" Margin="109,175,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
         <ComboBox HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32"/>

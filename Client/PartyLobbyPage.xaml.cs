@@ -249,5 +249,11 @@ namespace Client {
             Friends.Remove(friend);
             ReloadGroupList();
         }
+
+        private void GameTimeLimitSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if(GameTimeLimitIndicator != null) {
+                GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
+            } 
+        }
     }
 }

@@ -5,10 +5,71 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Client"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PartyGamePage">
+      xmlns:p = "clr-namespace:Client.Properties"
+      Height="720" Width="1280">
 
-    <Grid>
-        
+    <Page.Resources>
+        <ResourceDictionary Source="StylesDictionary.xaml" />
+    </Page.Resources>
+ 
+    <Grid Style="{StaticResource MainGrid}">
+        <Border BorderBrush="White" BorderThickness="1" Margin="617,31,93,119">
+            <Grid Width="570" Height="570" ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        </Grid>
+        </Border>
+        <Grid Margin="598,614,74,22">
+            <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.PARTY_GAME_PASS_BUTTON}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18" Height="44" Width="126" />
+            <Grid ShowGridLines="True" Width="420" Height="60" Margin="178,12,10,12" Background="Azure">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+            </Grid>
+        </Grid>
+        <Grid Margin="62,65,741,295"/>
+        <Frame Name="ChatFrame" Margin="62,464,741,22" Height="234" Width="477" VerticalContentAlignment="Top" />
+
     </Grid>
 </Page>

@@ -18,8 +18,10 @@ namespace Client {
     /// Interaction logic for PartyGamePage.xaml
     /// </summary>
     public partial class PartyGamePage : Page {
-        public PartyGamePage() {
+        public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
         }
+
+        
     }
 }
