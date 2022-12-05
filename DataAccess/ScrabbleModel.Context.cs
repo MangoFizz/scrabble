@@ -13,10 +13,10 @@ namespace DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Scrabble99Entities : DbContext
+    public partial class ScrabbleEntities : DbContext
     {
-        public Scrabble99Entities()
-            : base("name=Scrabble99Entities")
+        public ScrabbleEntities()
+            : base("name=ScrabbleEntities")
         {
         }
     

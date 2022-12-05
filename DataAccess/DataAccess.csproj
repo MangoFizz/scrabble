@@ -52,61 +52,61 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Friendship.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="gameResults.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="games.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Player.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scrabble99Model.Context.cs">
-      <DependentUpon>Scrabble99Model.Context.tt</DependentUpon>
+    <Compile Include="ScrabbleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ScrabbleModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scrabble99Model.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+    <Compile Include="ScrabbleModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scrabble99Model.Designer.cs">
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
+    <Compile Include="ScrabbleModel.Designer.cs">
+      <DependentUpon>ScrabbleModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="settings.cs">
-      <DependentUpon>Scrabble99Model.tt</DependentUpon>
+      <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Scrabble99Model.edmx">
+    <EntityDeploy Include="ScrabbleModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Scrabble99Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>ScrabbleModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scrabble99Model.Context.tt">
+    <Content Include="ScrabbleModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-      <LastGenOutput>Scrabble99Model.Context.cs</LastGenOutput>
+      <LastGenOutput>ScrabbleModel.Context.cs</LastGenOutput>
+      <DependentUpon>ScrabbleModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Scrabble99Model.edmx.sql" />
-    <Content Include="Scrabble99Model.tt">
+    <Content Include="ScrabbleModel.edmx.sql" />
+    <Content Include="ScrabbleModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
-      <LastGenOutput>Scrabble99Model.cs</LastGenOutput>
+      <LastGenOutput>ScrabbleModel.cs</LastGenOutput>
+      <DependentUpon>ScrabbleModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Scrabble99Model.edmx.diagram">
-      <DependentUpon>Scrabble99Model.edmx</DependentUpon>
+    <None Include="ScrabbleModel.edmx.diagram">
+      <DependentUpon>ScrabbleModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

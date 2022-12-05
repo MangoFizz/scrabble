@@ -71,13 +71,13 @@ namespace Core {
         }
 
         public static Player GetPlayerData(string nickname) {
-            Scrabble99Entities context = new Scrabble99Entities();
+            ScrabbleEntities context = new ScrabbleEntities();
             return context.players.First(p => p.Nickname == nickname);
         } 
 
         public static PlayerAuthResult AuthenticatePlayer(string nickname, string password) {
             try {
-                Scrabble99Entities context = new Scrabble99Entities();
+                ScrabbleEntities context = new ScrabbleEntities();
                 var queryResult = from player in context.players where player.Nickname == nickname select player;
                 if(queryResult.Count() > 0) {
                     var user = queryResult.First();
@@ -117,7 +117,7 @@ namespace Core {
             }
 
             try {
-                Scrabble99Entities context = new Scrabble99Entities();
+                ScrabbleEntities context = new ScrabbleEntities();
                 
                 if(context.players.Any(p => p.Nickname == nickname)) {
                     return PlayerResgisterResult.PlayerAlreadyExists;
@@ -142,7 +142,7 @@ namespace Core {
 
         public static PlayerUnregisterResult UnregisterPlayer(string nickname, string password) {
             try {
-                Scrabble99Entities context = new Scrabble99Entities();
+                ScrabbleEntities context = new ScrabbleEntities();
                 var queryResult = from player in context.players where player.Nickname == nickname select player;
                 if(queryResult.Count() > 0) {
                     if(AuthenticatePlayer(nickname, password) != PlayerAuthResult.Success) {
@@ -169,7 +169,7 @@ namespace Core {
             }
 
             try {
-                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
                     if(player == null) {
                         return PlayerFriendRequestResult.SenderPlayerDoesNotExists;
@@ -210,7 +210,7 @@ namespace Core {
 
         public static PlayerFriendshipRequestAnswer AnswerFriendshipRequest(string playerNickname, string senderPlayerNickname, bool accept) {
             try {
-                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
                     if(player == null) {
                         return PlayerFriendshipRequestAnswer.ReceiverPlayerDoesNotExists;
@@ -246,7 +246,7 @@ namespace Core {
 
         public static List<Player> GetPlayerFriendsData(string playerNickname) {
             try {
-                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
                     var friendships = context.friendships.Where(f => (f.Sender == player.UserId || f.Receiver == player.UserId) && f.Status == (short)PlayerFriendshipStatus.Accepted).ToList();
                     var friends = new List<Player>();
@@ -269,7 +269,7 @@ namespace Core {
 
         public static List<Player> GetPrendingFriendRequest(string playerNickname) {
             try {
-                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
                     var friendships = context.friendships.Where(f => f.Receiver == player.UserId && f.Status == (short)PlayerFriendshipStatus.Pending).ToList();
                     var friends = new List<Player>();

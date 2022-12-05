@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/21/2022 19:30:07
--- Generated from EDMX file: C:\Users\xjerr\source\repos\scrabble99\DataAccess\Scrabble99Model.edmx
+-- Date Created: 12/05/2022 08:16:33
+-- Generated from EDMX file: C:\Users\aiwass\source\repos\scrabble\DataAccess\ScrabbleModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [Scrabble99];
+USE [scrabble];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\xjerr\source\repos\scrabble99\DataAccess\Scrabble99Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\aiwass\Source\Repos\scrabble\DataAccess\ScrabbleModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

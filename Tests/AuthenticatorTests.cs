@@ -24,7 +24,7 @@ namespace Tests {
         [ClassInitialize]
         public static void ClassInit(TestContext context) {
             // Create dummy users
-            var dbContext = new Scrabble99Entities();
+            var dbContext = new ScrabbleEntities();
             var player = new Player();
             player.Password = superPasswordHash;
 
@@ -40,7 +40,7 @@ namespace Tests {
         [ClassCleanup]
         public static void ClassCleanup() {
             // Set up db context
-            var dbContext = new Scrabble99Entities();
+            var dbContext = new ScrabbleEntities();
 
             Func<string, bool> unregisterDummyUser = username => {
                 try {

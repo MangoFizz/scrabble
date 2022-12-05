@@ -16,7 +16,7 @@ namespace Service {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var result = PlayerManager.AuthenticatePlayer(nickname, password);
             if(result == PlayerManager.PlayerAuthResult.Success) {
-                using(Scrabble99Entities context = new Scrabble99Entities()) {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
                     // Fetch player data
                     var playerData = PlayerManager.GetPlayerData(nickname);
                     var player = new Player(playerData) {
