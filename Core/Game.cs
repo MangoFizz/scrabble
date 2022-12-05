@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core {
     public class Game {
-        enum Language {
+        public enum Language {
             en_US,
             es_MX
         };

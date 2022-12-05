@@ -296,7 +296,7 @@ namespace Service {
             }
         }
 
-        public void StartGame() {
+        public void StartGame(Game.Language language, int timeLimitMins) {
             throw new NotImplementedException();
         }
 

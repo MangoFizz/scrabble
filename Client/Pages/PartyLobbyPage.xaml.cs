@@ -32,6 +32,17 @@ namespace Client {
             if(App.Current.CurrentParty == null) {
                 App.Current.PartyManagerClient.CreateParty();
             }
+
+            // Remove start game button if we are not the leader
+            if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
+                StartButton.Visibility = Visibility.Hidden;
+                StartButton.IsEnabled = false;
+            }
+
+            // Add languages to combobox
+            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_ENGLISH);
+            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_SPANISH);
+            GameLanguageCombobox.SelectedIndex = 1;
         }
 
         public void ReloadGroupList() {
@@ -239,6 +250,12 @@ namespace Client {
             ChatPage.PrintPlayerIsLeaderMessage(player.Nickname);
             ReloadGroupList();
             App.Current.PlayerManagerClient.GetFriendList();
+
+            // Show start button if the player is the new leader
+            if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
+                StartButton.Visibility = Visibility.Visible;
+                StartButton.IsEnabled = true;
+            }
         }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
@@ -286,6 +303,10 @@ namespace Client {
             if(GameTimeLimitIndicator != null) {
                 GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
             } 
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.PartyManagerClient.StartGame((GameLanguage)GameLanguageCombobox.SelectedIndex, (int)GameTimeLimitSlider.Value);
         }
     }
 }

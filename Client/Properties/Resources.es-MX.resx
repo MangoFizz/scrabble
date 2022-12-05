@@ -138,6 +138,12 @@
   <data name="COMMON_INVALID_CHARACTERS_LABEL" xml:space="preserve">
     <value>Caracteres inválidos</value>
   </data>
+  <data name="COMMON_LANGUAGE_ENGLISH" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="COMMON_LANGUAGE_SPANISH" xml:space="preserve">
+    <value>Español</value>
+  </data>
   <data name="COMMON_LOADING" xml:space="preserve">
     <value>Cargando...</value>
   </data>

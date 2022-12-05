@@ -8,12 +8,12 @@
       mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Margin="0,0,0,-67">
+        <StackPanel Margin="0,0,0,0">
             <ListBox Name="ChatListBox" HorizontalContentAlignment="Stretch" SelectionMode="Extended" BorderBrush="White" Height="234" Background="#26373737"/>
             <Grid>
                 <Label Name="MessageInputWatermark" Content="{x:Static p:Resources.PARTY_LOBBY_CHAT_INPUT_WATERMARK}" Padding="10,0" FontSize="18" VerticalAlignment="Center" Foreground="#A5FFFFFF" />
                 <Border BorderBrush="White" BorderThickness="1">
-                    <TextBox Name="MessageInput" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="477" Height="41" Padding="7,0" BorderBrush="Transparent" FontSize="20" Foreground="#A5FFFFFF" Background="#26373737" KeyDown="MessageInput_KeyDown" KeyUp="MessageInput_KeyUp" />
+                    <TextBox Name="MessageInput" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="477" Height="41" Padding="7,0" BorderBrush="Transparent" FontSize="20" Foreground="#A5FFFFFF" Background="#26373737" KeyDown="MessageInput_KeyDown" KeyUp="MessageInput_KeyUp" Margin="0,-1,0,1" />
                 </Border>
             </Grid>
         </StackPanel>

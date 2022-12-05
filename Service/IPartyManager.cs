@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
 
 namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
@@ -19,7 +20,7 @@ namespace Service {
         void LeaveParty();
 
         [OperationContract(IsOneWay = true)]
-        void StartGame();
+        void StartGame(Game.Language language, int timeLimitMins);
 
         [OperationContract(IsOneWay = true)]
         void CancelGame();

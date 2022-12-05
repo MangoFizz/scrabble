@@ -124,6 +124,24 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string COMMON_LANGUAGE_ENGLISH {
+            get {
+                return ResourceManager.GetString("COMMON_LANGUAGE_ENGLISH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spanish.
+        /// </summary>
+        public static string COMMON_LANGUAGE_SPANISH {
+            get {
+                return ResourceManager.GetString("COMMON_LANGUAGE_SPANISH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string COMMON_LOADING {

@@ -9,7 +9,7 @@
       Height="720" Width="1280"> 
 
     <Page.Resources>
-        <ResourceDictionary Source="StylesDictionary.xaml" />
+        <ResourceDictionary Source="../StylesDictionary.xaml" />
     </Page.Resources>
 
     <Grid Style="{StaticResource MainGrid}">

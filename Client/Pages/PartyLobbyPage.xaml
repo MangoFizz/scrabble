@@ -9,7 +9,7 @@
       Height="720" Width="1280">
 
     <Page.Resources>
-        <ResourceDictionary Source="StylesDictionary.xaml" />
+        <ResourceDictionary Source="../StylesDictionary.xaml" />
     </Page.Resources>
 
     <Grid Style="{StaticResource MainGrid}">
@@ -22,7 +22,7 @@
         <Label Name="GameTimeLimitIndicator" Content="5m" HorizontalAlignment="Left" Margin="490,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_GAME_LANGUAGE_LABEL}" HorizontalAlignment="Left" Margin="109,175,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
-        <ComboBox HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32"/>
+        <ComboBox Name="GameLanguageCombobox" HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32" FontSize="20"/>
 
         <StackPanel Orientation="Horizontal" Margin="109,278,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="430">
             <Label Content="{x:Static p:Resources.PARTY_LOBBY_LOBBY_CODE_LABEL}" FontSize="28" Foreground="White" FontFamily="Consolas"/>
@@ -36,9 +36,9 @@
         </Grid>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_CHAT_LABEL}" HorizontalAlignment="Left" Margin="62,363,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="188"/>
-        <Frame Name="ChatFrame" Margin="62,407,741,79" Height="234" Width="477" VerticalContentAlignment="Top" />
+        <Frame Name="ChatFrame" Margin="62,407,741,0" Height="277" Width="477" VerticalContentAlignment="Top" VerticalAlignment="Top" />
 
-        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.PARTY_LOBBY_START_GAME_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,268,41" Height="56" Width="190"/>
+        <Button Name="StartButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.PARTY_LOBBY_START_GAME_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,268,41" Height="56" Width="190" Click="StartButton_Click"/>
         <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_BACK_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,56,41" Height="56" Width="190" Click="BackButton_Click"/>
     </Grid>
 </Page>

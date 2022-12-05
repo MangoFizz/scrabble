@@ -228,6 +228,17 @@ namespace Client.GameService {
         DatabaseError = 6,
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.Language", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameLanguage : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        en_US = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        es_MX = 1,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Service")]
@@ -591,10 +602,10 @@ namespace Client.GameService {
         System.Threading.Tasks.Task LeavePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
-        void StartGame();
+        void StartGame(Client.GameService.GameLanguage language, int timeLimitMins);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
-        System.Threading.Tasks.Task StartGameAsync();
+        System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameLanguage language, int timeLimitMins);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CancelGame")]
         void CancelGame();
@@ -713,12 +724,12 @@ namespace Client.GameService {
             return base.Channel.LeavePartyAsync();
         }
         
-        public void StartGame() {
-            base.Channel.StartGame();
+        public void StartGame(Client.GameService.GameLanguage language, int timeLimitMins) {
+            base.Channel.StartGame(language, timeLimitMins);
         }
         
-        public System.Threading.Tasks.Task StartGameAsync() {
-            return base.Channel.StartGameAsync();
+        public System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameLanguage language, int timeLimitMins) {
+            return base.Channel.StartGameAsync(language, timeLimitMins);
         }
         
         public void CancelGame() {

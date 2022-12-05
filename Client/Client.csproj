@@ -65,37 +65,37 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="FriendsListPage.xaml.cs">
+    <Compile Include="Pages\FriendsListPage.xaml.cs">
       <DependentUpon>FriendsListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NotificationSidePage.xaml.cs">
+    <Compile Include="Pages\NotificationSidePage.xaml.cs">
       <DependentUpon>NotificationSidePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartyInvitationPage.xaml.cs">
+    <Compile Include="Pages\PartyInvitationPage.xaml.cs">
       <DependentUpon>PartyInvitationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartyChatPage.xaml.cs">
+    <Compile Include="Pages\PartyChatPage.xaml.cs">
       <DependentUpon>PartyChatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartyGamePage.xaml.cs">
+    <Compile Include="Pages\PartyGamePage.xaml.cs">
       <DependentUpon>PartyGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartyLobbyPage.xaml.cs">
+    <Compile Include="Pages\PartyLobbyPage.xaml.cs">
       <DependentUpon>PartyLobbyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayerProfilePage.xaml.cs">
+    <Compile Include="Pages\PlayerProfilePage.xaml.cs">
       <DependentUpon>PlayerProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayPage.xaml.cs">
+    <Compile Include="Pages\PlayPage.xaml.cs">
       <DependentUpon>PlayPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -121,10 +121,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SettingsPage.xaml.cs">
+    <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SignUpPage.xaml.cs">
+    <Compile Include="Pages\SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Resource Include="Assets\fonts\Scramble-KVBe.ttf" />
@@ -154,23 +154,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="FriendsListPage.xaml">
+    <Page Include="Pages\FriendsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NotificationSidePage.xaml">
+    <Page Include="Pages\NotificationSidePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartyInvitationPage.xaml">
+    <Page Include="Pages\PartyInvitationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -178,31 +178,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartyChatPage.xaml">
+    <Page Include="Pages\PartyChatPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartyGamePage.xaml">
+    <Page Include="Pages\PartyGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartyLobbyPage.xaml">
+    <Page Include="Pages\PartyLobbyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlayerProfilePage.xaml">
+    <Page Include="Pages\PlayerProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlayPage.xaml">
+    <Page Include="Pages\PlayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignUpPage.xaml">
+    <Page Include="Pages\SignUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
