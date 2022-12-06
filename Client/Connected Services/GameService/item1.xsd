@@ -34,4 +34,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Party" nillable="true" type="tns:Party" />
+  <xs:simpleType name="GameStartResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="NotEnoughPlayers" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GameStartResult" nillable="true" type="tns:GameStartResult" />
 </xs:schema>

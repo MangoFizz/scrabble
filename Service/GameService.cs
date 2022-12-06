@@ -218,21 +218,6 @@ namespace Service {
             }
         }
 
-        public void CancelGame() {
-            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
-            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer != null) {
-                var party = currentPlayer.CurrentParty;
-                if(party != null) {
-                    for(var i = 0; i < party.Players.Count(); i++) {
-                        var p = party.Players[i];
-                        p.PartyManagerCallbackChannel.ReceiveGameCancel();
-                        p.CurrentParty = null;
-                    }
-                }
-            }
-        }
-
         public void InvitePlayer(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
@@ -296,8 +281,28 @@ namespace Service {
             }
         }
 
-        public void StartGame(Game.Language language, int timeLimitMins) {
-            throw new NotImplementedException();
+        public void StartGame(Game.SupportedLanguage language, int timeLimitMins) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    if(party.Leader.Nickname == currentPlayer.Nickname) {
+                        if(party.Players.Count < Game.MIN_PLAYERS) {
+                            currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
+                            return;
+                        }
+                        currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
+
+                        var game = new Game(language);
+                        party.Game = game;
+                        party.TimeLimitMins = timeLimitMins;
+                        foreach(var p in party.Players) {
+                            p.PartyManagerCallbackChannel.ReceiveGameStart();
+                        }
+                    }
+                }
+            }
         }
 
         public void TransferLeadership(Player player) {
@@ -315,6 +320,12 @@ namespace Service {
                     }
                 }
             }
+        }
+    }
+
+    public partial class GameService : IPartyGame {
+        public void ConnectPartyGame(string playerSessionId) {
+            throw new NotImplementedException();
         }
     }
 

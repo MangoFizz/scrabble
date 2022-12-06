@@ -241,12 +241,11 @@ namespace Client {
             }
         }
 
-        public void ReceiveGameCancel() {
-            throw new System.NotImplementedException();
-        }
-
         public void ReceiveGameStart() {
-            throw new System.NotImplementedException();
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.ReceiveGameStart();
+            }
         }
 
         public void ReceiveInvitation(Player player, string partyId) {
@@ -296,6 +295,13 @@ namespace Client {
             if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
                 var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
                 partyLobbyPage.ReceivePartyPlayerLeave(player);
+            }
+        }
+
+        public void StartGameCallback(GameStartResult result) {
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.StartGameCallback(result);
             }
         }
     }

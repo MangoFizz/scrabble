@@ -475,6 +475,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starting....
+        /// </summary>
+        public static string PARTY_LOBBY_GAME_START_SUCCESS {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_GAME_START_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GROUP.
         /// </summary>
         public static string PARTY_LOBBY_GROUP_LABEL {
@@ -507,6 +516,15 @@ namespace Client.Properties {
         public static string PARTY_LOBBY_LOBBY_CODE_LABEL {
             get {
                 return ResourceManager.GetString("PARTY_LOBBY_LOBBY_CODE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not enough players to start game!.
+        /// </summary>
+        public static string PARTY_LOBBY_NOT_ENOUGH_PLAYERS {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_NOT_ENOUGH_PLAYERS", resourceCulture);
             }
         }
         

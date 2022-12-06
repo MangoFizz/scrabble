@@ -179,9 +179,6 @@
   <wsdl:message name="IPartyManager_StartGame_InputMessage">
     <wsdl:part name="parameters" element="tns:StartGame" />
   </wsdl:message>
-  <wsdl:message name="IPartyManager_CancelGame_InputMessage">
-    <wsdl:part name="parameters" element="tns:CancelGame" />
-  </wsdl:message>
   <wsdl:message name="IPartyManager_InvitePlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:InvitePlayer" />
   </wsdl:message>
@@ -230,17 +227,17 @@
   <wsdl:message name="IPartyManager_ReceivePartyPlayerJoin_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceivePartyPlayerJoinResponse" />
   </wsdl:message>
+  <wsdl:message name="IPartyManager_StartGameCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartGameCallback" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_StartGameCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartGameCallbackResponse" />
+  </wsdl:message>
   <wsdl:message name="IPartyManager_ReceiveGameStart_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveGameStart" />
   </wsdl:message>
   <wsdl:message name="IPartyManager_ReceiveGameStart_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveGameStartResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPartyManager_ReceiveGameCancel_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveGameCancel" />
-  </wsdl:message>
-  <wsdl:message name="IPartyManager_ReceiveGameCancel_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveGameCancelResponse" />
   </wsdl:message>
   <wsdl:message name="IPartyManager_ReceivePartyKick_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceivePartyKick" />
@@ -339,9 +336,6 @@
     <wsdl:operation name="StartGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/StartGame" message="tns:IPartyManager_StartGame_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CancelGame">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CancelGame" message="tns:IPartyManager_CancelGame_InputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="InvitePlayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/InvitePlayer" message="tns:IPartyManager_InvitePlayer_InputMessage" />
     </wsdl:operation>
@@ -378,13 +372,13 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoin" message="tns:IPartyManager_ReceivePartyPlayerJoin_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoinResponse" message="tns:IPartyManager_ReceivePartyPlayerJoin_InputCallbackMessage" />
     </wsdl:operation>
+    <wsdl:operation name="StartGameCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/StartGameCallback" message="tns:IPartyManager_StartGameCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/StartGameCallbackResponse" message="tns:IPartyManager_StartGameCallback_InputCallbackMessage" />
+    </wsdl:operation>
     <wsdl:operation name="ReceiveGameStart">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameStart" message="tns:IPartyManager_ReceiveGameStart_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameStartResponse" message="tns:IPartyManager_ReceiveGameStart_InputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ReceiveGameCancel">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameCancel" message="tns:IPartyManager_ReceiveGameCancel_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveGameCancelResponse" message="tns:IPartyManager_ReceiveGameCancel_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="ReceivePartyKick">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyKick" message="tns:IPartyManager_ReceivePartyKick_OutputCallbackMessage" />
@@ -568,12 +562,6 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="CancelGame">
-      <soap12:operation soapAction="http://tempuri.org/IPartyManager/CancelGame" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
     <wsdl:operation name="InvitePlayer">
       <soap12:operation soapAction="http://tempuri.org/IPartyManager/InvitePlayer" style="document" />
       <wsdl:input>
@@ -652,8 +640,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ReceiveGameStart">
-      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveGameStart" style="document" />
+    <wsdl:operation name="StartGameCallback">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/StartGameCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -661,8 +649,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ReceiveGameCancel">
-      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveGameCancel" style="document" />
+    <wsdl:operation name="ReceiveGameStart">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveGameStart" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -255,6 +255,9 @@
   <data name="PARTY_LOBBY_GAME_LANGUAGE_LABEL" xml:space="preserve">
     <value>Idioma del juego: </value>
   </data>
+  <data name="PARTY_LOBBY_GAME_START_SUCCESS" xml:space="preserve">
+    <value>Iniciando...</value>
+  </data>
   <data name="PARTY_LOBBY_GROUP_LABEL" xml:space="preserve">
     <value>GRUPO</value>
   </data>
@@ -266,6 +269,9 @@
   </data>
   <data name="PARTY_LOBBY_LOBBY_CODE_LABEL" xml:space="preserve">
     <value>El código de tu sala es: </value>
+  </data>
+  <data name="PARTY_LOBBY_NOT_ENOUGH_PLAYERS" xml:space="preserve">
+    <value>¡No hay suficientes jugadores para iniciar el juego!</value>
   </data>
   <data name="PARTY_LOBBY_START_GAME_BUTTON" xml:space="preserve">
     <value>Iniciar partida</value>

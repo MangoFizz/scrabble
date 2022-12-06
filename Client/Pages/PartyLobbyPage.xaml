@@ -29,15 +29,16 @@
             <Label Name="LobbyCode" Content="ABCD" FontSize="28" Foreground="White" FontFamily="Consolas" FontWeight="Bold" VerticalAlignment="Center" />
         </StackPanel>
 
-        <Grid x:Name="FriendsListGrid" Width="490" HorizontalAlignment="Left" Margin="758,50,0,129">
+        <Grid x:Name="FriendsListGrid" Width="490" HorizontalAlignment="Left" Margin="758,50,0,174">
             <Label Content="{x:Static p:Resources.PARTY_LOBBY_GROUP_LABEL}" HorizontalAlignment="Left" Margin="29,-4,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="188"/>
-            <ListBox Name="FriendsListBox" Margin="29,40,29,27" FontSize="16" Background="#26373737" BorderBrush="White"/>
+            <ListBox Name="FriendsListBox" Margin="29,40,29,10" FontSize="16" Background="#26373737" BorderBrush="White"/>
             <Label Name="FriendListMessage" Content="{x:Static p:Resources.COMMON_LOADING}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
         </Grid>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_CHAT_LABEL}" HorizontalAlignment="Left" Margin="62,363,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="188"/>
         <Frame Name="ChatFrame" Margin="62,407,741,0" Height="277" Width="477" VerticalContentAlignment="Top" VerticalAlignment="Top" />
 
+        <Label x:Name="ResultText" Content="placeholder" HorizontalContentAlignment="Right" Margin="690,570,56,114" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
         <Button Name="StartButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.PARTY_LOBBY_START_GAME_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,268,41" Height="56" Width="190" Click="StartButton_Click"/>
         <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_BACK_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,56,41" Height="56" Width="190" Click="BackButton_Click"/>
     </Grid>

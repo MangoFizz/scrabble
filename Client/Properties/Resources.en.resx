@@ -259,6 +259,9 @@
   <data name="PARTY_LOBBY_GAME_LANGUAGE_LABEL" xml:space="preserve">
     <value>Game language: </value>
   </data>
+  <data name="PARTY_LOBBY_GAME_START_SUCCESS" xml:space="preserve">
+    <value>Starting...</value>
+  </data>
   <data name="PARTY_LOBBY_GROUP_LABEL" xml:space="preserve">
     <value>GROUP</value>
   </data>
@@ -270,6 +273,9 @@
   </data>
   <data name="PARTY_LOBBY_LOBBY_CODE_LABEL" xml:space="preserve">
     <value>Your lobby code is: </value>
+  </data>
+  <data name="PARTY_LOBBY_NOT_ENOUGH_PLAYERS" xml:space="preserve">
+    <value>Not enough players to start game!</value>
   </data>
   <data name="PARTY_LOBBY_START_GAME_BUTTON" xml:space="preserve">
     <value>Start game</value>

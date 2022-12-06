@@ -229,8 +229,8 @@ namespace Client.GameService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Game.Language", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    public enum GameLanguage : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.SupportedLanguage", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameSupportedLanguage : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         en_US = 0,
@@ -314,6 +314,17 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GameStartResult", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+    public enum GameStartResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Success = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NotEnoughPlayers = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -602,16 +613,10 @@ namespace Client.GameService {
         System.Threading.Tasks.Task LeavePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
-        void StartGame(Client.GameService.GameLanguage language, int timeLimitMins);
+        void StartGame(Client.GameService.GameSupportedLanguage language, int timeLimitMins);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
-        System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameLanguage language, int timeLimitMins);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CancelGame")]
-        void CancelGame();
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CancelGame")]
-        System.Threading.Tasks.Task CancelGameAsync();
+        System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameSupportedLanguage language, int timeLimitMins);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InvitePlayer")]
         void InvitePlayer(Client.GameService.Player player);
@@ -659,11 +664,11 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoin", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerJoinResponse")]
         void ReceivePartyPlayerJoin(Client.GameService.Player player);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/StartGameCallback", ReplyAction="http://tempuri.org/IPartyManager/StartGameCallbackResponse")]
+        void StartGameCallback(Client.GameService.GameStartResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveGameStart", ReplyAction="http://tempuri.org/IPartyManager/ReceiveGameStartResponse")]
         void ReceiveGameStart();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveGameCancel", ReplyAction="http://tempuri.org/IPartyManager/ReceiveGameCancelResponse")]
-        void ReceiveGameCancel();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyKick", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyKickResponse")]
         void ReceivePartyKick(Client.GameService.Player player);
@@ -724,20 +729,12 @@ namespace Client.GameService {
             return base.Channel.LeavePartyAsync();
         }
         
-        public void StartGame(Client.GameService.GameLanguage language, int timeLimitMins) {
+        public void StartGame(Client.GameService.GameSupportedLanguage language, int timeLimitMins) {
             base.Channel.StartGame(language, timeLimitMins);
         }
         
-        public System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameLanguage language, int timeLimitMins) {
+        public System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameSupportedLanguage language, int timeLimitMins) {
             return base.Channel.StartGameAsync(language, timeLimitMins);
-        }
-        
-        public void CancelGame() {
-            base.Channel.CancelGame();
-        }
-        
-        public System.Threading.Tasks.Task CancelGameAsync() {
-            return base.Channel.CancelGameAsync();
         }
         
         public void InvitePlayer(Client.GameService.Player player) {

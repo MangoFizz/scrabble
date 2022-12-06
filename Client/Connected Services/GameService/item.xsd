@@ -30,11 +30,11 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PlayerManager.PlayerFriendRequestResult" nillable="true" type="tns:PlayerManager.PlayerFriendRequestResult" />
-  <xs:simpleType name="Game.Language">
+  <xs:simpleType name="Game.SupportedLanguage">
     <xs:restriction base="xs:string">
       <xs:enumeration value="en_US" />
       <xs:enumeration value="es_MX" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="Game.Language" nillable="true" type="tns:Game.Language" />
+  <xs:element name="Game.SupportedLanguage" nillable="true" type="tns:Game.SupportedLanguage" />
 </xs:schema>

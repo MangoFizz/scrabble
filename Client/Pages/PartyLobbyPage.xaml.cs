@@ -32,11 +32,12 @@ namespace Client {
             if(App.Current.CurrentParty == null) {
                 App.Current.PartyManagerClient.CreateParty();
             }
-
-            // Remove start game button if we are not the leader
-            if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
-                StartButton.Visibility = Visibility.Hidden;
-                StartButton.IsEnabled = false;
+            else {
+                // Remove start game button if we are not the leader
+                if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
+                    StartButton.Visibility = Visibility.Hidden;
+                    StartButton.IsEnabled = false;
+                }
             }
 
             // Add languages to combobox
@@ -235,11 +236,7 @@ namespace Client {
         }
 
         public void ReceiveGameStart() {
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveGameCancel() {
-            throw new NotImplementedException();
+            NavigationService.Navigate(new PartyGamePage(ChatPage));
         }
 
         public void ReceivePartyKick(Player player) {
@@ -251,11 +248,10 @@ namespace Client {
             ReloadGroupList();
             App.Current.PlayerManagerClient.GetFriendList();
 
-            // Show start button if the player is the new leader
-            if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
-                StartButton.Visibility = Visibility.Visible;
-                StartButton.IsEnabled = true;
-            }
+            // Show or hide start button if the player is the new leader
+            bool playerIsLeader = App.Current.CurrentParty.Leader.Nickname == App.Current.Player.Nickname;
+            StartButton.Visibility = playerIsLeader ? Visibility.Visible : Visibility.Hidden;
+            StartButton.IsEnabled = playerIsLeader;
         }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
@@ -306,7 +302,22 @@ namespace Client {
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.PartyManagerClient.StartGame((GameLanguage)GameLanguageCombobox.SelectedIndex, (int)GameTimeLimitSlider.Value);
+            App.Current.PartyManagerClient.StartGame((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex, (int)GameTimeLimitSlider.Value);
+        }
+
+        public void StartGameCallback(GameStartResult result) {
+            switch(result) {
+                case GameStartResult.NotEnoughPlayers:
+                    ResultText.Content = Properties.Resources.PARTY_LOBBY_NOT_ENOUGH_PLAYERS;
+                    break;
+
+                case GameStartResult.Success:
+                    ResultText.Content = Properties.Resources.PARTY_LOBBY_GAME_START_SUCCESS;
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

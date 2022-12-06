@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 using Core;
 
 namespace Service {
+    public enum GameStartResult {
+        Success,
+        NotEnoughPlayers
+    }
+
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
     public interface IPartyManager {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
@@ -20,10 +25,7 @@ namespace Service {
         void LeaveParty();
 
         [OperationContract(IsOneWay = true)]
-        void StartGame(Game.Language language, int timeLimitMins);
-
-        [OperationContract(IsOneWay = true)]
-        void CancelGame();
+        void StartGame(Game.SupportedLanguage language, int timeLimitMins);
 
         [OperationContract(IsOneWay = true)]
         void InvitePlayer(Player player);
@@ -58,10 +60,10 @@ namespace Service {
         void ReceivePartyPlayerJoin(Player player);
 
         [OperationContract]
-        void ReceiveGameStart();
+        void StartGameCallback(GameStartResult result);
 
         [OperationContract]
-        void ReceiveGameCancel();
+        void ReceiveGameStart();
 
         [OperationContract]
         void ReceivePartyKick(Player player);
@@ -71,7 +73,7 @@ namespace Service {
     }
 
     [DataContract]
-    public class Party {
+    public partial class Party {
         [DataMember]
         public string Id { get; set; }
 
