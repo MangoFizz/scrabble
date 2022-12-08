@@ -39,6 +39,8 @@ namespace Client {
                 if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
                     StartButton.Visibility = Visibility.Hidden;
                     StartButton.IsEnabled = false;
+                    GameTimeLimitSlider.IsEnabled = false;
+                    GameLanguageCombobox.IsEnabled = false;
                 }
             }
 
@@ -255,6 +257,8 @@ namespace Client {
             bool playerIsLeader = App.Current.CurrentParty.Leader.Nickname == App.Current.Player.Nickname;
             StartButton.Visibility = playerIsLeader ? Visibility.Visible : Visibility.Hidden;
             StartButton.IsEnabled = playerIsLeader;
+            GameTimeLimitSlider.IsEnabled = playerIsLeader;
+            GameLanguageCombobox.IsEnabled = playerIsLeader;
         }
 
         public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
