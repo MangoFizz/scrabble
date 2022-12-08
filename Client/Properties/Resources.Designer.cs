@@ -500,6 +500,42 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}&apos;s score.
+        /// </summary>
+        public static string PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}&apos;s turn!.
+        /// </summary>
+        public static string PARTY_GAME_PLAYER_TURN_FORMAT {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_PLAYER_TURN_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GAME STATUS.
+        /// </summary>
+        public static string PARTY_GAME_STATUS_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_STATUS_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiles left.
+        /// </summary>
+        public static string PARTY_GAME_TILES_LEFT_LABEL {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_TILES_LEFT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} invited you to play!.
         /// </summary>
         public static string PARTY_INVITATION_TEXT {

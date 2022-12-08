@@ -26,6 +26,9 @@ namespace Client {
             Board = new GameBoardSlot[15, 15];
             Rack = new GameTile?[7];
 
+            // Set up score table
+            SetUpScoreTable();
+
             // Restore chat
             ChatFrame.Content = chatPage;
 
@@ -33,6 +36,45 @@ namespace Client {
             var context = new InstanceContext(this);
             Client = new PartyGameClient(context);
             Client.ConnectPartyGame(App.Current.SessionId);
+        }
+
+        private void SetUpScoreTable() {
+            var party = App.Current.CurrentParty;
+            var players = party.Players;
+
+            Player1ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[0].Nickname);
+            Player1Score.Content = "0";
+
+            if(players.Length == 2) {
+                Player2ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[1].Nickname);
+                Player2Score.Content = "0";
+            }
+            else {
+                Player2ScoreLabel.Visibility = Visibility.Hidden;
+                Player2Score.Visibility = Visibility.Hidden;
+            }
+
+            if(players.Length == 3) {
+                Player3ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[2].Nickname);
+                Player3Score.Content = "0";
+            }
+            else {
+                Player3ScoreLabel.Visibility = Visibility.Hidden;
+                Player3Score.Visibility = Visibility.Hidden;
+            }
+
+            if(players.Length == 4) {
+                Player4ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[3].Nickname);
+                Player4Score.Content = "0";
+            }
+            else {
+                Player4ScoreLabel.Visibility = Visibility.Hidden;
+                Player4Score.Visibility = Visibility.Hidden;
+            }
+
+            TilesLeftCount.Content = "--";
+
+            PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, players[0].Nickname);
         }
 
         private Border GetBoardDragOverSlot(Point dragObjectPosition) {
@@ -209,6 +251,8 @@ namespace Client {
 
                             RackCanvas.Children.Remove(DraggedTile);
                             Rack[tileIndex] = null;
+
+                            FocusedBoardSlot = null;
                         }
                         else {
                             // If there is no focused slot, just return the tile to the rack
@@ -264,7 +308,7 @@ namespace Client {
         }
 
         public void UpdateBagTilesLeft(int amount) {
-            
+            TilesLeftCount.Content = amount.ToString();
         }
 
         public void UpdateBoard(GameBoardSlot[][] board) {

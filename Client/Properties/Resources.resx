@@ -262,6 +262,18 @@
   <data name="PARTY_GAME_PASS_BUTTON" xml:space="preserve">
     <value>Pass</value>
   </data>
+  <data name="PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT" xml:space="preserve">
+    <value>{0}'s score</value>
+  </data>
+  <data name="PARTY_GAME_PLAYER_TURN_FORMAT" xml:space="preserve">
+    <value>{0}'s turn!</value>
+  </data>
+  <data name="PARTY_GAME_STATUS_HEADER" xml:space="preserve">
+    <value>GAME STATUS</value>
+  </data>
+  <data name="PARTY_GAME_TILES_LEFT_LABEL" xml:space="preserve">
+    <value>Tiles left</value>
+  </data>
   <data name="PARTY_INVITATION_TEXT" xml:space="preserve">
     <value>{0} invited you to play!</value>
   </data>
