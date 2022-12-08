@@ -16,17 +16,17 @@ namespace Client {
     public partial class PartyGamePage : Page, IPartyGameCallback {
         private PartyGameClient Client { get; set; }
         private GameBoardSlot[,] Board { get; set; }
-        private GameTile[] Rack { get; set; }
-        private Grid DragTile { get; set; }
-        private Point DragTileStartingPosition { get; set; }
-        private Rectangle FocusedBoardSlot { get; set; }
+        private GameTile?[] Rack { get; set; }
+        private Grid DraggedTile { get; set; }
+        private Point DraggedTileStartingPosition { get; set; }
+        private Border FocusedBoardSlot { get; set; }
 
         public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
 
             // Initialize resources
             Board = new GameBoardSlot[15, 15];
-            Rack = new GameTile[7];
+            Rack = new GameTile?[7];
 
             // Restore chat
             ChatFrame.Content = chatPage;
@@ -37,7 +37,7 @@ namespace Client {
             Client.ConnectPartyGame(App.Current.SessionId);
         }
 
-        private Rectangle GetBoardDragOverRectangle(Point dragObjectPosition) {
+        private Border GetBoardDragOverSlot(Point dragObjectPosition) {
             var board = BoardGrid;
             var startPoint = new Point() {
                 X = board.Margin.Left,
@@ -52,7 +52,12 @@ namespace Client {
             }
 
             // Get the rectangle from Grid
-            var slot = BoardGrid.Children[slotRow * 15 + slotColumn] as Rectangle;
+            var slot = BoardGrid.Children[slotRow * 15 + slotColumn] as Border;
+
+            // If the slot is NOT empty, do not allow the tile to be dropped!
+            if(slot.Child != null) {
+                return null;
+            }
 
             return slot;
         }
@@ -92,37 +97,38 @@ namespace Client {
                             break;
                     }
 
-                    var rectangle = new Rectangle() {
-                        Fill = color,
-                        Stroke = Brushes.Gray,
-                        StrokeThickness = 1
+                    var slotContainer = new Border() {
+                        Background = color,
+                        BorderBrush = Brushes.Gray,
+                        BorderThickness = new Thickness(1),
+                        Padding = new Thickness(0),
+                        Opacity = 0.75
                     };
 
-                    rectangle.Opacity = 0.75;
-
-                    rectangle.MouseEnter += (sender, e) => {
-                        rectangle.Stroke = Brushes.Black;
-                        rectangle.StrokeThickness = 2;
-                        rectangle.Opacity = 1;
+                    slotContainer.MouseEnter += (sender, e) => {
+                        slotContainer.BorderBrush = Brushes.Black;
+                        slotContainer.BorderThickness = new Thickness(slotContainer.Child != null ? 1 : 2);
+                        slotContainer.Opacity = 1;
                     };
 
-                    rectangle.MouseLeave += (sender, e) => {
-                        rectangle.Stroke = Brushes.Gray;
-                        rectangle.StrokeThickness = 1;
-                        rectangle.Opacity = 0.75;
+                    slotContainer.MouseLeave += (sender, e) => {
+                        slotContainer.BorderBrush = Brushes.Gray;
+                        slotContainer.BorderThickness = new Thickness(1);
+                        slotContainer.Opacity = 0.75;
                     };
 
-                    rectangle.AllowDrop = true;
+                    slotContainer.AllowDrop = true;
 
-                    Grid.SetColumn(rectangle, x);
-                    Grid.SetRow(rectangle, y);
-                    BoardGrid.Children.Add(rectangle);
+                    Grid.SetColumn(slotContainer, x);
+                    Grid.SetRow(slotContainer, y);
+                    BoardGrid.Children.Add(slotContainer);
                 }
             }
         }
 
         private void UpdateRackGrid() {
             for(int i = 0; i < 7; i++) {
+                var tileIndex = i;
                 var tile = Rack[i];
                 var letter = (char)tile;
                 var fontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
@@ -138,8 +144,8 @@ namespace Client {
                     Height = 60,
                     Foreground = Brushes.White,
                     FontSize = 40,
-                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,
-                    VerticalContentAlignment = System.Windows.VerticalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
                     FontFamily = fontFamily
                 };
 
@@ -150,8 +156,8 @@ namespace Client {
                     Opacity = 0.9,
                     Foreground = Brushes.Black,
                     FontSize = 40,
-                    HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,
-                    VerticalContentAlignment = System.Windows.VerticalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
                     FontFamily = fontFamily
                 };
 
@@ -177,25 +183,49 @@ namespace Client {
                 };
 
                 tileContainer.PreviewMouseDown += (sender, e) => {
-                    DragTile = sender as Grid;
-                    DragTileStartingPosition = new Point() {
+                    DraggedTile = sender as Grid;
+                    DraggedTileStartingPosition = new Point() {
                         X = tileContainer.Margin.Left,
                         Y = tileContainer.Margin.Top
                     };
                 };
                 
                 tileContainer.PreviewMouseUp += (sender, e) => {
-                    if(DragTile != null && DragTile == sender) {
-                        DragTile.Margin = new Thickness(DragTileStartingPosition.X, DragTileStartingPosition.Y, 0, 0);
-                        DragTile = null;
+                    if(DraggedTile != null) {
+                        if(FocusedBoardSlot != null) {
+                            var draggedTileLabel = DraggedTile.Children[1] as Label;
+                            var draggedTileLetter = draggedTileLabel.Content.ToString();
+
+                            var slot = FocusedBoardSlot;
+
+                            // Place tile into the focused slot
+                            slot.Child = new Label() {
+                                Content = draggedTileLetter.ToLower(),
+                                Foreground = Brushes.Black,
+                                FontSize = 36,
+                                Padding = new Thickness(0,1,0,0),
+                                HorizontalContentAlignment = HorizontalAlignment.Center,
+                                VerticalContentAlignment = VerticalAlignment.Center,
+                                FontFamily = fontFamily
+                            };
+
+                            RackCanvas.Children.Remove(DraggedTile);
+                            Rack[tileIndex] = null;
+                        }
+                        else {
+                            // If there is no focused slot, just return the tile to the rack
+                            DraggedTile.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
+                        }
+
+                        DraggedTile = null;
                         RackCanvas.ReleaseMouseCapture();
                     }
                 };
 
                 tileContainer.MouseLeave += (sender, e) => {
-                    if(DragTile != null) {
-                        DragTile.Margin = new Thickness(DragTileStartingPosition.X, DragTileStartingPosition.Y, 0, 0);
-                        DragTile = null;
+                    if(DraggedTile != null && DraggedTile == sender) {
+                        DraggedTile.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
+                        DraggedTile = null;
                         RackCanvas.ReleaseMouseCapture();
                     }
                 };
@@ -205,24 +235,28 @@ namespace Client {
         }
         
         private void RackCanvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-            if(DragTile == null) {
+            if(DraggedTile == null) {
                 return;
             }
+
+            // Update the position of the dragged object
             var currentPoint = e.GetPosition(sender as IInputElement);
-            DragTile.Margin = new Thickness(currentPoint.X - DragTile.ActualWidth / 2, currentPoint.Y - DragTile.ActualHeight / 2, 0, 0);
-            var slot = GetBoardDragOverRectangle(currentPoint);
+            DraggedTile.Margin = new Thickness(currentPoint.X - DraggedTile.ActualWidth / 2, currentPoint.Y - DraggedTile.ActualHeight / 2, 0, 0);
+            
+            // Handle board slot mouse focus
+            var slot = GetBoardDragOverSlot(currentPoint);
             if(slot != null) {
                 if(FocusedBoardSlot != null && FocusedBoardSlot != slot) {
-                    FocusedBoardSlot.Stroke = Brushes.Gray;
-                    FocusedBoardSlot.StrokeThickness = 1;
+                    FocusedBoardSlot.BorderBrush = Brushes.Gray;
+                    FocusedBoardSlot.BorderThickness = new Thickness(1);
                 }
-                slot.StrokeThickness = 2;
-                slot.Stroke = Brushes.Black;
+                slot.BorderThickness = new Thickness(slot.Child != null ? 1 : 2);
+                slot.BorderBrush = Brushes.Black;
                 FocusedBoardSlot = slot;
             }
             else if(FocusedBoardSlot != null) {
-                FocusedBoardSlot.Stroke = Brushes.Gray;
-                FocusedBoardSlot.StrokeThickness = 1;
+                FocusedBoardSlot.BorderBrush = Brushes.Gray;
+                FocusedBoardSlot.BorderThickness = new Thickness(1);
                 FocusedBoardSlot = null;
             }
         }
@@ -247,7 +281,9 @@ namespace Client {
         }
 
         public void UpdatePlayerRack(GameTile[] rack) {
-            Rack = rack;
+            for(int i = 0; i < 7; i++) {
+                Rack[i] = rack[i];
+            }
 
             UpdateRackGrid();
         }
