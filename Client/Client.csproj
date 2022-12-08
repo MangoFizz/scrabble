@@ -242,6 +242,7 @@
     <Resource Include="Resources\images\avatars\avatar_0.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\fonts\font_tiles.otf" />
     <None Include="Resources\text\words_en.txt" />
   </ItemGroup>
   <ItemGroup>

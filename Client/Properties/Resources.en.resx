@@ -290,13 +290,13 @@
     <value>Player profile</value>
   </data>
   <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
-    <value>Back</value>
+    <value>BACK</value>
   </data>
   <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
-    <value>Join Game</value>
+    <value>JOIN GAME</value>
   </data>
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
-    <value>New game</value>
+    <value>NEW GAME</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Games played: </value>

@@ -246,6 +246,16 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] font_tiles {
+            get {
+                object obj = ResourceManager.GetObject("font_tiles", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ➕ Add.
         /// </summary>
         public static string FRIENDS_LIST_ADD_BUTTON {
@@ -607,7 +617,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back.
+        ///   Looks up a localized string similar to BACK.
         /// </summary>
         public static string PLAY_MENU_BACK_BUTTON {
             get {
@@ -616,7 +626,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Join Game.
+        ///   Looks up a localized string similar to JOIN GAME.
         /// </summary>
         public static string PLAY_MENU_JOIN_GAME_BUTTON {
             get {
@@ -625,7 +635,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New game.
+        ///   Looks up a localized string similar to NEW GAME.
         /// </summary>
         public static string PLAY_MENU_NEW_GAME_BUTTON {
             get {

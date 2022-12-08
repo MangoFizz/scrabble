@@ -229,6 +229,179 @@ namespace Client.GameService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.Tile", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameTile : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        A = 65,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        B = 66,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        C = 67,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        D = 68,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        E = 69,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        F = 70,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        G = 71,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        H = 72,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        I = 73,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        J = 74,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        K = 75,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        L = 76,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        M = 77,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        N = 78,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        O = 79,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        P = 80,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Q = 81,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        R = 82,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        S = 83,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        T = 84,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        U = 85,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        V = 86,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        W = 87,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        X = 88,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Y = 89,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Z = 90,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Ñ = 209,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Wildcard = 32,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlot", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    [System.SerializableAttribute()]
+    public partial class GameBoardSlot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.GameService.GameBoardSlotBonus BonusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Client.GameService.GameTile> TileField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.GameService.GameBoardSlotBonus Bonus {
+            get {
+                return this.BonusField;
+            }
+            set {
+                if ((this.BonusField.Equals(value) != true)) {
+                    this.BonusField = value;
+                    this.RaisePropertyChanged("Bonus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<Client.GameService.GameTile> Tile {
+            get {
+                return this.TileField;
+            }
+            set {
+                if ((this.TileField.Equals(value) != true)) {
+                    this.TileField = value;
+                    this.RaisePropertyChanged("Tile");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlotBonus", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameBoardSlotBonus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Center = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TripleWord = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoubleWord = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TripleLetter = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoubleLetter = 5,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Game.SupportedLanguage", Namespace="http://schemas.datacontract.org/2004/07/Core")]
     public enum GameSupportedLanguage : int {
         
@@ -587,6 +760,118 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task WhisperAsync(Client.GameService.Player receiver, string message) {
             return base.Channel.WhisperAsync(receiver, message);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameService.IPartyGame", CallbackContract=typeof(Client.GameService.IPartyGameCallback))]
+    public interface IPartyGame {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/ConnectPartyGame")]
+        void ConnectPartyGame(string playerSessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/ConnectPartyGame")]
+        System.Threading.Tasks.Task ConnectPartyGameAsync(string playerSessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PlaceTile")]
+        void PlaceTile(Client.GameService.GameTile tile, int x, int y);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PlaceTile")]
+        System.Threading.Tasks.Task PlaceTileAsync(Client.GameService.GameTile tile, int x, int y);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/EndTurn")]
+        void EndTurn();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/EndTurn")]
+        System.Threading.Tasks.Task EndTurnAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PassTurn")]
+        void PassTurn();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PassTurn")]
+        System.Threading.Tasks.Task PassTurnAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IPartyGameCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdateBoard", ReplyAction="http://tempuri.org/IPartyGame/UpdateBoardResponse")]
+        void UpdateBoard(Client.GameService.GameBoardSlot[][] board);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerRack", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerRackResponse")]
+        void UpdatePlayerRack(Client.GameService.GameTile[] rack);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerScore", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerScoreResponse")]
+        void UpdatePlayerScore(int score);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerTurn", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerTurnResponse")]
+        void UpdatePlayerTurn(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdateBagTilesLeft", ReplyAction="http://tempuri.org/IPartyGame/UpdateBagTilesLeftResponse")]
+        void UpdateBagTilesLeft(int amount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError", ReplyAction="http://tempuri.org/IPartyGame/SendInvalidTilePlacingErrorResponse")]
+        void SendInvalidTilePlacingError();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IPartyGameChannel : Client.GameService.IPartyGame, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class PartyGameClient : System.ServiceModel.DuplexClientBase<Client.GameService.IPartyGame>, Client.GameService.IPartyGame {
+        
+        public PartyGameClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public PartyGameClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public PartyGameClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PartyGameClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PartyGameClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void ConnectPartyGame(string playerSessionId) {
+            base.Channel.ConnectPartyGame(playerSessionId);
+        }
+        
+        public System.Threading.Tasks.Task ConnectPartyGameAsync(string playerSessionId) {
+            return base.Channel.ConnectPartyGameAsync(playerSessionId);
+        }
+        
+        public void PlaceTile(Client.GameService.GameTile tile, int x, int y) {
+            base.Channel.PlaceTile(tile, x, y);
+        }
+        
+        public System.Threading.Tasks.Task PlaceTileAsync(Client.GameService.GameTile tile, int x, int y) {
+            return base.Channel.PlaceTileAsync(tile, x, y);
+        }
+        
+        public void EndTurn() {
+            base.Channel.EndTurn();
+        }
+        
+        public System.Threading.Tasks.Task EndTurnAsync() {
+            return base.Channel.EndTurnAsync();
+        }
+        
+        public void PassTurn() {
+            base.Channel.PassTurn();
+        }
+        
+        public System.Threading.Tasks.Task PassTurnAsync() {
+            return base.Channel.PassTurnAsync();
         }
     }
     

@@ -300,11 +300,13 @@ namespace Service {
                         foreach(var p in party.Players) {
                             p.PartyManagerCallbackChannel.ReceiveGameStart();
                         }
+
+                        party.Timer = new System.Threading.Timer((o) => { }, null, 0, timeLimitMins * 60 * 1000);
                     }
                 }
             }
         }
-
+        
         public void TransferLeadership(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
@@ -325,6 +327,34 @@ namespace Service {
 
     public partial class GameService : IPartyGame {
         public void ConnectPartyGame(string playerSessionId) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
+            var player = Players.Find(p => p.SessionId == playerSessionId);
+            if(player != null && player.CurrentParty != null) {
+                player.PartyGameCallbackChannel = currentCallbackChannel;
+
+                var party = player.CurrentParty;
+                var game = party.Game;
+                player.Rack = game.TakeFromBag();
+                currentCallbackChannel.UpdateBoard(game.GetJaggedBoard());
+                currentCallbackChannel.UpdatePlayerRack(player.Rack);
+
+                foreach(var p in party.Players) {
+                    if(p.PartyGameCallbackChannel != null) {
+                        p.PartyGameCallbackChannel.UpdateBagTilesLeft(game.Bag.Count);
+                    }
+                }
+            }
+        }
+
+        public void EndTurn() {
+            throw new NotImplementedException();
+        }
+
+        public void PassTurn() {
+            throw new NotImplementedException();
+        }
+
+        public void PlaceTile(Game.Tile tile, int x, int y) {
             throw new NotImplementedException();
         }
     }

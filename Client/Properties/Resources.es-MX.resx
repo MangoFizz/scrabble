@@ -286,13 +286,13 @@
     <value>Perfil del jugador</value>
   </data>
   <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
-    <value>Atras</value>
+    <value>ATRAS</value>
   </data>
   <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
-    <value>Unirse</value>
+    <value>UNIRSE</value>
   </data>
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
-    <value>Nueva partida</value>
+    <value>NUEVA PARTIDA</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Partidas jugadas: </value>

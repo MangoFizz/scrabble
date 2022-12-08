@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Core {
     public class Game {
         public const int MAX_PLAYERS = 4;
-        public const int MIN_PLAYERS = 2;
+        public const int MIN_PLAYERS = 1;
 
         public enum SupportedLanguage {
             en_US,
@@ -39,9 +39,15 @@ namespace Core {
                 Tile = null;
                 Bonus = bonus;
             }
+
+            public BoardSlot() { }
         };
 
+        public static Dictionary<SupportedLanguage, List<string>> WordsDictionariesCache { get; set; }
+
         public SupportedLanguage Language { get; set; }
+
+        public List<string> WordsDictionary;
 
         public BoardSlot[,] Board { get; set; }
 
@@ -62,6 +68,57 @@ namespace Core {
             SetBoardBonusSlots();
             FillBag();
             ShuffleBag();
+            LoadWordDictionary();
+        }
+
+        private static string GetLanguageName(SupportedLanguage language) {
+            switch(language) {
+                case SupportedLanguage.es_MX:
+                    return "es";
+                case SupportedLanguage.en_US:
+                default:
+                    return "en";
+            }
+        }
+
+        private void LoadWordDictionary() {
+            if(WordsDictionariesCache == null) {
+                WordsDictionariesCache = new Dictionary<SupportedLanguage, List<string>>();
+            }
+
+            if(!WordsDictionariesCache.ContainsKey(Language)) {
+                WordsDictionariesCache[Language] = new List<string>();
+                var dictionaryResourceName = string.Format(Properties.Resources.WORDS_DICTIONARY_NAME_FORMAT, GetLanguageName(Language));
+                var dictionaryResource = Properties.Resources.ResourceManager.GetString(dictionaryResourceName);
+                var lines = dictionaryResource.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach(string line in lines) {
+                    // Discart words with non-valid characters
+                    string word = "";
+                    bool wordIsValid = true;
+                    foreach(char c in line) {
+                        if(!char.IsLetter(c)) {
+                            wordIsValid = false;
+                            break;
+                        }
+
+                        if(!Enum.IsDefined(typeof(Tile), (int)c)) {
+                            wordIsValid = false;
+                            break;
+                        }
+
+                        word += c;
+                    }
+                    if(wordIsValid) {
+                        // Normalize word and then add it!
+                        var normalizedWord = word.Normalize(NormalizationForm.FormD);
+                        WordsDictionariesCache[Language].Add(normalizedWord);
+                    }
+                }
+                Console.WriteLine("Loaded {0} words for language {1}", lines.Length, Language);
+            }
+
+
+            WordsDictionary = WordsDictionariesCache[Language];
         }
 
         private void SetBoardBonusSlots() {
@@ -223,6 +280,143 @@ namespace Core {
                 Bag[i] = Bag[randomIndex];
                 Bag[randomIndex] = tempTile;
             }
+        }
+
+        private int GetTileScore(Tile tile) {
+            switch(Language) {
+                case SupportedLanguage.en_US:
+                    switch(tile) {
+                        case Tile.A:
+                        case Tile.E:
+                        case Tile.I:
+                        case Tile.O:
+                        case Tile.U:
+                        case Tile.L:
+                        case Tile.N:
+                        case Tile.R:
+                        case Tile.S:
+                        case Tile.T:
+                            return 1;
+
+                        case Tile.D:
+                        case Tile.G:
+                            return 2;
+
+                        case Tile.B:
+                        case Tile.C:
+                        case Tile.M:
+                        case Tile.P:
+                            return 3;
+
+                        case Tile.F:
+                        case Tile.H:
+                        case Tile.V:
+                        case Tile.W:
+                        case Tile.Y:
+                            return 4;
+
+                        case Tile.K:
+                            return 5;
+
+                        case Tile.J:
+                        case Tile.X:
+                            return 8;
+
+                        case Tile.Q:
+                        case Tile.Z:
+                            return 10;
+
+                        case Tile.Wildcard:
+                            return 0;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                case SupportedLanguage.es_MX:
+                    switch(tile) {
+                        case Tile.A:
+                        case Tile.E:
+                        case Tile.I:
+                        case Tile.O:
+                        case Tile.U:
+                        case Tile.N:
+                        case Tile.L:
+                        case Tile.S:
+                        case Tile.R:
+                        case Tile.T:
+                            return 1;
+
+                        case Tile.D:
+                        case Tile.G:
+                            return 2;
+
+                        case Tile.B:
+                        case Tile.C:
+                        case Tile.M:
+                        case Tile.P:
+                            return 3;
+
+                        case Tile.F:
+                        case Tile.H:
+                        case Tile.V:
+                        case Tile.Y:
+                            return 4;
+
+                        case Tile.Q:
+                            return 5;
+
+                        case Tile.Ñ:
+                        case Tile.J:
+                        case Tile.X:
+                            return 8;
+
+                        case Tile.Z:
+                            return 10;
+
+                        case Tile.Wildcard:
+                            return 0;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public Tile[] TakeFromBag(int amount = 7) {
+            Tile[] tiles = new Tile[amount];
+            for(int i = 0; i < amount; i++) {
+                tiles[i] = Bag[0];
+                Bag.RemoveAt(0);
+            }
+            return tiles;
+        }
+
+        public int PlaceTile(Tile tile, int x, int y) {
+            if(x < 0 || x > 14 || y < 0 || y > 14) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if(Board[x, y].Tile != null) {
+                throw new InvalidOperationException("invalid position");
+            }
+
+            Board[x, y].Tile = tile;
+            return GetTileScore(tile);
+        }
+
+        public BoardSlot[][] GetJaggedBoard() {
+            BoardSlot[][] jaggedBoard = new BoardSlot[15][];
+            for(int i = 0; i < 15; i++) {
+                jaggedBoard[i] = new BoardSlot[15];
+                for(int j = 0; j < 15; j++) {
+                    jaggedBoard[i][j] = Board[i, j];
+                }
+            }
+            return jaggedBoard;
         }
     }
 }

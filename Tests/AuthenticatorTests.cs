@@ -49,7 +49,7 @@ namespace Tests {
                     dbContext.SaveChanges();
                     return true;
                 }
-                catch(Exception ex) {
+                catch {
                     return false;
                 }
             };

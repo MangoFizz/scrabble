@@ -178,6 +178,9 @@
   <data name="font_scramble" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fonts\font_scramble.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="font_tiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fonts\font_tiles.otf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
     <value>➕ Add</value>
   </data>
@@ -305,13 +308,13 @@
     <value>Player profile</value>
   </data>
   <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
-    <value>Back</value>
+    <value>BACK</value>
   </data>
   <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
-    <value>Join Game</value>
+    <value>JOIN GAME</value>
   </data>
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
-    <value>New game</value>
+    <value>NEW GAME</value>
   </data>
   <data name="PROFILE_AVATAR_NAME_FORMAT" xml:space="preserve">
     <value>avatar_{0}</value>

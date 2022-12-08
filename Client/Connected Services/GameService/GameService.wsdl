@@ -58,6 +58,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IPartyGame_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="NetTcpBinding_IPartyManager_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -166,6 +195,54 @@
   </wsdl:message>
   <wsdl:message name="IPartyChat_ReceiveWhisper_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveWhisperResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_ConnectPartyGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectPartyGame" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_PlaceTile_InputMessage">
+    <wsdl:part name="parameters" element="tns:PlaceTile" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_EndTurn_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndTurn" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_PassTurn_InputMessage">
+    <wsdl:part name="parameters" element="tns:PassTurn" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdateBoard_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBoard" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdateBoard_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBoardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerRack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerRack" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerRack_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerRackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerScore_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerScore" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerScore_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerScoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerTurn_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerTurn" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdatePlayerTurn_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerTurnResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdateBagTilesLeft_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBagTilesLeft" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_UpdateBagTilesLeft_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBagTilesLeftResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_SendInvalidTilePlacingError_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendInvalidTilePlacingError" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_SendInvalidTilePlacingError_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendInvalidTilePlacingErrorResponse" />
   </wsdl:message>
   <wsdl:message name="IPartyManager_Subscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Subscribe" />
@@ -321,6 +398,44 @@
     <wsdl:operation name="ReceiveWhisper">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisper" message="tns:IPartyChat_ReceiveWhisper_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisperResponse" message="tns:IPartyChat_ReceiveWhisper_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IPartyGame">
+    <wsdl:operation name="ConnectPartyGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/ConnectPartyGame" message="tns:IPartyGame_ConnectPartyGame_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PlaceTile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/PlaceTile" message="tns:IPartyGame_PlaceTile_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EndTurn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/EndTurn" message="tns:IPartyGame_EndTurn_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PassTurn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/PassTurn" message="tns:IPartyGame_PassTurn_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBoard">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/UpdateBoard" message="tns:IPartyGame_UpdateBoard_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/UpdateBoardResponse" message="tns:IPartyGame_UpdateBoard_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerRack">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerRack" message="tns:IPartyGame_UpdatePlayerRack_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerRackResponse" message="tns:IPartyGame_UpdatePlayerRack_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerScore">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerScore" message="tns:IPartyGame_UpdatePlayerScore_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerScoreResponse" message="tns:IPartyGame_UpdatePlayerScore_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerTurn">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerTurn" message="tns:IPartyGame_UpdatePlayerTurn_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/UpdatePlayerTurnResponse" message="tns:IPartyGame_UpdatePlayerTurn_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBagTilesLeft">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/UpdateBagTilesLeft" message="tns:IPartyGame_UpdateBagTilesLeft_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/UpdateBagTilesLeftResponse" message="tns:IPartyGame_UpdateBagTilesLeft_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendInvalidTilePlacingError">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError" message="tns:IPartyGame_SendInvalidTilePlacingError_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingErrorResponse" message="tns:IPartyGame_SendInvalidTilePlacingError_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyManager">
@@ -535,6 +650,88 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IPartyGame" type="tns:IPartyGame">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPartyGame_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ConnectPartyGame">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/ConnectPartyGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="PlaceTile">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/PlaceTile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="EndTurn">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/EndTurn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="PassTurn">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/PassTurn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBoard">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/UpdateBoard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerRack">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/UpdatePlayerRack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerScore">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/UpdatePlayerScore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerTurn">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/UpdatePlayerTurn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBagTilesLeft">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/UpdateBagTilesLeft" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendInvalidTilePlacingError">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IPartyManager" type="tns:IPartyManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IPartyManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
@@ -688,6 +885,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyChat" binding="tns:NetTcpBinding_IPartyChat">
+      <soap12:address location="net.tcp://localhost:8090/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>BLOO\aiwass</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IPartyGame" binding="tns:NetTcpBinding_IPartyGame">
       <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
