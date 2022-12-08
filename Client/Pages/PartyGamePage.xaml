@@ -13,7 +13,7 @@
     </Page.Resources>
 
     <Grid Style="{StaticResource MainGrid}" Name="MainGrid">
-        <Grid Name="BoardGrid" Width="570" Height="570" Background="LightGray" AllowDrop="True" Margin="617,31,93,119">
+        <Grid Name="BoardGrid" Width="570" Height="570" Background="LightGray" AllowDrop="True" Margin="617,31,93,119" Opacity="0.85">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

@@ -6,8 +6,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Client {
     /// <summary>
@@ -107,14 +105,14 @@ namespace Client {
 
                     slotContainer.MouseEnter += (sender, e) => {
                         slotContainer.BorderBrush = Brushes.Black;
-                        slotContainer.BorderThickness = new Thickness(slotContainer.Child != null ? 1 : 2);
+                        slotContainer.BorderThickness = new Thickness(slotContainer.Child == null ? 2 : 1);
                         slotContainer.Opacity = 1;
                     };
 
                     slotContainer.MouseLeave += (sender, e) => {
                         slotContainer.BorderBrush = Brushes.Gray;
                         slotContainer.BorderThickness = new Thickness(1);
-                        slotContainer.Opacity = 0.75;
+                        slotContainer.Opacity = slotContainer.Child == null ? 0.75 : 1;
                     };
 
                     slotContainer.AllowDrop = true;
