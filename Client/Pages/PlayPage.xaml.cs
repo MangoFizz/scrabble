@@ -25,7 +25,7 @@ namespace Client {
 
         public void LoadProfileButton() {
             PlayerProfileName.Text = App.Current.Player.Nickname;
-            PlayerProfileAvatar.Source = new BitmapImage(new Uri($"/Assets/images/avatars/default_{App.Current.Player.Avatar}.png", UriKind.Relative));
+            PlayerProfileAvatar.Source = App.Current.GetPlayerAvatarImage();
         }
 
         private void FriendsButton_Click(object sender, RoutedEventArgs e) {

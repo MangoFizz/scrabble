@@ -68,7 +68,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="FontFamily" Value="./Assets/fonts/#Scramble"/>
+        <Setter Property="FontFamily" Value="pack://application:,,,/Resources/fonts/#Scramble"/>
         <Setter Property="FontSize" Value="70"/>
         <Setter Property="Opacity" Value="0.85"/>
         <Setter Property="Foreground" Value="White"/>

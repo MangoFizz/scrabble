@@ -13,7 +13,7 @@
     </Page.Resources>
 
     <Grid Style="{StaticResource FormGrid}">
-        <Image HorizontalAlignment="Left" Height="121" Margin="82,289,0,0" VerticalAlignment="Top" Width="558" Source="/Assets/images/logo.png"/>
+        <Image HorizontalAlignment="Left" Height="121" Margin="82,289,0,0" VerticalAlignment="Top" Width="558" Source="pack://application:,,,/Resources/images/logo.png"/>
         <Button Name="LanguageButton" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="37,38,0,0" VerticalAlignment="Top" FontSize="18" Content="🇲🇽" Height="44" Width="92" Click="LanguageButton_Click" />
 
         <Border Margin="761,95,119,525" Width="400" Height="100" >

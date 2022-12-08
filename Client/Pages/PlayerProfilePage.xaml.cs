@@ -29,7 +29,7 @@ namespace Client {
         private void LoadProfileData() {
             ProfileNickname.Content = player.Nickname;
             ProfileEmail.Content = player.Email;
-            ProfileAvatar.Source = new BitmapImage(new Uri($"/Assets/images/avatars/default_{player.Avatar}.png", UriKind.Relative));
+            ProfileAvatar.Source = App.Current.GetPlayerAvatarImage();
             ProfileGamesCount.Content = player.GamesCount;
             ProfileWinsCount.Content = player.WinsCount;
             ProfileRegisteredDate.Content = player.Registered.ToString("dd/MM/yyyy");

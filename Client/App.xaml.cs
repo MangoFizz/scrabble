@@ -1,9 +1,11 @@
 ﻿using Client.GameService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Client {
     public partial class App : Application {
@@ -72,6 +74,14 @@ namespace Client {
             var nextLanguage = languages[(languages.IndexOf(currentLanguage) + 1) % languages.Count];
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(nextLanguage);
             CurrentLanguage = nextLanguage;
+        }
+
+        public BitmapImage GetPlayerAvatarImage(Player player = null) {
+            if(player == null) {
+                player = Player;
+            }
+            var image = new BitmapImage(new Uri($"pack://application:,,,/Resources/images/avatars/avatar_{player.Avatar}.png"));
+            return image;
         }
     }
 

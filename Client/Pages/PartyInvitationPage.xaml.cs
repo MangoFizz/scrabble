@@ -25,8 +25,7 @@ namespace Client {
             InitializeComponent();
             Player = player;
             InviteMessage.Text = string.Format(Properties.Resources.PARTY_INVITATION_TEXT, player.Nickname);
-            var avatarPath = string.Format(Properties.Resources.PROFILE_AVATAR_FILE_PATH_FORMAT, player.Avatar);
-            PlayerAvatar.Source = new BitmapImage(new Uri(avatarPath, UriKind.Relative));
+            PlayerAvatar.Source = App.Current.GetPlayerAvatarImage();
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e) {

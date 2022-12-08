@@ -127,7 +127,7 @@
     <Compile Include="Pages\SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
-    <Resource Include="Assets\fonts\Scramble-KVBe.ttf" />
+    <Resource Include="Resources\fonts\font_scramble.ttf" />
     <None Include="Connected Services\GameService\GameService.wsdl" />
     <None Include="Connected Services\GameService\item.xsd">
       <SubType>Designer</SubType>
@@ -215,12 +215,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GameService\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.es-MX.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -231,6 +229,26 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\avatars\avatar_2.png" />
+    <Resource Include="Resources\images\avatars\avatar_3.png" />
+    <Resource Include="Resources\images\avatars\avatar_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\avatars\avatar_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text\words_en.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text\words_es.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\GameService\item.disco" />
@@ -246,20 +264,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\BoardScrabble.jpeg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\images\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\images\avatars\default_2.png" />
-    <Resource Include="Assets\images\avatars\default_3.png" />
-    <Resource Include="Assets\images\avatars\default_1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\images\avatars\default_0.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

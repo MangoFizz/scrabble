@@ -39,8 +39,7 @@ namespace Client {
                 stackPanel.Width = 325;
 
                 Image image = new Image();
-                var avatarPath = string.Format(Properties.Resources.PROFILE_AVATAR_FILE_PATH_FORMAT, player.Avatar);
-                image.Source = new BitmapImage(new Uri(avatarPath, UriKind.Relative));
+                image.Source = App.Current.GetPlayerAvatarImage(player);
                 image.Width = 60;
                 image.Height = 60;
                 stackPanel.Children.Add(image);

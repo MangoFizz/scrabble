@@ -117,6 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="avatar_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images\avatars\avatar_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="avatar_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images\avatars\avatar_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="avatar_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images\avatars\avatar_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="avatar_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images\avatars\avatar_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="COMMON_ACCEPT_BUTTON" xml:space="preserve">
     <value>Accept</value>
   </data>
@@ -161,6 +174,9 @@
   </data>
   <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown Error :(</value>
+  </data>
+  <data name="font_scramble" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fonts\font_scramble.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
     <value>➕ Add</value>
@@ -209,6 +225,9 @@
   </data>
   <data name="LOGIN_MENU_REGISTER_BUTTON" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\images\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MAIN_MENU_EXIT_BUTTON" xml:space="preserve">
     <value>EXIT</value>
@@ -294,8 +313,8 @@
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
     <value>New game</value>
   </data>
-  <data name="PROFILE_AVATAR_FILE_PATH_FORMAT" xml:space="preserve">
-    <value>/Assets/images/avatars/default_{0}.png</value>
+  <data name="PROFILE_AVATAR_NAME_FORMAT" xml:space="preserve">
+    <value>avatar_{0}</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Games played: </value>
@@ -329,5 +348,11 @@
   </data>
   <data name="SIGN_UP_USER_ALREADY_EXISTS_MESSAGE" xml:space="preserve">
     <value>User already exists</value>
+  </data>
+  <data name="words_en" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\text\words_en.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="words_es" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\text\words_es.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

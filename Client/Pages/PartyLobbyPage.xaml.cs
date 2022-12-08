@@ -29,6 +29,8 @@ namespace Client {
             ChatPage = new PartyChatPage();
             ChatFrame.Content = ChatPage;
 
+            ResultText.Visibility = Visibility.Hidden;
+
             if(App.Current.CurrentParty == null) {
                 App.Current.PartyManagerClient.CreateParty();
             }
@@ -61,8 +63,7 @@ namespace Client {
                 stackPanel.Width = 416;
 
                 Image image = new Image();
-                var avatarPath = string.Format(Properties.Resources.PROFILE_AVATAR_FILE_PATH_FORMAT, player.Avatar);
-                image.Source = new BitmapImage(new Uri(avatarPath, UriKind.Relative));
+                image.Source = App.Current.GetPlayerAvatarImage(player);
                 image.Width = 60;
                 image.Height = 60;
                 stackPanel.Children.Add(image);
@@ -110,37 +111,39 @@ namespace Client {
                     buttons.Visibility = Visibility.Hidden;
                 };
 
-                if(isFriend) {
-                    Button invite = new Button();
-                    invite.Content = "➕";
-                    invite.Width = 30;
-                    invite.Height = 30;
-                    invite.Margin = new Thickness(50, 0, 0, 0);
-                    invite.Click += (sender, e) => {
-                        App.Current.PartyManagerClient.InvitePlayer(player);
-                    };
-                    buttons.Children.Add(invite);
-                }
-                else if(!isLeader && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
-                    Button promote = new Button();
-                    promote.Content = "👑";
-                    promote.Width = 30;
-                    promote.Height = 30;
-                    promote.Margin = new Thickness(10, 0, 0, 0);
-                    promote.Click += (sender, e) => {
-                        App.Current.PartyManagerClient.TransferLeadership(player);
-                    };
-                    buttons.Children.Add(promote);
+                if(App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                    if(isFriend) {
+                        Button invite = new Button();
+                        invite.Content = "➕";
+                        invite.Width = 30;
+                        invite.Height = 30;
+                        invite.Margin = new Thickness(50, 0, 0, 0);
+                        invite.Click += (sender, e) => {
+                            App.Current.PartyManagerClient.InvitePlayer(player);
+                        };
+                        buttons.Children.Add(invite);
+                    }
+                    else if(!isLeader) {
+                        Button promote = new Button();
+                        promote.Content = "👑";
+                        promote.Width = 30;
+                        promote.Height = 30;
+                        promote.Margin = new Thickness(10, 0, 0, 0);
+                        promote.Click += (sender, e) => {
+                            App.Current.PartyManagerClient.TransferLeadership(player);
+                        };
+                        buttons.Children.Add(promote);
                     
-                    Button kick = new Button();
-                    kick.Content = "❌";
-                    kick.Width = 30;
-                    kick.Height = 30;
-                    kick.Margin = new Thickness(10, 0, 0, 0);
-                    kick.Click += (sender, e) => {
-                        App.Current.PartyManagerClient.KickPlayer(player);
-                    };
-                    buttons.Children.Add(kick);
+                        Button kick = new Button();
+                        kick.Content = "❌";
+                        kick.Width = 30;
+                        kick.Height = 30;
+                        kick.Margin = new Thickness(10, 0, 0, 0);
+                        kick.Click += (sender, e) => {
+                            App.Current.PartyManagerClient.KickPlayer(player);
+                        };
+                        buttons.Children.Add(kick);
+                    }
                 }
 
                 stackPanel.Children.Add(buttons);
@@ -306,6 +309,7 @@ namespace Client {
         }
 
         public void StartGameCallback(GameStartResult result) {
+            ResultText.Visibility = Visibility.Visible;
             switch(result) {
                 case GameStartResult.NotEnoughPlayers:
                     ResultText.Content = Properties.Resources.PARTY_LOBBY_NOT_ENOUGH_PLAYERS;

@@ -61,6 +61,46 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap avatar_0 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap avatar_1 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap avatar_2 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap avatar_3 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
         public static string COMMON_ACCEPT_BUTTON {
@@ -192,6 +232,16 @@ namespace Client.Properties {
         public static string COMMON_UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("COMMON_UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] font_scramble {
+            get {
+                object obj = ResourceManager.GetObject("font_scramble", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -336,6 +386,16 @@ namespace Client.Properties {
         public static string LOGIN_MENU_REGISTER_BUTTON {
             get {
                 return ResourceManager.GetString("LOGIN_MENU_REGISTER_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -592,11 +652,11 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /Assets/images/avatars/default_{0}.png.
+        ///   Looks up a localized string similar to avatar_{0}.
         /// </summary>
-        public static string PROFILE_AVATAR_FILE_PATH_FORMAT {
+        public static string PROFILE_AVATAR_NAME_FORMAT {
             get {
-                return ResourceManager.GetString("PROFILE_AVATAR_FILE_PATH_FORMAT", resourceCulture);
+                return ResourceManager.GetString("PROFILE_AVATAR_NAME_FORMAT", resourceCulture);
             }
         }
         
@@ -696,6 +756,147 @@ namespace Client.Properties {
         public static string SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL {
             get {
                 return ResourceManager.GetString("SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AA
+        ///AAH
+        ///AAHED
+        ///AAHING
+        ///AAHS
+        ///AAL
+        ///AALII
+        ///AALIIS
+        ///AALS
+        ///AARDVARK
+        ///AARDVARKS
+        ///AARDWOLF
+        ///AARDWOLVES
+        ///AARGH
+        ///AARRGH
+        ///AARRGHH
+        ///AARTI
+        ///AARTIS
+        ///AAS
+        ///AASVOGEL
+        ///AASVOGELS
+        ///AB
+        ///ABA
+        ///ABAC
+        ///ABACA
+        ///ABACAS
+        ///ABACI
+        ///ABACK
+        ///ABACS
+        ///ABACTERIAL
+        ///ABACTINAL
+        ///ABACTINALLY
+        ///ABACTOR
+        ///ABACTORS
+        ///ABACUS
+        ///ABACUSES
+        ///ABAFT
+        ///ABAKA
+        ///ABAKAS
+        ///ABALONE
+        ///ABALONES
+        ///ABAMP
+        ///ABAMPERE
+        ///ABAMPERES
+        ///ABAMPS
+        ///ABAND
+        ///ABANDED
+        ///ABANDING
+        ///ABANDON
+        ///ABANDONED
+        ///ABANDONEDLY
+        ///ABANDONEE
+        ///ABANDONEES
+        ///ABANDONER
+        ///ABANDONERS
+        ///ABANDONING
+        ///ABANDONMENT
+        ///ABANDONMENTS
+        ///ABANDONS
+        ///ABANDONWARE
+        ///ABANDONWARES
+        ///ABANDS
+        ///ABAPICAL
+        ///ABAS
+        ///ABASE
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string words_en {
+            get {
+                return ResourceManager.GetString("words_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a
+        ///aba
+        ///abaá
+        ///ababillarse
+        ///ababol
+        ///abacá
+        ///abacal
+        ///abacalera
+        ///abacalero
+        ///abacera
+        ///abacería
+        ///abacero
+        ///abacial
+        ///ábaco
+        ///abacora
+        ///abacorar
+        ///abad
+        ///abada
+        ///abadejo
+        ///abadenga
+        ///abadengo
+        ///abadernar
+        ///abadesa
+        ///abadí
+        ///abadía
+        ///abadiado
+        ///abadiato
+        ///ab aeterno
+        ///abajadero
+        ///abajamiento
+        ///abajar
+        ///abajeña
+        ///abajeño
+        ///abajera
+        ///abajo
+        ///abakuá
+        ///abalada
+        ///abalanzar
+        ///abalaustrada
+        ///abalaustrado
+        ///abalconada
+        ///abalconado
+        ///abaldonar
+        ///abalear
+        ///abaleo
+        ///abalizar
+        ///aballar
+        ///aballestar
+        ///abalorio
+        ///abaluartar
+        ///abanador
+        ///abanar
+        ///abancalar
+        ///abanda
+        ///abanderada
+        ///abanderado
+        ///abanderamiento
+        ///abanderar
+        ///abanderizar [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string words_es {
+            get {
+                return ResourceManager.GetString("words_es", resourceCulture);
             }
         }
     }
