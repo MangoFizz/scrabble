@@ -141,6 +141,9 @@
     <None Include="Connected Services\GameService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\GameService\item41.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

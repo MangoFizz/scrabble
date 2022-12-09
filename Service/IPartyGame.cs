@@ -30,10 +30,10 @@ namespace Service {
         void UpdateBoard(BoardSlot[][] board);
 
         [OperationContract]
-        void UpdatePlayerRack(Tile[] rack);
+        void UpdatePlayerRack(Tile?[] rack);
 
         [OperationContract]
-        void UpdatePlayerScore(int score);
+        void UpdatePlayerScore(Player player, int score);
 
         [OperationContract]
         void UpdatePlayerTurn(Player player);
@@ -50,20 +50,38 @@ namespace Service {
         public Game Game { get; set; }
 
         [IgnoreDataMember]
+        public int CurrentPlayerTurn { get; set; }
+
+        [IgnoreDataMember]
         public int TimeLimitMins { get; set; }
 
         [IgnoreDataMember]
         public Timer Timer { get; set; }
+
+        public Player NextTurn() {
+            CurrentPlayerTurn = (CurrentPlayerTurn + 1) % Players.Count;
+            return Players[CurrentPlayerTurn];
+        }
     }
 
     public partial class Player {
         [IgnoreDataMember]
-        public Tile[] Rack { get; set; }
+        public Tile?[] Rack { get; set; }
 
         [IgnoreDataMember]
         public int Score { get; set; }
 
         [IgnoreDataMember]
         public IPartyGameCallback PartyGameCallbackChannel { get; set; }
+
+        public int UsedRackTiles() {
+            int count = 0;
+            foreach(var tile in Rack) {
+                if(tile == null) {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }

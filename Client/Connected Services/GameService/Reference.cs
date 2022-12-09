@@ -799,10 +799,10 @@ namespace Client.GameService {
         void UpdateBoard(Client.GameService.GameBoardSlot[][] board);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerRack", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerRackResponse")]
-        void UpdatePlayerRack(Client.GameService.GameTile[] rack);
+        void UpdatePlayerRack(System.Nullable<Client.GameService.GameTile>[] rack);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerScore", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerScoreResponse")]
-        void UpdatePlayerScore(int score);
+        void UpdatePlayerScore(Client.GameService.Player player, int score);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/UpdatePlayerTurn", ReplyAction="http://tempuri.org/IPartyGame/UpdatePlayerTurnResponse")]
         void UpdatePlayerTurn(Client.GameService.Player player);

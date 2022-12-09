@@ -262,12 +262,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Game.BoardSlotBonus" nillable="true" type="tns:Game.BoardSlotBonus" />
-  <xs:complexType name="ArrayOfGame.Tile">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Game.Tile" type="tns:Game.Tile" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfGame.Tile" nillable="true" type="tns:ArrayOfGame.Tile" />
   <xs:simpleType name="Game.SupportedLanguage">
     <xs:restriction base="xs:string">
       <xs:enumeration value="en_US" />

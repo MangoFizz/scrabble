@@ -358,6 +358,15 @@ namespace Service {
     }
 
     public partial class GameService : IPartyGame {
+        private bool GamePlayersAreReady(Party party) {
+            foreach(var p in party.Players) {
+                if(p.PartyGameCallbackChannel == null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public void ConnectPartyGame(string playerSessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var player = Players.Find(p => p.SessionId == playerSessionId);
@@ -366,7 +375,11 @@ namespace Service {
 
                 var party = player.CurrentParty;
                 var game = party.Game;
-                player.Rack = game.TakeFromBag();
+                player.Rack = new Game.Tile?[7];
+                var newRack = game.TakeFromBag();
+                for(int i = 0; i < newRack.Length; i++) {
+                    player.Rack[i] = newRack[i];
+                }
                 currentCallbackChannel.UpdateBoard(game.GetJaggedBoard());
                 currentCallbackChannel.UpdatePlayerRack(player.Rack);
 
@@ -375,20 +388,81 @@ namespace Service {
                         p.PartyGameCallbackChannel.UpdateBagTilesLeft(game.Bag.Count);
                     }
                 }
+
+                if(GamePlayersAreReady(party)) {
+                    var random = new Random();
+                    var randomNumber = random.Next(0, party.Players.Count - 1);
+                    party.CurrentPlayerTurn = randomNumber;
+                    foreach(var p in party.Players) {
+                        p.PartyGameCallbackChannel.UpdatePlayerTurn(party.Players[randomNumber]);
+                    }
+                }
             }
         }
 
         public void EndTurn() {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
+            var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null && currentPlayer.CurrentParty != null) {
+                // Refill and send player rack
+                var party = currentPlayer.CurrentParty;
+                var usedTiles = currentPlayer.UsedRackTiles();
+                var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
+                for(var i = 0; i < currentPlayer.Rack.Length; i++) {
+                    if(currentPlayer.Rack[i] == null) {
+                        currentPlayer.Rack[i] = rackRefill[0];
+                        rackRefill.RemoveAt(0);
+                    }
+                }
+                currentPlayer.PartyGameCallbackChannel.UpdatePlayerRack(currentPlayer.Rack);
+
+                var nextPlayerTurn = party.NextTurn();
+                foreach(var p in party.Players) {
+                    p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
+                    p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
+                }
+            }
         }
 
         public void PassTurn() {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
+            var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null && currentPlayer.CurrentParty != null) {
+                var party = currentPlayer.CurrentParty;
+                var nextPlayerTurn = party.NextTurn();
+                foreach(var p in party.Players) {
+                    p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
+                }
+            }
         }
 
         public void PlaceTile(Game.Tile tile, int x, int y) {
-            throw new NotImplementedException();
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
+            var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null && currentPlayer.CurrentParty != null) {
+                var party = currentPlayer.CurrentParty;
+
+                // check if it's the player's turn
+                if(party.Players[party.CurrentPlayerTurn] != currentPlayer) {
+                    return;
+                }
+
+                var points = party.Game.PlaceTile(tile, x, y);
+                currentPlayer.Score += points;
+
+                // Remove tile from rack
+                for(var i = 0; i < currentPlayer.Rack.Length; i++) {
+                    if(currentPlayer.Rack[i] != null && currentPlayer.Rack[i] == tile) {
+                        currentPlayer.Rack[i] = null;
+                        break;
+                    }
+                }
+
+                foreach(var p in party.Players) {
+                    p.PartyGameCallbackChannel.UpdatePlayerScore(currentPlayer, currentPlayer.Score);
+                    p.PartyGameCallbackChannel.UpdateBoard(party.Game.GetJaggedBoard());
+                }
+            }
         }
     }
-
 }

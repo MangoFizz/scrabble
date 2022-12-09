@@ -1,5 +1,6 @@
 ﻿using Client.GameService;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.ServiceModel;
 using System.Threading;
@@ -12,12 +13,21 @@ namespace Client {
     /// Interaction logic for PartyGamePage.xaml
     /// </summary>
     public partial class PartyGamePage : Page, IPartyGameCallback {
+        class BoardSlot {
+            public Border Container { get; set; }
+            public int Row { get; set; }
+            public int Column { get; set; }
+        }
+
         private PartyGameClient Client { get; set; }
         private GameBoardSlot[,] Board { get; set; }
         private GameTile?[] Rack { get; set; }
         private Grid DraggedTile { get; set; }
         private Point DraggedTileStartingPosition { get; set; }
-        private Border FocusedBoardSlot { get; set; }
+        private BoardSlot FocusedBoardSlot { get; set; }
+        private List<Grid> TileContainers { get; set; }
+        private bool CanPlaceTiles { get; set; }
+        private bool TurnStarted { get; set; }
 
         public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
@@ -25,6 +35,7 @@ namespace Client {
             // Initialize resources
             Board = new GameBoardSlot[15, 15];
             Rack = new GameTile?[7];
+            TileContainers = new List<Grid>();
 
             // Set up score table
             SetUpScoreTable();
@@ -36,6 +47,8 @@ namespace Client {
             var context = new InstanceContext(this);
             Client = new PartyGameClient(context);
             Client.ConnectPartyGame(App.Current.SessionId);
+
+            CanPlaceTiles = false;
         }
 
         private void SetUpScoreTable() {
@@ -45,7 +58,7 @@ namespace Client {
             Player1ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[0].Nickname);
             Player1Score.Content = "0";
 
-            if(players.Length == 2) {
+            if(players.Length >= 2) {
                 Player2ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[1].Nickname);
                 Player2Score.Content = "0";
             }
@@ -54,7 +67,7 @@ namespace Client {
                 Player2Score.Visibility = Visibility.Hidden;
             }
 
-            if(players.Length == 3) {
+            if(players.Length >= 3) {
                 Player3ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[2].Nickname);
                 Player3Score.Content = "0";
             }
@@ -63,7 +76,7 @@ namespace Client {
                 Player3Score.Visibility = Visibility.Hidden;
             }
 
-            if(players.Length == 4) {
+            if(players.Length >= 4) {
                 Player4ScoreLabel.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT, players[3].Nickname);
                 Player4Score.Content = "0";
             }
@@ -74,10 +87,10 @@ namespace Client {
 
             TilesLeftCount.Content = "--";
 
-            PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, players[0].Nickname);
+            PlayerTurnMessage.Content = Properties.Resources.PARTY_LOBBY_WAITING_FOR_PLAYERS;
         }
 
-        private Border GetBoardDragOverSlot(Point dragObjectPosition) {
+        private BoardSlot GetBoardDragOverSlot(Point dragObjectPosition) {
             var board = BoardGrid;
             var startPoint = new Point() {
                 X = board.Margin.Left,
@@ -99,7 +112,13 @@ namespace Client {
                 return null;
             }
 
-            return slot;
+            var elem = new BoardSlot() {
+                Column = slotColumn,
+                Row = slotRow
+            };
+            elem.Container = slot;
+
+            return elem;
         }
 
         private void UpdateBoardGrid() {
@@ -145,6 +164,19 @@ namespace Client {
                         Opacity = 0.75
                     };
 
+                    if(slot.Tile.HasValue) {
+                        // Place tile into the focused slot
+                        slotContainer.Child = new Label() {
+                            Content = slot.Tile.Value.ToString().ToLower(),
+                            Foreground = Brushes.Black,
+                            FontSize = 36,
+                            Padding = new Thickness(0, 1, 0, 0),
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular")
+                        };
+                    }
+
                     slotContainer.MouseEnter += (sender, e) => {
                         slotContainer.BorderBrush = Brushes.Black;
                         slotContainer.BorderThickness = new Thickness(slotContainer.Child == null ? 2 : 1);
@@ -167,9 +199,17 @@ namespace Client {
         }
 
         private void UpdateRackGrid() {
+            for(int i = 0; i < TileContainers.Count; i++) {
+                RackCanvas.Children.Remove(TileContainers[i]);
+            }
             for(int i = 0; i < 7; i++) {
                 var tileIndex = i;
                 var tile = Rack[i];
+
+                if(tile == null) {
+                    continue;
+                }
+
                 var letter = (char)tile;
                 var fontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
 
@@ -223,6 +263,9 @@ namespace Client {
                 };
 
                 tileContainer.PreviewMouseDown += (sender, e) => {
+                    if(!CanPlaceTiles) {
+                        return;
+                    }
                     DraggedTile = sender as Grid;
                     DraggedTileStartingPosition = new Point() {
                         X = tileContainer.Margin.Left,
@@ -236,7 +279,7 @@ namespace Client {
                             var draggedTileLabel = DraggedTile.Children[1] as Label;
                             var draggedTileLetter = draggedTileLabel.Content.ToString();
 
-                            var slot = FocusedBoardSlot;
+                            var slot = FocusedBoardSlot.Container;
 
                             // Place tile into the focused slot
                             slot.Child = new Label() {
@@ -249,10 +292,14 @@ namespace Client {
                                 FontFamily = fontFamily
                             };
 
+                            TileContainers.Remove(DraggedTile);
                             RackCanvas.Children.Remove(DraggedTile);
                             Rack[tileIndex] = null;
 
+                            Client.PlaceTile(tile.Value, FocusedBoardSlot.Row, FocusedBoardSlot.Column);
+                            
                             FocusedBoardSlot = null;
+                            PassTurnButton.Content = Properties.Resources.PARTY_GAME_END_TURN_BUTTON;
                         }
                         else {
                             // If there is no focused slot, just return the tile to the rack
@@ -272,6 +319,7 @@ namespace Client {
                     }
                 };
 
+                TileContainers.Add(tileContainer);
                 RackCanvas.Children.Add(tileContainer);
             }
         }
@@ -288,17 +336,19 @@ namespace Client {
             // Handle board slot mouse focus
             var slot = GetBoardDragOverSlot(currentPoint);
             if(slot != null) {
-                if(FocusedBoardSlot != null && FocusedBoardSlot != slot) {
-                    FocusedBoardSlot.BorderBrush = Brushes.Gray;
-                    FocusedBoardSlot.BorderThickness = new Thickness(1);
+                var slotContainer = slot.Container;
+                if(FocusedBoardSlot != null && FocusedBoardSlot.Container != slotContainer) {
+                    FocusedBoardSlot.Container.BorderBrush = Brushes.Gray;
+                    FocusedBoardSlot.Container.BorderThickness = new Thickness(1);
                 }
-                slot.BorderThickness = new Thickness(slot.Child != null ? 1 : 2);
-                slot.BorderBrush = Brushes.Black;
+                slotContainer.BorderThickness = new Thickness(slotContainer.Child != null ? 1 : 2);
+                slotContainer.BorderBrush = Brushes.Black;
                 FocusedBoardSlot = slot;
             }
             else if(FocusedBoardSlot != null) {
-                FocusedBoardSlot.BorderBrush = Brushes.Gray;
-                FocusedBoardSlot.BorderThickness = new Thickness(1);
+                var slotContainer = FocusedBoardSlot.Container;
+                slotContainer.BorderBrush = Brushes.Gray;
+                slotContainer.BorderThickness = new Thickness(1);
                 FocusedBoardSlot = null;
             }
         }
@@ -322,7 +372,7 @@ namespace Client {
             UpdateBoardGrid();
         }
 
-        public void UpdatePlayerRack(GameTile[] rack) {
+        public void UpdatePlayerRack(GameTile?[] rack) {
             for(int i = 0; i < 7; i++) {
                 Rack[i] = rack[i];
             }
@@ -330,12 +380,52 @@ namespace Client {
             UpdateRackGrid();
         }
 
-        public void UpdatePlayerScore(int score) {
-            throw new NotImplementedException();
+        public void UpdatePlayerScore(Player player, int score) {
+            var players = App.Current.CurrentParty.Players;
+            int playerIndex;
+            for(playerIndex = 0; playerIndex < players.Length; playerIndex++) {
+                if(players[playerIndex].Nickname == player.Nickname) {
+                    break;
+                }
+            }
+
+            Label playerScore;
+            switch(playerIndex) {
+                case 0:
+                    playerScore = Player1Score;
+                    break;
+                case 1:
+                    playerScore = Player2Score;
+                    break;
+                case 2:
+                    playerScore = Player3Score;
+                    break;
+                case 3:
+                    playerScore = Player4Score;
+                    break;
+                default:
+                    throw new Exception("Invalid player index");
+            }
+            playerScore.Content = score.ToString();
         }
 
         public void UpdatePlayerTurn(Player player) {
-            throw new NotImplementedException();
+            if(player.Nickname == App.Current.Player.Nickname) {
+                CanPlaceTiles = true;
+                PlayerTurnMessage.Content = Properties.Resources.PARTY_GAME_YOUR_TURN;
+            }
+            else {
+                PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, player.Nickname);
+            }
+        }
+
+        private void PassTurnButton_Click(object sender, RoutedEventArgs e) {
+            if(CanPlaceTiles) {
+                CanPlaceTiles = false;
+                TurnStarted = false;
+                PassTurnButton.Content = Properties.Resources.PARTY_GAME_PASS_TURN_BUTTON;
+                Client.EndTurn();
+            }
         }
     }
 }

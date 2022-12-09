@@ -491,11 +491,11 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pass.
+        ///   Looks up a localized string similar to Pass turn.
         /// </summary>
-        public static string PARTY_GAME_PASS_BUTTON {
+        public static string PARTY_GAME_PASS_TURN_BUTTON {
             get {
-                return ResourceManager.GetString("PARTY_GAME_PASS_BUTTON", resourceCulture);
+                return ResourceManager.GetString("PARTY_GAME_PASS_TURN_BUTTON", resourceCulture);
             }
         }
         
@@ -532,6 +532,15 @@ namespace Client.Properties {
         public static string PARTY_GAME_TILES_LEFT_LABEL {
             get {
                 return ResourceManager.GetString("PARTY_GAME_TILES_LEFT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your turn!.
+        /// </summary>
+        public static string PARTY_GAME_YOUR_TURN {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_YOUR_TURN", resourceCulture);
             }
         }
         
@@ -649,6 +658,15 @@ namespace Client.Properties {
         public static string PARTY_LOBBY_TIME_LIMIT_LABEL {
             get {
                 return ResourceManager.GetString("PARTY_LOBBY_TIME_LIMIT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for players....
+        /// </summary>
+        public static string PARTY_LOBBY_WAITING_FOR_PLAYERS {
+            get {
+                return ResourceManager.GetString("PARTY_LOBBY_WAITING_FOR_PLAYERS", resourceCulture);
             }
         }
         

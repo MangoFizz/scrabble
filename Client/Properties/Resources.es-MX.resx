@@ -237,8 +237,8 @@
   <data name="PARTY_GAME_END_TURN_BUTTON" xml:space="preserve">
     <value>Acabar turno</value>
   </data>
-  <data name="PARTY_GAME_PASS_BUTTON" xml:space="preserve">
-    <value>Pasar</value>
+  <data name="PARTY_GAME_PASS_TURN_BUTTON" xml:space="preserve">
+    <value>Pasar turno</value>
   </data>
   <data name="PARTY_GAME_PLAYER_SCORE_LABEL_FORMAT" xml:space="preserve">
     <value>Puntuación de {0}</value>
@@ -251,6 +251,9 @@
   </data>
   <data name="PARTY_GAME_TILES_LEFT_LABEL" xml:space="preserve">
     <value>Fichas restantes</value>
+  </data>
+  <data name="PARTY_GAME_YOUR_TURN" xml:space="preserve">
+    <value>¡Tu turno!</value>
   </data>
   <data name="PARTY_INVITATION_TEXT" xml:space="preserve">
     <value>¡{0} te ha invitado a jugar!</value>
@@ -290,6 +293,9 @@
   </data>
   <data name="PARTY_LOBBY_TIME_LIMIT_LABEL" xml:space="preserve">
     <value>Tiempo límite: </value>
+  </data>
+  <data name="PARTY_LOBBY_WAITING_FOR_PLAYERS" xml:space="preserve">
+    <value>Esperando jugadores...</value>
   </data>
   <data name="PLAYER_PROFILE_EDIT_BUTTON" xml:space="preserve">
     <value>✏ Edit</value>
