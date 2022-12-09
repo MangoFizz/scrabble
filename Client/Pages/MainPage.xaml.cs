@@ -8,6 +8,11 @@ namespace Client {
         public MainPage() {
             InitializeComponent();
             LoadProfileButton();
+
+            if(App.Current.Player.IsGuest) {
+                MainGrid.Children.Remove(FriendsButton);
+                MainGrid.Children.Remove(ProfileButton);
+            }
         }
 
         public void LoadProfileButton() {

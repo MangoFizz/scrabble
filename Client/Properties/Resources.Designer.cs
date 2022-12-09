@@ -382,6 +382,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login as guest.
+        /// </summary>
+        public static string LOGIN_MENU_LOGIN_AS_GUEST_BUTTON {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_LOGIN_AS_GUEST_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string LOGIN_MENU_LOGIN_BUTTON {

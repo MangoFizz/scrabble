@@ -204,6 +204,9 @@
   <data name="LOGIN_MENU_HEADER" xml:space="preserve">
     <value>Iniciar sesión en Scrabble</value>
   </data>
+  <data name="LOGIN_MENU_LOGIN_AS_GUEST_BUTTON" xml:space="preserve">
+    <value>Iniciar como invitado</value>
+  </data>
   <data name="LOGIN_MENU_LOGIN_BUTTON" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>

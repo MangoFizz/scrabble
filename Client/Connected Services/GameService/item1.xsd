@@ -5,6 +5,7 @@
       <xs:element minOccurs="0" name="Avatar" type="xs:int" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GamesCount" type="xs:int" />
+      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Registered" type="xs:dateTime" />
       <xs:element minOccurs="0" name="WinsCount" type="xs:int" />

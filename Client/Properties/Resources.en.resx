@@ -208,6 +208,9 @@
   <data name="LOGIN_MENU_HEADER" xml:space="preserve">
     <value>Log in to Scrabble</value>
   </data>
+  <data name="LOGIN_MENU_LOGIN_AS_GUEST_BUTTON" xml:space="preserve">
+    <value>Login as guest</value>
+  </data>
   <data name="LOGIN_MENU_LOGIN_BUTTON" xml:space="preserve">
     <value>Log in</value>
   </data>

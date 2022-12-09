@@ -73,5 +73,9 @@ namespace Client {
             LanguageButton.Content = App.Current.CurrentLanguage;
             App.Current.MainWindow.MainFrame.Content = new LoginPage();
         }
+
+        private void LoginAsGuessButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.PlayerManagerClient.LoginAsGuest();
+        }
     }
 }

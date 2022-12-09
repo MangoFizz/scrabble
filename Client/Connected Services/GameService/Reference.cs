@@ -49,6 +49,9 @@ namespace Client.GameService {
         private int GamesCountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -105,6 +108,19 @@ namespace Client.GameService {
                 if ((this.GamesCountField.Equals(value) != true)) {
                     this.GamesCountField = value;
                     this.RaisePropertyChanged("GamesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
                 }
             }
         }
@@ -510,6 +526,12 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/Login")]
         System.Threading.Tasks.Task LoginAsync(string nickname, string password);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/LoginAsGuest")]
+        void LoginAsGuest();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/LoginAsGuest")]
+        System.Threading.Tasks.Task LoginAsGuestAsync();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/RegisterPlayer")]
         void RegisterPlayer(string nickname, string password, string email);
         
@@ -618,6 +640,14 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task LoginAsync(string nickname, string password) {
             return base.Channel.LoginAsync(nickname, password);
+        }
+        
+        public void LoginAsGuest() {
+            base.Channel.LoginAsGuest();
+        }
+        
+        public System.Threading.Tasks.Task LoginAsGuestAsync() {
+            return base.Channel.LoginAsGuestAsync();
         }
         
         public void RegisterPlayer(string nickname, string password, string email) {

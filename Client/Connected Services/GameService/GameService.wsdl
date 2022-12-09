@@ -128,6 +128,9 @@
   <wsdl:message name="IPlayerManager_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
+  <wsdl:message name="IPlayerManager_LoginAsGuest_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginAsGuest" />
+  </wsdl:message>
   <wsdl:message name="IPlayerManager_RegisterPlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterPlayer" />
   </wsdl:message>
@@ -351,6 +354,9 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/Login" message="tns:IPlayerManager_Login_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoginAsGuest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/LoginAsGuest" message="tns:IPlayerManager_LoginAsGuest_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RegisterPlayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/RegisterPlayer" message="tns:IPlayerManager_RegisterPlayer_InputMessage" />
     </wsdl:operation>
@@ -542,6 +548,12 @@
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="Login">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="LoginAsGuest">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/LoginAsGuest" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

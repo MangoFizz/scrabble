@@ -15,6 +15,9 @@ namespace Service {
         void Login(string nickname, string password);
 
         [OperationContract(IsInitiating = true, IsOneWay = true)]
+        void LoginAsGuest();
+
+        [OperationContract(IsInitiating = true, IsOneWay = true)]
         void RegisterPlayer(string nickname, string password, string email);
         
         [OperationContract(IsTerminating = true, IsOneWay = true)]
@@ -101,6 +104,9 @@ namespace Service {
         [DataMember]
         public PlayerStatus status { get; set; }
 
+        [DataMember]
+        public bool IsGuest { get; set; }
+
         [IgnoreDataMember]
         public List<Player> Friends { get; set; }
 
@@ -119,6 +125,7 @@ namespace Service {
             WinsCount = playerData.Wins;
             Registered = playerData.Registered;
             SessionId = Guid.NewGuid().ToString();
+            IsGuest = false;
         }
     }
 }

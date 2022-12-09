@@ -16,27 +16,25 @@ namespace Service {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var result = PlayerManager.AuthenticatePlayer(nickname, password);
             if(result == PlayerManager.PlayerAuthResult.Success) {
-                using(ScrabbleEntities context = new ScrabbleEntities()) {
-                    // Fetch player data
-                    var playerData = PlayerManager.GetPlayerData(nickname);
-                    var player = new Player(playerData) {
-                        PlayerManagerCallbackChannel = currentCallbackChannel
-                    };
+                // Fetch player data
+                var playerData = PlayerManager.GetPlayerData(nickname);
+                var player = new Player(playerData) {
+                    PlayerManagerCallbackChannel = currentCallbackChannel
+                };
 
-                    // Fetch player friend list
-                    var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
-                    player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
+                // Fetch player friend list
+                var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
+                player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
-                    // Answer to client
-                    Players.Add(player);
-                    currentCallbackChannel.LoginResponseHandler(result, player, player.SessionId);
+                // Answer to client
+                Players.Add(player);
+                currentCallbackChannel.LoginResponseHandler(result, player, player.SessionId);
 
-                    // Notify friends that player is online
-                    foreach(var friend in player.Friends) {
-                        var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                        if(connectedPlayer != null) {
-                            connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
-                        }
+                // Notify friends that player is online
+                foreach(var friend in player.Friends) {
+                    var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                    if(connectedPlayer != null) {
+                        connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
                     }
                 }
             }
@@ -45,15 +43,33 @@ namespace Service {
             }
         }
 
+        public void LoginAsGuest() {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+
+            // Fetch player data
+            var player = new Player() {
+                Nickname = $"Guest#{Players.Count}",
+                Avatar = 3,
+                IsGuest = true,
+                PlayerManagerCallbackChannel = currentCallbackChannel
+            };
+
+            // Answer to client
+            Players.Add(player);
+            currentCallbackChannel.LoginResponseHandler(PlayerManager.PlayerAuthResult.Success, player, player.SessionId);
+        }
+
         public void Logout() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
 
             // Notify friends that player is offline
-            foreach(var friend in player.Friends) {
-                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                if(connectedPlayer != null) {
-                    connectedPlayer.PlayerManagerCallbackChannel.FriendDisconnect(player);
+            if(!player.IsGuest) {
+                foreach(var friend in player.Friends) {
+                    var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                    if(connectedPlayer != null) {
+                        connectedPlayer.PlayerManagerCallbackChannel.FriendDisconnect(player);
+                    }
                 }
             }
 
@@ -69,6 +85,10 @@ namespace Service {
         public void SendFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            if(player.IsGuest) {
+                return;
+            }
 
             // Send it!!
             var result = PlayerManager.RequestFriendship(player.Nickname, nickname);
@@ -88,6 +108,11 @@ namespace Service {
         public void AcceptFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            if(currentPlayer.IsGuest) {
+                return;
+            }
+
             var result = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
 
             // Send notification to players
@@ -115,12 +140,22 @@ namespace Service {
         public void DeclineFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            if(player.IsGuest) {
+                return;
+            }
+
             var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
         }
 
         public void GetFriendList() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            if(player.IsGuest) {
+                return;
+            }
+
             var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
             var friends = playerFriendsData.Select(data => new Player(data)).ToList();
 
@@ -144,6 +179,11 @@ namespace Service {
         public void GetFriendRequests() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+
+            if(currentPlayer.IsGuest) {
+                return;
+            }
+
             var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(currentPlayer.Nickname);
             var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
             currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
@@ -292,7 +332,11 @@ namespace Service {
                             currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
                             return;
                         }
-                        currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
+
+
+                        foreach(var p in party.Players) {
+                            p.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
+                        }
 
                         var game = new Game(language);
                         party.Game = game;

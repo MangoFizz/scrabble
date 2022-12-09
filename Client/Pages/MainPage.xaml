@@ -11,10 +11,10 @@
     <Page.Resources>
         <ResourceDictionary Source="../StylesDictionary.xaml" />
     </Page.Resources>
-    <Grid Style="{StaticResource MainGrid}">
+    <Grid Name="MainGrid" Style="{StaticResource MainGrid}">
         <Image HorizontalAlignment="Center" Height="121" Margin="0,93,0,0" VerticalAlignment="Top" Width="558" Source="pack://application:,,,/Resources/images/logo.png"/>
-        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_FRIENDS}" HorizontalAlignment="Left" Margin="50,55,0,0" VerticalAlignment="Top" FontSize="18" Click="FriendsButton_Click" Height="44" Width="92" />
-        <Button Style="{StaticResource BorderedButton}" HorizontalAlignment="Right" Margin="0,40,50,0" VerticalAlignment="Top" FontSize="18" Background="Azure" Click="ProfileButton_Click" Height="75">
+        <Button Name="FriendsButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_FRIENDS}" HorizontalAlignment="Left" Margin="50,55,0,0" VerticalAlignment="Top" FontSize="18" Click="FriendsButton_Click" Height="44" Width="92" />
+        <Button Name="ProfileButton" Style="{StaticResource BorderedButton}" HorizontalAlignment="Right" Margin="0,40,50,0" VerticalAlignment="Top" FontSize="18" Background="Azure" Click="ProfileButton_Click" Height="75">
             <Button.Content>
                 <StackPanel Orientation="Horizontal">
                     <Image Name="PlayerProfileAvatar" Source="Assets/images/avatars/avatar_0.png"/>
