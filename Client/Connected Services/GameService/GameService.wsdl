@@ -268,6 +268,12 @@
   <wsdl:message name="IPartyManager_TransferLeadership_InputMessage">
     <wsdl:part name="parameters" element="tns:TransferLeadership" />
   </wsdl:message>
+  <wsdl:message name="IPartyManager_UpdateTimeLimitSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTimeLimitSetting" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_UpdateLanguageSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateLanguageSetting" />
+  </wsdl:message>
   <wsdl:message name="IPartyManager_CreatePartyCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CreatePartyCallback" />
   </wsdl:message>
@@ -327,6 +333,18 @@
   </wsdl:message>
   <wsdl:message name="IPartyManager_ReceivePartyLeaderTransfer_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceivePartyLeaderTransferResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyTimeLimitUpdate_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyTimeLimitUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyTimeLimitUpdate_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyTimeLimitUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyLanguageUpdate_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyLanguageUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IPartyManager_ReceivePartyLanguageUpdate_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePartyLanguageUpdateResponse" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="IPlayerManager">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Login">
@@ -463,6 +481,12 @@
     <wsdl:operation name="TransferLeadership">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/TransferLeadership" message="tns:IPartyManager_TransferLeadership_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="UpdateTimeLimitSetting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/UpdateTimeLimitSetting" message="tns:IPartyManager_UpdateTimeLimitSetting_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLanguageSetting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/UpdateLanguageSetting" message="tns:IPartyManager_UpdateLanguageSetting_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CreatePartyCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/CreatePartyCallback" message="tns:IPartyManager_CreatePartyCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CreatePartyCallbackResponse" message="tns:IPartyManager_CreatePartyCallback_InputCallbackMessage" />
@@ -502,6 +526,14 @@
     <wsdl:operation name="ReceivePartyLeaderTransfer">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer" message="tns:IPartyManager_ReceivePartyLeaderTransfer_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransferResponse" message="tns:IPartyManager_ReceivePartyLeaderTransfer_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyTimeLimitUpdate">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyTimeLimitUpdate" message="tns:IPartyManager_ReceivePartyTimeLimitUpdate_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyTimeLimitUpdateResponse" message="tns:IPartyManager_ReceivePartyTimeLimitUpdate_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyLanguageUpdate">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLanguageUpdate" message="tns:IPartyManager_ReceivePartyLanguageUpdate_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyLanguageUpdateResponse" message="tns:IPartyManager_ReceivePartyLanguageUpdate_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IPlayerManager" type="tns:IPlayerManager">
@@ -783,6 +815,18 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="UpdateTimeLimitSetting">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/UpdateTimeLimitSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLanguageSetting">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/UpdateLanguageSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="CreatePartyCallback">
       <soap12:operation soapAction="http://tempuri.org/IPartyManager/CreatePartyCallback" style="document" />
       <wsdl:input>
@@ -866,6 +910,24 @@
     </wsdl:operation>
     <wsdl:operation name="ReceivePartyLeaderTransfer">
       <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyTimeLimitUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyTimeLimitUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePartyLanguageUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyLanguageUpdate" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

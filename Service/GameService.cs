@@ -323,6 +323,38 @@ namespace Service {
                 }
             }
         }
+
+        public void UpdateTimeLimitSetting(int time) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null && currentPlayer.Nickname == party.Leader.Nickname) {
+                    foreach(var p in party.Players) {
+                        if(p == currentPlayer) {
+                            continue;
+                        }
+                        p.PartyManagerCallbackChannel.ReceivePartyTimeLimitUpdate(time);
+                    }
+                }
+            }
+        }
+
+        public void UpdateLanguageSetting(Game.SupportedLanguage language) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null && currentPlayer.Nickname == party.Leader.Nickname) {
+                    foreach(var p in party.Players) {
+                        if(p == currentPlayer) {
+                            continue;
+                        }
+                        p.PartyManagerCallbackChannel.ReceivePartyLanguageUpdate(language);
+                    }
+                }
+            }
+        }
     }
 
     public partial class GameService : IPartyGame {

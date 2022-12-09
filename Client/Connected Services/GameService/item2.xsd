@@ -317,10 +317,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateTimeLimitSetting">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="time" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateLanguageSetting">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" name="language" type="q23:Game.SupportedLanguage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreatePartyCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="party" nillable="true" type="q23:Party" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="party" nillable="true" type="q24:Party" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -332,7 +346,7 @@
   <xs:element name="ReceiveInvitation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q24:Player" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q25:Player" />
         <xs:element minOccurs="0" name="partyId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -345,7 +359,7 @@
   <xs:element name="AcceptInvitationCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="party" nillable="true" type="q25:Party" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="party" nillable="true" type="q26:Party" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -357,7 +371,7 @@
   <xs:element name="ReceiveInvitationDecline">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q26:Player" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q27:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -369,7 +383,7 @@
   <xs:element name="ReceivePartyPlayerLeave">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q27:Player" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q28:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -381,7 +395,7 @@
   <xs:element name="ReceivePartyPlayerJoin">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q28:Player" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q29:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -393,7 +407,7 @@
   <xs:element name="StartGameCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="result" type="q29:GameStartResult" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="result" type="q30:GameStartResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -415,7 +429,7 @@
   <xs:element name="ReceivePartyKick">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q30:Player" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q31:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -427,11 +441,35 @@
   <xs:element name="ReceivePartyLeaderTransfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q31:Player" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q32:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ReceivePartyLeaderTransferResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePartyTimeLimitUpdate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="time" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePartyTimeLimitUpdateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePartyLanguageUpdate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" name="language" type="q33:Game.SupportedLanguage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePartyLanguageUpdateResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

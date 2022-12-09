@@ -22,7 +22,7 @@
         <Label Name="GameTimeLimitIndicator" Content="5m" HorizontalAlignment="Left" Margin="490,119,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
 
         <Label Content="{x:Static p:Resources.PARTY_LOBBY_GAME_LANGUAGE_LABEL}" HorizontalAlignment="Left" Margin="109,175,0,0" VerticalAlignment="Top" FontSize="22" Background="#00000000" Foreground="White"/>
-        <ComboBox Name="GameLanguageCombobox" HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32" FontSize="20"/>
+        <ComboBox Name="GameLanguageCombobox" HorizontalAlignment="Left" Margin="295,179,0,0" VerticalAlignment="Top" Width="236" Height="32" FontSize="20" SelectionChanged="GameLanguageCombobox_SelectionChanged"/>
 
         <StackPanel Orientation="Horizontal" Margin="109,278,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="430">
             <Label Content="{x:Static p:Resources.PARTY_LOBBY_LOBBY_CODE_LABEL}" FontSize="28" Foreground="White" FontFamily="Consolas"/>

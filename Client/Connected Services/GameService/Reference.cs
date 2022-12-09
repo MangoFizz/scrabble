@@ -926,6 +926,18 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/TransferLeadership")]
         System.Threading.Tasks.Task TransferLeadershipAsync(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/UpdateTimeLimitSetting")]
+        void UpdateTimeLimitSetting(int time);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/UpdateTimeLimitSetting")]
+        System.Threading.Tasks.Task UpdateTimeLimitSettingAsync(int time);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/UpdateLanguageSetting")]
+        void UpdateLanguageSetting(Client.GameService.GameSupportedLanguage language);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/UpdateLanguageSetting")]
+        System.Threading.Tasks.Task UpdateLanguageSettingAsync(Client.GameService.GameSupportedLanguage language);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -960,6 +972,12 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransfer", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyLeaderTransferResponse")]
         void ReceivePartyLeaderTransfer(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyTimeLimitUpdate", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyTimeLimitUpdateResponse")]
+        void ReceivePartyTimeLimitUpdate(int time);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyLanguageUpdate", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyLanguageUpdateResponse")]
+        void ReceivePartyLanguageUpdate(Client.GameService.GameSupportedLanguage language);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1052,6 +1070,22 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task TransferLeadershipAsync(Client.GameService.Player player) {
             return base.Channel.TransferLeadershipAsync(player);
+        }
+        
+        public void UpdateTimeLimitSetting(int time) {
+            base.Channel.UpdateTimeLimitSetting(time);
+        }
+        
+        public System.Threading.Tasks.Task UpdateTimeLimitSettingAsync(int time) {
+            return base.Channel.UpdateTimeLimitSettingAsync(time);
+        }
+        
+        public void UpdateLanguageSetting(Client.GameService.GameSupportedLanguage language) {
+            base.Channel.UpdateLanguageSetting(language);
+        }
+        
+        public System.Threading.Tasks.Task UpdateLanguageSettingAsync(Client.GameService.GameSupportedLanguage language) {
+            return base.Channel.UpdateLanguageSettingAsync(language);
         }
     }
 }

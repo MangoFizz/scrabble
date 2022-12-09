@@ -305,7 +305,10 @@ namespace Client {
         private void GameTimeLimitSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if(GameTimeLimitIndicator != null) {
                 GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
-            } 
+                if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                    App.Current.PartyManagerClient.UpdateTimeLimitSetting((int)GameTimeLimitSlider.Value);
+                }
+            }
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e) {
@@ -325,6 +328,25 @@ namespace Client {
 
                 default:
                     break;
+            }
+        }
+
+        public void ReceivePartyTimeLimitUpdate(int time) {
+            if(GameTimeLimitIndicator != null) {
+                GameTimeLimitIndicator.Content = time.ToString() + "m";
+                GameTimeLimitSlider.Value = time;
+            }
+        }
+
+        public void ReceivePartyLanguageUpdate(GameSupportedLanguage language) {
+            if(GameLanguageCombobox != null) {
+                GameLanguageCombobox.SelectedIndex = (int)language;
+            }
+        }
+
+        private void GameLanguageCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                App.Current.PartyManagerClient.UpdateLanguageSetting((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex);
             }
         }
     }

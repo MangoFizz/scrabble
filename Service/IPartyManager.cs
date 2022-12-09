@@ -38,6 +38,12 @@ namespace Service {
 
         [OperationContract(IsOneWay = true)]
         void TransferLeadership(Player player);
+
+        [OperationContract(IsOneWay = true)]
+        void UpdateTimeLimitSetting(int time);
+
+        [OperationContract(IsOneWay = true)]
+        void UpdateLanguageSetting(Game.SupportedLanguage language);
     }
 
     public interface IPartyManagerCallback {
@@ -70,6 +76,12 @@ namespace Service {
         
         [OperationContract]
         void ReceivePartyLeaderTransfer(Player player);
+
+        [OperationContract]
+        void ReceivePartyTimeLimitUpdate(int time);
+
+        [OperationContract]
+        void ReceivePartyLanguageUpdate(Game.SupportedLanguage language);
     }
 
     [DataContract]

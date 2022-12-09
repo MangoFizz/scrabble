@@ -272,6 +272,13 @@ namespace Client {
             CurrentParty = null;
         }
 
+        public void ReceivePartyLanguageUpdate(GameSupportedLanguage language) {
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.ReceivePartyLanguageUpdate(language);
+            }
+        }
+
         public void ReceivePartyLeaderTransfer(Player player) {
             var localPlayer = CurrentParty.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
             if(localPlayer != null) {
@@ -305,6 +312,13 @@ namespace Client {
             if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
                 var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
                 partyLobbyPage.ReceivePartyPlayerLeave(player);
+            }
+        }
+
+        public void ReceivePartyTimeLimitUpdate(int time) {
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
+                partyLobbyPage.ReceivePartyTimeLimitUpdate(time);
             }
         }
 
