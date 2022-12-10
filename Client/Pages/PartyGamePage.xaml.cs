@@ -32,18 +32,14 @@ namespace Client {
         public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
 
-            // Initialize resources
             Board = new GameBoardSlot[15, 15];
             Rack = new GameTile?[7];
             TileContainers = new List<Grid>();
 
-            // Set up score table
             SetUpScoreTable();
 
-            // Restore chat
             ChatFrame.Content = chatPage;
 
-            // Create client
             var context = new InstanceContext(this);
             Client = new PartyGameClient(context);
             Client.ConnectPartyGame(App.Current.SessionId);
@@ -104,10 +100,8 @@ namespace Client {
                 return null;
             }
 
-            // Get the rectangle from Grid
             var slot = BoardGrid.Children[slotRow * 15 + slotColumn] as Border;
 
-            // If the slot is NOT empty, do not allow the tile to be dropped!
             if(slot.Child != null) {
                 return null;
             }
@@ -165,7 +159,6 @@ namespace Client {
                     };
 
                     if(slot.Tile.HasValue) {
-                        // Place tile into the focused slot
                         slotContainer.Child = new Label() {
                             Content = slot.Tile.Value.ToString().ToLower(),
                             Foreground = Brushes.Black,
@@ -213,8 +206,7 @@ namespace Client {
                 var letter = (char)tile;
                 var fontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
 
-                // Account for wildcard
-                if(letter == ' ') {
+                if(letter == (char)GameTile.Wildcard) {
                     letter = '!';
                 }
 
@@ -281,7 +273,6 @@ namespace Client {
 
                             var slot = FocusedBoardSlot.Container;
 
-                            // Place tile into the focused slot
                             slot.Child = new Label() {
                                 Content = draggedTileLetter.ToLower(),
                                 Foreground = Brushes.Black,
@@ -302,7 +293,6 @@ namespace Client {
                             PassTurnButton.Content = Properties.Resources.PARTY_GAME_END_TURN_BUTTON;
                         }
                         else {
-                            // If there is no focused slot, just return the tile to the rack
                             DraggedTile.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
                         }
 
@@ -329,11 +319,9 @@ namespace Client {
                 return;
             }
 
-            // Update the position of the dragged object
             var currentPoint = e.GetPosition(sender as IInputElement);
             DraggedTile.Margin = new Thickness(currentPoint.X - DraggedTile.ActualWidth / 2, currentPoint.Y - DraggedTile.ActualHeight / 2, 0, 0);
             
-            // Handle board slot mouse focus
             var slot = GetBoardDragOverSlot(currentPoint);
             if(slot != null) {
                 var slotContainer = slot.Container;
@@ -362,7 +350,6 @@ namespace Client {
         }
 
         public void UpdateBoard(GameBoardSlot[][] board) {
-            // Convert again from a jagged array to a 2D array
             for(int x = 0; x < 15; x++) {
                 for(int y = 0; y < 15; y++) {
                     Board[x, y] = board[x][y];

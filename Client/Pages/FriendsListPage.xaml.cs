@@ -64,16 +64,16 @@ namespace Client {
                     status.Content = Properties.Resources.FRIENDS_LIST_STATUS_PENDING;
                 }
                 else {
-                    switch(player.status) {
-                        case PlayerStatus.Online:
+                    switch(player.Status) {
+                        case Player.StatusType.Online:
                             status.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
                             status.Foreground = Brushes.Green;
                             break;
-                        case PlayerStatus.Offline:
+                        case Player.StatusType.Offline:
                             status.Content = Properties.Resources.FRIENDS_LIST_STATUS_OFFLINE;
                             status.Foreground = Brushes.Gray;
                             break;
-                        case PlayerStatus.InGame:
+                        case Player.StatusType.InGame:
                             status.Content = Properties.Resources.FRIENDS_LIST_STATUS_IN_GAME;
                             status.Foreground = Brushes.Blue;
                             break;
@@ -143,8 +143,6 @@ namespace Client {
         }
 
         private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            // Wait for animation to finish
-            // TODO: Find a better way to do this!
             Task.Factory.StartNew(() => {
                 Thread.Sleep(175);
                 Dispatcher.Invoke(() => {
@@ -232,27 +230,14 @@ namespace Client {
             RefreshFriendList();
         }
 
-        public void FriendConnect(Player player) {
+        public void UpdateFriendStatus(Player player, Player.StatusType status) {
             if(Friends == null) {
                 Friends = new List<Player>();
             }
 
             var friend = Friends.Find(x => x.Nickname == player.Nickname);
             if(friend != null) {
-                friend.status = PlayerStatus.Online;
-            }
-
-            RefreshFriendList();
-        }
-
-        public void FriendDisconnect(Player player) {
-            if(Friends == null) {
-                Friends = new List<Player>();
-            }
-
-            var friend = Friends.Find(x => x.Nickname == player.Nickname);
-            if(friend != null) {
-                friend.status = PlayerStatus.Offline;
+                friend.Status = status;
             }
 
             RefreshFriendList();

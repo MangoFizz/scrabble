@@ -58,10 +58,10 @@ namespace Client.GameService {
         private System.DateTime RegisteredField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int WinsCountField;
+        private Client.GameService.Player.StatusType StatusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.PlayerStatus statusField;
+        private int WinsCountField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -152,6 +152,19 @@ namespace Client.GameService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.GameService.Player.StatusType Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int WinsCount {
             get {
                 return this.WinsCountField;
@@ -164,19 +177,6 @@ namespace Client.GameService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.PlayerStatus status {
-            get {
-                return this.statusField;
-            }
-            set {
-                if ((this.statusField.Equals(value) != true)) {
-                    this.statusField = value;
-                    this.RaisePropertyChanged("status");
-                }
-            }
-        }
-        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -185,20 +185,20 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerStatus", Namespace="http://schemas.datacontract.org/2004/07/Service")]
-    public enum PlayerStatus : int {
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Offline = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Online = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        InGame = 2,
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Player.StatusType", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+        public enum StatusType : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Offline = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Online = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            InGame = 2,
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -242,6 +242,17 @@ namespace Client.GameService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         DatabaseError = 6,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DisconnectionReason", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+    public enum DisconnectionReason : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DuplicatePlayerSession = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ServerShutdown = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -599,11 +610,11 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/ReceiveFriendAdd")]
         void ReceiveFriendAdd(Client.GameService.Player player);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/FriendConnect")]
-        void FriendConnect(Client.GameService.Player player);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/UpdateFriendStatus", ReplyAction="http://tempuri.org/IPlayerManager/UpdateFriendStatusResponse")]
+        void UpdateFriendStatus(Client.GameService.Player friend, Client.GameService.Player.StatusType status);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/FriendDisconnect")]
-        void FriendDisconnect(Client.GameService.Player player);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/Disconnect", ReplyAction="http://tempuri.org/IPlayerManager/DisconnectResponse")]
+        void Disconnect(Client.GameService.DisconnectionReason reason);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -711,11 +722,11 @@ namespace Client.GameService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameService.IPartyChat", CallbackContract=typeof(Client.GameService.IPartyChatCallback))]
     public interface IPartyChat {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Connect")]
-        void Connect(string sessionId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/ConnectPartyChat")]
+        void ConnectPartyChat(string sessionId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Connect")]
-        System.Threading.Tasks.Task ConnectAsync(string sessionId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/ConnectPartyChat")]
+        System.Threading.Tasks.Task ConnectPartyChatAsync(string sessionId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Say")]
         void Say(string message);
@@ -768,12 +779,12 @@ namespace Client.GameService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void Connect(string sessionId) {
-            base.Channel.Connect(sessionId);
+        public void ConnectPartyChat(string sessionId) {
+            base.Channel.ConnectPartyChat(sessionId);
         }
         
-        public System.Threading.Tasks.Task ConnectAsync(string sessionId) {
-            return base.Channel.ConnectAsync(sessionId);
+        public System.Threading.Tasks.Task ConnectPartyChatAsync(string sessionId) {
+            return base.Channel.ConnectPartyChatAsync(sessionId);
         }
         
         public void Say(string message) {
@@ -909,11 +920,11 @@ namespace Client.GameService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameService.IPartyManager", CallbackContract=typeof(Client.GameService.IPartyManagerCallback))]
     public interface IPartyManager {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/Subscribe")]
-        void Subscribe(string sessionId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/ConnectPartyManager")]
+        void ConnectPartyManager(string sessionId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/Subscribe")]
-        System.Threading.Tasks.Task SubscribeAsync(string sessionId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/ConnectPartyManager")]
+        System.Threading.Tasks.Task ConnectPartyManagerAsync(string sessionId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CreateParty")]
         void CreateParty();
@@ -1038,12 +1049,12 @@ namespace Client.GameService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void Subscribe(string sessionId) {
-            base.Channel.Subscribe(sessionId);
+        public void ConnectPartyManager(string sessionId) {
+            base.Channel.ConnectPartyManager(sessionId);
         }
         
-        public System.Threading.Tasks.Task SubscribeAsync(string sessionId) {
-            return base.Channel.SubscribeAsync(sessionId);
+        public System.Threading.Tasks.Task ConnectPartyManagerAsync(string sessionId) {
+            return base.Channel.ConnectPartyManagerAsync(sessionId);
         }
         
         public void CreateParty() {

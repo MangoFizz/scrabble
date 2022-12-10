@@ -1,5 +1,4 @@
 ﻿using Core;
-using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,54 +6,98 @@ using System.ServiceModel;
 
 namespace Service {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public partial class GameService { }
+    public partial class GameService { 
+        public void Dispose() {
+            DisconnectAllPlayerClients();
+        }
+    }
 
-    public partial class GameService : IPlayerManager {
+        public partial class GameService : IPlayerManager {
         private List<Player> Players = new List<Player>();
 
-        public void Login(string nickname, string password) {
-            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var result = PlayerManager.AuthenticatePlayer(nickname, password);
-            if(result == PlayerManager.PlayerAuthResult.Success) {
-                // Fetch player data
-                var playerData = PlayerManager.GetPlayerData(nickname);
-                var player = new Player(playerData) {
-                    PlayerManagerCallbackChannel = currentCallbackChannel
-                };
+        private void FetchPlayerFriendList(Player player) {
+            var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
+            player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
+        }
 
-                // Fetch player friend list
-                var playerFriendsData = PlayerManager.GetPlayerFriendsData(nickname);
-                player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
-
-                // Answer to client
-                Players.Add(player);
-                currentCallbackChannel.LoginResponseHandler(result, player, player.SessionId);
-
-                // Notify friends that player is online
-                foreach(var friend in player.Friends) {
-                    var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                    if(connectedPlayer != null) {
-                        connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
+        private void FetchPlayerFriendsStatus(Player player) {
+            for(var i = 0; i < player.Friends.Count; i++) {
+                var friend = player.Friends[i];
+                var onlinePlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                if(onlinePlayer != null) {
+                    if(onlinePlayer.CurrentParty != null) {
+                        friend.Status = Player.StatusType.InGame;
+                    }
+                    else {
+                        friend.Status = Player.StatusType.Online;
                     }
                 }
             }
+        }
+
+        private void NotifyFriendsPlayerState(Player player) {
+            if(player.IsGuest) {
+                return;
+            }
+            foreach(var friend in player.Friends) {
+                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                if(connectedPlayer != null) {
+                    connectedPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(player, player.Status);
+                }
+            }
+        }
+
+        private void SendFriendRequestNotification(string nickname, Player sender) {
+            var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == nickname);
+            if(connectedPlayer != null) {
+                connectedPlayer.PlayerManagerCallbackChannel.ReceiveFriendRequest(sender);
+            }
+        }
+
+        private void DisconnectPlayerClient(string nickname) {
+            var player = Players.FirstOrDefault(p => p.Nickname == nickname);
+            if(player != null) {
+                player.PlayerManagerCallbackChannel.Disconnect(DisconnectionReason.DuplicatePlayerSession);
+            }
+            Players.Remove(player);
+        }
+
+        private void DisconnectAllPlayerClients() {
+            foreach(var player in Players) {
+                player.PlayerManagerCallbackChannel.Disconnect(DisconnectionReason.ServerShutdown);
+            }
+            Players.Clear();
+        }
+
+        public void Login(string nickname, string password) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var authenticationResult = PlayerManager.AuthenticatePlayer(nickname, password);
+            if(authenticationResult == PlayerManager.PlayerAuthResult.Success) {
+                DisconnectPlayerClient(nickname);
+                var playerData = PlayerManager.GetPlayerData(nickname);
+                var player = new Player(playerData) {
+                    PlayerManagerCallbackChannel = currentCallbackChannel,
+                    Status = Player.StatusType.Online
+                };
+                Players.Add(player);
+                currentCallbackChannel.LoginResponseHandler(authenticationResult, player, player.SessionId);
+                FetchPlayerFriendList(player);
+                NotifyFriendsPlayerState(player);
+            }
             else {
-                currentCallbackChannel.LoginResponseHandler(result, null, null);
+                currentCallbackChannel.LoginResponseHandler(authenticationResult, null, null);
             }
         }
 
         public void LoginAsGuest() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-
-            // Fetch player data
             var player = new Player() {
-                Nickname = $"Guest#{Players.Count}",
+                Nickname = $"Guest #{Players.Count + 900}",
                 Avatar = 3,
+                Status = Player.StatusType.Online,
                 IsGuest = true,
                 PlayerManagerCallbackChannel = currentCallbackChannel
             };
-
-            // Answer to client
             Players.Add(player);
             currentCallbackChannel.LoginResponseHandler(PlayerManager.PlayerAuthResult.Success, player, player.SessionId);
         }
@@ -62,128 +105,80 @@ namespace Service {
         public void Logout() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
-
-            // Notify friends that player is offline
-            if(!player.IsGuest) {
-                foreach(var friend in player.Friends) {
-                    var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                    if(connectedPlayer != null) {
-                        connectedPlayer.PlayerManagerCallbackChannel.FriendDisconnect(player);
-                    }
-                }
-            }
-
+            player.Status = Player.StatusType.Offline;
+            NotifyFriendsPlayerState(player);
             Players.Remove(player);
         }
 
         public void RegisterPlayer(string nickname, string password, string email) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var result = PlayerManager.RegisterPlayer(nickname, password, email);
-            currentCallbackChannel.RegisterPlayerResponseHandler(result);
+            var registerResult = PlayerManager.RegisterPlayer(nickname, password, email);
+            currentCallbackChannel.RegisterPlayerResponseHandler(registerResult);
         }
 
         public void SendFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
-            var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
-
-            if(player.IsGuest) {
+            var sender = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
+            if(sender.IsGuest) {
                 return;
             }
-
-            // Send it!!
-            var result = PlayerManager.RequestFriendship(player.Nickname, nickname);
-
-            // If success, send friend request notification to the other player if is connected
-            if(result == PlayerManager.PlayerFriendRequestResult.Success) {
-                var receiver = Players.Find(p => p.Nickname == nickname);
-                if(receiver != null) {
-                    receiver.PlayerManagerCallbackChannel.ReceiveFriendRequest(player);
-                }
+            var requestResult = PlayerManager.RequestFriendship(sender.Nickname, nickname);
+            if(requestResult == PlayerManager.PlayerFriendRequestResult.Success) {
+                SendFriendRequestNotification(nickname, sender);
             }
-
-            // Answer to client
-            currentCallbackChannel.SendFriendRequestResponseHandler(result);
+            currentCallbackChannel.SendFriendRequestResponseHandler(requestResult);
         }
 
         public void AcceptFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-
             if(currentPlayer.IsGuest) {
                 return;
             }
-
-            var result = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
-
-            // Send notification to players
-            if(result == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
+            var requestResponseResult = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
+            if(requestResponseResult == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
                 var senderPlayer = Players.Find(p => p.Nickname == nickname);
-                bool senderIsConnected = senderPlayer != null;
                 if(senderPlayer != null) {
                     senderPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(currentPlayer);
-                    senderPlayer.PlayerManagerCallbackChannel.FriendConnect(currentPlayer);
+                    currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
+                    senderPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(currentPlayer, Player.StatusType.Online);
+                    currentPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(senderPlayer, Player.StatusType.Online);
                 }
                 else {
                     var senderPlayerData = PlayerManager.GetPlayerData(nickname);
                     senderPlayer = new Player(senderPlayerData);
+                    currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
                 }
-
-                currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
                 currentPlayer.Friends.Add(senderPlayer);
-
-                if(senderIsConnected) {
-                    currentPlayer.PlayerManagerCallbackChannel.FriendConnect(senderPlayer);
-                }
             }
         }
 
         public void DeclineFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-
             if(player.IsGuest) {
                 return;
             }
-
-            var result = PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
+            PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
         }
 
         public void GetFriendList() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-
             if(player.IsGuest) {
                 return;
             }
-
-            var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
-            var friends = playerFriendsData.Select(data => new Player(data)).ToList();
-
-            // Set friends status
-            for(var i = 0; i < friends.Count(); i++) {
-                var friend = friends[i];
-                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                if(connectedPlayer != null) {
-                    if(connectedPlayer.CurrentParty != null) {
-                        friend.status = PlayerStatus.InGame;
-                    }
-                    else {
-                        friend.status = PlayerStatus.Online;
-                    }
-                }
-            }
-
-            currentCallbackChannel.GetFriendListResponseHandler(friends.ToArray());
+            FetchPlayerFriendList(player);
+            FetchPlayerFriendsStatus(player);
+            currentCallbackChannel.GetFriendListResponseHandler(player.Friends.ToArray());
         }
 
         public void GetFriendRequests() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-
             if(currentPlayer.IsGuest) {
                 return;
             }
-
             var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(currentPlayer.Nickname);
             var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
             currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
@@ -191,7 +186,7 @@ namespace Service {
     }
 
     public partial class GameService : IPartyChat {
-        public void Connect(string sessionId) {
+        public void ConnectPartyChat(string sessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
             var currentPlayer = Players.Find(p => p.SessionId == sessionId);
             currentPlayer.PartyChatCallbackChannel = currentCallbackChannel;
@@ -217,7 +212,29 @@ namespace Service {
     }
 
     public partial class GameService : IPartyManager {
-        public void Subscribe(string sessionId) {
+        private void TransferPartyOwnership(Player player, Party party) {
+            if(player.Nickname == party.Leader.Nickname) {
+                if(party.Players.Count() > 0) {
+                    party.Leader = party.Players[0];
+                    foreach(var p in party.Players) {
+                        p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
+                    }
+                }
+            }
+        }
+        
+        private void CreateGame(Party party, Game.SupportedLanguage language, int timeLimit) {
+            var game = new Game(language);
+            party.Game = game;
+            party.TimeLimitMins = timeLimit;
+            foreach(var p in party.Players) {
+                p.PartyManagerCallbackChannel.ReceiveGameStart();
+            }
+
+            party.Timer = new System.Threading.Timer((o) => { }, null, 0, timeLimit * 60 * 1000);
+        }
+
+        public void ConnectPartyManager(string sessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var player = Players.Find(p => p.SessionId == sessionId);
             if(player != null) {
@@ -248,7 +265,6 @@ namespace Service {
                         currentPlayer.CurrentParty = party;
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
                         currentCallbackChannel.AcceptInvitationCallback(party);
-
                         party.Players.Add(currentPlayer);
                         foreach(var p in party.Players) {
                             p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(currentPlayer);
@@ -296,26 +312,13 @@ namespace Service {
                 if(party != null) {
                     player.CurrentParty = null;
                     party.Players.Remove(player);
-                    foreach(var p in party.Players) {
-                        p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
-                    }
-
-                    // Notify leadership transfer if player was the leader
-                    if(player.Nickname == party.Leader.Nickname) {
-                        if(party.Players.Count() > 0) {
-                            party.Leader = party.Players[0];
-                            foreach(var p in party.Players) {
-                                p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
-                            }
+                    player.Status = Player.StatusType.Online;
+                    NotifyFriendsPlayerState(player);
+                    if(party.Players.Count > 0) {
+                        foreach(var p in party.Players) {
+                            p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                         }
-                    }
-
-                    // Notify friends that player is online
-                    foreach(var friend in player.Friends) {
-                        var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                        if(connectedPlayer != null) {
-                            connectedPlayer.PlayerManagerCallbackChannel.FriendConnect(player);
-                        }
+                        TransferPartyOwnership(player, party);
                     }
                 }
             }
@@ -332,20 +335,10 @@ namespace Service {
                             currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
                             return;
                         }
-
-
                         foreach(var p in party.Players) {
                             p.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
                         }
-
-                        var game = new Game(language);
-                        party.Game = game;
-                        party.TimeLimitMins = timeLimitMins;
-                        foreach(var p in party.Players) {
-                            p.PartyManagerCallbackChannel.ReceiveGameStart();
-                        }
-
-                        party.Timer = new System.Threading.Timer((o) => { }, null, 0, timeLimitMins * 60 * 1000);
+                        CreateGame(party, language, timeLimitMins);
                     }
                 }
             }
@@ -411,35 +404,85 @@ namespace Service {
             return true;
         }
 
+        private void CreatePlayerRack(Player player) {
+            if(player.Rack != null) {
+                return;
+            }
+            var party = player.CurrentParty;
+            var game = party.Game;
+            player.Rack = new Game.Tile?[7];
+            var newRack = game.TakeFromBag();
+            for(int i = 0; i < newRack.Length; i++) {
+                player.Rack[i] = newRack[i];
+            }
+        }
+
+        private void UpdatePlayerGame(Player player) {
+            var callbackChannel = player.PartyGameCallbackChannel;
+            if(callbackChannel == null) {
+                return;
+            }
+            callbackChannel.UpdateBoard(player.CurrentParty.Game.GetJaggedBoard());
+            callbackChannel.UpdatePlayerRack(player.Rack);
+            callbackChannel.UpdatePlayerScore(player, player.Score);
+        }
+
+        private void UpdatePlayersGame(Party party) {
+            foreach(var player in party.Players) {
+                UpdatePlayerGame(player);
+            }
+        }
+
+        private void RefreshGameTilesLeftCount(Party party) {
+            foreach(var p in party.Players) {
+                if(p.PartyGameCallbackChannel != null) {
+                    p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
+                }
+            }
+        }
+
+        private void SetRandomTurn(Party party) {
+            var random = new Random();
+            var randomNumber = random.Next(0, party.Players.Count - 1);
+            party.CurrentPlayerTurn = randomNumber;
+            foreach(var p in party.Players) {
+                p.PartyGameCallbackChannel.UpdatePlayerTurn(party.Players[randomNumber]);
+            }
+        }
+
+        private void RefillPlayerRack(Player player) {
+            var party = player.CurrentParty;
+            var usedTiles = player.UsedRackTiles();
+            var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
+            for(var i = 0; i < player.Rack.Length; i++) {
+                if(player.Rack[i] == null) {
+                    player.Rack[i] = rackRefill[0];
+                    rackRefill.RemoveAt(0);
+                }
+            }
+            player.PartyGameCallbackChannel.UpdatePlayerRack(player.Rack);
+        }
+
+        private void RemoveTileFromPlayerRack(Player player, Game.Tile tile) {
+            for(var i = 0; i < player.Rack.Length; i++) {
+                if(player.Rack[i] != null && player.Rack[i] == tile) {
+                    player.Rack[i] = null;
+                    break;
+                }
+            }
+        }
+
         public void ConnectPartyGame(string playerSessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var player = Players.Find(p => p.SessionId == playerSessionId);
             if(player != null && player.CurrentParty != null) {
                 player.PartyGameCallbackChannel = currentCallbackChannel;
-
                 var party = player.CurrentParty;
-                var game = party.Game;
-                player.Rack = new Game.Tile?[7];
-                var newRack = game.TakeFromBag();
-                for(int i = 0; i < newRack.Length; i++) {
-                    player.Rack[i] = newRack[i];
-                }
-                currentCallbackChannel.UpdateBoard(game.GetJaggedBoard());
-                currentCallbackChannel.UpdatePlayerRack(player.Rack);
-
-                foreach(var p in party.Players) {
-                    if(p.PartyGameCallbackChannel != null) {
-                        p.PartyGameCallbackChannel.UpdateBagTilesLeft(game.Bag.Count);
-                    }
-                }
-
+                CreatePlayerRack(player);
+                UpdatePlayerGame(player);
+                RefreshGameTilesLeftCount(party);
                 if(GamePlayersAreReady(party)) {
-                    var random = new Random();
-                    var randomNumber = random.Next(0, party.Players.Count - 1);
-                    party.CurrentPlayerTurn = randomNumber;
-                    foreach(var p in party.Players) {
-                        p.PartyGameCallbackChannel.UpdatePlayerTurn(party.Players[randomNumber]);
-                    }
+                    SetRandomTurn(party);
                 }
             }
         }
@@ -448,18 +491,8 @@ namespace Service {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null && currentPlayer.CurrentParty != null) {
-                // Refill and send player rack
+                RefillPlayerRack(currentPlayer);
                 var party = currentPlayer.CurrentParty;
-                var usedTiles = currentPlayer.UsedRackTiles();
-                var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
-                for(var i = 0; i < currentPlayer.Rack.Length; i++) {
-                    if(currentPlayer.Rack[i] == null) {
-                        currentPlayer.Rack[i] = rackRefill[0];
-                        rackRefill.RemoveAt(0);
-                    }
-                }
-                currentPlayer.PartyGameCallbackChannel.UpdatePlayerRack(currentPlayer.Rack);
-
                 var nextPlayerTurn = party.NextTurn();
                 foreach(var p in party.Players) {
                     p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
@@ -485,27 +518,13 @@ namespace Service {
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null && currentPlayer.CurrentParty != null) {
                 var party = currentPlayer.CurrentParty;
-
-                // check if it's the player's turn
                 if(party.Players[party.CurrentPlayerTurn] != currentPlayer) {
                     return;
                 }
-
                 var points = party.Game.PlaceTile(tile, x, y);
                 currentPlayer.Score += points;
-
-                // Remove tile from rack
-                for(var i = 0; i < currentPlayer.Rack.Length; i++) {
-                    if(currentPlayer.Rack[i] != null && currentPlayer.Rack[i] == tile) {
-                        currentPlayer.Rack[i] = null;
-                        break;
-                    }
-                }
-
-                foreach(var p in party.Players) {
-                    p.PartyGameCallbackChannel.UpdatePlayerScore(currentPlayer, currentPlayer.Score);
-                    p.PartyGameCallbackChannel.UpdateBoard(party.Game.GetJaggedBoard());
-                }
+                RemoveTileFromPlayerRack(currentPlayer, tile);
+                UpdatePlayersGame(party);
             }
         }
     }

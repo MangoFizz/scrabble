@@ -58,7 +58,6 @@ namespace Core {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] hashBytes = sha256.ComputeHash(passwordBytes);
 
-            // Convert hash bytes to string in hex format
             StringBuilder stringBuilder = new StringBuilder();
             for(int i = 0; i < hashBytes.Length; i++) {
                 stringBuilder.Append(hashBytes[i].ToString("x2"));

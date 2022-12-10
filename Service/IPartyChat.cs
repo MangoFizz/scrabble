@@ -6,7 +6,7 @@ namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyChatCallback))]
     public interface IPartyChat {
         [OperationContract(IsOneWay = true)]
-        void Connect(string sessionId);
+        void ConnectPartyChat(string sessionId);
 
         [OperationContract(IsOneWay = true)]
         void Say(string message);
@@ -21,10 +21,5 @@ namespace Service {
 
         [OperationContract]
         void ReceiveWhisper(Player sender, string message);
-    }
-
-    public partial class Player {
-        [IgnoreDataMember]
-        public IPartyChatCallback PartyChatCallbackChannel { get; set; }
     }
 }

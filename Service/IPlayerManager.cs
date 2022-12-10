@@ -9,6 +9,11 @@ using Core;
 using static Core.PlayerManager;
 
 namespace Service {
+    public enum DisconnectionReason {
+        DuplicatePlayerSession,
+        ServerShutdown
+    }
+    
     [ServiceContract(CallbackContract = typeof(IPlayerManagerCallback), SessionMode = SessionMode.Required)]
     public interface IPlayerManager {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
@@ -62,70 +67,10 @@ namespace Service {
         [OperationContract(IsOneWay = true)]
         void ReceiveFriendAdd(Player player);
 
-        [OperationContract(IsOneWay = true)]
-        void FriendConnect(Player player);
+        [OperationContract]
+        void UpdateFriendStatus(Player friend, Player.StatusType status);
 
-        [OperationContract(IsOneWay = true)]
-        void FriendDisconnect(Player player);
-    }
-
-    public enum PlayerStatus {
-        Offline,
-        Online,
-        InGame
-    }
-
-    /// <summary>
-    /// Partial class for player data contract.
-    /// </summary>
-    [DataContract]
-    public partial class Player {
-        [IgnoreDataMember]
-        public string SessionId { get; set; }
-
-        [DataMember]
-        public string Nickname { get; set; }
-
-        [DataMember]
-        public string Email { get; set; }
-
-        [DataMember]
-        public int Avatar { get; set; }
-
-        [DataMember]
-        public int GamesCount { get; set; }
-
-        [DataMember]
-        public int WinsCount { get; set; }
-
-        [DataMember]
-        public DateTime Registered { get; set; }
-
-        [DataMember]
-        public PlayerStatus status { get; set; }
-
-        [DataMember]
-        public bool IsGuest { get; set; }
-
-        [IgnoreDataMember]
-        public List<Player> Friends { get; set; }
-
-        [IgnoreDataMember]
-        public IPlayerManagerCallback PlayerManagerCallbackChannel { get; set; }
-
-        public Player() {
-            SessionId = Guid.NewGuid().ToString();
-        }
-
-        public Player(DataAccess.Player playerData) {
-            Nickname = playerData.Nickname;
-            Email = playerData.Email;
-            Avatar = playerData.Avatar;
-            GamesCount = playerData.Games;
-            WinsCount = playerData.Wins;
-            Registered = playerData.Registered;
-            SessionId = Guid.NewGuid().ToString();
-            IsGuest = false;
-        }
+        [OperationContract]
+        void Disconnect(DisconnectionReason reason);
     }
 }

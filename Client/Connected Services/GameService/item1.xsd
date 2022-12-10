@@ -8,25 +8,32 @@
       <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Registered" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" type="tns:Player.StatusType" />
       <xs:element minOccurs="0" name="WinsCount" type="xs:int" />
-      <xs:element minOccurs="0" name="status" type="tns:PlayerStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />
-  <xs:simpleType name="PlayerStatus">
+  <xs:simpleType name="Player.StatusType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Offline" />
       <xs:enumeration value="Online" />
       <xs:enumeration value="InGame" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="PlayerStatus" nillable="true" type="tns:PlayerStatus" />
+  <xs:element name="Player.StatusType" nillable="true" type="tns:Player.StatusType" />
   <xs:complexType name="ArrayOfPlayer">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
+  <xs:simpleType name="DisconnectionReason">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DuplicatePlayerSession" />
+      <xs:enumeration value="ServerShutdown" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DisconnectionReason" nillable="true" type="tns:DisconnectionReason" />
   <xs:complexType name="Party">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />

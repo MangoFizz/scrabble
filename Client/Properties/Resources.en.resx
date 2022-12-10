@@ -205,6 +205,9 @@
   <data name="LOGIN_INVALID_CREDENTIALS_MESSAGE" xml:space="preserve">
     <value>Invalid credentials</value>
   </data>
+  <data name="LOGIN_MENU_DUPLICATE_SESSION_MESSAGE" xml:space="preserve">
+    <value>Another login was detected.</value>
+  </data>
   <data name="LOGIN_MENU_HEADER" xml:space="preserve">
     <value>Log in to Scrabble</value>
   </data>
@@ -216,6 +219,9 @@
   </data>
   <data name="LOGIN_MENU_REGISTER_BUTTON" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE" xml:space="preserve">
+    <value>Server shutdown.</value>
   </data>
   <data name="MAIN_MENU_EXIT_BUTTON" xml:space="preserve">
     <value>EXIT</value>

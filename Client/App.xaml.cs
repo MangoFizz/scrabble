@@ -137,7 +137,7 @@ namespace Client {
             if(loginResult == PlayerManagerPlayerAuthResult.Success) {
                 Player = player;
                 SessionId = sessionId;
-                PartyManagerClient.Subscribe(SessionId);
+                PartyManagerClient.ConnectPartyManager(SessionId);
                 MainFrame.Content = new MainPage();
             }
             else {
@@ -187,38 +187,35 @@ namespace Client {
             }
         }
 
-        public void FriendConnect(Player player) {
-            if(MainWindow.FriendListFrame.Content != null) {
-                var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
-                if(friendListPage != null) {
-                    friendListPage.FriendConnect(player);
-                }
-            }
-
-            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
-                var partyLobbyPage = ((PartyLobbyPage)MainFrame.Content);
-                partyLobbyPage.FriendConnect(player);
-            }
-        }
-
-        public void FriendDisconnect(Player player) {
-            if(MainWindow.FriendListFrame.Content != null) {
-                var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
-                if(friendListPage != null) {
-                    friendListPage.FriendDisconnect(player);
-                }
-            }
-
-            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
-                var partyLobbyPage = ((PartyLobbyPage)MainFrame.Content);
-                partyLobbyPage.FriendDisconnect(player);
-            }
-        }
-
         public void OnMainWindowClose() {
             if(Player != null) {
                 PlayerManagerClient.Logout();
             }
+        }
+
+        public void UpdateFriendStatus(Player friend, Player.StatusType status) {
+            if(MainWindow.FriendListFrame.Content != null) {
+                var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
+                if(friendListPage != null) {
+                    friendListPage.UpdateFriendStatus(friend, status);
+                }
+            }
+
+            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
+                var partyLobbyPage = ((PartyLobbyPage)MainFrame.Content);
+                partyLobbyPage.UpdateFriendStatus(friend, status);
+            }
+        }
+
+        public void Disconnect(DisconnectionReason reason) {
+            _PlayerManagerClient = null;
+            Player = null;
+            SessionId = null;
+            CurrentParty = null;
+            _PartyManagerClient = null;
+            var loginPage = new LoginPage();
+            MainWindow.MainFrame.Content = loginPage;
+            loginPage.ShowDisconnectMessage(reason);
         }
     }
 

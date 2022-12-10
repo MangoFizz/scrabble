@@ -58,7 +58,6 @@ namespace Core {
             Bag = new List<Tile>();
             Language = language;
 
-            // Initialize the board
             for(int i = 0; i < 15; i++) {
                 for(int j = 0; j < 15; j++) {
                     Board[i, j] = new BoardSlot(BoardSlotBonus.None);
@@ -92,7 +91,6 @@ namespace Core {
                 var dictionaryResource = Properties.Resources.ResourceManager.GetString(dictionaryResourceName);
                 var lines = dictionaryResource.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach(string line in lines) {
-                    // Discart words with non-valid characters
                     string word = "";
                     bool wordIsValid = true;
                     foreach(char c in line) {
@@ -109,7 +107,6 @@ namespace Core {
                         word += c;
                     }
                     if(wordIsValid) {
-                        // Normalize word and then add it!
                         var normalizedWord = word.Normalize(NormalizationForm.FormD);
                         WordsDictionariesCache[Language].Add(normalizedWord);
                     }
@@ -126,10 +123,8 @@ namespace Core {
                 Board[x, y].Bonus = bonus;
             };
 
-            // Set the center bonus
             setBonus(7, 7, BoardSlotBonus.Center);
 
-            // Set the triple word bonuses
             setBonus(0, 0, BoardSlotBonus.TripleWord);
             setBonus(0, 7, BoardSlotBonus.TripleWord);
             setBonus(0, 14, BoardSlotBonus.TripleWord);
@@ -139,7 +134,6 @@ namespace Core {
             setBonus(14, 7, BoardSlotBonus.TripleWord);
             setBonus(14, 14, BoardSlotBonus.TripleWord);
 
-            // Set the double word bonuses
             setBonus(1, 1, BoardSlotBonus.DoubleWord);
             setBonus(1, 13, BoardSlotBonus.DoubleWord);
             setBonus(2, 2, BoardSlotBonus.DoubleWord);
@@ -158,7 +152,6 @@ namespace Core {
             setBonus(13, 1, BoardSlotBonus.DoubleWord);
             setBonus(13, 13, BoardSlotBonus.DoubleWord);
 
-            // Set the triple letter bonuses
             setBonus(1, 5, BoardSlotBonus.TripleLetter);
             setBonus(1, 9, BoardSlotBonus.TripleLetter);
             setBonus(5, 1, BoardSlotBonus.TripleLetter);
@@ -172,7 +165,6 @@ namespace Core {
             setBonus(13, 5, BoardSlotBonus.TripleLetter);
             setBonus(13, 9, BoardSlotBonus.TripleLetter);
 
-            // Set the double letter bonuses
             setBonus(0, 3, BoardSlotBonus.DoubleLetter);
             setBonus(0, 11, BoardSlotBonus.DoubleLetter);
             setBonus(2, 6, BoardSlotBonus.DoubleLetter);

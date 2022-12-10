@@ -373,6 +373,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Another login was detected..
+        /// </summary>
+        public static string LOGIN_MENU_DUPLICATE_SESSION_MESSAGE {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_DUPLICATE_SESSION_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in to Scrabble.
         /// </summary>
         public static string LOGIN_MENU_HEADER {
@@ -405,6 +414,15 @@ namespace Client.Properties {
         public static string LOGIN_MENU_REGISTER_BUTTON {
             get {
                 return ResourceManager.GetString("LOGIN_MENU_REGISTER_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server shutdown..
+        /// </summary>
+        public static string LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE", resourceCulture);
             }
         }
         

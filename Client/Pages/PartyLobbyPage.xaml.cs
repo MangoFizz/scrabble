@@ -35,7 +35,6 @@ namespace Client {
                 App.Current.PartyManagerClient.CreateParty();
             }
             else {
-                // Remove start game button if we are not the leader
                 if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
                     StartButton.Visibility = Visibility.Hidden;
                     StartButton.IsEnabled = false;
@@ -44,7 +43,6 @@ namespace Client {
                 }
             }
 
-            // Add languages to combobox
             GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_ENGLISH);
             GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_SPANISH);
             GameLanguageCombobox.SelectedIndex = 1;
@@ -168,10 +166,8 @@ namespace Client {
             }
 
             if(Friends != null) {
-                // Get online friends
-                var onlineFriends = Friends.Where(f => f.status == PlayerStatus.Online).ToList();
+                var onlineFriends = Friends.Where(f => f.Status == Player.StatusType.Online).ToList();
 
-                // Filter out players that are already in the party
                 onlineFriends = onlineFriends.Where(f => {
                     if(f.Nickname == party.Leader.Nickname) {
                         return false;
@@ -291,17 +287,6 @@ namespace Client {
             ReloadGroupList();
         }
 
-        public void FriendConnect(Player player) {
-            App.Current.PlayerManagerClient.GetFriendList();
-            ReloadGroupList();
-        }
-
-        public void FriendDisconnect(Player player) {
-            var friend = Friends.Find(p => p.Nickname == player.Nickname);
-            Friends.Remove(friend);
-            ReloadGroupList();
-        }
-
         private void GameTimeLimitSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if(GameTimeLimitIndicator != null) {
                 GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
@@ -348,6 +333,15 @@ namespace Client {
             if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
                 App.Current.PartyManagerClient.UpdateLanguageSetting((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex);
             }
+        }
+
+        public void UpdateFriendStatus(Player friend, Player.StatusType status) {
+            App.Current.PlayerManagerClient.GetFriendList();
+            ReloadGroupList();
+        }
+
+        public void Disconnect(DisconnectionReason reason) {
+            throw new NotImplementedException();
         }
     }
 }

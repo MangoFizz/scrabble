@@ -7,37 +7,47 @@ using System.Windows.Controls;
 namespace Client {
     public partial class LoginPage : Page {
         private void HideTextMessages() {
-            this.usernameRequiredText.Visibility = Visibility.Hidden;
-            this.passwordRequiredText.Visibility = Visibility.Hidden;
-            this.resultText.Visibility = Visibility.Hidden;
+            usernameRequiredText.Visibility = Visibility.Hidden;
+            passwordRequiredText.Visibility = Visibility.Hidden;
+            ResultText.Visibility = Visibility.Hidden;
+        }
+
+        public void ShowDisconnectMessage(DisconnectionReason reason) {
+            ResultText.Visibility = Visibility.Visible;
+            switch(reason) {
+                case DisconnectionReason.ServerShutdown:
+                    ResultText.Content = Properties.Resources.LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE;
+                    break;
+                case DisconnectionReason.DuplicatePlayerSession:
+                    ResultText.Content = Properties.Resources.LOGIN_MENU_DUPLICATE_SESSION_MESSAGE;
+                    break;
+            }
         }
 
         public LoginPage() {
             InitializeComponent();
             LanguageButton.Content = App.Current.CurrentLanguage;
-            this.HideTextMessages();
+            HideTextMessages();
         }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e) {
             bool isInputValid = true;
 
-            this.HideTextMessages();
+            HideTextMessages();
 
-            // Show text message if user leaves the username field empty
-            if(this.usernameTextBox.Text.Length == 0) {
-                this.usernameRequiredText.Visibility = Visibility.Visible;
+            if(usernameTextBox.Text.Length == 0) {
+                usernameRequiredText.Visibility = Visibility.Visible;
                 isInputValid = false;
             }
 
-            // Show text message if user leaves the password field empty
-            if(this.passwordPasswordBox.Password.Length == 0) {
-                this.passwordRequiredText.Visibility = Visibility.Visible;
+            if(passwordPasswordBox.Password.Length == 0) {
+                passwordRequiredText.Visibility = Visibility.Visible;
                 isInputValid = false;
             }
 
             if(isInputValid) {
-                var username = this.usernameTextBox.Text;
-                var password = this.passwordPasswordBox.Password;
+                var username = usernameTextBox.Text;
+                var password = passwordPasswordBox.Password;
 
                 App.Current.PlayerManagerClient.Login(username, password);
             }
@@ -45,25 +55,25 @@ namespace Client {
 
         private void RegisterButtonClick(object sender, RoutedEventArgs e) {
             var signupScreen = new SignUpPage();
-            this.NavigationService.Navigate(signupScreen);
+            NavigationService.Navigate(signupScreen);
         }
 
         public void LoginResponse(PlayerManagerPlayerAuthResult loginResult) {
-            this.resultText.Visibility = Visibility.Visible;
+            ResultText.Visibility = Visibility.Visible;
             switch(loginResult) {
                 case PlayerManagerPlayerAuthResult.Success:
                     break;
 
                 case PlayerManagerPlayerAuthResult.InvalidCredentials:
-                    this.resultText.Content = Properties.Resources.LOGIN_INVALID_CREDENTIALS_MESSAGE;
+                    ResultText.Content = Properties.Resources.LOGIN_INVALID_CREDENTIALS_MESSAGE;
                     break;
 
                 case PlayerManagerPlayerAuthResult.IncorrectPassword:
-                    this.resultText.Content = Properties.Resources.LOGIN_INCORRECT_PASSWORD_MESSAGE;
+                    ResultText.Content = Properties.Resources.LOGIN_INCORRECT_PASSWORD_MESSAGE;
                     break;
 
                 default:
-                    this.resultText.Content = Properties.Resources.COMMON_UNKNOWN_ERROR;
+                    ResultText.Content = Properties.Resources.COMMON_UNKNOWN_ERROR;
                     break;
             }
         }

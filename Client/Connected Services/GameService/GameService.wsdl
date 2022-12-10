@@ -173,14 +173,20 @@
   <wsdl:message name="IPlayerManager_ReceiveFriendAdd_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveFriendAdd" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_FriendConnect_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:FriendConnect" />
+  <wsdl:message name="IPlayerManager_UpdateFriendStatus_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFriendStatus" />
   </wsdl:message>
-  <wsdl:message name="IPlayerManager_FriendDisconnect_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:FriendDisconnect" />
+  <wsdl:message name="IPlayerManager_UpdateFriendStatus_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFriendStatusResponse" />
   </wsdl:message>
-  <wsdl:message name="IPartyChat_Connect_InputMessage">
-    <wsdl:part name="parameters" element="tns:Connect" />
+  <wsdl:message name="IPlayerManager_Disconnect_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_Disconnect_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPartyChat_ConnectPartyChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectPartyChat" />
   </wsdl:message>
   <wsdl:message name="IPartyChat_Say_InputMessage">
     <wsdl:part name="parameters" element="tns:Say" />
@@ -248,8 +254,8 @@
   <wsdl:message name="IPartyGame_SendInvalidTilePlacingError_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendInvalidTilePlacingErrorResponse" />
   </wsdl:message>
-  <wsdl:message name="IPartyManager_Subscribe_InputMessage">
-    <wsdl:part name="parameters" element="tns:Subscribe" />
+  <wsdl:message name="IPartyManager_ConnectPartyManager_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectPartyManager" />
   </wsdl:message>
   <wsdl:message name="IPartyManager_CreateParty_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateParty" />
@@ -399,16 +405,18 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ReceiveFriendAdd">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/ReceiveFriendAdd" message="tns:IPlayerManager_ReceiveFriendAdd_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="FriendConnect">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/FriendConnect" message="tns:IPlayerManager_FriendConnect_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateFriendStatus">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/UpdateFriendStatus" message="tns:IPlayerManager_UpdateFriendStatus_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/UpdateFriendStatusResponse" message="tns:IPlayerManager_UpdateFriendStatus_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="FriendDisconnect">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/FriendDisconnect" message="tns:IPlayerManager_FriendDisconnect_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Disconnect">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/Disconnect" message="tns:IPlayerManager_Disconnect_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/DisconnectResponse" message="tns:IPlayerManager_Disconnect_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyChat">
-    <wsdl:operation name="Connect">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Connect" message="tns:IPartyChat_Connect_InputMessage" />
+    <wsdl:operation name="ConnectPartyChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/ConnectPartyChat" message="tns:IPartyChat_ConnectPartyChat_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Say">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Say" message="tns:IPartyChat_Say_InputMessage" />
@@ -464,8 +472,8 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyManager">
-    <wsdl:operation name="Subscribe">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/Subscribe" message="tns:IPartyManager_Subscribe_InputMessage" />
+    <wsdl:operation name="ConnectPartyManager">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ConnectPartyManager" message="tns:IPartyManager_ConnectPartyManager_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateParty">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/CreateParty" message="tns:IPartyManager_CreateParty_InputMessage" />
@@ -642,14 +650,20 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FriendConnect">
-      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/FriendConnect" style="document" />
+    <wsdl:operation name="UpdateFriendStatus">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/UpdateFriendStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FriendDisconnect">
-      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/FriendDisconnect" style="document" />
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -658,8 +672,8 @@
   <wsdl:binding name="NetTcpBinding_IPartyChat" type="tns:IPartyChat">
     <wsp:PolicyReference URI="#NetTcpBinding_IPartyChat_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Connect">
-      <soap12:operation soapAction="http://tempuri.org/IPartyChat/Connect" style="document" />
+    <wsdl:operation name="ConnectPartyChat">
+      <soap12:operation soapAction="http://tempuri.org/IPartyChat/ConnectPartyChat" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -780,8 +794,8 @@
   <wsdl:binding name="NetTcpBinding_IPartyManager" type="tns:IPartyManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IPartyManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Subscribe">
-      <soap12:operation soapAction="http://tempuri.org/IPartyManager/Subscribe" style="document" />
+    <wsdl:operation name="ConnectPartyManager">
+      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ConnectPartyManager" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

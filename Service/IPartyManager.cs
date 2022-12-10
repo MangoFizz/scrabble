@@ -16,7 +16,7 @@ namespace Service {
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
     public interface IPartyManager {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
-        void Subscribe(string sessionId);
+        void ConnectPartyManager(string sessionId);
 
         [OperationContract(IsOneWay = true)]
         void CreateParty();
@@ -82,48 +82,5 @@ namespace Service {
 
         [OperationContract]
         void ReceivePartyLanguageUpdate(Game.SupportedLanguage language);
-    }
-
-    [DataContract]
-    public partial class Party {
-        [DataMember]
-        public string Id { get; set; }
-
-        [DataMember]
-        public Player Leader { get; set; }
-
-        [DataMember]
-        public List<Player> Players { get; set; }
-
-        public void PlayerLeaves(Player player) {
-            Players.Remove(player);
-            foreach(var p in Players) {
-                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
-            }
-            
-            if(Leader == player) {
-                Leader = Players[0];
-                foreach(var p in Players) {
-                    p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(Leader);
-                }
-            }
-        }
-
-        public Party() {
-            Players = new List<Player>();
-            Id = Guid.NewGuid().ToString();
-        }
-    }
-
-    public partial class Player {
-        [IgnoreDataMember]
-        public Party CurrentParty { get; set; }
-
-        [IgnoreDataMember]
-        public IPartyManagerCallback PartyManagerCallbackChannel { get; set; }
-
-        public void Dispose() {
-            CurrentParty.PlayerLeaves(this);
-        }
     }
 }

@@ -39,7 +39,7 @@ namespace Client {
         }
 
         private void Connect() {
-            PartyChatClient.Connect(App.Current.SessionId);
+            PartyChatClient.ConnectPartyChat(App.Current.SessionId);
         }
 
         private void MessageInput_KeyDown(object sender, KeyEventArgs e) {
@@ -62,8 +62,6 @@ namespace Client {
             if(this.ChatListBox.Items.Count == 0) {
                 return;
             }
-
-            // Move scroll to bottom
             this.ChatListBox.ScrollIntoView(this.ChatListBox.Items[this.ChatListBox.Items.Count - 1]);
         }
 
@@ -99,8 +97,6 @@ namespace Client {
             if(this.MessageInput.Text.Length == 0) {
                 return;
             }
-
-            // Send message to server
             PartyChatClient.Say(MessageInput.Text);
             MessageInput.Text = "";
         }
