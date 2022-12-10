@@ -20,11 +20,11 @@ namespace Client {
             HideTextMessages();
         }
 
-        private void CancelButtonClick(object sender, RoutedEventArgs e) {
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
             NavigationService.GoBack();
         }
 
-        private void RegisterButtonClick(object sender, RoutedEventArgs e) {
+        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
             bool isInputValid = true;
             
             HideTextMessages();

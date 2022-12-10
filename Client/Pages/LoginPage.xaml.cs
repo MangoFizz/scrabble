@@ -30,7 +30,7 @@ namespace Client {
             HideTextMessages();
         }
 
-        private void LoginButtonClick(object sender, RoutedEventArgs e) {
+        private void LoginButton_Click(object sender, RoutedEventArgs e) {
             bool isInputValid = true;
 
             HideTextMessages();
@@ -53,7 +53,7 @@ namespace Client {
             }
         }
 
-        private void RegisterButtonClick(object sender, RoutedEventArgs e) {
+        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
             var signupScreen = new SignUpPage();
             NavigationService.Navigate(signupScreen);
         }

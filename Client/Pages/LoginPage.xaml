@@ -29,8 +29,8 @@
         <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,378,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
 
         <Label Name="ResultText" Content="placeholder" HorizontalContentAlignment="Left" Margin="761,442,302,242" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
-        <Button Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" Style="{StaticResource BorderedButton}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="971,502,0,0" Click="RegisterButtonClick" Height="56" Width="190"/>
-        <Button Name="LoginButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_BUTTON}" HorizontalAlignment="Right" Margin="0,0,329,162" VerticalAlignment="Bottom" Background="#FFDDDDDD" FontSize="22" Click="LoginButtonClick" Height="56" Width="190"/>
+        <Button Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" Style="{StaticResource BorderedButton}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="971,502,0,0" Click="RegisterButton_Click" Height="56" Width="190"/>
+        <Button Name="LoginButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_BUTTON}" HorizontalAlignment="Right" Margin="0,0,329,162" VerticalAlignment="Bottom" Background="#FFDDDDDD" FontSize="22" Click="LoginButton_Click" Height="56" Width="190"/>
         <Button Name="LoginAsGuessButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_AS_GUEST_BUTTON}" HorizontalAlignment="Right" Margin="0,0,119,89" VerticalAlignment="Bottom" Background="#FFDDDDDD" FontSize="22" Height="56" Width="400" Click="LoginAsGuessButton_Click"/>
     </Grid>
 </Page>

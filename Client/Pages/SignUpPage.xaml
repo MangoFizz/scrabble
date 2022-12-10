@@ -36,8 +36,8 @@
         <PasswordBox Name="confirmPasswordTextBox" HorizontalAlignment="Left" Margin="680,440,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
 
         <Label Name="resultMessage" Content="placeholder" HorizontalContentAlignment="Right" Margin="680,523,200,161" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
-        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,410,87" Click="RegisterButtonClick" Height="56" Width="190"/>
-        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_CANCEL_BUTTON}" HorizontalAlignment="Left" Margin="890,577,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="CancelButtonClick" Height="56" Width="190"/>
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_REGISTER_BUTTON}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,410,87" Click="RegisterButton_Click" Height="56" Width="190"/>
+        <Button Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.COMMON_CANCEL_BUTTON}" HorizontalAlignment="Left" Margin="890,577,0,0" VerticalAlignment="Top" Background="#FFDDDDDD" FontSize="22" Click="CancelButton_Click" Height="56" Width="190"/>
 
     </Grid>
 </Page>

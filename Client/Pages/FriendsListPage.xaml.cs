@@ -151,7 +151,7 @@ namespace Client {
             });
         }
 
-        private void AddFriendButtonClick(object sender, RoutedEventArgs e) {
+        private void AddFriendButton_Click(object sender, RoutedEventArgs e) {
             if(NicknameTextBox.Text.Length > 0) {
                 App.Current.PlayerManagerClient.SendFriendRequest(NicknameTextBox.Text);
             }

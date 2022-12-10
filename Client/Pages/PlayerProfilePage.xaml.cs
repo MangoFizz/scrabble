@@ -35,7 +35,7 @@ namespace Client {
             ProfileRegisteredDate.Content = player.Registered.ToString("dd/MM/yyyy");
         }
 
-        private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void RectagleMouseLeft_ButtonUp(object sender, MouseButtonEventArgs e) {
             App.Current.CloseSecondaryPanel();
         }
     }

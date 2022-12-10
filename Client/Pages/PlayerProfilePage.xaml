@@ -9,7 +9,7 @@
       Height="720" Width="1280">
 
     <Grid>
-        <Rectangle x:Name="CloseRectangle" MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#7F000000"/>
+        <Rectangle x:Name="CloseRectangle" MouseLeftButtonUp="RectagleMouseLeft_ButtonUp" Fill="#7F000000"/>
         <Grid x:Name="FriendsListGrid" Background="Azure" Width="562" HorizontalAlignment="Center" Margin="0,183,0,202">
             <Border Margin="29,76,27,27" Background="White" BorderBrush="Gray" BorderThickness="1"></Border>
             <Label Name="ProfileNickname" Content="aiwass" HorizontalAlignment="Left" Margin="217,92,0,0" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" Width="267"/>
