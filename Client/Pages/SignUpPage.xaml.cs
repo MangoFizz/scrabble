@@ -18,6 +18,10 @@ namespace Client {
         private bool ValidateInputs() {
             bool isInputValid = true;
             var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
+            var passwordValidCharactersRegex = new Regex("^[a-zA-Z0-9!\" \"# $% & '() * +, -. / :; <=>? @ \\ [\\] \\ ^ _` {|} ~]*$");
+            var containNumbersRegex = new Regex(@"(?=.*\d)");
+            var containLowercaseRegex = new Regex(@"(?=.*[a-z])");
+            var containUppercaseRegex = new Regex(@"(?=.*[A-Z])");
 
             if(nicknameTextBox.Text.Length == 0) {
                 nicknameInvalidMessage.Visibility = Visibility.Visible;
@@ -27,6 +31,11 @@ namespace Client {
             else if(nicknameTextBox.Text.Length > 12) {
                 nicknameInvalidMessage.Visibility = Visibility.Visible;
                 nicknameInvalidMessage.Content = Properties.Resources.SIGNUP_NICKNAME_TOO_LONG;
+                isInputValid = false;
+            }
+            else if(nicknameTextBox.Text.Length < 4) {
+                nicknameInvalidMessage.Visibility = Visibility.Visible;
+                nicknameInvalidMessage.Content = Properties.Resources.SIGNUP_NICKNAME_TOO_SHORT;
                 isInputValid = false;
             }
             else if(validCharactersRegex.IsMatch(nicknameTextBox.Text) == false) {
@@ -66,20 +75,42 @@ namespace Client {
                 passwordInvalidMessage.Content = Properties.Resources.SIGNUP_PASSWORD_TOO_LONG;
                 isInputValid = false;
             }
-            else if(validCharactersRegex.IsMatch(passwordTextBox.Password) == false) {
+            else if(passwordTextBox.Password.Length < 8) {
+                passwordInvalidMessage.Visibility = Visibility.Visible;
+                passwordInvalidMessage.Content = Properties.Resources.SIGNUP_PASSWORD_TOO_SHORT;
+                isInputValid = false;
+            }
+            else if(passwordValidCharactersRegex.IsMatch(passwordTextBox.Password) == false) {
                 passwordInvalidMessage.Visibility = Visibility.Visible;
                 passwordInvalidMessage.Content = Properties.Resources.COMMON_INVALID_CHARACTERS_LABEL;
                 isInputValid = false;
+            }
+            else if(containLowercaseRegex.IsMatch(passwordTextBox.Password) == false) {
+                resultMessage.Visibility = Visibility.Visible;
+                resultMessage.Content = Properties.Resources.SIGNUP_PASSWORD_NO_LOWERCASE;
+                isInputValid = false;
+            }
+            else if(containUppercaseRegex.IsMatch(passwordTextBox.Password) == false) {
+                resultMessage.Visibility = Visibility.Visible;
+                resultMessage.Content = Properties.Resources.SIGNUP_PASSWORD_NO_UPPERCASE;
+                isInputValid = false;
+            }
+            else if(containNumbersRegex.IsMatch(passwordTextBox.Password) == false) {
+                resultMessage.Visibility = Visibility.Visible;
+                resultMessage.Content = Properties.Resources.SIGNUP_PASSWORD_NO_NUMBERS;
+                isInputValid = false;
+            }
+            else {
+                if(confirmPasswordTextBox.Password.Length > 0 && passwordTextBox.Password != confirmPasswordTextBox.Password) {
+                    resultMessage.Visibility = Visibility.Visible;
+                    resultMessage.Content = Properties.Resources.SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL;
+                    isInputValid = false;
+                }
             }
 
             if(confirmPasswordTextBox.Password.Length == 0) {
                 confirmPasswordInvalidMessage.Visibility = Visibility.Visible;
                 confirmPasswordInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
-                isInputValid = false;
-            }
-            else if(passwordTextBox.Password != confirmPasswordTextBox.Password) {
-                resultMessage.Visibility = Visibility.Visible;
-                resultMessage.Content = Properties.Resources.SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL;
                 isInputValid = false;
             }
 

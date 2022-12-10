@@ -336,11 +336,26 @@
   <data name="SIGNUP_NICKNAME_TOO_LONG" xml:space="preserve">
     <value>¡Apodo demasiado largo!</value>
   </data>
+  <data name="SIGNUP_NICKNAME_TOO_SHORT" xml:space="preserve">
+    <value>¡Apodo muy corto!</value>
+  </data>
   <data name="SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL" xml:space="preserve">
     <value>Las contraseñas no coinciden</value>
   </data>
+  <data name="SIGNUP_PASSWORD_NO_LOWERCASE" xml:space="preserve">
+    <value>¡La contraseña debe contener al menos una letra minúscula!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_NO_NUMBERS" xml:space="preserve">
+    <value>¡La contraseña debe contener al menos un número!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_NO_UPPERCASE" xml:space="preserve">
+    <value>¡La contraseña debe contener al menos una letra mayúscula!</value>
+  </data>
   <data name="SIGNUP_PASSWORD_TOO_LONG" xml:space="preserve">
     <value>¡Contraseña demasiado larga!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_TOO_SHORT" xml:space="preserve">
+    <value>¡Contraseña muy corta!</value>
   </data>
   <data name="SIGN_UP_CONFIRM_PASSWORD_LABEL" xml:space="preserve">
     <value>CONFIRMAR CONTRASEÑA</value>

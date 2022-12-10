@@ -833,11 +833,56 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nickname too short!.
+        /// </summary>
+        public static string SIGNUP_NICKNAME_TOO_SHORT {
+            get {
+                return ResourceManager.GetString("SIGNUP_NICKNAME_TOO_SHORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one lowercase letter!.
+        /// </summary>
+        public static string SIGNUP_PASSWORD_NO_LOWERCASE {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORD_NO_LOWERCASE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one number!.
+        /// </summary>
+        public static string SIGNUP_PASSWORD_NO_NUMBERS {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORD_NO_NUMBERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one uppercase letter!.
+        /// </summary>
+        public static string SIGNUP_PASSWORD_NO_UPPERCASE {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORD_NO_UPPERCASE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password too long!.
         /// </summary>
         public static string SIGNUP_PASSWORD_TOO_LONG {
             get {
                 return ResourceManager.GetString("SIGNUP_PASSWORD_TOO_LONG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password too short!.
+        /// </summary>
+        public static string SIGNUP_PASSWORD_TOO_SHORT {
+            get {
+                return ResourceManager.GetString("SIGNUP_PASSWORD_TOO_SHORT", resourceCulture);
             }
         }
         

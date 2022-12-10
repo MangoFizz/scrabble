@@ -69,6 +69,42 @@ namespace Core {
             return HashPassword(password).Equals(hashedPassword);
         }
 
+        private static bool ValidateRegisterInputs(string nickname, string password, string email) {
+            var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
+            var passwordValidCharactersRegex = new Regex("^[a-zA-Z0-9!\" \"# $% & '() * +, -. / :; <=>? @ \\ [\\] \\ ^ _` {|} ~]*$");
+            var containNumbersRegex = new Regex(@"(?=.*\d)");
+            var containLowercaseRegex = new Regex(@"(?=.*[a-z])");
+            var containUppercaseRegex = new Regex(@"(?=.*[A-Z])");
+
+            bool isInputValid = true;
+
+            if(nickname.Length == 0 || nickname.Length > 12 || nickname.Length < 4 || !validCharactersRegex.IsMatch(nickname)) {
+                isInputValid = false;
+            }
+
+            if(email.Length == 0 || email.Length > 255) {
+                isInputValid = false;
+            }
+            else {
+                try {
+                    new System.Net.Mail.MailAddress(email);
+                }
+                catch(FormatException) {
+                    isInputValid = false;
+                }
+            }
+
+            if(password.Length == 0 || password.Length > 255 || password.Length < 8 || !passwordValidCharactersRegex.IsMatch(password)) {
+                isInputValid = false;
+            }
+
+            if(!containLowercaseRegex.IsMatch(password) || !containUppercaseRegex.IsMatch(password) || !containNumbersRegex.IsMatch(password)) {
+                isInputValid = false;
+            }
+
+            return isInputValid;
+        }
+
         public static Player GetPlayerData(string nickname) {
             ScrabbleEntities context = new ScrabbleEntities();
             return context.players.First(p => p.Nickname == nickname);
@@ -94,24 +130,7 @@ namespace Core {
         }
 
         public static PlayerResgisterResult RegisterPlayer(string nickname, string password, string email) {
-            var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
-
-            if(nickname.Length == 0 || nickname.Length > 12 || !validCharactersRegex.IsMatch(nickname)) {
-                return PlayerResgisterResult.InvalidInputs;
-            }
-
-            if(password.Length == 0 || password.Length > 50 || !validCharactersRegex.IsMatch(password)) {
-                return PlayerResgisterResult.InvalidInputs;
-            }
-
-            if(email.Length == 0 || email.Length > 50) {
-                return PlayerResgisterResult.InvalidInputs;
-            }
-
-            try {
-                new System.Net.Mail.MailAddress(email);
-            }
-            catch(FormatException) {
+            if(!ValidateRegisterInputs(nickname, password, email)) {
                 return PlayerResgisterResult.InvalidInputs;
             }
 

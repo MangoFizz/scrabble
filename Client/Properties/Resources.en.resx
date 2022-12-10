@@ -340,11 +340,26 @@
   <data name="SIGNUP_NICKNAME_TOO_LONG" xml:space="preserve">
     <value>Nickname too long!</value>
   </data>
+  <data name="SIGNUP_NICKNAME_TOO_SHORT" xml:space="preserve">
+    <value>Nickname too short!</value>
+  </data>
   <data name="SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL" xml:space="preserve">
     <value>Passwords do not match</value>
   </data>
+  <data name="SIGNUP_PASSWORD_NO_LOWERCASE" xml:space="preserve">
+    <value>Password must contain at least one lowercase letter!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_NO_NUMBERS" xml:space="preserve">
+    <value>Password must contain at least one number!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_NO_UPPERCASE" xml:space="preserve">
+    <value>Password must contain at least one uppercase letter!</value>
+  </data>
   <data name="SIGNUP_PASSWORD_TOO_LONG" xml:space="preserve">
     <value>Password too long!</value>
+  </data>
+  <data name="SIGNUP_PASSWORD_TOO_SHORT" xml:space="preserve">
+    <value>Password too short!</value>
   </data>
   <data name="SIGN_UP_CONFIRM_PASSWORD_LABEL" xml:space="preserve">
     <value>CONFIRM PASSWORD</value>
