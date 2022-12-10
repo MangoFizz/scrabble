@@ -24,41 +24,7 @@ namespace Client {
             }
         }
 
-        public LoginPage() {
-            InitializeComponent();
-            LanguageButton.Content = App.Current.CurrentLanguage;
-            HideTextMessages();
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e) {
-            bool isInputValid = true;
-
-            HideTextMessages();
-
-            if(usernameTextBox.Text.Length == 0) {
-                usernameRequiredText.Visibility = Visibility.Visible;
-                isInputValid = false;
-            }
-
-            if(passwordPasswordBox.Password.Length == 0) {
-                passwordRequiredText.Visibility = Visibility.Visible;
-                isInputValid = false;
-            }
-
-            if(isInputValid) {
-                var username = usernameTextBox.Text;
-                var password = passwordPasswordBox.Password;
-
-                App.Current.PlayerManagerClient.Login(username, password);
-            }
-        }
-
-        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
-            var signupScreen = new SignUpPage();
-            NavigationService.Navigate(signupScreen);
-        }
-
-        public void LoginResponse(PlayerManagerPlayerAuthResult loginResult) {
+        public void ShowLoginMessage(PlayerManagerPlayerAuthResult loginResult) {
             ResultText.Visibility = Visibility.Visible;
             switch(loginResult) {
                 case PlayerManagerPlayerAuthResult.Success:
@@ -78,6 +44,39 @@ namespace Client {
             }
         }
 
+        private bool ValidateInput() {
+            HideTextMessages();
+            bool valid = true;
+            if(usernameTextBox.Text.Length == 0) {
+                usernameRequiredText.Visibility = Visibility.Visible;
+                valid = false;
+            }
+            if(passwordPasswordBox.Password.Length == 0) {
+                passwordRequiredText.Visibility = Visibility.Visible;
+                valid = false;
+            }
+            return valid;
+        }
+
+        public LoginPage() {
+            InitializeComponent();
+            LanguageButton.Content = App.Current.CurrentLanguage;
+            HideTextMessages();
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e) {
+            if(ValidateInput()) {
+                var username = usernameTextBox.Text;
+                var password = passwordPasswordBox.Password;
+                App.Current.PlayerManagerClient.Login(username, password);
+            }
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
+            var signupScreen = new SignUpPage();
+            NavigationService.Navigate(signupScreen);
+        }
+
         private void LanguageButton_Click(object sender, RoutedEventArgs e) {
             App.Current.SwitchLanguage();
             LanguageButton.Content = App.Current.CurrentLanguage;
@@ -86,6 +85,10 @@ namespace Client {
 
         private void LoginAsGuessButton_Click(object sender, RoutedEventArgs e) {
             App.Current.PlayerManagerClient.LoginAsGuest();
+        }
+
+        public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult) {
+            ShowLoginMessage(loginResult);
         }
     }
 }

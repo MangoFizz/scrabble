@@ -42,9 +42,9 @@ namespace Client {
             PartyChatClient.ConnectPartyChat(App.Current.SessionId);
         }
 
-        private void MessageInput_KeyDown(object sender, KeyEventArgs e) {
+        private void MessageInput_KeyDown(object sender, KeyEventArgs eventArgs) {
             MessageInputWatermark.Visibility = Visibility.Hidden;
-            if(e.Key == Key.Return) {
+            if(eventArgs.Key == Key.Return) {
                 SendMessage();
             }
         }
@@ -66,11 +66,11 @@ namespace Client {
         }
 
         public void Print(string message) {
-            var item = new ListBoxItem();
-            item.Content = message;
-            item.Foreground = Brushes.White;
-            item.FontSize = 20;
-            ChatListBox.Items.Add(item);
+            var chatEntry = new ListBoxItem();
+            chatEntry.Content = message;
+            chatEntry.Foreground = Brushes.White;
+            chatEntry.FontSize = 20;
+            ChatListBox.Items.Add(chatEntry);
             UpdateChatScroll();
         }
 
@@ -83,18 +83,19 @@ namespace Client {
         }
 
         public void PrintPlayerJoinMessage(string nickname) {
-            Print(String.Format(Properties.Resources.PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT, nickname));
+            Print(string.Format(Properties.Resources.PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT, nickname));
         }
-
+        
         public void PrintPlayerLeaveMessage(string nickname) {
-            Print(String.Format(Properties.Resources.PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT, nickname));
+            Print(string.Format(Properties.Resources.PARTY_CHAT_PLAYER_LEAVE_MESSAGE_FORMAT, nickname));
         }
 
         public void PrintPlayerIsLeaderMessage(string nickname) {
             Print(string.Format(Properties.Resources.PARTY_CHAT_LEADER_TRANSFER_MESSAGE_FORMAT, nickname));
         }
+        
         private void SendMessage() {
-            if(this.MessageInput.Text.Length == 0) {
+            if(MessageInput.Text.Length == 0) {
                 return;
             }
             PartyChatClient.Say(MessageInput.Text);

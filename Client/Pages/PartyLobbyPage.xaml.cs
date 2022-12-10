@@ -2,35 +2,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Client {
     /// <summary>
     /// Interaction logic for PartyLobbyPage.xaml
     /// </summary>
-    public partial class PartyLobbyPage : Page, IPartyManagerCallback, IPlayerManagerCallback {
+    public partial class PartyLobbyPage : Page {
         private PartyChatPage ChatPage = null;
 
         public List<Player> Friends { get; set; }
 
-        public PartyLobbyPage() {
-            InitializeComponent();
-            ChatPage = new PartyChatPage();
-            ChatFrame.Content = ChatPage;
+        private void SetUpLanguageCombobox() {
+            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_ENGLISH);
+            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_SPANISH);
+            GameLanguageCombobox.SelectedIndex = 1;
+        }
 
+        private void HideResultMessage() {
             ResultText.Visibility = Visibility.Hidden;
+        }
 
+        private void InitializeParty() {
             if(App.Current.CurrentParty == null) {
                 App.Current.PartyManagerClient.CreateParty();
             }
@@ -42,126 +38,137 @@ namespace Client {
                     GameLanguageCombobox.IsEnabled = false;
                 }
             }
-
-            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_ENGLISH);
-            GameLanguageCombobox.Items.Add(Properties.Resources.COMMON_LANGUAGE_SPANISH);
-            GameLanguageCombobox.SelectedIndex = 1;
         }
 
-        public void ReloadGroupList() {
-            Action<Player, bool> addItem = (player, isFriend) => {
-                bool isLeader = player.Nickname == App.Current.CurrentParty.Leader.Nickname;
-                bool isSelf = player.Nickname == App.Current.Player.Nickname;
+        private void SetUpChatFrame() {
+            ChatPage = new PartyChatPage();
+            ChatFrame.Content = ChatPage;
+        }
 
-                Border border = new Border();
-                border.Background = new SolidColorBrush(Color.FromArgb(32, 255, 255, 255));
-                border.BorderBrush = Brushes.White;
-                border.BorderThickness = new Thickness(1);
+        private StackPanel GetGroupListEntryButtons(Player player, bool isFriend) {
+            StackPanel entryButtonsContainer = new StackPanel();
+            entryButtonsContainer.Orientation = Orientation.Horizontal;
+            entryButtonsContainer.HorizontalAlignment = HorizontalAlignment.Right;
+            entryButtonsContainer.Visibility = Visibility.Hidden;
+            entryButtonsContainer.Width = 80;
 
-                StackPanel stackPanel = new StackPanel();
-                stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Width = 416;
-
-                Image image = new Image();
-                image.Source = App.Current.GetPlayerAvatarImage(player);
-                image.Width = 60;
-                image.Height = 60;
-                stackPanel.Children.Add(image);
-
-                StackPanel text = new StackPanel();
-                text.VerticalAlignment = VerticalAlignment.Center;
-                text.Margin = new Thickness(10, 0, 0, 0);
-                text.Width = 230;
-
-                Label nickname = new Label();
-                nickname.Content = player.Nickname;
-                nickname.Foreground = Brushes.White;
-                nickname.FontSize = 18;
-                nickname.FontWeight = FontWeights.Bold;
-                nickname.Padding = new Thickness(0);
-                text.Children.Add(nickname);
-
-                Label status = new Label();
-                status.FontSize = 18;
-                status.Padding = new Thickness(0);
-                status.Foreground = Brushes.White;
-
-                if(isFriend) {
-                    status.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
-                }
-                else if(isLeader) {
-                    status.Content = Properties.Resources.PARTY_LOBBY_LEADER_LABEL;
-                }
-
-                text.Children.Add(status);
-
-                stackPanel.Children.Add(text);
-
-                StackPanel buttons = new StackPanel();
-                buttons.Orientation = Orientation.Horizontal;
-                buttons.HorizontalAlignment = HorizontalAlignment.Right;
-                buttons.Visibility = Visibility.Hidden;
-                buttons.Width = 80;
-
-                border.MouseEnter += (sender, e) => {
-                    buttons.Visibility = Visibility.Visible;
+            if(isFriend) {
+                Button inviteButton = new Button();
+                inviteButton.Content = "➕";
+                inviteButton.Width = 30;
+                inviteButton.Height = 30;
+                inviteButton.Margin = new Thickness(50, 0, 0, 0);
+                inviteButton.Click += (sender, e) => {
+                    App.Current.PartyManagerClient.InvitePlayer(player);
                 };
-
-                border.MouseLeave += (sender, e) => {
-                    buttons.Visibility = Visibility.Hidden;
+                entryButtonsContainer.Children.Add(inviteButton);
+            }
+            else if(player.Nickname != App.Current.CurrentParty.Leader.Nickname) {
+                Button promoteButton = new Button();
+                promoteButton.Content = "👑";
+                promoteButton.Width = 30;
+                promoteButton.Height = 30;
+                promoteButton.Margin = new Thickness(10, 0, 0, 0);
+                promoteButton.Click += (sender, e) => {
+                    App.Current.PartyManagerClient.TransferLeadership(player);
                 };
+                entryButtonsContainer.Children.Add(promoteButton);
 
-                if(App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
-                    if(isFriend) {
-                        Button invite = new Button();
-                        invite.Content = "➕";
-                        invite.Width = 30;
-                        invite.Height = 30;
-                        invite.Margin = new Thickness(50, 0, 0, 0);
-                        invite.Click += (sender, e) => {
-                            App.Current.PartyManagerClient.InvitePlayer(player);
-                        };
-                        buttons.Children.Add(invite);
-                    }
-                    else if(!isLeader) {
-                        Button promote = new Button();
-                        promote.Content = "👑";
-                        promote.Width = 30;
-                        promote.Height = 30;
-                        promote.Margin = new Thickness(10, 0, 0, 0);
-                        promote.Click += (sender, e) => {
-                            App.Current.PartyManagerClient.TransferLeadership(player);
-                        };
-                        buttons.Children.Add(promote);
-                    
-                        Button kick = new Button();
-                        kick.Content = "❌";
-                        kick.Width = 30;
-                        kick.Height = 30;
-                        kick.Margin = new Thickness(10, 0, 0, 0);
-                        kick.Click += (sender, e) => {
-                            App.Current.PartyManagerClient.KickPlayer(player);
-                        };
-                        buttons.Children.Add(kick);
-                    }
-                }
+                Button kickButton = new Button();
+                kickButton.Content = "❌";
+                kickButton.Width = 30;
+                kickButton.Height = 30;
+                kickButton.Margin = new Thickness(10, 0, 0, 0);
+                kickButton.Click += (sender, e) => {
+                    App.Current.PartyManagerClient.KickPlayer(player);
+                };
+                entryButtonsContainer.Children.Add(kickButton);
+            }
 
-                stackPanel.Children.Add(buttons);
+            return entryButtonsContainer;
+        }
 
-                border.Child = stackPanel;
+        private Border GetGroupListEntry(Player player, bool isFriend) {
+            Border entryBorder = new Border();
+            entryBorder.Background = new SolidColorBrush(Color.FromArgb(32, 255, 255, 255));
+            entryBorder.BorderBrush = Brushes.Gray;
+            entryBorder.BorderThickness = new Thickness(1);
 
-                FriendsListBox.Items.Add(border);
+            StackPanel entryContainer = new StackPanel();
+            entryContainer.Orientation = Orientation.Horizontal;
+            entryContainer.Width = 416;
+
+            Image avatarImage = new Image();
+            avatarImage.Source = App.Current.GetPlayerAvatarImage(player);
+            avatarImage.Width = 60;
+            avatarImage.Height = 60;
+            entryContainer.Children.Add(avatarImage);
+
+            StackPanel textContainer = new StackPanel();
+            textContainer.VerticalAlignment = VerticalAlignment.Center;
+            textContainer.Margin = new Thickness(10, 0, 0, 0);
+            textContainer.Width = 230;
+
+            Label friendNicknameLabel = new Label();
+            friendNicknameLabel.Content = player.Nickname;
+            friendNicknameLabel.FontSize = 18;
+            friendNicknameLabel.FontWeight = FontWeights.Bold;
+            friendNicknameLabel.Padding = new Thickness(0);
+            textContainer.Children.Add(friendNicknameLabel);
+
+            Label friendStatusLabel = new Label();
+            friendStatusLabel.FontSize = 18;
+            friendStatusLabel.Padding = new Thickness(0);
+            friendStatusLabel.Foreground = Brushes.White;
+            if(isFriend) {
+                friendStatusLabel.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
+            }
+            else if(player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                friendStatusLabel.Content = Properties.Resources.PARTY_LOBBY_LEADER_LABEL;
+            }
+
+            textContainer.Children.Add(friendStatusLabel);
+            entryContainer.Children.Add(textContainer);
+
+            var buttonsContainer = GetGroupListEntryButtons(player, isFriend);
+            entryContainer.Children.Add(buttonsContainer);
+
+            entryBorder.MouseEnter += (sender, e) => {
+                buttonsContainer.Visibility = Visibility.Visible;
             };
+            
+            entryBorder.MouseLeave += (sender, e) => {
+                buttonsContainer.Visibility = Visibility.Hidden;
+            };
+            
+            entryBorder.Child = entryContainer;
 
+            return entryBorder;
+        }
+
+        private void AddGroupListEntry(Player player, bool isFriend) {
+            Border border = GetGroupListEntry(player, isFriend);
+            FriendsListBox.Items.Add(border);
+        }
+
+        public PartyLobbyPage() {
+            InitializeComponent();
+            
+            SetUpChatFrame();
+            HideResultMessage();
+            InitializeParty();
+            SetUpLanguageCombobox();
+        }
+
+
+        public void ReloadGroupList() {
             FriendListMessage.Visibility = Visibility.Hidden;
-
             FriendsListBox.Items.Clear();
 
             var party = App.Current.CurrentParty;
-
             if(party.Players != null) {
                 foreach(var player in party.Players) {
-                    addItem(player, false);
+                    AddGroupListEntry(player, false);
                 }
             }
 
@@ -194,7 +201,7 @@ namespace Client {
                     FriendsListBox.Items.Add(friendsSubheader);
                 
                     foreach(var friend in onlineFriends) {
-                        addItem(friend, true);
+                        AddGroupListEntry(friend, true);
                     }
                 }
             }
@@ -206,6 +213,62 @@ namespace Client {
             App.Current.PartyManagerClient.LeaveParty();
         }
 
+        private void GameTimeLimitSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if(GameTimeLimitIndicator != null) {
+                GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
+                if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                    App.Current.PartyManagerClient.UpdateTimeLimitSetting((int)GameTimeLimitSlider.Value);
+                }
+            }
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.PartyManagerClient.StartGame((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex, (int)GameTimeLimitSlider.Value);
+        }
+    }
+
+    public partial class PartyLobbyPage : IPlayerManagerCallback {
+        public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
+            throw new NotImplementedException();
+        }
+
+        public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
+            throw new NotImplementedException();
+        }
+
+        public void SendFriendRequestResponseHandler(PlayerManagerPlayerFriendRequestResult result) {
+            throw new NotImplementedException();
+        }
+
+        public void GetFriendListResponseHandler(Player[] friends) {
+            Friends = friends.ToList();
+            ReloadGroupList();
+        }
+
+        public void GetFriendRequestsResponseHandler(Player[] friendRequests) {
+            throw new NotImplementedException();
+        }
+
+        public void ReceiveFriendRequest(Player player) {
+            throw new NotImplementedException();
+        }
+
+        public void ReceiveFriendAdd(Player player) {
+            App.Current.PlayerManagerClient.GetFriendList();
+            ReloadGroupList();
+        }
+
+        public void UpdateFriendStatus(Player friend, Player.StatusType status) {
+            App.Current.PlayerManagerClient.GetFriendList();
+            ReloadGroupList();
+        }
+
+        public void Disconnect(DisconnectionReason reason) {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class PartyLobbyPage : IPartyManagerCallback {
         public void CreatePartyCallback(Party party) {
             ChatPage.PrintPlayerJoinMessage(App.Current.CurrentParty.Leader.Nickname);
             ReloadGroupList();
@@ -257,49 +320,6 @@ namespace Client {
             GameLanguageCombobox.IsEnabled = playerIsLeader;
         }
 
-        public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
-            throw new NotImplementedException();
-        }
-
-        public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
-            throw new NotImplementedException();
-        }
-
-        public void SendFriendRequestResponseHandler(PlayerManagerPlayerFriendRequestResult result) {
-            throw new NotImplementedException();
-        }
-
-        public void GetFriendListResponseHandler(Player[] friends) {
-            Friends = friends.ToList();
-            ReloadGroupList();
-        }
-
-        public void GetFriendRequestsResponseHandler(Player[] friendRequests) {
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveFriendRequest(Player player) {
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveFriendAdd(Player player) {
-            App.Current.PlayerManagerClient.GetFriendList();
-            ReloadGroupList();
-        }
-
-        private void GameTimeLimitSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            if(GameTimeLimitIndicator != null) {
-                GameTimeLimitIndicator.Content = GameTimeLimitSlider.Value.ToString() + "m";
-                if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
-                    App.Current.PartyManagerClient.UpdateTimeLimitSetting((int)GameTimeLimitSlider.Value);
-                }
-            }
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.PartyManagerClient.StartGame((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex, (int)GameTimeLimitSlider.Value);
-        }
-
         public void StartGameCallback(GameStartResult result) {
             ResultText.Visibility = Visibility.Visible;
             switch(result) {
@@ -333,15 +353,6 @@ namespace Client {
             if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
                 App.Current.PartyManagerClient.UpdateLanguageSetting((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex);
             }
-        }
-
-        public void UpdateFriendStatus(Player friend, Player.StatusType status) {
-            App.Current.PlayerManagerClient.GetFriendList();
-            ReloadGroupList();
-        }
-
-        public void Disconnect(DisconnectionReason reason) {
-            throw new NotImplementedException();
         }
     }
 }

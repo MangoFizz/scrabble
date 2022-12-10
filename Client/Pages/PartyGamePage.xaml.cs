@@ -12,7 +12,7 @@ namespace Client {
     /// <summary>
     /// Interaction logic for PartyGamePage.xaml
     /// </summary>
-    public partial class PartyGamePage : Page, IPartyGameCallback {
+    public partial class PartyGamePage : Page {
         class BoardSlot {
             public Border Container { get; set; }
             public int Row { get; set; }
@@ -22,19 +22,16 @@ namespace Client {
         private PartyGameClient Client { get; set; }
         private GameBoardSlot[,] Board { get; set; }
         private GameTile?[] Rack { get; set; }
-        private Grid DraggedTile { get; set; }
+        private Grid DraggedTileItem { get; set; }
         private Point DraggedTileStartingPosition { get; set; }
         private BoardSlot FocusedBoardSlot { get; set; }
-        private List<Grid> TileContainers { get; set; }
         private bool CanPlaceTiles { get; set; }
-        private bool TurnStarted { get; set; }
 
         public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
 
             Board = new GameBoardSlot[15, 15];
             Rack = new GameTile?[7];
-            TileContainers = new List<Grid>();
 
             SetUpScoreTable();
 
@@ -115,214 +112,216 @@ namespace Client {
             return elem;
         }
 
-        private void UpdateBoardGrid() {
-            // Update board grid
-            BoardGrid.Children.Clear();
+        private SolidColorBrush GetBoardSlotColor(GameBoardSlotBonus slotBonus) {
+            SolidColorBrush color;
+            switch(slotBonus) {
+                case GameBoardSlotBonus.DoubleLetter:
+                    color = Brushes.SkyBlue;
+                    break;
 
+                case GameBoardSlotBonus.DoubleWord:
+                    color = Brushes.Orange;
+                    break;
+
+                case GameBoardSlotBonus.TripleLetter:
+                    color = Brushes.RoyalBlue;
+                    break;
+
+                case GameBoardSlotBonus.TripleWord:
+                    color = Brushes.OrangeRed;
+                    break;
+
+                case GameBoardSlotBonus.Center:
+                    color = Brushes.Yellow;
+                    break;
+
+                case GameBoardSlotBonus.None:
+                default:
+                    color = Brushes.White;
+                    break;
+            }
+            return color;
+        }
+
+        private FontFamily GetTileFontFamily() {
+            return new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
+        }
+
+        private Label GetBoardSlotItemGlyph(char letter) {
+            if(letter == ' ') {
+                letter = '"';
+            }
+            var boardSlotItemGlyph = new Label() {
+                Content = letter.ToString().ToLower(),
+                Foreground = Brushes.Black,
+                FontSize = 36,
+                Padding = new Thickness(0, 1, 0, 0),
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                FontFamily = GetTileFontFamily()
+            };
+            return boardSlotItemGlyph;
+        }
+
+        private Border GetBoardSlotItem(GameBoardSlot boardSlot) {
+            var slotItemContainer = new Border() {
+                Background = GetBoardSlotColor(boardSlot.Bonus),
+                BorderBrush = Brushes.Gray,
+                BorderThickness = new Thickness(1),
+                Padding = new Thickness(0),
+                Opacity = 0.75
+            };
+
+            if(boardSlot.Tile.HasValue) {
+                slotItemContainer.Child = GetBoardSlotItemGlyph((char)boardSlot.Tile.Value);
+            }
+
+            slotItemContainer.MouseEnter += (sender, e) => {
+                slotItemContainer.BorderBrush = Brushes.Black;
+                slotItemContainer.BorderThickness = new Thickness(slotItemContainer.Child == null ? 2 : 1);
+                slotItemContainer.Opacity = 1;
+            };
+
+            slotItemContainer.MouseLeave += (sender, e) => {
+                slotItemContainer.BorderBrush = Brushes.Gray;
+                slotItemContainer.BorderThickness = new Thickness(1);
+                slotItemContainer.Opacity = slotItemContainer.Child == null ? 0.75 : 1;
+            };
+
+            return slotItemContainer;
+        }
+
+        private void UpdateBoardGrid() {
+            BoardGrid.Children.Clear();
             for(int x = 0; x < 15; x++) {
                 for(int y = 0; y < 15; y++) {
                     var slot = Board[x, y];
-                    SolidColorBrush color;
-                    switch(slot.Bonus) {
-                        case GameBoardSlotBonus.DoubleLetter:
-                            color = Brushes.SkyBlue;
-                            break;
-
-                        case GameBoardSlotBonus.DoubleWord:
-                            color = Brushes.Orange;
-                            break;
-
-                        case GameBoardSlotBonus.TripleLetter:
-                            color = Brushes.RoyalBlue;
-                            break;
-
-                        case GameBoardSlotBonus.TripleWord:
-                            color = Brushes.OrangeRed;
-                            break;
-
-                        case GameBoardSlotBonus.Center:
-                            color = Brushes.Yellow;
-                            break;
-
-                        case GameBoardSlotBonus.None:
-                        default:
-                            color = Brushes.White;
-                            break;
-                    }
-
-                    var slotContainer = new Border() {
-                        Background = color,
-                        BorderBrush = Brushes.Gray,
-                        BorderThickness = new Thickness(1),
-                        Padding = new Thickness(0),
-                        Opacity = 0.75
-                    };
-
-                    if(slot.Tile.HasValue) {
-                        slotContainer.Child = new Label() {
-                            Content = slot.Tile.Value.ToString().ToLower(),
-                            Foreground = Brushes.Black,
-                            FontSize = 36,
-                            Padding = new Thickness(0, 1, 0, 0),
-                            HorizontalContentAlignment = HorizontalAlignment.Center,
-                            VerticalContentAlignment = VerticalAlignment.Center,
-                            FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular")
-                        };
-                    }
-
-                    slotContainer.MouseEnter += (sender, e) => {
-                        slotContainer.BorderBrush = Brushes.Black;
-                        slotContainer.BorderThickness = new Thickness(slotContainer.Child == null ? 2 : 1);
-                        slotContainer.Opacity = 1;
-                    };
-
-                    slotContainer.MouseLeave += (sender, e) => {
-                        slotContainer.BorderBrush = Brushes.Gray;
-                        slotContainer.BorderThickness = new Thickness(1);
-                        slotContainer.Opacity = slotContainer.Child == null ? 0.75 : 1;
-                    };
-
-                    slotContainer.AllowDrop = true;
-
-                    Grid.SetColumn(slotContainer, x);
-                    Grid.SetRow(slotContainer, y);
-                    BoardGrid.Children.Add(slotContainer);
+                    var slotItemContainer = GetBoardSlotItem(slot);
+                    Grid.SetColumn(slotItemContainer, x);
+                    Grid.SetRow(slotItemContainer, y);
+                    BoardGrid.Children.Add(slotItemContainer);
                 }
             }
         }
 
-        private void UpdateRackGrid() {
-            for(int i = 0; i < TileContainers.Count; i++) {
-                RackCanvas.Children.Remove(TileContainers[i]);
+        private void AddRackTileItemGlyph(Grid rackTileItemContainer, char letter) {
+            var fontFamily = GetTileFontFamily();
+
+            if(letter == ' ') {
+                letter = '!';
             }
+
+            var tileLetterBackground = new Label() {
+                Content = ".",
+                Width = 60,
+                Height = 60,
+                Foreground = Brushes.White,
+                FontSize = 40,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                FontFamily = fontFamily
+            };
+
+            var tileLetterForeground = new Label() {
+                Content = letter.ToString(),
+                Width = 60,
+                Height = 60,
+                Opacity = 0.9,
+                Foreground = Brushes.Black,
+                FontSize = 40,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                FontFamily = fontFamily
+            };
+            
+            rackTileItemContainer.Children.Add(tileLetterBackground);
+            rackTileItemContainer.Children.Add(tileLetterForeground);
+        }
+
+        private Grid GetRackTileItem(char letter, int rackSlotIndex) {
+            var tileItemContainer = new Grid();
+            tileItemContainer.Opacity = 0.9;
+            tileItemContainer.HorizontalAlignment = HorizontalAlignment.Left;
+            tileItemContainer.VerticalAlignment = VerticalAlignment.Top;
+            tileItemContainer.Margin = new Thickness(RackBorder.Margin.Left + (60 * RackCanvas.Children.Count), RackBorder.Margin.Top, 0, 0);
+
+            AddRackTileItemGlyph(tileItemContainer, letter);
+
+            tileItemContainer.MouseEnter += (sender, e) => {
+                tileItemContainer.Opacity = 1;
+            };
+
+            tileItemContainer.MouseLeave += (sender, e) => {
+                tileItemContainer.Opacity = 0.9;
+            };
+
+            tileItemContainer.PreviewMouseDown += (sender, e) => {
+                if(!CanPlaceTiles) {
+                    return;
+                }
+                DraggedTileItem = sender as Grid;
+                DraggedTileStartingPosition = new Point() {
+                    X = tileItemContainer.Margin.Left,
+                    Y = tileItemContainer.Margin.Top
+                };
+            };
+
+            tileItemContainer.PreviewMouseUp += (sender, e) => {
+                if(DraggedTileItem != null) {
+                    if(FocusedBoardSlot != null) {
+                        Client.PlaceTile(rackSlotIndex, FocusedBoardSlot.Row, FocusedBoardSlot.Column);
+                        PassTurnButton.Content = Properties.Resources.PARTY_GAME_END_TURN_BUTTON;
+
+                        RackCanvas.Children.Remove(DraggedTileItem);
+
+                        var draggedTileLabel = DraggedTileItem.Children[1] as Label;
+                        var draggedTileLetter = draggedTileLabel.Content.ToString();
+                        FocusedBoardSlot.Container.Child = GetBoardSlotItemGlyph(draggedTileLetter[0]);
+                        FocusedBoardSlot = null;
+                    }
+                    else {
+                        DraggedTileItem.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
+                    }
+
+                    DraggedTileItem = null;
+                    RackCanvas.ReleaseMouseCapture();
+                }
+            };
+
+            tileItemContainer.MouseLeave += (sender, e) => {
+                if(DraggedTileItem != null && DraggedTileItem == sender) {
+                    DraggedTileItem.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
+                    DraggedTileItem = null;
+                    RackCanvas.ReleaseMouseCapture();
+                }
+            };
+
+            return tileItemContainer;
+        }
+
+        private void UpdateRackGrid() {
+            RackCanvas.Children.Clear();
             for(int i = 0; i < 7; i++) {
                 var tileIndex = i;
                 var tile = Rack[i];
 
-                if(tile == null) {
-                    continue;
+                if(tile.HasValue) {
+                    char letter = '!';
+                    if(tile != GameTile.Wildcard) {
+                        letter = (char)tile.Value;
+                    }
+                    var tileContainer = GetRackTileItem(letter, tileIndex);
+                    RackCanvas.Children.Add(tileContainer);
                 }
+                else {
+                    RackCanvas.Children.Add(new Grid());
 
-                var letter = (char)tile;
-                var fontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
-
-                if(letter == (char)GameTile.Wildcard) {
-                    letter = '!';
                 }
-
-                var tileToken = new Label() {
-                    Content = ".",
-                    Width = 60,
-                    Height = 60,
-                    Foreground = Brushes.White,
-                    FontSize = 40,
-                    HorizontalContentAlignment = HorizontalAlignment.Center,
-                    VerticalContentAlignment = VerticalAlignment.Center,
-                    FontFamily = fontFamily
-                };
-
-                var tileBackground = new Label() {
-                    Content = letter.ToString(),
-                    Width = 60,
-                    Height = 60,
-                    Opacity = 0.9,
-                    Foreground = Brushes.Black,
-                    FontSize = 40,
-                    HorizontalContentAlignment = HorizontalAlignment.Center,
-                    VerticalContentAlignment = VerticalAlignment.Center,
-                    FontFamily = fontFamily
-                };
-
-                var rackPosition = new Point() {
-                    X = RackBorder.Margin.Left,
-                    Y = RackBorder.Margin.Top
-                };
-
-                var tileContainer = new Grid();
-                tileContainer.Opacity = 0.9;
-                tileContainer.HorizontalAlignment = HorizontalAlignment.Left;
-                tileContainer.VerticalAlignment = VerticalAlignment.Top;
-                tileContainer.Margin = new Thickness(rackPosition.X + (60 * RackCanvas.Children.Count), rackPosition.Y, 0, 0);
-                tileContainer.Children.Add(tileToken);
-                tileContainer.Children.Add(tileBackground);
-
-                tileContainer.MouseEnter += (sender, e) => {
-                    tileContainer.Opacity = 1;
-                };
-
-                tileContainer.MouseLeave += (sender, e) => {
-                    tileContainer.Opacity = 0.9;
-                };
-
-                tileContainer.PreviewMouseDown += (sender, e) => {
-                    if(!CanPlaceTiles) {
-                        return;
-                    }
-                    DraggedTile = sender as Grid;
-                    DraggedTileStartingPosition = new Point() {
-                        X = tileContainer.Margin.Left,
-                        Y = tileContainer.Margin.Top
-                    };
-                };
-                
-                tileContainer.PreviewMouseUp += (sender, e) => {
-                    if(DraggedTile != null) {
-                        if(FocusedBoardSlot != null) {
-                            var draggedTileLabel = DraggedTile.Children[1] as Label;
-                            var draggedTileLetter = draggedTileLabel.Content.ToString();
-
-                            var slot = FocusedBoardSlot.Container;
-
-                            slot.Child = new Label() {
-                                Content = draggedTileLetter.ToLower(),
-                                Foreground = Brushes.Black,
-                                FontSize = 36,
-                                Padding = new Thickness(0,1,0,0),
-                                HorizontalContentAlignment = HorizontalAlignment.Center,
-                                VerticalContentAlignment = VerticalAlignment.Center,
-                                FontFamily = fontFamily
-                            };
-
-                            TileContainers.Remove(DraggedTile);
-                            RackCanvas.Children.Remove(DraggedTile);
-                            Rack[tileIndex] = null;
-
-                            Client.PlaceTile(tile.Value, FocusedBoardSlot.Row, FocusedBoardSlot.Column);
-                            
-                            FocusedBoardSlot = null;
-                            PassTurnButton.Content = Properties.Resources.PARTY_GAME_END_TURN_BUTTON;
-                        }
-                        else {
-                            DraggedTile.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
-                        }
-
-                        DraggedTile = null;
-                        RackCanvas.ReleaseMouseCapture();
-                    }
-                };
-
-                tileContainer.MouseLeave += (sender, e) => {
-                    if(DraggedTile != null && DraggedTile == sender) {
-                        DraggedTile.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
-                        DraggedTile = null;
-                        RackCanvas.ReleaseMouseCapture();
-                    }
-                };
-
-                TileContainers.Add(tileContainer);
-                RackCanvas.Children.Add(tileContainer);
             }
         }
-        
-        private void RackCanvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-            if(DraggedTile == null) {
-                return;
-            }
 
-            var currentPoint = e.GetPosition(sender as IInputElement);
-            DraggedTile.Margin = new Thickness(currentPoint.X - DraggedTile.ActualWidth / 2, currentPoint.Y - DraggedTile.ActualHeight / 2, 0, 0);
-            
-            var slot = GetBoardDragOverSlot(currentPoint);
+        private void UpdateBoardSlotItemsFocus(Point currentCursorPosition) {
+            var slot = GetBoardDragOverSlot(currentCursorPosition);
             if(slot != null) {
                 var slotContainer = slot.Container;
                 if(FocusedBoardSlot != null && FocusedBoardSlot.Container != slotContainer) {
@@ -341,6 +340,31 @@ namespace Client {
             }
         }
 
+        private void UpdateDraggedRackTilePosition(Point currentCursorPosition) {
+            var positionX = currentCursorPosition.X - DraggedTileItem.ActualWidth / 2;
+            var positionY = currentCursorPosition.Y - DraggedTileItem.ActualHeight / 2;
+            DraggedTileItem.Margin = new Thickness(positionX, positionY, 0, 0);
+        }
+
+        private void RackCanvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs eventArgs) {
+            if(DraggedTileItem == null) {
+                return;
+            }
+            var currentPoint = eventArgs.GetPosition(sender as IInputElement);
+            UpdateDraggedRackTilePosition(currentPoint);
+            UpdateBoardSlotItemsFocus(currentPoint);
+        }
+
+        private void PassTurnButton_Click(object sender, RoutedEventArgs e) {
+            if(CanPlaceTiles) {
+                CanPlaceTiles = false;
+                PassTurnButton.Content = Properties.Resources.PARTY_GAME_PASS_TURN_BUTTON;
+                Client.EndTurn();
+            }
+        }
+    }
+
+    public partial class PartyGamePage : IPartyGameCallback {
         public void SendInvalidTilePlacingError() {
             throw new NotImplementedException();
         }
@@ -403,15 +427,6 @@ namespace Client {
             }
             else {
                 PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, player.Nickname);
-            }
-        }
-
-        private void PassTurnButton_Click(object sender, RoutedEventArgs e) {
-            if(CanPlaceTiles) {
-                CanPlaceTiles = false;
-                TurnStarted = false;
-                PassTurnButton.Content = Properties.Resources.PARTY_GAME_PASS_TURN_BUTTON;
-                Client.EndTurn();
             }
         }
     }

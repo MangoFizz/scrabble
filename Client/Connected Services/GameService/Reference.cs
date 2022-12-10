@@ -255,6 +255,90 @@ namespace Client.GameService {
         ServerShutdown = 1,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlot", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    [System.SerializableAttribute()]
+    public partial class GameBoardSlot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.GameService.GameBoardSlotBonus BonusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<Client.GameService.GameTile> TileField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.GameService.GameBoardSlotBonus Bonus {
+            get {
+                return this.BonusField;
+            }
+            set {
+                if ((this.BonusField.Equals(value) != true)) {
+                    this.BonusField = value;
+                    this.RaisePropertyChanged("Bonus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<Client.GameService.GameTile> Tile {
+            get {
+                return this.TileField;
+            }
+            set {
+                if ((this.TileField.Equals(value) != true)) {
+                    this.TileField = value;
+                    this.RaisePropertyChanged("Tile");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlotBonus", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameBoardSlotBonus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Center = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TripleWord = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoubleWord = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TripleLetter = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoubleLetter = 5,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Game.Tile", Namespace="http://schemas.datacontract.org/2004/07/Core")]
     public enum GameTile : int {
@@ -342,90 +426,6 @@ namespace Client.GameService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Wildcard = 32,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlot", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    [System.SerializableAttribute()]
-    public partial class GameBoardSlot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.GameService.GameBoardSlotBonus BonusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<Client.GameService.GameTile> TileField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.GameService.GameBoardSlotBonus Bonus {
-            get {
-                return this.BonusField;
-            }
-            set {
-                if ((this.BonusField.Equals(value) != true)) {
-                    this.BonusField = value;
-                    this.RaisePropertyChanged("Bonus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<Client.GameService.GameTile> Tile {
-            get {
-                return this.TileField;
-            }
-            set {
-                if ((this.TileField.Equals(value) != true)) {
-                    this.TileField = value;
-                    this.RaisePropertyChanged("Tile");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Game.BoardSlotBonus", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    public enum GameBoardSlotBonus : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        None = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Center = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        TripleWord = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DoubleWord = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        TripleLetter = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        DoubleLetter = 5,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -815,10 +815,10 @@ namespace Client.GameService {
         System.Threading.Tasks.Task ConnectPartyGameAsync(string playerSessionId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PlaceTile")]
-        void PlaceTile(Client.GameService.GameTile tile, int x, int y);
+        void PlaceTile(int rackTileIndex, int x, int y);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/PlaceTile")]
-        System.Threading.Tasks.Task PlaceTileAsync(Client.GameService.GameTile tile, int x, int y);
+        System.Threading.Tasks.Task PlaceTileAsync(int rackTileIndex, int x, int y);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyGame/EndTurn")]
         void EndTurn();
@@ -891,12 +891,12 @@ namespace Client.GameService {
             return base.Channel.ConnectPartyGameAsync(playerSessionId);
         }
         
-        public void PlaceTile(Client.GameService.GameTile tile, int x, int y) {
-            base.Channel.PlaceTile(tile, x, y);
+        public void PlaceTile(int rackTileIndex, int x, int y) {
+            base.Channel.PlaceTile(rackTileIndex, x, y);
         }
         
-        public System.Threading.Tasks.Task PlaceTileAsync(Client.GameService.GameTile tile, int x, int y) {
-            return base.Channel.PlaceTileAsync(tile, x, y);
+        public System.Threading.Tasks.Task PlaceTileAsync(int rackTileIndex, int x, int y) {
+            return base.Channel.PlaceTileAsync(rackTileIndex, x, y);
         }
         
         public void EndTurn() {

@@ -79,6 +79,15 @@ namespace Service {
             return count;
         }
 
+        public Tile? PopTileFromRack(int index) {
+            if(index < 0 || index > Rack.Length) {
+                return null;
+            }
+            var tile = Rack[index];
+            Rack[index] = null;
+            return tile;
+        }
+
         public void Dispose() {
             if(CurrentParty != null) {
                 CurrentParty.PlayerLeaves(this);

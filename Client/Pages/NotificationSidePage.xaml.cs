@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Client {
     /// <summary>
@@ -24,37 +13,55 @@ namespace Client {
             InitializeComponent();
         }
 
-        public void PushInviteNotification(PartyInvitationPage page) {
+        private bool InviteNotificationAlreadyShown(string invideSenderNickname) {
             foreach(var child in NotificationsStackPanel.Children) {
                 if(typeof(Frame).IsInstanceOfType(child)) {
                     var childFrame = (Frame)child;
                     if(typeof(PartyInvitationPage).IsInstanceOfType(childFrame.Content)) {
                         var invitationPage = (PartyInvitationPage)childFrame.Content;
-                        if(invitationPage.Player.Nickname == page.Player.Nickname) {
-                            return;
+                        if(invitationPage.Player.Nickname == invideSenderNickname) {
+                            return true;
                         }
                     }
                 }
             }
+            return false;
+        }
 
-            var frame = new Frame();
+        private void SetNotificationEntryCloseTimer(Frame notificationFrame) {
+            Task.Factory.StartNew(() => {
+                Thread.Sleep(5600);
+                Dispatcher.Invoke(() => {
+                    NotificationsStackPanel.Children.Remove(notificationFrame);
+                });
+            });
+        }
+
+        private Frame GetInviteNotificationFrame(PartyInvitationPage page) {
             page.VerticalAlignment = VerticalAlignment.Top;
-            frame.Content = page;
-            NotificationsStackPanel.Children.Add(frame);
+            var inviteFrame = new Frame() {
+                Content = page
+            };
+            NotificationsStackPanel.Children.Add(inviteFrame);
 
             Action<Object, RoutedEventArgs> closeAction = (sender, e) => {
-                NotificationsStackPanel.Children.Remove(frame);
+                NotificationsStackPanel.Children.Remove(inviteFrame);
             };
 
             page.AcceptButton.Click += new RoutedEventHandler(closeAction);
             page.RejectButton.Click += new RoutedEventHandler(closeAction);
 
-            Task.Factory.StartNew(() => {
-                Thread.Sleep(5600);
-                Dispatcher.Invoke(() => {
-                    NotificationsStackPanel.Children.Remove(frame);
-                });
-            });
+            SetNotificationEntryCloseTimer(inviteFrame);
+
+            return inviteFrame;
+        }
+
+        public void PushInviteNotification(PartyInvitationPage page) {
+            if(InviteNotificationAlreadyShown(page.Player.Nickname)) {
+                return;
+            }
+            var inviteNotificationFrame = GetInviteNotificationFrame(page);
+            NotificationsStackPanel.Children.Add(inviteNotificationFrame);
         }
     }
 }

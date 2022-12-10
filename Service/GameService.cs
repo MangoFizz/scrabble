@@ -422,7 +422,7 @@ namespace Service {
             if(callbackChannel == null) {
                 return;
             }
-            callbackChannel.UpdateBoard(player.CurrentParty.Game.GetJaggedBoard());
+            callbackChannel.UpdateBoard(player.CurrentParty.Game.GetBoardJaggedArray());
             callbackChannel.UpdatePlayerRack(player.Rack);
             callbackChannel.UpdatePlayerScore(player, player.Score);
         }
@@ -461,15 +461,6 @@ namespace Service {
                 }
             }
             player.PartyGameCallbackChannel.UpdatePlayerRack(player.Rack);
-        }
-
-        private void RemoveTileFromPlayerRack(Player player, Game.Tile tile) {
-            for(var i = 0; i < player.Rack.Length; i++) {
-                if(player.Rack[i] != null && player.Rack[i] == tile) {
-                    player.Rack[i] = null;
-                    break;
-                }
-            }
         }
 
         public void ConnectPartyGame(string playerSessionId) {
@@ -513,7 +504,7 @@ namespace Service {
             }
         }
 
-        public void PlaceTile(Game.Tile tile, int x, int y) {
+        public void PlaceTile(int rackTileIndex, int x, int y) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null && currentPlayer.CurrentParty != null) {
@@ -521,9 +512,12 @@ namespace Service {
                 if(party.Players[party.CurrentPlayerTurn] != currentPlayer) {
                     return;
                 }
-                var points = party.Game.PlaceTile(tile, x, y);
+                var tile = currentPlayer.PopTileFromRack(rackTileIndex);
+                if(!tile.HasValue) {
+                    return;
+                }
+                var points = party.Game.PlaceTile(tile.Value, x, y);
                 currentPlayer.Score += points;
-                RemoveTileFromPlayerRack(currentPlayer, tile);
                 UpdatePlayersGame(party);
             }
         }

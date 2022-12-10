@@ -16,7 +16,7 @@ namespace Service {
         void ConnectPartyGame(string playerSessionId);
 
         [OperationContract(IsOneWay = true)]
-        void PlaceTile(Tile tile, int x, int y);
+        void PlaceTile(int rackTileIndex, int x, int y);
 
         [OperationContract(IsOneWay = true)]
         void EndTurn();

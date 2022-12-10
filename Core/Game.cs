@@ -252,7 +252,6 @@ namespace Core {
                     addTile(Tile.T, 4);
                     addTile(Tile.U, 5);
                     addTile(Tile.V, 1);
-                    addTile(Tile.W, 1);
                     addTile(Tile.X, 1);
                     addTile(Tile.Y, 1);
                     addTile(Tile.Z, 1);
@@ -400,7 +399,7 @@ namespace Core {
             return GetTileScore(tile);
         }
 
-        public BoardSlot[][] GetJaggedBoard() {
+        public BoardSlot[][] GetBoardJaggedArray() {
             BoardSlot[][] jaggedBoard = new BoardSlot[15][];
             for(int i = 0; i < 15; i++) {
                 jaggedBoard[i] = new BoardSlot[15];

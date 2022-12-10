@@ -15,22 +15,10 @@ namespace Client {
             resultMessage.Visibility = Visibility.Hidden;
         }
 
-        public SignUpPage() {
-            InitializeComponent();
-            HideTextMessages();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e) {
-            NavigationService.GoBack();
-        }
-
-        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
+        private bool ValidateInputs() {
             bool isInputValid = true;
-            
-            HideTextMessages();
-
             var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
-            
+
             if(nicknameTextBox.Text.Length == 0) {
                 nicknameInvalidMessage.Visibility = Visibility.Visible;
                 nicknameInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
@@ -95,11 +83,24 @@ namespace Client {
                 isInputValid = false;
             }
 
-            if(isInputValid) {
+            return isInputValid;
+        }
+
+        public SignUpPage() {
+            InitializeComponent();
+            HideTextMessages();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
+            NavigationService.GoBack();
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e) {
+            HideTextMessages();
+            if(ValidateInputs()) {
                 var email = emailTextBox.Text;
                 var nickname = nicknameTextBox.Text;
                 var password = passwordTextBox.Password;
-
                 App.Current.PlayerManagerClient.RegisterPlayer(nickname, password, email);
             }
         }

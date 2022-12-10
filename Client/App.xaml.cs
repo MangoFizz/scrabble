@@ -143,7 +143,7 @@ namespace Client {
             else {
                 if(typeof(LoginPage).IsInstanceOfType(MainFrame.Content)) {
                     var loginPage = ((LoginPage)MainFrame.Content);
-                    loginPage.LoginResponse(loginResult);
+                    loginPage.LoginResponseHandler(loginResult);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace Client {
             if(MainWindow.FriendListFrame.Content != null) {
                 var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
                 if(friendListPage != null) {
-                    friendListPage.FriendAddHandler(player);
+                    friendListPage.ReceiveFriendAdd(player);
                 }
             }
 
@@ -166,7 +166,7 @@ namespace Client {
             if(MainWindow.FriendListFrame.Content != null) {
                 var friendListPage = ((FriendsListPage)MainWindow.FriendListFrame.Content);
                 if(friendListPage != null) {
-                    friendListPage.FriendRequestReceiveHandler(player);
+                    friendListPage.ReceiveFriendRequest(player);
                 }
             }
         }

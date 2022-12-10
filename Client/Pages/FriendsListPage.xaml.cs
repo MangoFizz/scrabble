@@ -29,103 +29,15 @@ namespace Client {
         public void RefreshFriendList() {
             FriendsListBox.Items.Clear();
 
-            Action<Player, bool> addItem = (player, pending) => {
-                Border border = new Border();
-                border.BorderBrush = Brushes.Gray;
-                border.BorderThickness = new Thickness(1);
-
-                StackPanel stackPanel = new StackPanel();
-                stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Width = 325;
-
-                Image image = new Image();
-                image.Source = App.Current.GetPlayerAvatarImage(player);
-                image.Width = 60;
-                image.Height = 60;
-                stackPanel.Children.Add(image);
-
-                StackPanel text = new StackPanel();
-                text.VerticalAlignment = VerticalAlignment.Center;
-                text.Margin = new Thickness(10, 0, 0, 0);
-                text.Width = 160;
-
-                Label nickname = new Label();
-                nickname.Content = player.Nickname;
-                nickname.FontSize = 18;
-                nickname.FontWeight = FontWeights.Bold;
-                nickname.Padding = new Thickness(0);
-                text.Children.Add(nickname);
-
-                Label status = new Label();
-                status.FontSize = 18;
-                status.Padding = new Thickness(0);
-                
-                if(pending) {
-                    status.Content = Properties.Resources.FRIENDS_LIST_STATUS_PENDING;
-                }
-                else {
-                    switch(player.Status) {
-                        case Player.StatusType.Online:
-                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
-                            status.Foreground = Brushes.Green;
-                            break;
-                        case Player.StatusType.Offline:
-                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_OFFLINE;
-                            status.Foreground = Brushes.Gray;
-                            break;
-                        case Player.StatusType.InGame:
-                            status.Content = Properties.Resources.FRIENDS_LIST_STATUS_IN_GAME;
-                            status.Foreground = Brushes.Blue;
-                            break;
-                    }
-                }
-
-                text.Children.Add(status);
-
-                stackPanel.Children.Add(text);
-
-                if(pending) {
-                    StackPanel buttons = new StackPanel();
-                    buttons.Orientation = Orientation.Horizontal;
-                    buttons.HorizontalAlignment = HorizontalAlignment.Right;
-
-                    Button accept = new Button();
-                    accept.Content = "✔";
-                    accept.Width = 30;
-                    accept.Height = 30;
-                    accept.Margin = new Thickness(10, 0, 0, 0);
-                    accept.Click += (sender, e) => {
-                        App.Current.PlayerManagerClient.AcceptFriendRequest(player.Nickname);
-                    };
-                    buttons.Children.Add(accept);
-
-                    Button decline = new Button();
-                    decline.Content = "❌";
-                    decline.Width = 30;
-                    decline.Height = 30;
-                    decline.Margin = new Thickness(10, 0, 0, 0);
-                    decline.Click += (sender, e) => {
-                        App.Current.PlayerManagerClient.DeclineFriendRequest(player.Nickname);
-                    };
-                    buttons.Children.Add(decline);
-
-                    stackPanel.Children.Add(buttons);
-                }
-
-                border.Child = stackPanel;
-
-                FriendsListBox.Items.Add(border);
-            };
-
             if(FriendRequests != null) {
                 foreach(var friendRequest in FriendRequests) {
-                    addItem(friendRequest, true);
+                    AddFriendListEntry(friendRequest, true);
                 }
             }
             
             if(Friends != null) {
                 foreach(var friend in Friends) {
-                    addItem(friend, false);
+                    AddFriendListEntry(friend, false);
                 }
             }
 
@@ -142,13 +54,8 @@ namespace Client {
             RequestFriendsList();
         }
 
-        private void RectagleMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            Task.Factory.StartNew(() => {
-                Thread.Sleep(175);
-                Dispatcher.Invoke(() => {
-                    App.Current.CloseFriendsList();
-                });
-            });
+        private void CloseRectangle_ButtonUp(object sender, MouseButtonEventArgs e) {
+            SetCloseAnimationEndTimer();
         }
 
         private void AddFriendButton_Click(object sender, RoutedEventArgs e) {
@@ -156,10 +63,122 @@ namespace Client {
                 App.Current.PlayerManagerClient.SendFriendRequest(NicknameTextBox.Text);
             }
         }
-        
+
+        private StackPanel GetFriendListEntryButtons(Player player) {
+            StackPanel entryButtonsContainer = new StackPanel();
+            entryButtonsContainer.Orientation = Orientation.Horizontal;
+            entryButtonsContainer.HorizontalAlignment = HorizontalAlignment.Right;
+
+            Button acceptButton = new Button();
+            acceptButton.Content = "✔";
+            acceptButton.Width = 30;
+            acceptButton.Height = 30;
+            acceptButton.Margin = new Thickness(10, 0, 0, 0);
+            acceptButton.Click += (sender, e) => {
+                App.Current.PlayerManagerClient.AcceptFriendRequest(player.Nickname);
+            };
+            entryButtonsContainer.Children.Add(acceptButton);
+
+            Button declineButton = new Button();
+            declineButton.Content = "❌";
+            declineButton.Width = 30;
+            declineButton.Height = 30;
+            declineButton.Margin = new Thickness(10, 0, 0, 0);
+            declineButton.Click += (sender, e) => {
+                App.Current.PlayerManagerClient.DeclineFriendRequest(player.Nickname);
+            };
+            entryButtonsContainer.Children.Add(declineButton);
+
+            return entryButtonsContainer;
+        }
+
+        private void SetFriendStatusLabel(Player.StatusType status, Label statusLabel) {
+            switch(status) {
+                case Player.StatusType.Online:
+                    statusLabel.Content = Properties.Resources.FRIENDS_LIST_STATUS_ONLINE;
+                    statusLabel.Foreground = Brushes.Green;
+                    break;
+                case Player.StatusType.Offline:
+                    statusLabel.Content = Properties.Resources.FRIENDS_LIST_STATUS_OFFLINE;
+                    statusLabel.Foreground = Brushes.Gray;
+                    break;
+                case Player.StatusType.InGame:
+                    statusLabel.Content = Properties.Resources.FRIENDS_LIST_STATUS_IN_GAME;
+                    statusLabel.Foreground = Brushes.Blue;
+                    break;
+            }
+        }
+
+        private Border GetFriendListEntry(Player player, bool pending) {
+            Border entryBorder = new Border();
+            entryBorder.BorderBrush = Brushes.Gray;
+            entryBorder.BorderThickness = new Thickness(1);
+
+            StackPanel entryContainer = new StackPanel();
+            entryContainer.Orientation = Orientation.Horizontal;
+            entryContainer.Width = 325;
+
+            Image avatarImage = new Image();
+            avatarImage.Source = App.Current.GetPlayerAvatarImage(player);
+            avatarImage.Width = 60;
+            avatarImage.Height = 60;
+            entryContainer.Children.Add(avatarImage);
+
+            StackPanel textContainer = new StackPanel();
+            textContainer.VerticalAlignment = VerticalAlignment.Center;
+            textContainer.Margin = new Thickness(10, 0, 0, 0);
+            textContainer.Width = 160;
+
+            Label friendNicknameLabel = new Label();
+            friendNicknameLabel.Content = player.Nickname;
+            friendNicknameLabel.FontSize = 18;
+            friendNicknameLabel.FontWeight = FontWeights.Bold;
+            friendNicknameLabel.Padding = new Thickness(0);
+            textContainer.Children.Add(friendNicknameLabel);
+
+            Label friendStatusLabel = new Label();
+            friendStatusLabel.FontSize = 18;
+            friendStatusLabel.Padding = new Thickness(0);
+            if(pending) {
+                friendStatusLabel.Content = Properties.Resources.FRIENDS_LIST_STATUS_PENDING;
+            }
+            else {
+                SetFriendStatusLabel(player.Status, friendStatusLabel);
+            }
+
+            textContainer.Children.Add(friendStatusLabel);
+
+            entryContainer.Children.Add(textContainer);
+
+            if(pending) {
+                var buttons = GetFriendListEntryButtons(player);
+                entryContainer.Children.Add(buttons);
+            }
+
+            entryBorder.Child = entryContainer;
+
+            return entryBorder;
+        }
+
+        private void AddFriendListEntry(Player player, bool pending) {
+            var friendListEntry = GetFriendListEntry(player, pending);
+            FriendsListBox.Items.Add(friendListEntry);
+        }
+
+        private void SetCloseAnimationEndTimer() {
+            Task.Factory.StartNew(() => {
+                Thread.Sleep(175);
+                Dispatcher.Invoke(() => {
+                    App.Current.CloseFriendsList();
+                });
+            });
+        }
+    }
+
+    partial class FriendsListPage : IPlayerManagerCallback {
         public void SendFriendRequestResponseHandler(GameService.PlayerManagerPlayerFriendRequestResult result) {
             switch(result) {
-                case GameService.PlayerManagerPlayerFriendRequestResult.Success: 
+                case PlayerManagerPlayerFriendRequestResult.Success:
                     FriendRequestResultMessage.Content = Properties.Resources.FRIENDS_LIST_FRIEND_REQUEST_SUCCESS;
                     FriendRequestResultMessage.Foreground = Brushes.Green;
                     NicknameTextBox.Text = "";
@@ -195,7 +214,7 @@ namespace Client {
             }
         }
 
-        public void FriendAddHandler(Player friend) {
+        public void ReceiveFriendAdd(Player player) {
             if(Friends == null) {
                 Friends = new List<Player>();
             }
@@ -204,16 +223,16 @@ namespace Client {
                 FriendRequests = new List<Player>();
             }
 
-            var friendRequest = FriendRequests.Find(x => x.Nickname == friend.Nickname);
+            var friendRequest = FriendRequests.Find(x => x.Nickname == player.Nickname);
             if(friendRequest != null) {
                 FriendRequests.Remove(friendRequest);
             }
 
-            Friends.Add(friend);
+            Friends.Add(player);
             RefreshFriendList();
         }
 
-        public void FriendRequestReceiveHandler(Player friend) {
+        public void ReceiveFriendRequest(Player player) {
             if(Friends == null) {
                 Friends = new List<Player>();
             }
@@ -222,9 +241,9 @@ namespace Client {
                 FriendRequests = new List<Player>();
             }
 
-            var friendRequest = FriendRequests.Find(x => x.Nickname == friend.Nickname);
+            var friendRequest = FriendRequests.Find(x => x.Nickname == player.Nickname);
             if(friendRequest == null) {
-                FriendRequests.Add(friend);
+                FriendRequests.Add(player);
             }
 
             RefreshFriendList();
@@ -241,6 +260,26 @@ namespace Client {
             }
 
             RefreshFriendList();
+        }
+
+        public void Disconnect(DisconnectionReason reason) {
+            throw new NotImplementedException();
+        }
+
+        public void GetFriendListResponseHandler(Player[] friends) {
+            throw new NotImplementedException();
+        }
+
+        public void GetFriendRequestsResponseHandler(Player[] friendRequests) {
+            throw new NotImplementedException();
+        }
+
+        public void LoginResponseHandler(PlayerManagerPlayerAuthResult loginResult, Player player, string sessionId) {
+            throw new NotImplementedException();
+        }
+
+        public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
+            throw new NotImplementedException();
         }
     }
 }

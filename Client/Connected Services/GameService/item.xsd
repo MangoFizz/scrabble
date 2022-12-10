@@ -31,6 +31,36 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PlayerManager.PlayerFriendRequestResult" nillable="true" type="tns:PlayerManager.PlayerFriendRequestResult" />
+  <xs:complexType name="ArrayOfArrayOfGame.BoardSlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfArrayOfGame.BoardSlot" />
+  <xs:complexType name="ArrayOfGame.BoardSlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
+  <xs:complexType name="Game.BoardSlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bonus" type="tns:Game.BoardSlotBonus" />
+      <xs:element minOccurs="0" name="Tile" nillable="true" type="tns:Game.Tile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
+  <xs:simpleType name="Game.BoardSlotBonus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="TripleWord" />
+      <xs:enumeration value="DoubleWord" />
+      <xs:enumeration value="TripleLetter" />
+      <xs:enumeration value="DoubleLetter" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Game.BoardSlotBonus" nillable="true" type="tns:Game.BoardSlotBonus" />
   <xs:simpleType name="Game.Tile">
     <xs:restriction base="xs:string">
       <xs:enumeration value="A">
@@ -232,36 +262,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Game.Tile" nillable="true" type="tns:Game.Tile" />
-  <xs:complexType name="ArrayOfArrayOfGame.BoardSlot">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfArrayOfGame.BoardSlot" />
-  <xs:complexType name="ArrayOfGame.BoardSlot">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
-  <xs:complexType name="Game.BoardSlot">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Bonus" type="tns:Game.BoardSlotBonus" />
-      <xs:element minOccurs="0" name="Tile" nillable="true" type="tns:Game.Tile" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
-  <xs:simpleType name="Game.BoardSlotBonus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None" />
-      <xs:enumeration value="Center" />
-      <xs:enumeration value="TripleWord" />
-      <xs:enumeration value="DoubleWord" />
-      <xs:enumeration value="TripleLetter" />
-      <xs:enumeration value="DoubleLetter" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="Game.BoardSlotBonus" nillable="true" type="tns:Game.BoardSlotBonus" />
   <xs:simpleType name="Game.SupportedLanguage">
     <xs:restriction base="xs:string">
       <xs:enumeration value="en_US" />

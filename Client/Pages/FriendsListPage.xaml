@@ -30,7 +30,7 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Grid.Triggers>
-        <Rectangle x:Name="CloseRectangle" MouseLeftButtonUp="RectagleMouseLeftButtonUp" Fill="#4C000000">
+        <Rectangle x:Name="CloseRectangle" MouseLeftButtonUp="CloseRectangle_ButtonUp" Fill="#4C000000">
             <Rectangle.Triggers>
                 <EventTrigger RoutedEvent="MouseLeftButtonUp">
                     <BeginStoryboard>
