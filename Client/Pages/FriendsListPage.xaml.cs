@@ -285,5 +285,9 @@ namespace Client {
         public void VerificationResponseHandler(PlayerManagerPlayerVerificationResult verificationResult) {
             throw new NotImplementedException();
         }
+
+        public void UpdatePlayerAvatarCallback(short newAvatarId) {
+            throw new NotImplementedException();
+        }
     }
 }

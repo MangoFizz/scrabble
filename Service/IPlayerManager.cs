@@ -48,6 +48,9 @@ namespace Service {
 
         [OperationContract(IsOneWay = true)]
         void DeclineFriendRequest(string nickname);
+
+        [OperationContract(IsOneWay = true)]
+        void UpdatePlayerAvatar(short newAvatarId);
     }
 
     [ServiceContract]
@@ -78,6 +81,9 @@ namespace Service {
 
         [OperationContract]
         void UpdateFriendStatus(Player friend, Player.StatusType status);
+
+        [OperationContract]
+        void UpdatePlayerAvatarCallback(short avatarId);
 
         [OperationContract]
         void Disconnect(DisconnectionReason reason);

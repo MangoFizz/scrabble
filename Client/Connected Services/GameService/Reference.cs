@@ -649,6 +649,12 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/DeclineFriendRequest")]
         System.Threading.Tasks.Task DeclineFriendRequestAsync(string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar")]
+        void UpdatePlayerAvatar(short newAvatarId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar")]
+        System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short newAvatarId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -680,6 +686,9 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/UpdateFriendStatus", ReplyAction="http://tempuri.org/IPlayerManager/UpdateFriendStatusResponse")]
         void UpdateFriendStatus(Client.GameService.Player friend, Client.GameService.Player.StatusType status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatarCallback", ReplyAction="http://tempuri.org/IPlayerManager/UpdatePlayerAvatarCallbackResponse")]
+        void UpdatePlayerAvatarCallback(short avatarId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerManager/Disconnect", ReplyAction="http://tempuri.org/IPlayerManager/DisconnectResponse")]
         void Disconnect(Client.GameService.DisconnectionReason reason);
@@ -799,6 +808,14 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task DeclineFriendRequestAsync(string nickname) {
             return base.Channel.DeclineFriendRequestAsync(nickname);
+        }
+        
+        public void UpdatePlayerAvatar(short newAvatarId) {
+            base.Channel.UpdatePlayerAvatar(newAvatarId);
+        }
+        
+        public System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short newAvatarId) {
+            return base.Channel.UpdatePlayerAvatarAsync(newAvatarId);
         }
     }
     

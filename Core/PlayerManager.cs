@@ -407,5 +407,18 @@ namespace Core {
                 return null;
             }
         }
+
+        public static void UpdatePlayerAvatar(string playerNickname, short avatarId) {
+            try {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
+                    var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
+                    player.Avatar = avatarId;
+                    context.SaveChanges();
+                }
+            }
+            catch(DbException ex) {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

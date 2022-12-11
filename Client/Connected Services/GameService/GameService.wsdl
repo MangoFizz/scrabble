@@ -158,6 +158,9 @@
   <wsdl:message name="IPlayerManager_DeclineFriendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:DeclineFriendRequest" />
   </wsdl:message>
+  <wsdl:message name="IPlayerManager_UpdatePlayerAvatar_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerAvatar" />
+  </wsdl:message>
   <wsdl:message name="IPlayerManager_LoginResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:LoginResponseHandler" />
   </wsdl:message>
@@ -187,6 +190,12 @@
   </wsdl:message>
   <wsdl:message name="IPlayerManager_UpdateFriendStatus_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:UpdateFriendStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_UpdatePlayerAvatarCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerAvatarCallback" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_UpdatePlayerAvatarCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerAvatarCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_Disconnect_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:Disconnect" />
@@ -405,6 +414,9 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DeclineFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/DeclineFriendRequest" message="tns:IPlayerManager_DeclineFriendRequest_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdatePlayerAvatar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar" message="tns:IPlayerManager_UpdatePlayerAvatar_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoginResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/LoginResponseHandler" message="tns:IPlayerManager_LoginResponseHandler_OutputCallbackMessage" />
     </wsdl:operation>
@@ -432,6 +444,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateFriendStatus">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/UpdateFriendStatus" message="tns:IPlayerManager_UpdateFriendStatus_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/UpdateFriendStatusResponse" message="tns:IPlayerManager_UpdateFriendStatus_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdatePlayerAvatarCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatarCallback" message="tns:IPlayerManager_UpdatePlayerAvatarCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatarCallbackResponse" message="tns:IPlayerManager_UpdatePlayerAvatarCallback_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Disconnect">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/Disconnect" message="tns:IPlayerManager_Disconnect_OutputCallbackMessage" />
@@ -648,6 +664,12 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerAvatar">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="LoginResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/LoginResponseHandler" style="document" />
       <wsdl:output>
@@ -698,6 +720,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateFriendStatus">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/UpdateFriendStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayerAvatarCallback">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/UpdatePlayerAvatarCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

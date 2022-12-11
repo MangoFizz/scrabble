@@ -78,6 +78,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdatePlayerAvatar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newAvatarId" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="LoginResponseHandler">
     <xs:complexType>
       <xs:sequence>
@@ -145,6 +152,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateFriendStatusResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePlayerAvatarCallback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="avatarId" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePlayerAvatarCallbackResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

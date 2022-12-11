@@ -26,7 +26,7 @@
                 <Label Content="{x:Static p:Resources.PROFILE_PROFILE_REGISTERED_LABEL}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
                 <Label Name="ProfileRegisteredDate" Content="11/20/2022" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
             </StackPanel>
-            <Button Name="AddFriendButton" Content="{x:Static p:Resources.PLAYER_PROFILE_EDIT_BUTTON}" HorizontalAlignment="Left" Margin="392,258,0,0" VerticalAlignment="Top" Height="34" Width="122" FontSize="18"/>
+            <Button Name="EditAvatarButton" Content="{x:Static p:Resources.PLAYER_PROFILE_EDIT_BUTTON}" HorizontalAlignment="Left" Margin="350,258,0,0" VerticalAlignment="Top" Height="34" Width="164" FontSize="18" Click="EditAvatarButton_Click"/>
             <Image Name="ProfileAvatar" Margin="54,17,364,158" Source="Assets/Images/Avatars/default_0.png"></Image>
         </Grid>
     </Grid>

@@ -234,6 +234,18 @@ namespace Client {
                 signupPage.VerificationResponseHandler(verificationResult);
             }
         }
+
+        public void UpdatePlayerAvatarCallback(short avatarId) {
+            Player.Avatar = avatarId;
+            if(typeof(MainPage).IsInstanceOfType(MainFrame.Content)) {
+                var mainPage = ((MainPage)MainFrame.Content);
+                mainPage.LoadProfileButton();
+            }
+            if(typeof(PlayerProfilePage).IsInstanceOfType(SecondaryFrame.Content)) {
+                var profilePage = ((PlayerProfilePage)SecondaryFrame.Content);
+                profilePage.LoadProfileData();
+            }
+        }
     }
 
     public partial class App : IPartyManagerCallback {

@@ -101,6 +101,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CHANGE AVATAR.
+        /// </summary>
+        public static string AVATAR_EDIT_MENU_HEADER {
+            get {
+                return ResourceManager.GetString("AVATAR_EDIT_MENU_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code too long!.
         /// </summary>
         public static string CODE_INPUT_MENU_CODE_TOO_LONG {
@@ -815,7 +824,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ✏ Edit.
+        ///   Looks up a localized string similar to Change avatar.
         /// </summary>
         public static string PLAYER_PROFILE_EDIT_BUTTON {
             get {

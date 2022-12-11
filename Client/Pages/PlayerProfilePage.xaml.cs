@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,23 +21,27 @@ namespace Client {
     public partial class PlayerProfilePage : Page {
         public GameService.Player player { get; set; }
 
+        private void RectagleMouseLeft_ButtonUp(object sender, MouseButtonEventArgs e) {
+            App.Current.CloseSecondaryPanel();
+        }
+
+        private void EditAvatarButton_Click(object sender, RoutedEventArgs e) {
+            NavigationService.Navigate(new AvatarEditPage());
+        }
+
         public PlayerProfilePage(GameService.Player player) {
             InitializeComponent();
             this.player = player;
             LoadProfileData();
         }
 
-        private void LoadProfileData() {
+        public void LoadProfileData() {
             ProfileNickname.Content = player.Nickname;
             ProfileEmail.Content = player.Email;
             ProfileAvatar.Source = App.Current.GetPlayerAvatarImage();
             ProfileGamesCount.Content = player.GamesCount;
             ProfileWinsCount.Content = player.WinsCount;
             ProfileRegisteredDate.Content = player.Registered.ToString("dd/MM/yyyy");
-        }
-
-        private void RectagleMouseLeft_ButtonUp(object sender, MouseButtonEventArgs e) {
-            App.Current.CloseSecondaryPanel();
         }
     }
 }

@@ -196,6 +196,17 @@ namespace Service {
                 PlayerManager.ResendVerificationCode(nickname);
             }
         }
+
+        public void UpdatePlayerAvatar(short newAvatarId) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer == null || currentPlayer.IsGuest) {
+                return;
+            }
+            PlayerManager.UpdatePlayerAvatar(currentPlayer.Nickname, newAvatarId);
+            currentPlayer.Avatar = newAvatarId;
+            currentCallbackChannel.UpdatePlayerAvatarCallback(newAvatarId);
+        }
     }
 
     public partial class GameService : IPartyChat {
