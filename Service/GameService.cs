@@ -480,7 +480,9 @@ namespace Service {
             }
             callbackChannel.UpdateBoard(player.CurrentParty.Game.GetBoardJaggedArray());
             callbackChannel.UpdatePlayerRack(player.Rack);
-            callbackChannel.UpdatePlayerScore(player, player.Score);
+            foreach(var p in player.CurrentParty.Players) {
+                callbackChannel.UpdatePlayerScore(p, p.Score);
+            }
         }
 
         private void UpdatePlayersGame(Party party) {
