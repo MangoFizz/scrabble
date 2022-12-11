@@ -243,6 +243,7 @@
     <Resource Include="Resources\images\avatars\avatar_2.png" />
     <Resource Include="Resources\images\avatars\avatar_3.png" />
     <Resource Include="Resources\images\avatars\avatar_1.png" />
+    <Resource Include="Resources\images\avatars\avatar_4.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\images\avatars\avatar_0.png" />

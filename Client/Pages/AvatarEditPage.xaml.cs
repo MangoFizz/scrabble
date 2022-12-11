@@ -27,15 +27,15 @@ namespace Client.Pages {
 
             var avatarImage = new Image();
             avatarImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/images/avatars/avatar_{avatarId}.png"));
-            avatarImage.Width = 217;
-            avatarImage.Height = 217;
+            avatarImage.Width = 165;
+            avatarImage.Height = 165;
             avatarItem.Content = avatarImage;
 
             return avatarItem;
         }
 
         private void SetUpAvatarSelector() {
-            for(short i = 0; i < 4; i++) {
+            for(short i = 0; i < 5; i++) {
                 var avatarIndex = i;
                 var avatarItem = GetAvatarItem(i);
                 avatarItem.Click += (sender, e) => {

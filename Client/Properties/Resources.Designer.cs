@@ -101,6 +101,16 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap avatar_4 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CHANGE AVATAR.
         /// </summary>
         public static string AVATAR_EDIT_MENU_HEADER {
