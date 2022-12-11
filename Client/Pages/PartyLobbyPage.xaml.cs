@@ -91,7 +91,7 @@ namespace Client {
         private Border GetGroupListEntry(Player player, bool isFriend) {
             Border entryBorder = new Border();
             entryBorder.Background = new SolidColorBrush(Color.FromArgb(32, 255, 255, 255));
-            entryBorder.BorderBrush = Brushes.Gray;
+            entryBorder.BorderBrush = Brushes.White;
             entryBorder.BorderThickness = new Thickness(1);
 
             StackPanel entryContainer = new StackPanel();
@@ -111,6 +111,7 @@ namespace Client {
 
             Label friendNicknameLabel = new Label();
             friendNicknameLabel.Content = player.Nickname;
+            friendNicknameLabel.Foreground = Brushes.White;
             friendNicknameLabel.FontSize = 18;
             friendNicknameLabel.FontWeight = FontWeights.Bold;
             friendNicknameLabel.Padding = new Thickness(0);

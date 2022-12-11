@@ -147,11 +147,21 @@ namespace Client {
             return new FontFamily(new Uri("pack://application:,,,/"), "./Resources/fonts/#Tiles Regular");
         }
 
-        private Label GetBoardSlotItemGlyph(char letter) {
+        private Grid GetBoardSlotItemGlyph(char letter) {
             if(letter == ' ') {
                 letter = '"';
             }
-            var boardSlotItemGlyph = new Label() {
+            var boardSlotItem = new Grid();
+            var boardSlotGlyphBackground = new Label() {
+                Content = "/",
+                Foreground = Brushes.White,
+                FontSize = 36,
+                Padding = new Thickness(0, 1, 0, 0),
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                FontFamily = GetTileFontFamily()
+            };
+            var boardSlotGlyphForeground = new Label() {
                 Content = letter.ToString().ToLower(),
                 Foreground = Brushes.Black,
                 FontSize = 36,
@@ -160,7 +170,9 @@ namespace Client {
                 VerticalContentAlignment = VerticalAlignment.Center,
                 FontFamily = GetTileFontFamily()
             };
-            return boardSlotItemGlyph;
+            boardSlotItem.Children.Add(boardSlotGlyphBackground);
+            boardSlotItem.Children.Add(boardSlotGlyphForeground);
+            return boardSlotItem;
         }
 
         private Border GetBoardSlotItem(GameBoardSlot boardSlot) {
