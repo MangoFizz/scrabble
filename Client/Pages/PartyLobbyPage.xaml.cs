@@ -28,17 +28,19 @@ namespace Client {
 
         private void InitializeParty() {
             if(App.Current.CurrentParty == null) {
-                App.Current.PartyManagerClient.CreateParty();
+                App.Current.CreateParty();
             }
-            else {
-                if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
-                    StartButton.Visibility = Visibility.Hidden;
-                    StartButton.IsEnabled = false;
-                    GameTimeLimitSlider.IsEnabled = false;
-                    GameLanguageCombobox.IsEnabled = false;
-                }
-                SetLobbyCode();
+            if(App.Current.CurrentParty.Leader.Nickname != App.Current.Player.Nickname) {
+                StartButton.Visibility = Visibility.Hidden;
+                StartButton.IsEnabled = false;
+                GameTimeLimitSlider.IsEnabled = false;
+                GameLanguageCombobox.IsEnabled = false;
             }
+
+            ChatPage.PrintPlayerJoinMessage(App.Current.CurrentParty.Leader.Nickname);
+            SetLobbyCode();
+            ReloadGroupList();
+            App.Current.PlayerManagerClient.GetFriendList();
         }
 
         private void SetUpChatFrame() {
@@ -57,37 +59,39 @@ namespace Client {
             entryButtonsContainer.Visibility = Visibility.Hidden;
             entryButtonsContainer.Width = 80;
 
-            if(isFriend) {
-                Button inviteButton = new Button();
-                inviteButton.Content = "➕";
-                inviteButton.Width = 30;
-                inviteButton.Height = 30;
-                inviteButton.Margin = new Thickness(50, 0, 0, 0);
-                inviteButton.Click += (sender, e) => {
-                    App.Current.PartyManagerClient.InviteFriend(player);
-                };
-                entryButtonsContainer.Children.Add(inviteButton);
-            }
-            else if(player.Nickname != App.Current.CurrentParty.Leader.Nickname) {
-                Button promoteButton = new Button();
-                promoteButton.Content = "👑";
-                promoteButton.Width = 30;
-                promoteButton.Height = 30;
-                promoteButton.Margin = new Thickness(10, 0, 0, 0);
-                promoteButton.Click += (sender, e) => {
-                    App.Current.PartyManagerClient.TransferLeadership(player);
-                };
-                entryButtonsContainer.Children.Add(promoteButton);
+            if(App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
+                if(isFriend) {
+                    Button inviteButton = new Button();
+                    inviteButton.Content = "➕";
+                    inviteButton.Width = 30;
+                    inviteButton.Height = 30;
+                    inviteButton.Margin = new Thickness(50, 0, 0, 0);
+                    inviteButton.Click += (sender, e) => {
+                        App.Current.PartyManagerClient.InviteFriend(player);
+                    };
+                    entryButtonsContainer.Children.Add(inviteButton);
+                }
+                else if(player.Nickname != App.Current.CurrentParty.Leader.Nickname) {
+                    Button promoteButton = new Button();
+                    promoteButton.Content = "👑";
+                    promoteButton.Width = 30;
+                    promoteButton.Height = 30;
+                    promoteButton.Margin = new Thickness(10, 0, 0, 0);
+                    promoteButton.Click += (sender, e) => {
+                        App.Current.PartyManagerClient.TransferLeadership(player);
+                    };
+                    entryButtonsContainer.Children.Add(promoteButton);
 
-                Button kickButton = new Button();
-                kickButton.Content = "❌";
-                kickButton.Width = 30;
-                kickButton.Height = 30;
-                kickButton.Margin = new Thickness(10, 0, 0, 0);
-                kickButton.Click += (sender, e) => {
-                    App.Current.PartyManagerClient.KickPlayer(player);
-                };
-                entryButtonsContainer.Children.Add(kickButton);
+                    Button kickButton = new Button();
+                    kickButton.Content = "❌";
+                    kickButton.Width = 30;
+                    kickButton.Height = 30;
+                    kickButton.Margin = new Thickness(10, 0, 0, 0);
+                    kickButton.Click += (sender, e) => {
+                        App.Current.PartyManagerClient.KickPlayer(player);
+                    };
+                    entryButtonsContainer.Children.Add(kickButton);
+                }
             }
 
             return entryButtonsContainer;
@@ -279,13 +283,6 @@ namespace Client {
     }
 
     public partial class PartyLobbyPage : IPartyManagerCallback {
-        public void CreatePartyCallback(Party party) {
-            ChatPage.PrintPlayerJoinMessage(App.Current.CurrentParty.Leader.Nickname);
-            SetLobbyCode();
-            ReloadGroupList();
-            App.Current.PlayerManagerClient.GetFriendList();
-        }
-
         public void ReceiveInvitation(Player player, string partyId) {
             throw new NotImplementedException();
         }

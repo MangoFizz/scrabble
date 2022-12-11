@@ -125,6 +125,9 @@
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
     <Resource Include="Resources\fonts\font_scramble.ttf" />
+    <None Include="Connected Services\GameService\Client.GameService.Party.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\GameService\GameService.wsdl" />
     <None Include="Connected Services\GameService\item.xsd">
       <SubType>Designer</SubType>

@@ -448,17 +448,6 @@ namespace Client.GameService {
         Wildcard = 32,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Game.SupportedLanguage", Namespace="http://schemas.datacontract.org/2004/07/Core")]
-    public enum GameSupportedLanguage : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        en_US = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        es_MX = 1,
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Service")]
@@ -550,6 +539,17 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Game.SupportedLanguage", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum GameSupportedLanguage : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        en_US = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        es_MX = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -1010,11 +1010,11 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/ConnectPartyManager")]
         System.Threading.Tasks.Task ConnectPartyManagerAsync(string sessionId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CreateParty")]
-        void CreateParty();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/CreateParty", ReplyAction="http://tempuri.org/IPartyManager/CreatePartyResponse")]
+        Client.GameService.Party CreateParty();
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/CreateParty")]
-        System.Threading.Tasks.Task CreatePartyAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/CreateParty", ReplyAction="http://tempuri.org/IPartyManager/CreatePartyResponse")]
+        System.Threading.Tasks.Task<Client.GameService.Party> CreatePartyAsync();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/LeaveParty")]
         void LeaveParty();
@@ -1073,9 +1073,6 @@ namespace Client.GameService {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IPartyManagerCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/CreatePartyCallback", ReplyAction="http://tempuri.org/IPartyManager/CreatePartyCallbackResponse")]
-        void CreatePartyCallback(Client.GameService.Party party);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/JoinPartyCallback", ReplyAction="http://tempuri.org/IPartyManager/JoinPartyCallbackResponse")]
         void JoinPartyCallback(Client.GameService.JoinPartyResult result, Client.GameService.Party party);
@@ -1150,11 +1147,11 @@ namespace Client.GameService {
             return base.Channel.ConnectPartyManagerAsync(sessionId);
         }
         
-        public void CreateParty() {
-            base.Channel.CreateParty();
+        public Client.GameService.Party CreateParty() {
+            return base.Channel.CreateParty();
         }
         
-        public System.Threading.Tasks.Task CreatePartyAsync() {
+        public System.Threading.Tasks.Task<Client.GameService.Party> CreatePartyAsync() {
             return base.Channel.CreatePartyAsync();
         }
         

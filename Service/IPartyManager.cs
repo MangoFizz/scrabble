@@ -25,8 +25,8 @@ namespace Service {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
         void ConnectPartyManager(string sessionId);
 
-        [OperationContract(IsOneWay = true)]
-        void CreateParty();
+        [OperationContract]
+        Party CreateParty();
 
         [OperationContract(IsOneWay = true)]
         void LeaveParty();
@@ -57,9 +57,6 @@ namespace Service {
     }
 
     public interface IPartyManagerCallback {
-        [OperationContract]
-        void CreatePartyCallback(Party party);
-
         [OperationContract]
         void JoinPartyCallback(JoinPartyResult result, Party party);
 

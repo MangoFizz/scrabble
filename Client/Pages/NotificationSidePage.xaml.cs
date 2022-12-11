@@ -37,7 +37,7 @@ namespace Client {
             });
         }
 
-        private Frame GetInviteNotificationFrame(PartyInvitationPage page) {
+        private void AddInviteNotificationFrame(PartyInvitationPage page) {
             page.VerticalAlignment = VerticalAlignment.Top;
             var inviteFrame = new Frame() {
                 Content = page
@@ -52,16 +52,13 @@ namespace Client {
             page.RejectButton.Click += new RoutedEventHandler(closeAction);
 
             SetNotificationEntryCloseTimer(inviteFrame);
-
-            return inviteFrame;
         }
 
         public void PushInviteNotification(PartyInvitationPage page) {
             if(InviteNotificationAlreadyShown(page.Player.Nickname)) {
                 return;
             }
-            var inviteNotificationFrame = GetInviteNotificationFrame(page);
-            NotificationsStackPanel.Children.Add(inviteNotificationFrame);
+            AddInviteNotificationFrame(page);
         }
     }
 }

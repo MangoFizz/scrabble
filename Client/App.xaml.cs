@@ -252,17 +252,13 @@ namespace Client {
             }
         }
 
+        public void CreateParty() {
+            CurrentParty = PartyManagerClient.CreateParty();
+        }
+
         public void AcceptInvitationCallback(Party party) {
             CurrentParty = party;
             MainFrame.NavigationService.Navigate(new PartyLobbyPage());
-        }
-
-        public void CreatePartyCallback(Party party) {
-            CurrentParty = party;
-            if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
-                var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;
-                partyLobbyPage.CreatePartyCallback(party);
-            }
         }
 
         public void JoinPartyCallback(JoinPartyResult result, Party party) {

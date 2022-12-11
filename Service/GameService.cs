@@ -276,7 +276,7 @@ namespace Service {
             }
         }
 
-        public void CreateParty() {
+        public Party CreateParty() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
@@ -287,8 +287,9 @@ namespace Service {
                 };
                 Parties.Add(party);
                 currentPlayer.CurrentParty = party;
-                currentCallbackChannel.CreatePartyCallback(currentPlayer.CurrentParty);
+                return party;
             }
+            return null;
         }
 
         public void AcceptInvitation(Player player) {
@@ -300,8 +301,8 @@ namespace Service {
                     var party = inviteSender.CurrentParty;
                     if(party != null) {
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
-                        player.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
-                        JoinPlayerToParty(player, party);
+                        currentPlayer.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
+                        JoinPlayerToParty(currentPlayer, party);
                     }
                 }
             }
