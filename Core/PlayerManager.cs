@@ -126,10 +126,10 @@ namespace Core {
 
         private static string GenerateVerificationCode() {
             var random = new Random();
-            var verificationCode = random.Next(0, 0xFFFF).ToString("x2");
-            return verificationCode;
+            var verificationCode = random.Next(0x1000, 0xFFFF).ToString("x2");
+            return verificationCode.ToUpper();
         }
-
+        
         private static void SendVerificationCodeEmail(Player player) {
             var senderEmail = new MailAddress(ConfigurationManager.AppSettings["emailAddress"], "Scrabble game");
             var playerEmail = new MailAddress(player.Email, $"To {player.Nickname}");
@@ -248,7 +248,7 @@ namespace Core {
                 var queryResult = from player in context.players where player.Nickname == nickname select player;
                 if(queryResult.Count() > 0) {
                     var user = queryResult.First();
-                    if(user.VerificationCode == code) {
+                    if(user.VerificationCode == code.ToUpper()) {
                         user.Verified = true;
                         context.SaveChanges();
                         return PlayerVerificationResult.Success;
