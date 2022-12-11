@@ -22,11 +22,11 @@
 
         <Label Content="{x:Static p:Resources.COMMON_NICKNAME_LABEL}" HorizontalAlignment="Left" Margin="761,207,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         <Label Name="usernameRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,207,0,0" VerticalAlignment="Top" Foreground="Red" Height="48" Width="101" FontSize="20"/>
-        <TextBox Name="usernameTextBox" HorizontalAlignment="Left" Margin="761,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85"/>
+        <TextBox Name="usernameTextBox" HorizontalAlignment="Left" Margin="761,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="54" FontSize="24" TextAlignment="Left" VerticalContentAlignment="Center" Opacity="0.85" KeyDown="TextInput_KeyDown"/>
 
         <Label Content="{x:Static p:Resources.COMMON_PASSWORD_LABEL}" HorizontalAlignment="Left" Margin="761,332,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         <Label Name="passwordRequiredText" Content="{x:Static p:Resources.COMMON_REQUIRED_LABEL}" HorizontalAlignment="Left" Margin="1060,332,0,0" VerticalAlignment="Top" Foreground="Red" Height="40" Width="101" FontSize="20" />
-        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,378,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85"/>
+        <PasswordBox Name="passwordPasswordBox" HorizontalAlignment="Left" Margin="761,378,0,0" VerticalAlignment="Top" Width="400" Height="54" RenderTransformOrigin="0.5,0.5" FontSize="18" VerticalContentAlignment="Center" Opacity="0.85" KeyDown="TextInput_KeyDown"/>
 
         <Label Name="ResultText" Content="placeholder" HorizontalContentAlignment="Left" Margin="761,442,302,242" VerticalContentAlignment="Center" Foreground="Red" FontSize="20"/>
         <Button Name="LoginButton" Style="{StaticResource BorderedButton}" Content="{x:Static p:Resources.LOGIN_MENU_LOGIN_BUTTON}" HorizontalAlignment="Right" Margin="0,0,329,162" VerticalAlignment="Bottom" Background="#FFDDDDDD" FontSize="22" Click="LoginButton_Click" Height="56" Width="190"/>

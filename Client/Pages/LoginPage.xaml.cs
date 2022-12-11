@@ -4,6 +4,7 @@ using System;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Client {
     public partial class LoginPage : Page {
@@ -113,6 +114,12 @@ namespace Client {
             App.Current.SwitchLanguage();
             LanguageButton.Content = App.Current.CurrentLanguage;
             App.Current.MainWindow.MainFrame.Content = new LoginPage();
+        }
+
+        private void TextInput_KeyDown(object sender, KeyEventArgs eventArgs) {
+            if(eventArgs.Key == Key.Return) {
+                Login();
+            }
         }
 
         private void LoginAsGuestButton_Click(object sender, RoutedEventArgs e) {
