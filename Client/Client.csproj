@@ -74,6 +74,9 @@
     <Compile Include="Pages\NotificationSidePage.xaml.cs">
       <DependentUpon>NotificationSidePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PartyGameResultsPage.xaml.cs">
+      <DependentUpon>PartyGameResultsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PartyInvitationPage.xaml.cs">
       <DependentUpon>PartyInvitationPage.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NotificationSidePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PartyGameResultsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

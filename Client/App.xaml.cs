@@ -1,11 +1,13 @@
 ﻿using Client.GameService;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Client {
     public partial class App : Application {
@@ -55,8 +57,26 @@ namespace Client {
             }
         }
 
+        private void ResetApp() {
+            _PlayerManagerClient = null;
+            Player = null;
+            SessionId = null;
+            CurrentParty = null;
+            _PartyManagerClient = null;
+            var loginPage = new LoginPage();
+            MainWindow.MainFrame.Content = loginPage;
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args) {
+            Exception e = (Exception)args.Exception;
+            Trace.TraceError($"ERROR: {e.GetType().Name} -> {e.Message}");
+            App.Current.ResetApp();
+            args.Handled = true;
+        }
+
         App() {
             CurrentLanguage = languages[0];
+            DispatcherUnhandledException += CurrentDomain_UnhandledException;
         }
 
         public void OpenFriendsList() {
@@ -214,13 +234,8 @@ namespace Client {
         }
 
         public void Disconnect(DisconnectionReason reason) {
-            _PlayerManagerClient = null;
-            Player = null;
-            SessionId = null;
-            CurrentParty = null;
-            _PartyManagerClient = null;
-            var loginPage = new LoginPage();
-            MainWindow.MainFrame.Content = loginPage;
+            ResetApp();
+            var loginPage = (LoginPage)MainFrame.Content;
             loginPage.ShowDisconnectMessage(reason);
         }
 
