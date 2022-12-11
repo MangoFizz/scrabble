@@ -180,6 +180,12 @@
   <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
     <value>Error desconocido :(</value>
   </data>
+  <data name="DEAD_SCREEN_HEADER" xml:space="preserve">
+    <value>ERROR</value>
+  </data>
+  <data name="DEAD_SCREEN_TEXT" xml:space="preserve">
+    <value>Ha ocurrido un error interno. La aplicación se reiniciará.</value>
+  </data>
   <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
     <value>➕ Agregar</value>
   </data>

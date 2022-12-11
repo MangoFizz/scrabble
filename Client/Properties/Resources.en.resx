@@ -184,6 +184,12 @@
   <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown error :(</value>
   </data>
+  <data name="DEAD_SCREEN_HEADER" xml:space="preserve">
+    <value>ERROR</value>
+  </data>
+  <data name="DEAD_SCREEN_TEXT" xml:space="preserve">
+    <value>An internal error has occurred. The app will be restarted.</value>
+  </data>
   <data name="FRIENDS_LIST_ADD_BUTTON" xml:space="preserve">
     <value>➕ Add</value>
   </data>

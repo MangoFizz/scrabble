@@ -300,6 +300,24 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERROR.
+        /// </summary>
+        public static string DEAD_SCREEN_HEADER {
+            get {
+                return ResourceManager.GetString("DEAD_SCREEN_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An internal error has occurred. The app will be restarted..
+        /// </summary>
+        public static string DEAD_SCREEN_TEXT {
+            get {
+                return ResourceManager.GetString("DEAD_SCREEN_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] font_scramble {

@@ -196,6 +196,12 @@
   <data name="COMMON_UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown Error :(</value>
   </data>
+  <data name="DEAD_SCREEN_HEADER" xml:space="preserve">
+    <value>ERROR</value>
+  </data>
+  <data name="DEAD_SCREEN_TEXT" xml:space="preserve">
+    <value>An internal error has occurred. The app will be restarted.</value>
+  </data>
   <data name="font_scramble" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fonts\font_scramble.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

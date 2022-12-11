@@ -1,4 +1,5 @@
 ﻿using Client.GameService;
+using Client.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -57,7 +58,7 @@ namespace Client {
             }
         }
 
-        private void ResetApp() {
+        public void ResetApp() {
             _PlayerManagerClient = null;
             Player = null;
             SessionId = null;
@@ -70,7 +71,7 @@ namespace Client {
         private static void CurrentDomain_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args) {
             Exception e = (Exception)args.Exception;
             Trace.TraceError($"ERROR: {e.GetType().Name} -> {e.Message}");
-            App.Current.ResetApp();
+            Current.SecondaryFrame.Content = new DeadScreenPage();
             args.Handled = true;
         }
 

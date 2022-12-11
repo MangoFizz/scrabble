@@ -68,6 +68,9 @@
     <Compile Include="Pages\AvatarEditPage.xaml.cs">
       <DependentUpon>AvatarEditPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DeadScreenPage.xaml.cs">
+      <DependentUpon>DeadScreenPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FriendsListPage.xaml.cs">
       <DependentUpon>FriendsListPage.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Pages\AvatarEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DeadScreenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
