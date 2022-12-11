@@ -591,6 +591,15 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid position!!.
+        /// </summary>
+        public static string PARTY_GAME_INVALID_TILE_PLACING_ERROR {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_INVALID_TILE_PLACING_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pass turn.
         /// </summary>
         public static string PARTY_GAME_PASS_TURN_BUTTON {

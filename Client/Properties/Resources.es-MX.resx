@@ -267,6 +267,9 @@
   <data name="PARTY_GAME_END_TURN_BUTTON" xml:space="preserve">
     <value>Acabar turno</value>
   </data>
+  <data name="PARTY_GAME_INVALID_TILE_PLACING_ERROR" xml:space="preserve">
+    <value>¡¡Posición inválida!!</value>
+  </data>
   <data name="PARTY_GAME_PASS_TURN_BUTTON" xml:space="preserve">
     <value>Pasar turno</value>
   </data>

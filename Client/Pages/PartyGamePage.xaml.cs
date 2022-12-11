@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.ServiceModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,9 +20,11 @@ namespace Client {
             public int Column { get; set; }
         }
 
+        private PartyChatPage Chat { get; set; }
         private PartyGameClient Client { get; set; }
         private GameBoardSlot[,] Board { get; set; }
         private GameTile?[] Rack { get; set; }
+        private Player CurrentTurn { get; set; }
         private Grid DraggedTileItem { get; set; }
         private Point DraggedTileStartingPosition { get; set; }
         private BoardSlot FocusedBoardSlot { get; set; }
@@ -36,6 +39,7 @@ namespace Client {
             SetUpScoreTable();
 
             ChatFrame.Content = chatPage;
+            Chat = chatPage;
 
             var context = new InstanceContext(this);
             Client = new PartyGameClient(context);
@@ -378,7 +382,13 @@ namespace Client {
 
     public partial class PartyGamePage : IPartyGameCallback {
         public void SendInvalidTilePlacingError() {
-            throw new NotImplementedException();
+            PlayerTurnMessage.Content = Properties.Resources.PARTY_GAME_INVALID_TILE_PLACING_ERROR;
+            PlayerTurnMessage.Foreground = Brushes.Red;
+            Task.Delay(2000).ContinueWith((t) => {
+                Dispatcher.Invoke(() => {
+                    UpdatePlayerTurnText();
+                });
+            });
         }
 
         public void UpdateBagTilesLeft(int amount) {
@@ -432,14 +442,22 @@ namespace Client {
             playerScore.Content = score.ToString();
         }
 
-        public void UpdatePlayerTurn(Player player) {
-            if(player.Nickname == App.Current.Player.Nickname) {
-                CanPlaceTiles = true;
+        private void UpdatePlayerTurnText() {
+            PlayerTurnMessage.Foreground = Brushes.White;
+            if(CurrentTurn.Nickname == App.Current.Player.Nickname) {
                 PlayerTurnMessage.Content = Properties.Resources.PARTY_GAME_YOUR_TURN;
             }
             else {
-                PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, player.Nickname);
+                PlayerTurnMessage.Content = string.Format(Properties.Resources.PARTY_GAME_PLAYER_TURN_FORMAT, CurrentTurn.Nickname);
             }
+        }
+
+        public void UpdatePlayerTurn(Player player) {
+            CurrentTurn = player;
+            if(player.Nickname == App.Current.Player.Nickname) {
+                CanPlaceTiles = true;
+            }
+            UpdatePlayerTurnText();
         }
     }
 }

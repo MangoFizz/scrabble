@@ -52,6 +52,7 @@ namespace Core {
         public BoardSlot[,] Board { get; set; }
 
         public List<Tile> Bag { get; set; }
+        private bool BoardIsEmpty { get; set; }
 
         public Game(SupportedLanguage language) {
             Board = new BoardSlot[15, 15];
@@ -68,6 +69,7 @@ namespace Core {
             FillBag();
             ShuffleBag();
             LoadWordDictionary();
+            BoardIsEmpty = true;
         }
 
         private static string GetLanguageName(SupportedLanguage language) {
@@ -93,7 +95,7 @@ namespace Core {
                 foreach(string line in lines) {
                     string word = "";
                     bool wordIsValid = true;
-                    foreach(char c in line) {
+                    foreach(char c in line.ToUpper()) {
                         if(!char.IsLetter(c)) {
                             wordIsValid = false;
                             break;
@@ -106,12 +108,15 @@ namespace Core {
 
                         word += c;
                     }
+                    if(word.Length == 1) {
+                        wordIsValid = false;
+                    }
                     if(wordIsValid) {
                         var normalizedWord = word.Normalize(NormalizationForm.FormD);
                         WordsDictionariesCache[Language].Add(normalizedWord);
                     }
                 }
-                Console.WriteLine("Loaded {0} words for language {1}", lines.Length, Language);
+                Console.WriteLine("Loaded {0} words for language {1}", WordsDictionariesCache[Language].Count, Language);
             }
 
 
@@ -226,7 +231,7 @@ namespace Core {
                     addTile(Tile.X, 1);
                     addTile(Tile.Y, 2);
                     addTile(Tile.Z, 1);
-                    addTile(Tile.Wildcard, 2);
+                    //addTile(Tile.Wildcard, 2);
                     break;
 
                 case SupportedLanguage.es_MX:
@@ -255,7 +260,7 @@ namespace Core {
                     addTile(Tile.X, 1);
                     addTile(Tile.Y, 1);
                     addTile(Tile.Z, 1);
-                    addTile(Tile.Wildcard, 2);
+                    //addTile(Tile.Wildcard, 2);
                     break;
 
                 default:
@@ -386,16 +391,94 @@ namespace Core {
             return tiles;
         }
 
+        public string[] GetSlotTileChains(int x, int y) {
+            string leftChain = "";
+            for(int i = x - 1; i >= 0; i--) {
+                if(Board[i, y].Tile == null || Board[i, y].Tile == Tile.Wildcard) {
+                    break;
+                }
+                leftChain = ((char)Board[i, y].Tile).ToString() + leftChain;
+            }
+
+            string rightChain = "";
+            for(int i = x + 1; i < Board.GetLength(0); i++) {
+                if(Board[i, y].Tile == null || Board[i, y].Tile == Tile.Wildcard) {
+                    break;
+                }
+                rightChain += ((char)Board[i, y].Tile).ToString();
+            }
+
+            string topChain = "";
+            for(int i = y - 1; i >= 0; i--) {
+                if(Board[x, i].Tile == null || Board[x, i].Tile == Tile.Wildcard) {
+                    break;
+                }
+                topChain = ((char)Board[x, i].Tile).ToString() + topChain;
+            }
+
+            string bottomChain = "";
+            for(int i = y + 1; i < Board.GetLength(1); i++) {
+                if(Board[x, i].Tile == null || Board[x, i].Tile == Tile.Wildcard) {
+                    break;
+                }
+                bottomChain += ((char)Board[x, i].Tile).ToString();
+            }
+
+            return new string[] { leftChain, rightChain, topChain, bottomChain };
+        }
+
+        private bool ValidatePosition(Tile tile, int x, int y) {
+            if(BoardIsEmpty && x == 7 && y == 7) {
+                return true;
+            }
+
+            var letter = ((char)tile).ToString();
+            var chains = GetSlotTileChains(x, y);
+            string leftWord = chains[0];
+            string rightWord = chains[1];
+            string topWord = chains[2];
+            string bottomWord = chains[3];
+
+            if(leftWord.Length == 0 && rightWord.Length == 0 && topWord.Length == 0 && bottomWord.Length == 0) {
+                return false;
+            }
+
+            bool horizontalIsValid = true;
+            if(leftWord.Length > 0 && rightWord.Length == 0) {
+                horizontalIsValid = WordsDictionary.Any(word => word.StartsWith(leftWord + letter));
+            }
+            else if(leftWord.Length == 0 && rightWord.Length > 0) {
+                horizontalIsValid = WordsDictionary.Any(word => word.EndsWith(letter + rightWord));
+            }
+            else if(leftWord.Length > 0 && rightWord.Length > 0) {
+                horizontalIsValid = WordsDictionary.Any(word => word.Contains(leftWord + letter + rightWord));
+            }
+
+            bool verticalIsValid = true;
+            if(topWord.Length > 0 && bottomWord.Length == 0) {
+                verticalIsValid = WordsDictionary.Any(word => word.StartsWith(topWord + letter));
+            }
+            else if(topWord.Length == 0 && bottomWord.Length > 0) {
+                verticalIsValid = WordsDictionary.Any(word => word.EndsWith(letter + bottomWord));
+            }
+            else if(topWord.Length > 0 && bottomWord.Length > 0) {
+                verticalIsValid = WordsDictionary.Any(word => word.Contains(topWord + letter + bottomWord));
+            }
+
+            return horizontalIsValid && verticalIsValid;
+        }
+
         public int PlaceTile(Tile tile, int x, int y) {
             if(x < 0 || x > 14 || y < 0 || y > 14) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            if(Board[x, y].Tile != null) {
-                throw new InvalidOperationException("invalid position");
+            if(Board[x, y].Tile != null || !ValidatePosition(tile, x, y)) {
+                throw new InvalidOperationException();
             }
 
             Board[x, y].Tile = tile;
+            BoardIsEmpty = false;
             return GetTileScore(tile);
         }
 

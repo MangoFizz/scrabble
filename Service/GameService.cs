@@ -586,8 +586,14 @@ namespace Service {
                 if(!tile.HasValue) {
                     return;
                 }
-                var points = party.Game.PlaceTile(tile.Value, x, y);
-                currentPlayer.Score += points;
+                try {
+                    var points = party.Game.PlaceTile(tile.Value, x, y);
+                    currentPlayer.Score += points;
+                }
+                catch(InvalidOperationException) {
+                    currentPlayer.Rack[rackTileIndex] = tile;
+                    currentCallbackChannel.SendInvalidTilePlacingError();
+                }
                 UpdatePlayersGame(party);
             }
         }
