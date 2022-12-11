@@ -281,5 +281,9 @@ namespace Client {
         public void RegisterPlayerResponseHandler(PlayerManagerPlayerResgisterResult registrationResult) {
             throw new NotImplementedException();
         }
+
+        public void VerificationResponseHandler(PlayerManagerPlayerVerificationResult verificationResult) {
+            throw new NotImplementedException();
+        }
     }
 }

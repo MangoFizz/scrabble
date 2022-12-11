@@ -101,6 +101,33 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code too long!.
+        /// </summary>
+        public static string CODE_INPUT_MENU_CODE_TOO_LONG {
+            get {
+                return ResourceManager.GetString("CODE_INPUT_MENU_CODE_TOO_LONG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code too short!.
+        /// </summary>
+        public static string CODE_INPUT_MENU_CODE_TOO_SHORT {
+            get {
+                return ResourceManager.GetString("CODE_INPUT_MENU_CODE_TOO_SHORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid code.
+        /// </summary>
+        public static string CODE_INPUT_MENU_INVALID_CODE {
+            get {
+                return ResourceManager.GetString("CODE_INPUT_MENU_INVALID_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
         public static string COMMON_ACCEPT_BUTTON {
@@ -124,6 +151,15 @@ namespace Client.Properties {
         public static string COMMON_CANCEL_BUTTON {
             get {
                 return ResourceManager.GetString("COMMON_CANCEL_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CODE.
+        /// </summary>
+        public static string COMMON_CODE_LABEL {
+            get {
+                return ResourceManager.GetString("COMMON_CODE_LABEL", resourceCulture);
             }
         }
         
@@ -205,6 +241,15 @@ namespace Client.Properties {
         public static string COMMON_PASSWORD_LABEL {
             get {
                 return ResourceManager.GetString("COMMON_PASSWORD_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait....
+        /// </summary>
+        public static string COMMON_PLEASE_WAIT {
+            get {
+                return ResourceManager.GetString("COMMON_PLEASE_WAIT", resourceCulture);
             }
         }
         
@@ -423,6 +468,15 @@ namespace Client.Properties {
         public static string LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE {
             get {
                 return ResourceManager.GetString("LOGIN_MENU_SERVER_SHUTDOWN_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not verified.
+        /// </summary>
+        public static string LOGIN_MENU_USER_NOT_VERIFIED {
+            get {
+                return ResourceManager.GetString("LOGIN_MENU_USER_NOT_VERIFIED", resourceCulture);
             }
         }
         
@@ -802,6 +856,24 @@ namespace Client.Properties {
         public static string SIGN_UP_INVALID_EMAIL_LABEL {
             get {
                 return ResourceManager.GetString("SIGN_UP_INVALID_EMAIL_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification code.
+        /// </summary>
+        public static string SIGN_UP_MENU_VERIFICATION_CODE_LABEL {
+            get {
+                return ResourceManager.GetString("SIGN_UP_MENU_VERIFICATION_CODE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ve sent the verification code to your email.
+        /// </summary>
+        public static string SIGN_UP_MENU_VERIFICATION_CODE_MESSAGE {
+            get {
+                return ResourceManager.GetString("SIGN_UP_MENU_VERIFICATION_CODE_MESSAGE", resourceCulture);
             }
         }
         

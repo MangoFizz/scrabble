@@ -134,6 +134,12 @@
   <wsdl:message name="IPlayerManager_RegisterPlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterPlayer" />
   </wsdl:message>
+  <wsdl:message name="IPlayerManager_ResendVerificationCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResendVerificationCode" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_VerifyPlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyPlayer" />
+  </wsdl:message>
   <wsdl:message name="IPlayerManager_Logout_InputMessage">
     <wsdl:part name="parameters" element="tns:Logout" />
   </wsdl:message>
@@ -154,6 +160,9 @@
   </wsdl:message>
   <wsdl:message name="IPlayerManager_LoginResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:LoginResponseHandler" />
+  </wsdl:message>
+  <wsdl:message name="IPlayerManager_VerificationResponseHandler_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:VerificationResponseHandler" />
   </wsdl:message>
   <wsdl:message name="IPlayerManager_RegisterPlayerResponseHandler_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RegisterPlayerResponseHandler" />
@@ -366,6 +375,12 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RegisterPlayer">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/RegisterPlayer" message="tns:IPlayerManager_RegisterPlayer_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ResendVerificationCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/ResendVerificationCode" message="tns:IPlayerManager_ResendVerificationCode_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="VerifyPlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/VerifyPlayer" message="tns:IPlayerManager_VerifyPlayer_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="true" name="Logout">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerManager/Logout" message="tns:IPlayerManager_Logout_InputMessage" />
     </wsdl:operation>
@@ -386,6 +401,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LoginResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/LoginResponseHandler" message="tns:IPlayerManager_LoginResponseHandler_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="VerificationResponseHandler">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/VerificationResponseHandler" message="tns:IPlayerManager_VerificationResponseHandler_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RegisterPlayerResponseHandler">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler" message="tns:IPlayerManager_RegisterPlayerResponseHandler_OutputCallbackMessage" />
@@ -572,6 +590,18 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="ResendVerificationCode">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/ResendVerificationCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyPlayer">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/VerifyPlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="Logout">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/Logout" style="document" />
       <wsdl:input>
@@ -610,6 +640,12 @@
     </wsdl:operation>
     <wsdl:operation name="LoginResponseHandler">
       <soap12:operation soapAction="http://tempuri.org/IPlayerManager/LoginResponseHandler" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerificationResponseHandler">
+      <soap12:operation soapAction="http://tempuri.org/IPlayerManager/VerificationResponseHandler" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

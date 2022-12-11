@@ -267,6 +267,10 @@ namespace Client {
         public void Disconnect(DisconnectionReason reason) {
             throw new NotImplementedException();
         }
+
+        public void VerificationResponseHandler(PlayerManagerPlayerVerificationResult verificationResult) {
+            throw new NotImplementedException();
+        }
     }
 
     public partial class PartyLobbyPage : IPartyManagerCallback {

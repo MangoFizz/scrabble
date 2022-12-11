@@ -4,12 +4,22 @@
   <xs:simpleType name="PlayerManager.PlayerAuthResult">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Success" />
+      <xs:enumeration value="NotVerified" />
       <xs:enumeration value="InvalidCredentials" />
       <xs:enumeration value="IncorrectPassword" />
       <xs:enumeration value="DatabaseError" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PlayerManager.PlayerAuthResult" nillable="true" type="tns:PlayerManager.PlayerAuthResult" />
+  <xs:simpleType name="PlayerManager.PlayerVerificationResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="AuthFailed" />
+      <xs:enumeration value="InvalidCode" />
+      <xs:enumeration value="DatabaseError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerManager.PlayerVerificationResult" nillable="true" type="tns:PlayerManager.PlayerVerificationResult" />
   <xs:simpleType name="PlayerManager.PlayerResgisterResult">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Success" />

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/05/2022 08:16:33
+-- Date Created: 12/10/2022 16:54:58
 -- Generated from EDMX file: C:\Users\aiwass\source\repos\scrabble\DataAccess\ScrabbleModel.edmx
 -- --------------------------------------------------
 
@@ -33,9 +33,6 @@ IF OBJECT_ID(N'[dbo].[games]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[players]', 'U') IS NOT NULL
     DROP TABLE [dbo].[players];
-GO
-IF OBJECT_ID(N'[dbo].[settings]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[settings];
 GO
 
 -- --------------------------------------------------
@@ -79,21 +76,9 @@ CREATE TABLE [dbo].[players] (
     [Email] nvarchar(255)  NOT NULL,
     [Registered] datetime  NOT NULL,
     [Games] int  NOT NULL,
-    [Wins] int  NOT NULL
-);
-GO
-
--- Creating table 'settings'
-CREATE TABLE [dbo].[settings] (
-    [idSettings] int  NOT NULL,
-    [playerId] int  NOT NULL,
-    [lenguege] varchar(5)  NULL,
-    [videoResolutionWidth] int  NULL,
-    [videoResolutionHeigth] int  NULL,
-    [videoStyle] nchar(10)  NOT NULL,
-    [audioMaster] int  NULL,
-    [audioMusic] int  NULL,
-    [audioEffects] int  NULL
+    [Wins] int  NOT NULL,
+    [VerificationCode] nvarchar(4)  NOT NULL,
+    [Verified] bit  NOT NULL
 );
 GO
 
@@ -101,10 +86,10 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [FriendshipId], [Sender], [Receiver] in table 'friendships'
+-- Creating primary key on [FriendshipId] in table 'friendships'
 ALTER TABLE [dbo].[friendships]
 ADD CONSTRAINT [PK_friendships]
-    PRIMARY KEY CLUSTERED ([FriendshipId], [Sender], [Receiver] ASC);
+    PRIMARY KEY CLUSTERED ([FriendshipId] ASC);
 GO
 
 -- Creating primary key on [idGameResults], [playerId], [gameId], [points], [position] in table 'gameResults'
@@ -119,16 +104,10 @@ ADD CONSTRAINT [PK_games]
     PRIMARY KEY CLUSTERED ([idGame], [duration], [date], [idWinner] ASC);
 GO
 
--- Creating primary key on [UserId], [Password], [Avatar], [Email], [Nickname] in table 'players'
+-- Creating primary key on [UserId] in table 'players'
 ALTER TABLE [dbo].[players]
 ADD CONSTRAINT [PK_players]
-    PRIMARY KEY CLUSTERED ([UserId], [Password], [Avatar], [Email], [Nickname] ASC);
-GO
-
--- Creating primary key on [idSettings], [playerId], [videoStyle] in table 'settings'
-ALTER TABLE [dbo].[settings]
-ADD CONSTRAINT [PK_settings]
-    PRIMARY KEY CLUSTERED ([idSettings], [playerId], [videoStyle] ASC);
+    PRIMARY KEY CLUSTERED ([UserId] ASC);
 GO
 
 -- --------------------------------------------------

@@ -24,6 +24,12 @@ namespace Service {
 
         [OperationContract(IsInitiating = true, IsOneWay = true)]
         void RegisterPlayer(string nickname, string password, string email);
+
+        [OperationContract(IsOneWay = true)]
+        void ResendVerificationCode(string nickname, string password);
+
+        [OperationContract(IsOneWay = true)]
+        void VerifyPlayer(string nickname, string password, string code);
         
         [OperationContract(IsTerminating = true, IsOneWay = true)]
         void Logout();
@@ -48,6 +54,9 @@ namespace Service {
     public interface IPlayerManagerCallback {
         [OperationContract(IsOneWay = true)]
         void LoginResponseHandler(PlayerAuthResult loginResult, Player player, string sessionId);
+
+        [OperationContract(IsOneWay = true)]
+        void VerificationResponseHandler(PlayerVerificationResult verificationResult);
 
         [OperationContract(IsOneWay = true)]
         void RegisterPlayerResponseHandler(PlayerResgisterResult registrationResult);

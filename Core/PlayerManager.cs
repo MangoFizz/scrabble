@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
@@ -6,11 +7,14 @@ using System.Data.Common;
 using DataAccess;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 namespace Core {
     public class PlayerManager {
         public enum PlayerAuthResult {
             Success = 0,
+            NotVerified,
             InvalidCredentials,
             IncorrectPassword,
             DatabaseError
@@ -20,6 +24,21 @@ namespace Core {
             Success = 0,
             PlayerAlreadyExists,
             InvalidInputs,
+            DatabaseError
+        }
+
+        public enum PlayerResendCodeResult {
+            Success = 0,
+            PlayerDoesNotExists,
+            UserAlreadyVerified,
+            DatabaseError,
+            InternalError
+        }
+
+        public enum PlayerVerificationResult {
+            Success = 0,
+            AuthFailed,
+            InvalidCode,
             DatabaseError
         }
 
@@ -105,6 +124,39 @@ namespace Core {
             return isInputValid;
         }
 
+        private static string GenerateVerificationCode() {
+            var random = new Random();
+            var verificationCode = random.Next(0, 0xFFFF).ToString("x2");
+            return verificationCode;
+        }
+
+        private static void SendVerificationCodeEmail(Player player) {
+            var senderEmail = new MailAddress(ConfigurationManager.AppSettings["emailAddress"], "Scrabble game");
+            var playerEmail = new MailAddress(player.Email, $"To {player.Nickname}");
+            string appPassword = ConfigurationManager.AppSettings["emailAppPassword"];
+            const string subject = "Scrabble account verification code";
+            string body = $"Your verification code is \"{player.VerificationCode}\".";
+
+            var smtp = new SmtpClient {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, appPassword)
+            };
+            try {
+                using(var message = new MailMessage(senderEmail, playerEmail)) {
+                    message.Subject = subject;
+                    message.Body = body;
+                    smtp.Send(message);
+                }
+            }
+            catch {
+                throw;
+            }
+        }
+
         public static Player GetPlayerData(string nickname) {
             ScrabbleEntities context = new ScrabbleEntities();
             return context.players.First(p => p.Nickname == nickname);
@@ -117,6 +169,9 @@ namespace Core {
                 if(queryResult.Count() > 0) {
                     var user = queryResult.First();
                     if(CheckPassword(password, user.Password)) {
+                        if(!user.Verified) {
+                            return PlayerAuthResult.NotVerified;
+                        }
                         return PlayerAuthResult.Success;
                     }
                     return PlayerAuthResult.IncorrectPassword;
@@ -145,10 +200,13 @@ namespace Core {
                     Nickname = nickname,
                     Password = HashPassword(password),
                     Email = email,
-                    Registered = DateTime.Now
+                    Registered = DateTime.Now,
+                    VerificationCode = GenerateVerificationCode()
                 };
                 context.players.Add(player);
                 context.SaveChanges();
+
+                SendVerificationCodeEmail(player);
 
                 return PlayerResgisterResult.Success;
             }
@@ -158,6 +216,53 @@ namespace Core {
             }
         }
 
+        public static PlayerResendCodeResult ResendVerificationCode(string nickname) {
+            try {
+                ScrabbleEntities context = new ScrabbleEntities();
+                var queryResult = from player in context.players where player.Nickname == nickname select player;
+                if(queryResult.Count() > 0) {
+                    var player = queryResult.First();
+                    try {
+                        SendVerificationCodeEmail(player);
+                        return PlayerResendCodeResult.Success;
+                    }
+                    catch(SmtpException ex) {
+                        Console.WriteLine(ex.Message);
+                        return PlayerResendCodeResult.InternalError;
+                    }
+                }
+                return PlayerResendCodeResult.PlayerDoesNotExists;
+            }
+            catch(DbException ex) {
+                Console.WriteLine(ex.Message);
+                return PlayerResendCodeResult.DatabaseError;
+            }
+        }
+
+        public static PlayerVerificationResult VerifyPlayer(string nickname, string password, string code) {
+            if(AuthenticatePlayer(nickname, password) != PlayerAuthResult.NotVerified) {
+                return PlayerVerificationResult.AuthFailed;
+            }
+            try {
+                ScrabbleEntities context = new ScrabbleEntities();
+                var queryResult = from player in context.players where player.Nickname == nickname select player;
+                if(queryResult.Count() > 0) {
+                    var user = queryResult.First();
+                    if(user.VerificationCode == code) {
+                        user.Verified = true;
+                        context.SaveChanges();
+                        return PlayerVerificationResult.Success;
+                    }
+                    return PlayerVerificationResult.InvalidCode;
+                }
+                return PlayerVerificationResult.AuthFailed;
+            }
+            catch(DbException ex) {
+                Console.WriteLine(ex.Message);
+                return PlayerVerificationResult.DatabaseError;
+            }
+        }
+        
         public static PlayerUnregisterResult UnregisterPlayer(string nickname, string password) {
             try {
                 ScrabbleEntities context = new ScrabbleEntities();

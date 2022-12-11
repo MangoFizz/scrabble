@@ -49,6 +49,12 @@ namespace Client {
             }
         }
 
+        public Frame SecondaryFrame {
+            get {
+                return MainWindow.SecondaryFrame;
+            }
+        }
+
         App() {
             CurrentLanguage = languages[0];
         }
@@ -216,6 +222,17 @@ namespace Client {
             var loginPage = new LoginPage();
             MainWindow.MainFrame.Content = loginPage;
             loginPage.ShowDisconnectMessage(reason);
+        }
+
+        public void VerificationResponseHandler(PlayerManagerPlayerVerificationResult verificationResult) {
+            if(typeof(LoginPage).IsInstanceOfType(MainFrame.Content)) {
+                var loginPage = ((LoginPage)MainFrame.Content);
+                loginPage.VerificationResponseHandler(verificationResult);
+            }
+            if(typeof(SignUpPage).IsInstanceOfType(MainFrame.Content)) {
+                var signupPage = ((SignUpPage)MainFrame.Content);
+                signupPage.VerificationResponseHandler(verificationResult);
+            }
         }
     }
 

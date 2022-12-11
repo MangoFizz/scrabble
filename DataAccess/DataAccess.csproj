@@ -79,9 +79,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="settings.cs">
-      <DependentUpon>ScrabbleModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ScrabbleModel.edmx">

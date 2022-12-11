@@ -183,6 +183,19 @@ namespace Service {
             var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
             currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
         }
+
+        public void VerifyPlayer(string nickname, string password, string code) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
+            var playerVerificationResult = PlayerManager.VerifyPlayer(nickname, password, code);
+            currentCallbackChannel.VerificationResponseHandler(playerVerificationResult);
+        }
+
+        public void ResendVerificationCode(string nickname, string password) {
+            var authenticationResult = PlayerManager.AuthenticatePlayer(nickname, password);
+            if(authenticationResult == PlayerManager.PlayerAuthResult.Success) {
+                PlayerManager.ResendVerificationCode(nickname);
+            }
+        }
     }
 
     public partial class GameService : IPartyChat {

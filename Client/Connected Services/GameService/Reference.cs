@@ -21,13 +21,16 @@ namespace Client.GameService {
         Success = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        InvalidCredentials = 1,
+        NotVerified = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        IncorrectPassword = 2,
+        InvalidCredentials = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        DatabaseError = 3,
+        IncorrectPassword = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DatabaseError = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -199,6 +202,23 @@ namespace Client.GameService {
             [System.Runtime.Serialization.EnumMemberAttribute()]
             InGame = 2,
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PlayerManager.PlayerVerificationResult", Namespace="http://schemas.datacontract.org/2004/07/Core")]
+    public enum PlayerManagerPlayerVerificationResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Success = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        AuthFailed = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        InvalidCode = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DatabaseError = 3,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -549,6 +569,18 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/RegisterPlayer")]
         System.Threading.Tasks.Task RegisterPlayerAsync(string nickname, string password, string email);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/ResendVerificationCode")]
+        void ResendVerificationCode(string nickname, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/ResendVerificationCode")]
+        System.Threading.Tasks.Task ResendVerificationCodeAsync(string nickname, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/VerifyPlayer")]
+        void VerifyPlayer(string nickname, string password, string code);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/VerifyPlayer")]
+        System.Threading.Tasks.Task VerifyPlayerAsync(string nickname, string password, string code);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, IsTerminating=true, Action="http://tempuri.org/IPlayerManager/Logout")]
         void Logout();
         
@@ -591,6 +623,9 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/LoginResponseHandler")]
         void LoginResponseHandler(Client.GameService.PlayerManagerPlayerAuthResult loginResult, Client.GameService.Player player, string sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/VerificationResponseHandler")]
+        void VerificationResponseHandler(Client.GameService.PlayerManagerPlayerVerificationResult verificationResult);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/RegisterPlayerResponseHandler")]
         void RegisterPlayerResponseHandler(Client.GameService.PlayerManagerPlayerResgisterResult registrationResult);
@@ -667,6 +702,22 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task RegisterPlayerAsync(string nickname, string password, string email) {
             return base.Channel.RegisterPlayerAsync(nickname, password, email);
+        }
+        
+        public void ResendVerificationCode(string nickname, string password) {
+            base.Channel.ResendVerificationCode(nickname, password);
+        }
+        
+        public System.Threading.Tasks.Task ResendVerificationCodeAsync(string nickname, string password) {
+            return base.Channel.ResendVerificationCodeAsync(nickname, password);
+        }
+        
+        public void VerifyPlayer(string nickname, string password, string code) {
+            base.Channel.VerifyPlayer(nickname, password, code);
+        }
+        
+        public System.Threading.Tasks.Task VerifyPlayerAsync(string nickname, string password, string code) {
+            return base.Channel.VerifyPlayerAsync(nickname, password, code);
         }
         
         public void Logout() {

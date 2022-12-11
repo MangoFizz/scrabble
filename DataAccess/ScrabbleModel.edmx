@@ -10,13 +10,10 @@
     <EntitySet Name="gameResults" EntityType="ScrabbleModel.Store.gameResults" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="games" EntityType="ScrabbleModel.Store.games" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="players" EntityType="ScrabbleModel.Store.players" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="settings" EntityType="ScrabbleModel.Store.settings" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="friendships">
     <Key>
       <PropertyRef Name="FriendshipId" />
-      <PropertyRef Name="Sender" />
-      <PropertyRef Name="Receiver" />
     </Key>
     <Property Name="FriendshipId" Type="int" Nullable="false" />
     <Property Name="Sender" Type="int" Nullable="false" />
@@ -52,10 +49,6 @@
   <EntityType Name="players">
     <Key>
       <PropertyRef Name="UserId" />
-      <PropertyRef Name="Password" />
-      <PropertyRef Name="Avatar" />
-      <PropertyRef Name="Email" />
-      <PropertyRef Name="Nickname" />
     </Key>
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nickname" Type="varchar" Nullable="false" MaxLength="50" />
@@ -65,22 +58,8 @@
     <Property Name="Registered" Type="datetime" Nullable="false" />
     <Property Name="Games" Type="int" Nullable="false" DefaultValue="0" />
     <Property Name="Wins" Type="int" Nullable="false" DefaultValue="0" />
-  </EntityType>
-  <EntityType Name="settings">
-    <Key>
-      <PropertyRef Name="idSettings" />
-      <PropertyRef Name="playerId" />
-      <PropertyRef Name="videoStyle" />
-    </Key>
-    <Property Name="idSettings" Type="int" Nullable="false" />
-    <Property Name="playerId" Type="int" Nullable="false" />
-    <Property Name="lenguege" Type="varchar" Nullable="true" MaxLength="5" />
-    <Property Name="videoResolutionWidth" Type="int" Nullable="true" />
-    <Property Name="videoResolutionHeigth" Type="int" Nullable="true" />
-    <Property Name="videoStyle" Type="nchar" Nullable="false" MaxLength="10" />
-    <Property Name="audioMaster" Type="int" Nullable="true" />
-    <Property Name="audioMusic" Type="int" Nullable="true" />
-    <Property Name="audioEffects" Type="int" Nullable="true" />
+    <Property Name="VerificationCode" Type="nvarchar" Nullable="false" MaxLength="4" />
+    <Property Name="Verified" Type="bit" Nullable="false" DefaultValue="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -89,8 +68,6 @@
         <EntityType Name="Friendship">
           <Key>
             <PropertyRef Name="FriendshipId" />
-            <PropertyRef Name="Sender" />
-            <PropertyRef Name="Receiver" />
           </Key>
           <Property Name="FriendshipId" Type="Int32" Nullable="false" />
           <Property Name="Sender" Type="Int32" Nullable="false" />
@@ -126,10 +103,6 @@
         <EntityType Name="Player">
           <Key>
             <PropertyRef Name="UserId" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="Avatar" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="Nickname" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -139,29 +112,14 @@
           <Property Name="Registered" Type="DateTime" Nullable="false" />
           <Property Name="Games" Type="Int32" Nullable="false" DefaultValue="0" />
           <Property Name="Wins" Type="Int32" Nullable="false" DefaultValue="0" />
-        </EntityType>
-        <EntityType Name="settings">
-          <Key>
-            <PropertyRef Name="idSettings" />
-            <PropertyRef Name="playerId" />
-            <PropertyRef Name="videoStyle" />
-          </Key>
-          <Property Name="idSettings" Type="Int32" Nullable="false" />
-          <Property Name="playerId" Type="Int32" Nullable="false" />
-          <Property Name="lenguege" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="videoResolutionWidth" Type="Int32" />
-          <Property Name="videoResolutionHeigth" Type="Int32" />
-          <Property Name="videoStyle" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="audioMaster" Type="Int32" />
-          <Property Name="audioMusic" Type="Int32" />
-          <Property Name="audioEffects" Type="Int32" />
+          <Property Name="VerificationCode" Type="String" Nullable="false" MaxLength="4" />
+          <Property Name="Verified" Type="Boolean" Nullable="false" DefaultValue="False" />
         </EntityType>
         <EntityContainer Name="ScrabbleEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="friendships" EntityType="ScrabbleModel.Friendship" />
           <EntitySet Name="gameResults" EntityType="Self.gameResults" />
           <EntitySet Name="games" EntityType="Self.games" />
           <EntitySet Name="players" EntityType="ScrabbleModel.Player" />
-          <EntitySet Name="settings" EntityType="Self.settings" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -204,28 +162,15 @@
       <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.Player)">
         <MappingFragment StoreEntitySet="players">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Avatar" ColumnName="Avatar" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
           <ScalarProperty Name="Registered" ColumnName="Registered" />
           <ScalarProperty Name="Games" ColumnName="Games" />
           <ScalarProperty Name="Wins" ColumnName="Wins" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="settings">
-      <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.settings)">
-        <MappingFragment StoreEntitySet="settings">
-          <ScalarProperty Name="idSettings" ColumnName="idSettings" />
-          <ScalarProperty Name="playerId" ColumnName="playerId" />
-          <ScalarProperty Name="videoStyle" ColumnName="videoStyle" />
-          <ScalarProperty Name="lenguege" ColumnName="lenguege" />
-          <ScalarProperty Name="videoResolutionWidth" ColumnName="videoResolutionWidth" />
-          <ScalarProperty Name="videoResolutionHeigth" ColumnName="videoResolutionHeigth" />
-          <ScalarProperty Name="audioMaster" ColumnName="audioMaster" />
-          <ScalarProperty Name="audioMusic" ColumnName="audioMusic" />
-          <ScalarProperty Name="audioEffects" ColumnName="audioEffects" />
+          <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+          <ScalarProperty Name="Verified" ColumnName="Verified" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
