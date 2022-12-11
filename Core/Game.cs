@@ -468,6 +468,48 @@ namespace Core {
             return horizontalIsValid && verticalIsValid;
         }
 
+        private int CalculateTilePlacementScore(Tile tile, int x, int y) {
+            var slot = Board[x, y];
+            var tileScore = GetTileScore(tile);
+            int score = 0;
+            switch(slot.Bonus) {
+                case BoardSlotBonus.DoubleLetter:
+                    score = tileScore * 2;
+                    break;
+
+                case BoardSlotBonus.TripleLetter:
+                    score = tileScore * 3;
+                    break;
+
+                case BoardSlotBonus.DoubleWord: {
+                        var chains = GetSlotTileChains(x, y);
+                        foreach(var chain in chains) {
+                            if(chain.Length > 0) {
+                                score += chain.Sum(c => GetTileScore((Tile)c));
+                            }
+                        }
+                        score += tileScore * 2;
+                        break;
+                    }
+
+                case BoardSlotBonus.TripleWord: {
+                        var chains = GetSlotTileChains(x, y);
+                        foreach(var chain in chains) {
+                            if(chain.Length > 0) {
+                                score += chain.Sum(c => GetTileScore((Tile)c)) * 2;
+                            }
+                        }
+                        score += tileScore * 3;
+                        break;
+                    }
+
+                default:
+                    score = tileScore;
+                    break;
+            }
+            return score;
+        }
+
         public int PlaceTile(Tile tile, int x, int y) {
             if(x < 0 || x > 14 || y < 0 || y > 14) {
                 throw new ArgumentOutOfRangeException();
@@ -479,7 +521,8 @@ namespace Core {
 
             Board[x, y].Tile = tile;
             BoardIsEmpty = false;
-            return GetTileScore(tile);
+            var score = CalculateTilePlacementScore(tile, x, y);
+            return score;
         }
 
         public BoardSlot[][] GetBoardJaggedArray() {

@@ -588,6 +588,9 @@ namespace Service {
                 }
                 try {
                     var points = party.Game.PlaceTile(tile.Value, x, y);
+                    if(currentPlayer.UsedRackTiles() == currentPlayer.Rack.Length) {
+                        points += 50;
+                    }
                     currentPlayer.Score += points;
                 }
                 catch(InvalidOperationException) {
