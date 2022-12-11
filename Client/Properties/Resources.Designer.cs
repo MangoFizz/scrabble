@@ -627,6 +627,51 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1st. place.
+        /// </summary>
+        public static string PARTY_GAME_RESULTS_MENU_FIRST_PLACE_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_RESULTS_MENU_FIRST_PLACE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4th. place.
+        /// </summary>
+        public static string PARTY_GAME_RESULTS_MENU_FOURTH_PLACE_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_RESULTS_MENU_FOURTH_PLACE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Over.
+        /// </summary>
+        public static string PARTY_GAME_RESULTS_MENU_GAME_OVER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_RESULTS_MENU_GAME_OVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2nd. place.
+        /// </summary>
+        public static string PARTY_GAME_RESULTS_MENU_SECOND_PLACE_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_RESULTS_MENU_SECOND_PLACE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3rd. place.
+        /// </summary>
+        public static string PARTY_GAME_RESULTS_MENU_THIRD_PLACE_HEADER {
+            get {
+                return ResourceManager.GetString("PARTY_GAME_RESULTS_MENU_THIRD_PLACE_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GAME STATUS.
         /// </summary>
         public static string PARTY_GAME_STATUS_HEADER {

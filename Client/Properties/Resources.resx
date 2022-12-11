@@ -304,6 +304,21 @@
   <data name="PARTY_GAME_PLAYER_TURN_FORMAT" xml:space="preserve">
     <value>{0}'s turn!</value>
   </data>
+  <data name="PARTY_GAME_RESULTS_MENU_FIRST_PLACE_HEADER" xml:space="preserve">
+    <value>1st. place</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_FOURTH_PLACE_HEADER" xml:space="preserve">
+    <value>4th. place</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_GAME_OVER" xml:space="preserve">
+    <value>Game Over</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_SECOND_PLACE_HEADER" xml:space="preserve">
+    <value>2nd. place</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_THIRD_PLACE_HEADER" xml:space="preserve">
+    <value>3rd. place</value>
+  </data>
   <data name="PARTY_GAME_STATUS_HEADER" xml:space="preserve">
     <value>GAME STATUS</value>
   </data>

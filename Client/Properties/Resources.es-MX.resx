@@ -279,6 +279,21 @@
   <data name="PARTY_GAME_PLAYER_TURN_FORMAT" xml:space="preserve">
     <value>¡Turno de {0}!</value>
   </data>
+  <data name="PARTY_GAME_RESULTS_MENU_FIRST_PLACE_HEADER" xml:space="preserve">
+    <value>1er. lugar</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_FOURTH_PLACE_HEADER" xml:space="preserve">
+    <value>4to. lugar</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_GAME_OVER" xml:space="preserve">
+    <value>Fin del juego</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_SECOND_PLACE_HEADER" xml:space="preserve">
+    <value>2do. lugar</value>
+  </data>
+  <data name="PARTY_GAME_RESULTS_MENU_THIRD_PLACE_HEADER" xml:space="preserve">
+    <value>3er. lugar</value>
+  </data>
   <data name="PARTY_GAME_STATUS_HEADER" xml:space="preserve">
     <value>ESTADO DEL JUEGO</value>
   </data>

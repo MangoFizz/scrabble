@@ -43,5 +43,8 @@ namespace Service {
 
         [OperationContract]
         void SendInvalidTilePlacingError();
+
+        [OperationContract]
+        void GameEnd(Party party);
     }
 }

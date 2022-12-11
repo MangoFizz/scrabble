@@ -60,8 +60,11 @@ namespace Service {
         [IgnoreDataMember]
         public Tile?[] Rack { get; set; }
 
-        [IgnoreDataMember]
+        [DataMember]
         public int Score { get; set; }
+
+        [IgnoreDataMember]
+        public int TurnPassesCount { get; set; }
 
         [IgnoreDataMember]
         public IPartyGameCallback PartyGameCallbackChannel { get; set; }

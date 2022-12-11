@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace Service {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
@@ -12,7 +13,7 @@ namespace Service {
         }
     }
 
-        public partial class GameService : IPlayerManager {
+    public partial class GameService : IPlayerManager {
         private List<Player> Players = new List<Player>();
 
         private void FetchPlayerFriendList(Player player) {
@@ -248,6 +249,14 @@ namespace Service {
                 }
             }
         }
+
+        private void SetGameEndTimer(Party party, int timeLimit) {
+            Task.Delay(timeLimit * 60 * 1000).ContinueWith(t => {
+                if(party.Game != null) {
+                    EndGame(party);
+                }
+            });
+        }
         
         private void CreateGame(Party party, Game.SupportedLanguage language, int timeLimit) {
             var game = new Game(language);
@@ -256,8 +265,7 @@ namespace Service {
             foreach(var p in party.Players) {
                 p.PartyManagerCallbackChannel.ReceiveGameStart();
             }
-
-            party.Timer = new System.Threading.Timer((o) => { }, null, 0, timeLimit * 60 * 1000);
+            SetGameEndTimer(party, timeLimit);
         }
 
         private void JoinPlayerToParty(Player player, Party party) {
@@ -520,14 +528,28 @@ namespace Service {
             }
         }
 
+        private void EndGame(Party party) {
+            foreach(var p in party.Players) {
+                p.PartyGameCallbackChannel.GameEnd(party);
+                p.PartyGameCallbackChannel = null;
+            }
+            party.Game = null;
+        }
+
         private void RefillPlayerRack(Player player) {
             var party = player.CurrentParty;
             var usedTiles = player.UsedRackTiles();
             var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
-            for(var i = 0; i < player.Rack.Length; i++) {
-                if(player.Rack[i] == null) {
-                    player.Rack[i] = rackRefill[0];
-                    rackRefill.RemoveAt(0);
+            if(rackRefill.Count == 0) {
+                EndGame(party);
+                return;
+            }
+            for(var i = 0; i < rackRefill.Count; i++) {
+                for(var j = 0; j < player.Rack.Length; j++) {
+                    if(player.Rack[j] == null) {
+                        player.Rack[j] = rackRefill[i];
+                        break;
+                    }
                 }
             }
             player.PartyGameCallbackChannel.UpdatePlayerRack(player.Rack);
@@ -545,6 +567,7 @@ namespace Service {
                 if(GamePlayersAreReady(party)) {
                     SetRandomTurn(party);
                 }
+                player.TurnPassesCount = 0;
             }
         }
 
@@ -555,6 +578,7 @@ namespace Service {
                 RefillPlayerRack(currentPlayer);
                 var party = currentPlayer.CurrentParty;
                 var nextPlayerTurn = party.NextTurn();
+                currentPlayer.TurnPassesCount = 0;
                 foreach(var p in party.Players) {
                     p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
                     p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
@@ -567,6 +591,11 @@ namespace Service {
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null && currentPlayer.CurrentParty != null) {
                 var party = currentPlayer.CurrentParty;
+                currentPlayer.TurnPassesCount++;
+                if(party.GameEndByTurnPasses()) {
+                    EndGame(party);
+                    return;
+                }
                 var nextPlayerTurn = party.NextTurn();
                 foreach(var p in party.Players) {
                     p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);

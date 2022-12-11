@@ -1,4 +1,5 @@
 ﻿using Client.GameService;
+using Client.Pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,6 +30,7 @@ namespace Client {
         private Point DraggedTileStartingPosition { get; set; }
         private BoardSlot FocusedBoardSlot { get; set; }
         private bool CanPlaceTiles { get; set; }
+        private bool TurnStarted { get; set; }
 
         public PartyGamePage(PartyChatPage chatPage) {
             InitializeComponent();
@@ -41,11 +43,10 @@ namespace Client {
             ChatFrame.Content = chatPage;
             Chat = chatPage;
 
-            var context = new InstanceContext(this);
-            Client = new PartyGameClient(context);
             Client.ConnectPartyGame(App.Current.SessionId);
 
             CanPlaceTiles = false;
+            TurnStarted = false;
         }
 
         private void SetUpScoreTable() {
@@ -294,6 +295,8 @@ namespace Client {
                         var draggedTileLetter = draggedTileLabel.Content.ToString();
                         FocusedBoardSlot.Container.Child = GetBoardSlotItemGlyph(draggedTileLetter[0]);
                         FocusedBoardSlot = null;
+
+                        TurnStarted = true;
                     }
                     else {
                         DraggedTileItem.Margin = new Thickness(DraggedTileStartingPosition.X, DraggedTileStartingPosition.Y, 0, 0);
@@ -375,7 +378,12 @@ namespace Client {
             if(CanPlaceTiles) {
                 CanPlaceTiles = false;
                 PassTurnButton.Content = Properties.Resources.PARTY_GAME_PASS_TURN_BUTTON;
-                Client.EndTurn();
+                if(TurnStarted) {
+                    Client.EndTurn();
+                }
+                else {
+                    Client.PassTurn();
+                }
             }
         }
     }
@@ -456,8 +464,14 @@ namespace Client {
             CurrentTurn = player;
             if(player.Nickname == App.Current.Player.Nickname) {
                 CanPlaceTiles = true;
+                TurnStarted = false;
             }
             UpdatePlayerTurnText();
+        }
+
+        public void GameEnd(Party party) {
+            App.Current.CurrentParty = party;
+            App.Current.SecondaryFrame.Content = new PartyGameResultsPage();
         }
     }
 }

@@ -61,6 +61,9 @@ namespace Client.GameService {
         private System.DateTime RegisteredField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ScoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Client.GameService.Player.StatusType StatusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -150,6 +153,19 @@ namespace Client.GameService {
                 if ((this.RegisteredField.Equals(value) != true)) {
                     this.RegisteredField = value;
                     this.RaisePropertyChanged("Registered");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Score {
+            get {
+                return this.ScoreField;
+            }
+            set {
+                if ((this.ScoreField.Equals(value) != true)) {
+                    this.ScoreField = value;
+                    this.RaisePropertyChanged("Score");
                 }
             }
         }
@@ -273,6 +289,9 @@ namespace Client.GameService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         ServerShutdown = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ServerInternalError = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -954,6 +973,9 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError", ReplyAction="http://tempuri.org/IPartyGame/SendInvalidTilePlacingErrorResponse")]
         void SendInvalidTilePlacingError();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyGame/GameEnd", ReplyAction="http://tempuri.org/IPartyGame/GameEndResponse")]
+        void GameEnd(Client.GameService.Party party);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

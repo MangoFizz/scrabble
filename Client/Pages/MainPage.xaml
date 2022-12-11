@@ -17,7 +17,7 @@
         <Button Name="ProfileButton" Style="{StaticResource BorderedButton}" HorizontalAlignment="Right" Margin="0,40,50,0" VerticalAlignment="Top" FontSize="18" Background="Azure" Click="ProfileButton_Click" Height="75">
             <Button.Content>
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="PlayerProfileAvatar" Source="Assets/images/avatars/avatar_0.png"/>
+                    <Image Name="PlayerProfileAvatar" Source="pack://application:,,,/Resources/images/avatars/avatar_0.png"/>
                     <TextBlock Name="PlayerProfileName" Text="Profile" VerticalAlignment="Center" Padding="10,0" FontSize="22" />
                 </StackPanel>
             </Button.Content>

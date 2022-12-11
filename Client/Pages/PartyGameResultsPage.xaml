@@ -1,0 +1,53 @@
+﻿<Page x:Class="Client.Pages.PartyGameResultsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client"
+      xmlns:p = "clr-namespace:Client.Properties"
+      mc:Ignorable="d" 
+      Height="720" Width="1280">
+
+    <Grid>
+        <Rectangle x:Name="CloseRectangle" Fill="#7F000000" />
+        <Grid Background="Azure" Margin="480,166,480,166" >
+            <StackPanel Background="LightGray" Margin="10,96,10,75" Orientation="Vertical" >
+                <Border Name="Player1Entry" Padding="0" Background="White" BorderThickness="2">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Image Name="Player1Avatar" Source="pack://application:,,,/Resources/images/avatars/avatar_0.png" Height="50" Width="50"/>
+                        <Label Padding="0" Margin="5,0" FontSize="16" VerticalContentAlignment="Center" Width="19">1.</Label>
+                        <Label Name="Player1Nickname"  Padding="0" FontSize="18" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="144">Aiwass</Label>
+                        <Label Name="Player1Score" Padding="0" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="66">70 pts.</Label>
+                    </StackPanel>
+                </Border>
+                <Border Name="Player2Entry" Padding="0" Background="White" BorderThickness="2">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Image Name="Player2Avatar" Source="pack://application:,,,/Resources/images/avatars/avatar_0.png" Height="50" Width="50"/>
+                        <Label Padding="0" Margin="5,0" FontSize="16" VerticalContentAlignment="Center" Width="19">2.</Label>
+                        <Label Name="Player2Nickname"  Padding="0" FontSize="18" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="144">Aiwass</Label>
+                        <Label Name="Player2Score" Padding="0" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="66">70 pts.</Label>
+                    </StackPanel>
+                </Border>
+                <Border Name="Player3Entry" Padding="0" Background="White" BorderThickness="2">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Image Name="Player3Avatar" Source="pack://application:,,,/Resources/images/avatars/avatar_0.png" Height="50" Width="50"/>
+                        <Label Padding="0" Margin="5,0" FontSize="16" VerticalContentAlignment="Center" Width="19">3.</Label>
+                        <Label Name="Player3Nickname"  Padding="0" FontSize="18" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="144">Aiwass</Label>
+                        <Label Name="Player3Score" Padding="0" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="66">70 pts.</Label>
+                    </StackPanel>
+                </Border>
+                <Border Name="Player4Entry" Padding="0" Background="White" BorderThickness="2">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Image Name="Player4Avatar" Source="pack://application:,,,/Resources/images/avatars/avatar_0.png" Height="50" Width="50"/>
+                        <Label Padding="0" Margin="5,0" FontSize="16" VerticalContentAlignment="Center" Width="19">4.</Label>
+                        <Label Name="Player4Nickname"  Padding="0" FontSize="18" FontWeight="SemiBold" VerticalContentAlignment="Center" Width="144">Aiwass</Label>
+                        <Label Name="Player4Score" Padding="0" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="66">70 pts.</Label>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Label Name="PlayerPlacement" Content="{x:Static p:Resources.PARTY_GAME_RESULTS_MENU_FIRST_PLACE_HEADER}" Margin="0,182,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontWeight="Bold" />
+        <Label Content="{x:Static p:Resources.PARTY_GAME_RESULTS_MENU_GAME_OVER}" Margin="0,214,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" />
+        <Button Name="AcceptButton" Content="{x:Static p:Resources.COMMON_ACCEPT_BUTTON}" HorizontalAlignment="Center" Margin="0,499,0,0" VerticalAlignment="Top" Height="34" Width="122" FontSize="18" Click="AcceptButton_Click"/>
+    </Grid>
+</Page>

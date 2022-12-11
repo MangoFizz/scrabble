@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace Service {
     [DataContract]
     public partial class Party {
+        private const int MAX_TURN_PASSES = 2;
+        
         [DataMember]
         public string Id { get; set; }
 
@@ -41,6 +43,15 @@ namespace Service {
 
         public bool IsFull() {
             return Players.Count == Game.MAX_PLAYERS;
+        }
+
+        public bool GameEndByTurnPasses() {
+            foreach(var player in Players) {
+                if(player.TurnPassesCount <= MAX_TURN_PASSES) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void PlayerLeaves(Player player) {

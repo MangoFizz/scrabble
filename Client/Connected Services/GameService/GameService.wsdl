@@ -272,6 +272,12 @@
   <wsdl:message name="IPartyGame_SendInvalidTilePlacingError_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendInvalidTilePlacingErrorResponse" />
   </wsdl:message>
+  <wsdl:message name="IPartyGame_GameEnd_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GameEnd" />
+  </wsdl:message>
+  <wsdl:message name="IPartyGame_GameEnd_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GameEndResponse" />
+  </wsdl:message>
   <wsdl:message name="IPartyManager_ConnectPartyManager_InputMessage">
     <wsdl:part name="parameters" element="tns:ConnectPartyManager" />
   </wsdl:message>
@@ -509,6 +515,10 @@
     <wsdl:operation name="SendInvalidTilePlacingError">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError" message="tns:IPartyGame_SendInvalidTilePlacingError_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/SendInvalidTilePlacingErrorResponse" message="tns:IPartyGame_SendInvalidTilePlacingError_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GameEnd">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartyGame/GameEnd" message="tns:IPartyGame_GameEnd_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartyGame/GameEndResponse" message="tns:IPartyGame_GameEnd_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyManager">
@@ -860,6 +870,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendInvalidTilePlacingError">
       <soap12:operation soapAction="http://tempuri.org/IPartyGame/SendInvalidTilePlacingError" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GameEnd">
+      <soap12:operation soapAction="http://tempuri.org/IPartyGame/GameEnd" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

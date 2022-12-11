@@ -11,7 +11,8 @@ using static Core.PlayerManager;
 namespace Service {
     public enum DisconnectionReason {
         DuplicatePlayerSession,
-        ServerShutdown
+        ServerShutdown,
+        ServerInternalError
     }
     
     [ServiceContract(CallbackContract = typeof(IPlayerManagerCallback), SessionMode = SessionMode.Required)]

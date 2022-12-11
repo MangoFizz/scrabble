@@ -8,6 +8,7 @@
       <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Registered" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Score" type="xs:int" />
       <xs:element minOccurs="0" name="Status" type="tns:Player.StatusType" />
       <xs:element minOccurs="0" name="WinsCount" type="xs:int" />
     </xs:sequence>
@@ -31,6 +32,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="DuplicatePlayerSession" />
       <xs:enumeration value="ServerShutdown" />
+      <xs:enumeration value="ServerInternalError" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="DisconnectionReason" nillable="true" type="tns:DisconnectionReason" />
