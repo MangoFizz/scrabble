@@ -28,12 +28,12 @@ namespace Client {
             App.Current.OpenPlayerProfile();
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.MainWindow.MainFrame.Navigate(new PlayPage());
+        private void NewGameButton_Click(object sender, RoutedEventArgs e) {
+            App.Current.MainWindow.MainFrame.Navigate(new PartyLobbyPage());
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            App.Current.MainWindow.MainFrame.Navigate(new SettingsPage());
+        private void JoinGameButton_Click(object sender, RoutedEventArgs e) {
+
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e) {

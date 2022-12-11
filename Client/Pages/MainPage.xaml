@@ -22,8 +22,8 @@
                 </StackPanel>
             </Button.Content>
         </Button>
-        <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_PLAY_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="PlayButton_Click" Margin="0,290,0,0"/>
-        <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_SETTINGS_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SettingsButton_Click" Margin="0,400,0,0"/>
+        <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.PLAY_MENU_NEW_GAME_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="NewGameButton_Click" Margin="0,290,0,0"/>
+        <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.PLAY_MENU_JOIN_GAME_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="JoinGameButton_Click" Margin="0,400,0,0"/>
         <Button Style="{StaticResource ScrambleButton}" Content="{x:Static p:Resources.MAIN_MENU_EXIT_BUTTON}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ExitButton_Click" Margin="0,510,0,0"/>
     </Grid>
 </Page>
