@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace Server {
     internal class ErrorHandler : IErrorHandler {
         public bool HandleError(Exception error) {
+            Trace.TraceError($"EXCEPTION: {error.GetType().Name} -> {error.Message}");
             return true;
         }
 
         public void ProvideFault(Exception error, MessageVersion version, ref Message fault) {
-            Trace.TraceError($"EXCEPTION: {error.GetType().Name} -> {error.Message}");
-            var newEx = new FaultException($"EXCEPTION: {error.GetType().Name} -> {error.Message}");
+            var newEx = new FaultException($"EXCEPTION: {error.GetType().Name}");
             MessageFault msgFault = newEx.CreateMessageFault();
             fault = Message.CreateMessage(version, msgFault, newEx.Action);
         }

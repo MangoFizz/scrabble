@@ -70,7 +70,7 @@ namespace Client {
 
         private static void CurrentDomain_UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args) {
             Exception e = (Exception)args.Exception;
-            Trace.TraceError($"ERROR: {e.GetType().Name} -> {e.Message}");
+            Trace.TraceError($"[{DateTime.Now.ToString("HH:mm:ss")}] ERROR: {e.GetType().Name} -> {e.Message}");
             Current.SecondaryFrame.Content = new DeadScreenPage();
             args.Handled = true;
         }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Net.Mail;
 using System.Net;
+using System.Diagnostics;
 
 namespace Core {
     public class PlayerManager {
@@ -108,8 +109,8 @@ namespace Core {
                 try {
                     new System.Net.Mail.MailAddress(email);
                 }
-                catch(FormatException) {
-                    isInputValid = false;
+                catch(FormatException ex) {
+                    Log.Warning($"Invalid email address: {email}. Email format error ({ex.GetType().Name})");
                 }
             }
 
@@ -150,9 +151,11 @@ namespace Core {
                     message.Subject = subject;
                     message.Body = body;
                     smtp.Send(message);
+                    Log.Info($"Sent verification code email to {player.Nickname}.");
                 }
             }
-            catch {
+            catch(Exception e) {
+                Log.Error($"Failed to send verification code email to {player.Nickname}. Email client error ({e.GetType().Name})");
                 throw;
             }
         }
@@ -172,6 +175,7 @@ namespace Core {
                         if(!user.Verified) {
                             return PlayerAuthResult.NotVerified;
                         }
+                        Log.Info($"Authenticated player {nickname}.");
                         return PlayerAuthResult.Success;
                     }
                     return PlayerAuthResult.IncorrectPassword;
@@ -179,7 +183,7 @@ namespace Core {
                 return PlayerAuthResult.InvalidCredentials;
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to authenticate player {nickname}. Database error ({ex.GetType().Name})");
                 return PlayerAuthResult.DatabaseError;
             }
         }
@@ -208,10 +212,11 @@ namespace Core {
 
                 SendVerificationCodeEmail(player);
 
+                Log.Info($"Registered player {nickname}.");
                 return PlayerResgisterResult.Success;
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to register player {nickname}. Database error ({ex.GetType().Name})");
                 return PlayerResgisterResult.DatabaseError;
             }
         }
@@ -224,6 +229,7 @@ namespace Core {
                     var player = queryResult.First();
                     try {
                         SendVerificationCodeEmail(player);
+                        Log.Info($"Resent verification email for player {nickname}.");
                         return PlayerResendCodeResult.Success;
                     }
                     catch(SmtpException ex) {
@@ -234,7 +240,7 @@ namespace Core {
                 return PlayerResendCodeResult.PlayerDoesNotExists;
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to resend verification email to player {nickname}. Database error ({ex.GetType().Name})");
                 return PlayerResendCodeResult.DatabaseError;
             }
         }
@@ -251,6 +257,7 @@ namespace Core {
                     if(user.VerificationCode == code.ToUpper()) {
                         user.Verified = true;
                         context.SaveChanges();
+                        Log.Info($"Verified player {nickname}.");
                         return PlayerVerificationResult.Success;
                     }
                     return PlayerVerificationResult.InvalidCode;
@@ -258,7 +265,7 @@ namespace Core {
                 return PlayerVerificationResult.AuthFailed;
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to verify player {nickname}. Database error ({ex.GetType().Name})");
                 return PlayerVerificationResult.DatabaseError;
             }
         }
@@ -274,6 +281,7 @@ namespace Core {
                     var player = queryResult.First();
                     context.players.Remove(player);
                     context.SaveChanges();
+                    Log.Info($"Player {nickname} has been unregistered.");
                     return PlayerUnregisterResult.Success;
                 }
                 else {
@@ -281,7 +289,7 @@ namespace Core {
                 }
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to unregister player {nickname}. Database error ({ex.GetType().Name})");
                 return PlayerUnregisterResult.DatabaseError;
             }
         }
@@ -326,7 +334,7 @@ namespace Core {
                 }
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to send friend request to player {receiverPlayerNickname} from player {playerNickname}. Database error ({ex.GetType().Name})");
                 return PlayerFriendRequestResult.DatabaseError;
             }
         }
@@ -381,11 +389,13 @@ namespace Core {
                             friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
                         }
                     }
-                    return friends;
+                    Log.Info($"Fetched {friends.Count} friends for {playerNickname}.");
+                    return friends; 
+
                 }
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to fetch friend list for player {playerNickname}. Database error ({ex.GetType().Name})");
                 return null;
             }
         }
@@ -399,11 +409,12 @@ namespace Core {
                     foreach(var friendship in friendships) {
                         friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
                     }
+                    Log.Info($"Fetched {friends.Count} friend requests for {playerNickname}.");
                     return friends;
                 }
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to fetch friend requests for player {playerNickname}. Database error ({ex.GetType().Name})");
                 return null;
             }
         }
@@ -413,11 +424,12 @@ namespace Core {
                 using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
                     player.Avatar = avatarId;
+                    Log.Info($"Updated avatar for {playerNickname}.");
                     context.SaveChanges();
                 }
             }
             catch(DbException ex) {
-                Console.WriteLine(ex.Message);
+                Log.Error($"Failed to update avatar for player {playerNickname}. Database error ({ex.GetType().Name})");
             }
         }
     }

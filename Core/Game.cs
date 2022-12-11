@@ -116,7 +116,7 @@ namespace Core {
                         WordsDictionariesCache[Language].Add(normalizedWord);
                     }
                 }
-                Console.WriteLine("Loaded {0} words for language {1}", WordsDictionariesCache[Language].Count, Language);
+                Log.Info(string.Format("Loaded {0} words for language {1}", WordsDictionariesCache[Language].Count, Language));
             }
 
 

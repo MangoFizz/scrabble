@@ -43,6 +43,8 @@ namespace Client {
             ChatFrame.Content = chatPage;
             Chat = chatPage;
 
+            var context = new InstanceContext(this);
+            Client = new PartyGameClient(context);
             Client.ConnectPartyGame(App.Current.SessionId);
 
             CanPlaceTiles = false;

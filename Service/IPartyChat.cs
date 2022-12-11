@@ -10,16 +10,10 @@ namespace Service {
 
         [OperationContract(IsOneWay = true)]
         void Say(string message);
-
-        [OperationContract(IsOneWay = true)]
-        void Whisper(Player receiver, string message);
     }
 
     public interface IPartyChatCallback {
         [OperationContract]
         void Receive(Player sender, string message);
-
-        [OperationContract]
-        void ReceiveWhisper(Player sender, string message);
     }
 }
