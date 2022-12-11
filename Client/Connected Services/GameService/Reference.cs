@@ -472,6 +472,9 @@ namespace Client.GameService {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InviteCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Client.GameService.Player LeaderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -496,6 +499,19 @@ namespace Client.GameService {
                 if ((object.ReferenceEquals(this.IdField, value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InviteCode {
+            get {
+                return this.InviteCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InviteCodeField, value) != true)) {
+                    this.InviteCodeField = value;
+                    this.RaisePropertyChanged("InviteCode");
                 }
             }
         }
@@ -534,6 +550,23 @@ namespace Client.GameService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyResult", Namespace="http://schemas.datacontract.org/2004/07/Service")]
+    public enum JoinPartyResult : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Success = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PartyNotFound = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PartyIsFull = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WhoAreYou = 3,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -995,11 +1028,17 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/StartGame")]
         System.Threading.Tasks.Task StartGameAsync(Client.GameService.GameSupportedLanguage language, int timeLimitMins);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InvitePlayer")]
-        void InvitePlayer(Client.GameService.Player player);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/JoinParty")]
+        void JoinParty(string inviteCode);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InvitePlayer")]
-        System.Threading.Tasks.Task InvitePlayerAsync(Client.GameService.Player player);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/JoinParty")]
+        System.Threading.Tasks.Task JoinPartyAsync(string inviteCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InviteFriend")]
+        void InviteFriend(Client.GameService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/InviteFriend")]
+        System.Threading.Tasks.Task InviteFriendAsync(Client.GameService.Player player);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyManager/AcceptInvitation")]
         void AcceptInvitation(Client.GameService.Player player);
@@ -1037,6 +1076,9 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/CreatePartyCallback", ReplyAction="http://tempuri.org/IPartyManager/CreatePartyCallbackResponse")]
         void CreatePartyCallback(Client.GameService.Party party);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/JoinPartyCallback", ReplyAction="http://tempuri.org/IPartyManager/JoinPartyCallbackResponse")]
+        void JoinPartyCallback(Client.GameService.JoinPartyResult result, Client.GameService.Party party);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveInvitation", ReplyAction="http://tempuri.org/IPartyManager/ReceiveInvitationResponse")]
         void ReceiveInvitation(Client.GameService.Player player, string partyId);
@@ -1132,12 +1174,20 @@ namespace Client.GameService {
             return base.Channel.StartGameAsync(language, timeLimitMins);
         }
         
-        public void InvitePlayer(Client.GameService.Player player) {
-            base.Channel.InvitePlayer(player);
+        public void JoinParty(string inviteCode) {
+            base.Channel.JoinParty(inviteCode);
         }
         
-        public System.Threading.Tasks.Task InvitePlayerAsync(Client.GameService.Player player) {
-            return base.Channel.InvitePlayerAsync(player);
+        public System.Threading.Tasks.Task JoinPartyAsync(string inviteCode) {
+            return base.Channel.JoinPartyAsync(inviteCode);
+        }
+        
+        public void InviteFriend(Client.GameService.Player player) {
+            base.Channel.InviteFriend(player);
+        }
+        
+        public System.Threading.Tasks.Task InviteFriendAsync(Client.GameService.Player player) {
+            return base.Channel.InviteFriendAsync(player);
         }
         
         public void AcceptInvitation(Client.GameService.Player player) {

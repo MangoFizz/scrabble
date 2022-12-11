@@ -98,9 +98,6 @@
     <Compile Include="Pages\CodeInputPage.xaml.cs">
       <DependentUpon>CodeInputPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PlayPage.xaml.cs">
-      <DependentUpon>PlayPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,9 +120,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Pages\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
@@ -201,14 +195,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CodeInputPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\PlayPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -355,11 +355,23 @@
   <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
     <value>BACK</value>
   </data>
+  <data name="PLAY_MENU_INVITE_CODE_LABEL" xml:space="preserve">
+    <value>Invite code</value>
+  </data>
+  <data name="PLAY_MENU_INVITE_CODE_MESSAGE" xml:space="preserve">
+    <value>Introduce a valid invite code to join party.</value>
+  </data>
   <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
     <value>JOIN GAME</value>
   </data>
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
     <value>NEW GAME</value>
+  </data>
+  <data name="PLAY_MENU_PARTY_IS_FULL" xml:space="preserve">
+    <value>Party is full!</value>
+  </data>
+  <data name="PLAY_MENU_PARTY_NOT_FOUND" xml:space="preserve">
+    <value>Party not found!</value>
   </data>
   <data name="PROFILE_AVATAR_NAME_FORMAT" xml:space="preserve">
     <value>avatar_{0}</value>

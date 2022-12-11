@@ -333,11 +333,23 @@
   <data name="PLAY_MENU_BACK_BUTTON" xml:space="preserve">
     <value>ATRAS</value>
   </data>
+  <data name="PLAY_MENU_INVITE_CODE_LABEL" xml:space="preserve">
+    <value>Código de invitación</value>
+  </data>
+  <data name="PLAY_MENU_INVITE_CODE_MESSAGE" xml:space="preserve">
+    <value>Introduzca un código de invitación válido para unirse a un grupo.</value>
+  </data>
   <data name="PLAY_MENU_JOIN_GAME_BUTTON" xml:space="preserve">
     <value>UNIRSE</value>
   </data>
   <data name="PLAY_MENU_NEW_GAME_BUTTON" xml:space="preserve">
     <value>NUEVA PARTIDA</value>
+  </data>
+  <data name="PLAY_MENU_PARTY_IS_FULL" xml:space="preserve">
+    <value>¡El grupo está lleno!</value>
+  </data>
+  <data name="PLAY_MENU_PARTY_NOT_FOUND" xml:space="preserve">
+    <value>¡Grupo no encontrado!</value>
   </data>
   <data name="PROFILE_PROFILE_GAMES_COUNT_LABEL" xml:space="preserve">
     <value>Partidas jugadas: </value>

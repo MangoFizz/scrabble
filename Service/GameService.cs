@@ -225,6 +225,8 @@ namespace Service {
     }
 
     public partial class GameService : IPartyManager {
+        private List<Party> Parties = new List<Party>();
+
         private void TransferPartyOwnership(Player player, Party party) {
             if(player.Nickname == party.Leader.Nickname) {
                 if(party.Players.Count() > 0) {
@@ -247,6 +249,25 @@ namespace Service {
             party.Timer = new System.Threading.Timer((o) => { }, null, 0, timeLimit * 60 * 1000);
         }
 
+        private void JoinPlayerToParty(Player player, Party party) {
+            party.Players.Add(player);
+            player.CurrentParty = party;
+            foreach(var p in party.Players) {
+                p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(player);
+            }
+        }
+
+        private string GenerateInviteCode() {
+            var random = new Random();
+            var code = random.Next(0x1000, 0xFFFF).ToString("x2");
+            if(Parties.Any(p => p.InviteCode == code)) {
+                return GenerateInviteCode();
+            }
+            else {
+                return code.ToUpper();
+            }
+        }
+
         public void ConnectPartyManager(string sessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var player = Players.Find(p => p.SessionId == sessionId);
@@ -259,10 +280,13 @@ namespace Service {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
-                currentPlayer.CurrentParty = new Party() {
+                var party = new Party() {
                     Leader = currentPlayer,
-                    Players = new List<Player>() { currentPlayer }
+                    Players = new List<Player>() { currentPlayer },
+                    InviteCode = GenerateInviteCode()
                 };
+                Parties.Add(party);
+                currentPlayer.CurrentParty = party;
                 currentCallbackChannel.CreatePartyCallback(currentPlayer.CurrentParty);
             }
         }
@@ -275,19 +299,15 @@ namespace Service {
                 if(inviteSender != null) {
                     var party = inviteSender.CurrentParty;
                     if(party != null) {
-                        currentPlayer.CurrentParty = party;
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
-                        currentCallbackChannel.AcceptInvitationCallback(party);
-                        party.Players.Add(currentPlayer);
-                        foreach(var p in party.Players) {
-                            p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(currentPlayer);
-                        }
+                        player.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
+                        JoinPlayerToParty(player, party);
                     }
                 }
             }
         }
 
-        public void InvitePlayer(Player player) {
+        public void InviteFriend(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
             var targetPlayer = Players.FirstOrDefault(u => u.Nickname == player.Nickname);
@@ -332,6 +352,9 @@ namespace Service {
                             p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                         }
                         TransferPartyOwnership(player, party);
+                    }
+                    else {
+                        Parties.Remove(party);
                     }
                 }
             }
@@ -404,6 +427,26 @@ namespace Service {
                     }
                 }
             }
+        }
+
+        public void JoinParty(string inviteCode) {
+            var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
+            var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
+            if(currentPlayer != null) {
+                var party = Parties.Find(p => p.InviteCode == inviteCode.ToUpper());
+                if(party == null) {
+                    currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyNotFound, null);
+                    return;
+                }
+                if(party.IsFull()) {
+                    currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyIsFull, null);
+                    return;
+                }
+                currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
+                currentCallbackChannel.JoinPartyCallback(JoinPartyResult.Success, party);
+                JoinPlayerToParty(currentPlayer, party);
+            }
+            currentCallbackChannel.JoinPartyCallback(JoinPartyResult.WhoAreYou, null);
         }
     }
 

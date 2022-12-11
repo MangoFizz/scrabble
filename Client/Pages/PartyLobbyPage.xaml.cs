@@ -37,12 +37,17 @@ namespace Client {
                     GameTimeLimitSlider.IsEnabled = false;
                     GameLanguageCombobox.IsEnabled = false;
                 }
+                SetLobbyCode();
             }
         }
 
         private void SetUpChatFrame() {
             ChatPage = new PartyChatPage();
             ChatFrame.Content = ChatPage;
+        }
+
+        private void SetLobbyCode() {
+            LobbyCode.Content = App.Current.CurrentParty.InviteCode;
         }
 
         private StackPanel GetGroupListEntryButtons(Player player, bool isFriend) {
@@ -59,7 +64,7 @@ namespace Client {
                 inviteButton.Height = 30;
                 inviteButton.Margin = new Thickness(50, 0, 0, 0);
                 inviteButton.Click += (sender, e) => {
-                    App.Current.PartyManagerClient.InvitePlayer(player);
+                    App.Current.PartyManagerClient.InviteFriend(player);
                 };
                 entryButtonsContainer.Children.Add(inviteButton);
             }
@@ -276,6 +281,7 @@ namespace Client {
     public partial class PartyLobbyPage : IPartyManagerCallback {
         public void CreatePartyCallback(Party party) {
             ChatPage.PrintPlayerJoinMessage(App.Current.CurrentParty.Leader.Nickname);
+            SetLobbyCode();
             ReloadGroupList();
             App.Current.PlayerManagerClient.GetFriendList();
         }
@@ -358,6 +364,10 @@ namespace Client {
             if(App.Current.CurrentParty != null && App.Current.Player.Nickname == App.Current.CurrentParty.Leader.Nickname) {
                 App.Current.PartyManagerClient.UpdateLanguageSetting((GameSupportedLanguage)GameLanguageCombobox.SelectedIndex);
             }
+        }
+
+        public void JoinPartyCallback(JoinPartyResult result, Party party) {
+            throw new NotImplementedException();
         }
     }
 }

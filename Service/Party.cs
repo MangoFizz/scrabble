@@ -14,6 +14,9 @@ namespace Service {
         public string Id { get; set; }
 
         [DataMember]
+        public string InviteCode { get; set; }
+
+        [DataMember]
         public Player Leader { get; set; }
 
         [DataMember]
@@ -34,6 +37,10 @@ namespace Service {
         public Player NextTurn() {
             CurrentPlayerTurn = (CurrentPlayerTurn + 1) % Players.Count;
             return Players[CurrentPlayerTurn];
+        }
+
+        public bool IsFull() {
+            return Players.Count == Game.MAX_PLAYERS;
         }
 
         public void PlayerLeaves(Player player) {

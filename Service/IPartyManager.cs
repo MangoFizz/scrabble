@@ -13,6 +13,13 @@ namespace Service {
         NotEnoughPlayers
     }
 
+    public enum JoinPartyResult {
+        Success,
+        PartyNotFound,
+        PartyIsFull,
+        WhoAreYou
+    }
+
     [ServiceContract(CallbackContract = typeof(IPartyManagerCallback))]
     public interface IPartyManager {
         [OperationContract(IsInitiating = true, IsOneWay = true)]
@@ -28,7 +35,10 @@ namespace Service {
         void StartGame(Game.SupportedLanguage language, int timeLimitMins);
 
         [OperationContract(IsOneWay = true)]
-        void InvitePlayer(Player player);
+        void JoinParty(string inviteCode);
+
+        [OperationContract(IsOneWay = true)]
+        void InviteFriend(Player player);
 
         [OperationContract(IsOneWay = true)]
         void AcceptInvitation(Player player);
@@ -49,6 +59,9 @@ namespace Service {
     public interface IPartyManagerCallback {
         [OperationContract]
         void CreatePartyCallback(Party party);
+
+        [OperationContract]
+        void JoinPartyCallback(JoinPartyResult result, Party party);
 
         [OperationContract]
         void ReceiveInvitation(Player player, string partyId);

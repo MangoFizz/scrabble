@@ -265,6 +265,18 @@ namespace Client {
             }
         }
 
+        public void JoinPartyCallback(JoinPartyResult result, Party party) {
+            if(result == JoinPartyResult.Success) {
+                CurrentParty = party;
+                CloseSecondaryPanel();
+                MainFrame.NavigationService.Navigate(new PartyLobbyPage());
+            }
+            else if(typeof(MainPage).IsInstanceOfType(MainFrame.Content)) {
+                var mainPage = (MainPage)MainFrame.Content;
+                mainPage.JoinPartyCallback(result, party);
+            }
+        }
+
         public void ReceiveGameStart() {
             if(typeof(PartyLobbyPage).IsInstanceOfType(MainFrame.Content)) {
                 var partyLobbyPage = (PartyLobbyPage)MainFrame.Content;

@@ -761,6 +761,24 @@ namespace Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invite code.
+        /// </summary>
+        public static string PLAY_MENU_INVITE_CODE_LABEL {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_INVITE_CODE_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Introduce a valid invite code to join party..
+        /// </summary>
+        public static string PLAY_MENU_INVITE_CODE_MESSAGE {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_INVITE_CODE_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JOIN GAME.
         /// </summary>
         public static string PLAY_MENU_JOIN_GAME_BUTTON {
@@ -775,6 +793,24 @@ namespace Client.Properties {
         public static string PLAY_MENU_NEW_GAME_BUTTON {
             get {
                 return ResourceManager.GetString("PLAY_MENU_NEW_GAME_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party is full!.
+        /// </summary>
+        public static string PLAY_MENU_PARTY_IS_FULL {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_PARTY_IS_FULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party not found!.
+        /// </summary>
+        public static string PLAY_MENU_PARTY_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("PLAY_MENU_PARTY_NOT_FOUND", resourceCulture);
             }
         }
         
