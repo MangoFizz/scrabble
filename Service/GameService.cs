@@ -633,7 +633,7 @@ namespace Service {
             var party = player.CurrentParty;
             var usedTiles = player.UsedRackTiles();
             var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
-            if(rackRefill.Count == 0) {
+            if(rackRefill.Count == 0 && party.Game.Bag.Count == 0)  {
                 EndGame(party);
                 return;
             }
