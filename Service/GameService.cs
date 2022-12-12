@@ -38,13 +38,12 @@ namespace Service {
         }
 
         private void NotifyFriendsPlayerState(Player player) {
-            if(player.IsGuest) {
-                return;
-            }
-            foreach(var friend in player.Friends) {
-                var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
-                if(connectedPlayer != null) {
-                    connectedPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(player, player.Status);
+            if(!player.IsGuest) {
+                foreach(var friend in player.Friends) {
+                    var connectedPlayer = Players.FirstOrDefault(p => p.Nickname == friend.Nickname);
+                    if(connectedPlayer != null) {
+                        connectedPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(player, player.Status);
+                    }
                 }
             }
         }
@@ -107,13 +106,14 @@ namespace Service {
         public void Logout() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(player == null) {
-                Log.Warning($"Unknown player called to log out without being logged in.");
-                return;
+            if(player != null) {
+                player.Status = Player.StatusType.Offline;
+                NotifyFriendsPlayerState(player);
+                Players.Remove(player);
             }
-            player.Status = Player.StatusType.Offline;
-            NotifyFriendsPlayerState(player);
-            Players.Remove(player);
+            else {
+                Log.Warning("Unknown player called to log out without being logged in.");
+            }
         }
 
         public void RegisterPlayer(string nickname, string password, string email) {
@@ -125,94 +125,104 @@ namespace Service {
         public void SendFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var sender = Players.Find(data => data.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(sender == null) {
-                Log.Warning($"Unknown player tried to send a friend request without being logged in.");
-                return;
+            if(sender != null) {
+                if(!sender.IsGuest) {
+                    var requestResult = PlayerManager.RequestFriendship(sender.Nickname, nickname);
+                    if(requestResult == PlayerManager.PlayerFriendRequestResult.Success) {
+                        SendFriendRequestNotification(nickname, sender);
+                    }
+                    currentCallbackChannel.SendFriendRequestResponseHandler(requestResult);
+                }
+                else {
+                    Log.Warning("Guest player tried to send a friend request.");
+                }
             }
-            if(sender.IsGuest) {
-                Log.Warning($"Guest player tried to send a friend request.");
-                return;
+            else {
+                Log.Warning("Unknown player tried to send a friend request without being logged in.");
             }
-            var requestResult = PlayerManager.RequestFriendship(sender.Nickname, nickname);
-            if(requestResult == PlayerManager.PlayerFriendRequestResult.Success) {
-                SendFriendRequestNotification(nickname, sender);
-            }
-            currentCallbackChannel.SendFriendRequestResponseHandler(requestResult);
         }
 
         public void AcceptFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to accept a friend request without being logged in.");
-                return;
-            }
-            if(currentPlayer.IsGuest) {
-                Log.Warning($"Guest player tried to accept a friend request (??).");
-                return;
-            }
-            var requestResponseResult = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
-            if(requestResponseResult == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
-                var senderPlayer = Players.Find(p => p.Nickname == nickname);
-                if(senderPlayer != null) {
-                    senderPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(currentPlayer);
-                    currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
-                    senderPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(currentPlayer, Player.StatusType.Online);
-                    currentPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(senderPlayer, Player.StatusType.Online);
+            if(currentPlayer != null) {
+                if(!currentPlayer.IsGuest) {
+                    var requestResponseResult = PlayerManager.AnswerFriendshipRequest(currentPlayer.Nickname, nickname, true);
+                    if(requestResponseResult == PlayerManager.PlayerFriendshipRequestAnswer.Success) {
+                        var senderPlayer = Players.Find(p => p.Nickname == nickname);
+                        if(senderPlayer != null) {
+                            senderPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(currentPlayer);
+                            currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
+                            senderPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(currentPlayer, Player.StatusType.Online);
+                            currentPlayer.PlayerManagerCallbackChannel.UpdateFriendStatus(senderPlayer, Player.StatusType.Online);
+                        }
+                        else {
+                            var senderPlayerData = PlayerManager.GetPlayerData(nickname);
+                            senderPlayer = new Player(senderPlayerData);
+                            currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
+                        }
+                        currentPlayer.Friends.Add(senderPlayer);
+                    }
                 }
                 else {
-                    var senderPlayerData = PlayerManager.GetPlayerData(nickname);
-                    senderPlayer = new Player(senderPlayerData);
-                    currentPlayer.PlayerManagerCallbackChannel.ReceiveFriendAdd(senderPlayer);
+                    Log.Warning("Guest player tried to accept a friend request (??).");
                 }
-                currentPlayer.Friends.Add(senderPlayer);
+            }
+            else {
+                Log.Warning("Unknown player tried to accept a friend request without being logged in.");
             }
         }
 
         public void DeclineFriendRequest(string nickname) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(player == null) {
-                Log.Warning($"Unknown player tried to decline a friend request without being logged in.");
-                return;
+            if(player != null) {
+                if(!player.IsGuest) {
+                    PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
+                }
+                else {
+                    Log.Warning("Guest player tried to decline a friend request.");
+                }
             }
-            if(player.IsGuest) {
-                Log.Warning($"Guest player tried to decline a friend request.");
-                return;
+            else {
+                Log.Warning("Unknown player tried to decline a friend request without being logged in.");
             }
-            PlayerManager.AnswerFriendshipRequest(player.Nickname, nickname, false);
         }
 
         public void GetFriendList() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(player == null) {
-                Log.Warning($"Unknown player tried to get friend list without being logged in.");
-                return;
+            if(player != null) {
+                if(!player.IsGuest) {
+                    FetchPlayerFriendList(player);
+                    FetchPlayerFriendsStatus(player);
+                    currentCallbackChannel.GetFriendListResponseHandler(player.Friends.ToArray());
+                }
+                else {
+                    Log.Warning("Guest player tried to get friend list.");
+                }
             }
-            if(player.IsGuest) {
-                Log.Warning($"Guest player tried to get friend list.");
-                return;
+            else {
+                Log.Warning("Unknown player tried to get friend list without being logged in.");
             }
-            FetchPlayerFriendList(player);
-            FetchPlayerFriendsStatus(player);
-            currentCallbackChannel.GetFriendListResponseHandler(player.Friends.ToArray());
         }
 
         public void GetFriendRequests() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to get friend requests without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                if(!currentPlayer.IsGuest) {
+                    var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(currentPlayer.Nickname);
+                    var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
+                    currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
+                }
+                else {
+                    Log.Warning("Guest player tried to get friend requests.");
+                }
             }
-            if(currentPlayer.IsGuest) {
-                Log.Warning($"Guest player tried to get friend requests.");
-                return;
+            else {
+                Log.Warning("Unknown player tried to get friend requests without being logged in.");
             }
-            var playerFriendRequestsData = PlayerManager.GetPrendingFriendRequest(currentPlayer.Nickname);
-            var friendRequests = playerFriendRequestsData.Select(data => new Player(data));
-            currentCallbackChannel.GetFriendRequestsResponseHandler(friendRequests.ToArray());
         }
 
         public void VerifyPlayer(string nickname, string password, string code) {
@@ -234,13 +244,19 @@ namespace Service {
         public void UpdatePlayerAvatar(short newAvatarId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null || currentPlayer.IsGuest) {
-                Log.Warning($"Unknown player tried to update avatar without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                if(!currentPlayer.IsGuest) {
+                    PlayerManager.UpdatePlayerAvatar(currentPlayer.Nickname, newAvatarId);
+                    currentPlayer.Avatar = newAvatarId;
+                    currentCallbackChannel.UpdatePlayerAvatarCallback(newAvatarId);
+                }
+                else {
+                    Log.Warning("Guest player tried to update its avatar.");
+                }
             }
-            PlayerManager.UpdatePlayerAvatar(currentPlayer.Nickname, newAvatarId);
-            currentPlayer.Avatar = newAvatarId;
-            currentCallbackChannel.UpdatePlayerAvatarCallback(newAvatarId);
+            else {
+                Log.Warning("Unknown player tried to update avatar without being logged in.");
+            }
         }
     }
 
@@ -248,22 +264,24 @@ namespace Service {
         public void ConnectPartyChat(string sessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
             var currentPlayer = Players.Find(p => p.SessionId == sessionId);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to connect to party chat without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                currentPlayer.PartyChatCallbackChannel = currentCallbackChannel;
             }
-            currentPlayer.PartyChatCallbackChannel = currentCallbackChannel;
+            else {
+                Log.Warning("Unknown player tried to connect to party chat without being logged in.");
+            }
         }
 
         public void Say(string message) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyChatCallback>();
             var player = Players.FirstOrDefault(u => u.PartyChatCallbackChannel == currentCallbackChannel);
-            if(player == null) {
-                Log.Warning($"Unknown player tried to say something in party chat without being logged in.");
-                return;
+            if(player != null) {
+                foreach(var p in Players) {
+                    p.PartyChatCallbackChannel.Receive(player, message);
+                }
             }
-            foreach(var p in Players) {
-                p.PartyChatCallbackChannel.Receive(player, message);
+            else {
+                Log.Warning("Unknown player tried to say something in party chat without being logged in.");
             }
         }
     }
@@ -292,7 +310,7 @@ namespace Service {
                     EndGame(party);
                 }
             });
-            Log.Info($"Game end timer set for party {party.Id}.");
+            Log.Info($"Game end timer set for party {party.InviteCode} to {timeLimit} minutes.");
         }
         
         private void CreateGame(Party party, Game.SupportedLanguage language, int timeLimit) {
@@ -328,45 +346,49 @@ namespace Service {
         public void ConnectPartyManager(string sessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var player = Players.Find(p => p.SessionId == sessionId);
-            if(player == null) {
-                Log.Warning($"Unknown player tried to connect to party manager without being logged in.");
-                return;
+            if(player != null) {
+                player.PartyManagerCallbackChannel = currentCallbackChannel;
             }
-            player.PartyManagerCallbackChannel = currentCallbackChannel;
+            else {
+                Log.Warning("Unknown player tried to connect to party manager without being logged in.");
+            }
         }
 
         public Party CreateParty() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to create a party without being logged in.");
+            if(currentPlayer != null) {
+                var party = new Party() {
+                    Leader = currentPlayer,
+                    Players = new List<Player>() { currentPlayer },
+                    InviteCode = GenerateInviteCode()
+                };
+                Parties.Add(party);
+                currentPlayer.CurrentParty = party;
+                return party;
+            }
+            else {
+                Log.Warning("Unknown player tried to create a party without being logged in.");
                 return null;
             }
-            var party = new Party() {
-                Leader = currentPlayer,
-                Players = new List<Player>() { currentPlayer },
-                InviteCode = GenerateInviteCode()
-            };
-            Parties.Add(party);
-            currentPlayer.CurrentParty = party;
-            return party;
         }
 
         public void AcceptInvitation(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to accept an invitation without being logged in.");
-                return;
-            }
-            var inviteSender = Players.Find(p => p.Nickname == player.Nickname);
-            if(inviteSender != null) {
-                var party = inviteSender.CurrentParty;
-                if(party != null) {
-                    currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
-                    currentPlayer.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
-                    JoinPlayerToParty(currentPlayer, party);
+            if(currentPlayer != null) {
+                var inviteSender = Players.Find(p => p.Nickname == player.Nickname);
+                if(inviteSender != null) {
+                    var party = inviteSender.CurrentParty;
+                    if(party != null) {
+                        currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
+                        currentPlayer.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
+                        JoinPlayerToParty(currentPlayer, party);
+                    }
                 }
+            }
+            else {
+                Log.Warning("Unknown player tried to accept an invitation without being logged in.");
             }
         }
 
@@ -380,184 +402,211 @@ namespace Service {
                 }
             }
             else {
-                Log.Warning($"Unknown player tried to invite a friend without being logged in.");
+                Log.Warning("Unknown player tried to invite a friend without being logged in.");
             }
         }
 
         public void KickPlayer(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to kick a player without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    if(currentPlayer.Nickname == party.Leader.Nickname) {
+                        var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
+                        if(targetPlayer != null) {
+                            party.Players.Remove(targetPlayer);
+                            targetPlayer.CurrentParty = null;
+                            targetPlayer.PartyManagerCallbackChannel.ReceivePartyKick(targetPlayer);
+                            foreach(var p in party.Players) {
+                                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(targetPlayer);
+                            }
+                        }
+                        else {
+                            Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player that is not in the party.");
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player without being the party leader.");
+                    }
+                }
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player without being in a party.");
+                }
             }
-            var party = currentPlayer.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player without being in a party.");
-                return;
-            }
-            if(currentPlayer.Nickname != party.Leader.Nickname) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player without being the party leader.");
-                return;
-            }
-            var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
-            if(targetPlayer == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to kick a player that is not in the party.");
-                return;
-            }
-            party.Players.Remove(targetPlayer);
-            targetPlayer.CurrentParty = null;
-            targetPlayer.PartyManagerCallbackChannel.ReceivePartyKick(targetPlayer);
-            foreach(var p in party.Players) {
-                p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(targetPlayer);
+            else {
+                Log.Warning("Unknown player tried to kick a player without being logged in.");
             }
         }
 
         public void LeaveParty() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var player = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(player == null) {
-                Log.Warning($"Unknown player tried to leave a party without being logged in.");
-                return;
-            }
-            var party = player.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {player.Nickname} tried to leave a party without being in one.");
-                return;
-            }
-            player.CurrentParty = null;
-            party.Players.Remove(player);
-            player.Status = Player.StatusType.Online;
-            NotifyFriendsPlayerState(player);
-            if(party.Players.Count > 0) {
-                foreach(var p in party.Players) {
-                    p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
+            if(player != null) {
+                var party = player.CurrentParty;
+                if(party != null) {
+                    player.CurrentParty = null;
+                    party.Players.Remove(player);
+                    player.Status = Player.StatusType.Online;
+                    NotifyFriendsPlayerState(player);
+                    if(party.Players.Count > 0) {
+                        foreach(var p in party.Players) {
+                            p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
+                        }
+                        TransferPartyOwnership(player, party);
+                    }
+                    else {
+                        Parties.Remove(party);
+                        Log.Info($"Empty party {party.Id} has been removed.");
+                    }
                 }
-                TransferPartyOwnership(player, party);
+                else {
+                    Log.Warning($"Player {player.Nickname} tried to leave a party without being in one.");
+                }
             }
             else {
-                Parties.Remove(party);
-                Log.Info($"Empty party {party.Id} has been deleted.");
+                Log.Warning("Unknown player tried to leave a party without being logged in.");
             }
         }
 
         public void StartGame(Game.SupportedLanguage language, int timeLimitMins) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to start a game without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+
+                    if(party.Leader.Nickname == currentPlayer.Nickname) {
+                        if(party.Players.Count >= Game.MIN_PLAYERS) {
+                            foreach(var p in party.Players) {
+                                p.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
+                            }
+                            CreateGame(party, language, timeLimitMins);
+                        }
+                        else {
+                            currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to start a game without being the party leader.");
+                    }
+                }
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to start a game without being in a party.");
+                }
             }
-            var party = currentPlayer.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to start a game without being in a party.");
-                return;
+            else {
+                Log.Warning("Unknown player tried to start a game without being logged in.");
             }
-            if(party.Leader.Nickname != currentPlayer.Nickname) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to start a game without being the party leader.");
-            }
-            if(party.Players.Count < Game.MIN_PLAYERS) {
-                currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
-                return;
-            }
-            foreach(var p in party.Players) {
-                p.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
-            }
-            CreateGame(party, language, timeLimitMins);
         }
         
         public void TransferLeadership(Player player) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to transfer leadership without being logged in.");
-                return;
-            }
-            var party = currentPlayer.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to transfer leadership without being in a party.");
-                return;
-            }
-            if(currentPlayer.Nickname != party.Leader.Nickname) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to transfer leadership without being the party leader.");
-                return;
-            }
-            var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
-            if(targetPlayer != null) {
-                party.Leader = targetPlayer;
-                foreach(var p in party.Players) {
-                    p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(targetPlayer);
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    if(currentPlayer.Nickname == party.Leader.Nickname) {
+                        var targetPlayer = party.Players.FirstOrDefault(p => p.Nickname == player.Nickname);
+                        if(targetPlayer != null) {
+                            party.Leader = targetPlayer;
+                            foreach(var p in party.Players) {
+                                p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(targetPlayer);
+                            }
+                        }
+                        else {
+                            Log.Warning($"Player {currentPlayer.Nickname} tried to transfer leadership to a player that is not in the party.");
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to transfer leadership without being the party leader.");
+                    }
                 }
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to transfer leadership without being in a party.");
+                }
+            }
+            else {
+                Log.Warning("Unknown player tried to transfer leadership without being logged in.");
             }
         }
 
         public void UpdateTimeLimitSetting(int time) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to update the time limit setting without being logged in.");
-                return;
-            }
-            var party = currentPlayer.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to update the time limit setting without being in a party.");
-                return;
-            }
-            if(currentPlayer.Nickname != party.Leader.Nickname) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to update the time limit setting without being the party leader.");
-                return;
-            }
-            foreach(var p in party.Players) {
-                if(p == currentPlayer) {
-                    continue;
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    if(currentPlayer.Nickname == party.Leader.Nickname) {
+                        foreach(var p in party.Players) {
+                            if(p == currentPlayer) {
+                                continue;
+                            }
+                            p.PartyManagerCallbackChannel.ReceivePartyTimeLimitUpdate(time);
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to update the time limit setting without being the party leader.");
+                    }
                 }
-                p.PartyManagerCallbackChannel.ReceivePartyTimeLimitUpdate(time);
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to update the time limit setting without being in a party.");
+                }
+            }
+            else {
+                Log.Warning("Unknown player tried to update the time limit setting without being logged in.");
             }
         }
 
         public void UpdateLanguageSetting(Game.SupportedLanguage language) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to update the language setting without being logged in.");
-                return;
-            }
-            var party = currentPlayer.CurrentParty;
-            if(party == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to update the language setting without being in a party.");
-                return;
-            }
-            if(currentPlayer.Nickname != party.Leader.Nickname) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to update the language setting without being the party leader.");
-                return;
-            }
-            foreach(var p in party.Players) {
-                if(p == currentPlayer) {
-                    continue;
+            if(currentPlayer != null) {
+                var party = currentPlayer.CurrentParty;
+                if(party != null) {
+                    if(currentPlayer.Nickname == party.Leader.Nickname) {
+                        foreach(var p in party.Players) {
+                            if(p == currentPlayer) {
+                                continue;
+                            }
+                            p.PartyManagerCallbackChannel.ReceivePartyLanguageUpdate(language);
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to update the language setting without being the party leader.");
+                    }
                 }
-                p.PartyManagerCallbackChannel.ReceivePartyLanguageUpdate(language);
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to update the language setting without being in a party.");
+                }
+            }
+            else {
+                Log.Warning("Unknown player tried to update the language setting without being logged in.");
             }
         }
 
         public void JoinParty(string inviteCode) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyManagerCallback>();
             var currentPlayer = Players.Find(p => p.PartyManagerCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to join a party without being logged in.");
-                return;
+            if(currentPlayer != null) {
+                var party = Parties.Find(p => p.InviteCode == inviteCode.ToUpper());
+                if(party != null) {
+                    if(!party.IsFull()) {
+                        currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
+                        currentCallbackChannel.JoinPartyCallback(JoinPartyResult.Success, party);
+                        JoinPlayerToParty(currentPlayer, party);
+                    }
+                    else {
+                        currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyIsFull, null);
+                    }
+                }
+                else {
+                    currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyNotFound, null);
+                }
             }
-            var party = Parties.Find(p => p.InviteCode == inviteCode.ToUpper());
-            if(party == null) {
-                currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyNotFound, null);
-                return;
+            else {
+                Log.Warning("Unknown player tried to join a party without being logged in.");
             }
-            if(party.IsFull()) {
-                currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyIsFull, null);
-                return;
-            }
-            currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
-            currentCallbackChannel.JoinPartyCallback(JoinPartyResult.Success, party);
-            JoinPlayerToParty(currentPlayer, party);
         }
     }
 
@@ -572,27 +621,28 @@ namespace Service {
         }
 
         private void CreatePlayerRack(Player player) {
-            if(player.Rack != null) {
-                return;
-            }
-            var party = player.CurrentParty;
-            var game = party.Game;
-            player.Rack = new Game.Tile?[7];
-            var newRack = game.TakeFromBag();
-            for(int i = 0; i < newRack.Length; i++) {
-                player.Rack[i] = newRack[i];
+            if(player.Rack == null) {
+                var party = player.CurrentParty;
+                var game = party.Game;
+                player.Rack = new Game.Tile?[7];
+                var newRack = game.TakeFromBag();
+                for(int i = 0; i < newRack.Length; i++) {
+                    player.Rack[i] = newRack[i];
+                }
             }
         }
 
         private void UpdatePlayerGame(Player player) {
             var callbackChannel = player.PartyGameCallbackChannel;
-            if(callbackChannel == null) {
-                return;
+            if(callbackChannel != null) {
+                callbackChannel.UpdateBoard(player.CurrentParty.Game.GetBoardJaggedArray());
+                callbackChannel.UpdatePlayerRack(player.Rack);
+                foreach(var p in player.CurrentParty.Players) {
+                    callbackChannel.UpdatePlayerScore(p, p.Score);
+                }
             }
-            callbackChannel.UpdateBoard(player.CurrentParty.Game.GetBoardJaggedArray());
-            callbackChannel.UpdatePlayerRack(player.Rack);
-            foreach(var p in player.CurrentParty.Players) {
-                callbackChannel.UpdatePlayerScore(p, p.Score);
+            else {
+                Log.Warning($"Failed to update player {player.Nickname}. Player is not in the game (fix me).");
             }
         }
 
@@ -651,103 +701,113 @@ namespace Service {
         public void ConnectPartyGame(string playerSessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var player = Players.Find(p => p.SessionId == playerSessionId);
-            if(player == null) {
+            if(player != null) {
+                if(player.CurrentParty != null) {
+                    player.PartyGameCallbackChannel = currentCallbackChannel;
+                    var party = player.CurrentParty;
+                    CreatePlayerRack(player);
+                    UpdatePlayerGame(player);
+                    RefreshGameTilesLeftCount(party);
+                    if(GamePlayersAreReady(party)) {
+                        SetRandomTurn(party);
+                    }
+                    player.TurnPassesCount = 0;
+                }
+                else {
+                    Log.Warning($"Player {player.Nickname} tried to connect to a party game without being in a party.");
+                }
+            }
+            else {
                 Log.Warning($"Unknown player tried to connect to a party game without being logged in.");
-                return;
             }
-            if(player.CurrentParty == null) {
-                Log.Warning($"Player {player.Nickname} tried to connect to a party game without being in a party.");
-                return;
-            }
-            player.PartyGameCallbackChannel = currentCallbackChannel;
-            var party = player.CurrentParty;
-            CreatePlayerRack(player);
-            UpdatePlayerGame(player);
-            RefreshGameTilesLeftCount(party);
-            if(GamePlayersAreReady(party)) {
-                SetRandomTurn(party);
-            }
-            player.TurnPassesCount = 0;
         }
 
         public void EndTurn() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
+            if(currentPlayer != null) {
+                if(currentPlayer.CurrentParty != null) {
+                    RefillPlayerRack(currentPlayer);
+                    var party = currentPlayer.CurrentParty;
+                    var nextPlayerTurn = party.NextTurn();
+                    currentPlayer.TurnPassesCount = 0;
+                    foreach(var p in party.Players) {
+                        p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
+                        p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
+                    }
+                }
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to end his turn without being in a party.");
+                }
+            }
+            else {
                 Log.Warning($"Unknown player tried to end his turn without being logged in.");
-                return;
-            }
-            if(currentPlayer.CurrentParty == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to end his turn without being in a party.");
-                return;
-            }
-            RefillPlayerRack(currentPlayer);
-            var party = currentPlayer.CurrentParty;
-            var nextPlayerTurn = party.NextTurn();
-            currentPlayer.TurnPassesCount = 0;
-            foreach(var p in party.Players) {
-                p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
-                p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
             }
         }
 
         public void PassTurn() {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
+            if(currentPlayer != null) {
+                if(currentPlayer.CurrentParty != null) {
+                    var party = currentPlayer.CurrentParty;
+                    currentPlayer.TurnPassesCount++;
+                    if(party.GameEndByTurnPasses()) {
+                        EndGame(party);
+                        return;
+                    }
+                    var nextPlayerTurn = party.NextTurn();
+                    foreach(var p in party.Players) {
+                        p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
+                    }
+                }
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to pass his turn without being in a party.");
+                }
+            }
+            else {
                 Log.Warning($"Unknown player tried to pass his turn without being logged in.");
-                return;
-            }
-            if(currentPlayer.CurrentParty == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to pass his turn without being in a party.");
-                return;
-            }
-            var party = currentPlayer.CurrentParty;
-            currentPlayer.TurnPassesCount++;
-            if(party.GameEndByTurnPasses()) {
-                EndGame(party);
-                return;
-            }
-            var nextPlayerTurn = party.NextTurn();
-            foreach(var p in party.Players) {
-                p.PartyGameCallbackChannel.UpdatePlayerTurn(nextPlayerTurn);
             }
         }
 
         public void PlaceTile(int rackTileIndex, int x, int y) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
-            if(currentPlayer == null) {
-                Log.Warning($"Unknown player tried to place a tile without being logged in.");
-                return;
-            }
-            if(currentPlayer.CurrentParty == null) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile without being in a party.");
-                return;
-            }
-            var party = currentPlayer.CurrentParty;
-            if(party.Players[party.CurrentPlayerTurn] != currentPlayer) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile while it's not his turn.");
-                return;
-            }
-            var tile = currentPlayer.PopTileFromRack(rackTileIndex);
-            if(!tile.HasValue) {
-                Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile that doesn't exist in his rack.");
-                return;
-            }
-            try {
-                var points = party.Game.PlaceTile(tile.Value, x, y);
-                if(currentPlayer.UsedRackTiles() == currentPlayer.Rack.Length) {
-                    points += 50;
+            if(currentPlayer != null) {
+                if(currentPlayer.CurrentParty != null) {
+                    var party = currentPlayer.CurrentParty;
+                    if(party.Players[party.CurrentPlayerTurn] == currentPlayer) {
+                        var tile = currentPlayer.PopTileFromRack(rackTileIndex);
+                        if(tile.HasValue) {
+                            try {
+                                var points = party.Game.PlaceTile(tile.Value, x, y);
+                                if(currentPlayer.UsedRackTiles() == currentPlayer.Rack.Length) {
+                                    points += 50;
+                                }
+                                currentPlayer.Score += points;
+                            }
+                            catch(InvalidOperationException) {
+                                currentPlayer.Rack[rackTileIndex] = tile;
+                                currentCallbackChannel.SendInvalidTilePlacingError();
+                                Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile at an invalid position.");
+                            }
+                            UpdatePlayersGame(party);
+                        }
+                        else {
+                            Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile that doesn't exist in his rack.");
+                        }
+                    }
+                    else {
+                        Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile while it's not his turn.");
+                    }
                 }
-                currentPlayer.Score += points;
+                else {
+                    Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile without being in a party.");
+                }
             }
-            catch(InvalidOperationException) {
-                currentPlayer.Rack[rackTileIndex] = tile;
-                currentCallbackChannel.SendInvalidTilePlacingError();
-                Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile at an invalid position.");
+            else {
+                Log.Warning($"Unknown player tried to place a tile without being logged in.");
             }
-            UpdatePlayersGame(party);
         }
     }
 }
