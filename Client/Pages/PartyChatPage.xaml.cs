@@ -78,10 +78,6 @@ namespace Client {
             Print(string.Format(Properties.Resources.PARTY_CHAT_MESSAGE_FORMAT, sender.Nickname, message));
         }
 
-        public void ReceiveWhisper(Player sender, string message) {
-            Print(string.Format(Properties.Resources.PARTY_CHAT_WHISPER_FORMAT, sender.Nickname, message));
-        }
-
         public void PrintPlayerJoinMessage(string nickname) {
             Print(string.Format(Properties.Resources.PARTY_CHAT_PLAYER_JOIN_MESSAGE_FORMAT, nickname));
         }

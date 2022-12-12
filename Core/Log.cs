@@ -12,15 +12,15 @@ namespace Core {
         }
 
         public static void Info(string message) {
-            Trace.TraceInformation($"[{CurrentTime()}] INFO: {message}");
+            Trace.TraceInformation($"[{CurrentTime()}] {message}");
         }
 
         public static void Error(string message) {
-            Trace.TraceError($"[{CurrentTime()}] ERROR: {message}");
+            Trace.TraceError($"[{CurrentTime()}] {message}");
         }
 
         public static void Warning(string message) {
-            Trace.TraceWarning($"[{CurrentTime()}] WARNING: {message}");
+            Trace.TraceWarning($"[{CurrentTime()}] {message}");
         }
     }
 }
