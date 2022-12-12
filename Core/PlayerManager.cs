@@ -73,7 +73,7 @@ namespace Core {
             DatabaseError
         }
 
-        private static string HashPassword(string password) {
+        public static string HashPassword(string password) {
             SHA256 sha256 = SHA256.Create();
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] hashBytes = sha256.ComputeHash(passwordBytes);
@@ -85,7 +85,7 @@ namespace Core {
             return stringBuilder.ToString();
         }
 
-        private static bool CheckPassword(string password, string hashedPassword) {
+        public static bool CheckPassword(string password, string hashedPassword) {
             return HashPassword(password).Equals(hashedPassword);
         }
 
@@ -125,7 +125,7 @@ namespace Core {
             return isInputValid;
         }
 
-        private static string GenerateVerificationCode() {
+        public static string GenerateVerificationCode() {
             var random = new Random();
             var verificationCode = random.Next(0x1000, 0xFFFF).ToString("x2");
             return verificationCode.ToUpper();
@@ -162,7 +162,7 @@ namespace Core {
 
         public static Player GetPlayerData(string nickname) {
             ScrabbleEntities context = new ScrabbleEntities();
-            return context.players.First(p => p.Nickname == nickname);
+            return context.players.FirstOrDefault(p => p.Nickname == nickname);
         } 
 
         public static PlayerAuthResult AuthenticatePlayer(string nickname, string password) {

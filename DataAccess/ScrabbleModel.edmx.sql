@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/10/2022 16:54:58
+-- Date Created: 12/11/2022 21:02:39
 -- Generated from EDMX file: C:\Users\aiwass\source\repos\scrabble\DataAccess\ScrabbleModel.edmx
 -- --------------------------------------------------
 
@@ -41,7 +41,7 @@ GO
 
 -- Creating table 'friendships'
 CREATE TABLE [dbo].[friendships] (
-    [FriendshipId] int  NOT NULL,
+    [FriendshipId] int IDENTITY(1,1) NOT NULL,
     [Sender] int  NOT NULL,
     [Receiver] int  NOT NULL,
     [Status] smallint  NOT NULL

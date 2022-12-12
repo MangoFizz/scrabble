@@ -9,120 +9,210 @@ using static Core.PlayerManager;
 namespace Tests {
     [TestClass]
     public class AuthenticatorTests {
-        // super secure password
-        private static string superPassword = "password";
-        private static string superPasswordHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+        private static string InsecurePassword = "password";
+        private static string InsecurePasswordHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+        private static string SecurePassword = "Password123.";
+        private static string DummyUserNickname1 = "DummyUser1";
+        private static string DummyUserNickname2 = "DummyUser2";
+        private static string DummyUserNickname3 = "DummyUser3";
+        private static string DummyUserNickname4 = "DummyUser4";
+        private static string DummyUserNickname5 = "tortilla";
+        private static string DummyUserNickname6 = "helado";
+        private static string Email = "holamundo@uv.mx";
 
-        // dummy users
-        private static string authTestsUser = "ImAUser";
-        private static string registerTestsUser = "tacosdemango";
-        private static string unregisterTestsUser = "tOdiomyriam";
-
-        // email
-        private static string email = "holamundo@uv.mx";
+        private static Player DummyPlayer1 { get; set; }
 
         [ClassInitialize]
         public static void ClassInit(TestContext context) {
-            // Create dummy users
             var dbContext = new ScrabbleEntities();
-            var player = new Player();
-            player.Password = superPasswordHash;
 
-            player.Nickname = authTestsUser;
-            dbContext.players.Add(player);
+            DummyPlayer1 = dbContext.players.Add(new Player() {
+                Nickname = DummyUserNickname1,
+                Password = HashPassword(SecurePassword),
+                Email = Email,
+                Registered = DateTime.Now,
+                VerificationCode = GenerateVerificationCode(),
+                Verified = false
+            });
 
-            player.Nickname = unregisterTestsUser;
-            dbContext.players.Add(player);
+            var DummyPlayer2 = dbContext.players.Add(new Player() {
+                Nickname = DummyUserNickname2,
+                Password = HashPassword(SecurePassword),
+                Email = Email,
+                Registered = DateTime.Now,
+                VerificationCode = GenerateVerificationCode(),
+                Verified = true
+            });
+
+            var DummyPlayer4 = dbContext.players.Add(new Player() {
+                Nickname = DummyUserNickname4,
+                Password = HashPassword(SecurePassword),
+                Email = Email,
+                Registered = DateTime.Now,
+                VerificationCode = GenerateVerificationCode(),
+                Verified = false
+            });
+
+            var DummyPlayer5 = dbContext.players.Add(new Player() {
+                Nickname = DummyUserNickname5,
+                Password = HashPassword(SecurePassword),
+                Email = Email,
+                Registered = DateTime.Now,
+                VerificationCode = GenerateVerificationCode(),
+                Verified = true
+            });
 
             dbContext.SaveChanges();
+
+            RequestFriendship(DummyUserNickname2, DummyUserNickname4);
+            RequestFriendship(DummyUserNickname4, DummyUserNickname1);
+            RequestFriendship(DummyUserNickname4, DummyUserNickname5);
+            AnswerFriendshipRequest(DummyUserNickname5, DummyUserNickname4, true);
         }
 
         [ClassCleanup]
         public static void ClassCleanup() {
-            // Set up db context
             var dbContext = new ScrabbleEntities();
-
-            Func<string, bool> unregisterDummyUser = username => {
-                try {
-                    var player = dbContext.players.Where(p => p.Nickname == username).First();
-                    dbContext.players.Remove(player);
-                    dbContext.SaveChanges();
-                    return true;
-                }
-                catch {
-                    return false;
-                }
-            };
-
-            if(!(unregisterDummyUser(authTestsUser) && unregisterDummyUser(registerTestsUser))) {
-                throw new Exception("failed to clean up");
-            }
+            var DummyPlayer1 = dbContext.players.First(p => p.Nickname == DummyUserNickname1);
+            var DummyPlayer2 = dbContext.players.First(p => p.Nickname == DummyUserNickname2);
+            var DummyPlayer3 = dbContext.players.First(p => p.Nickname == DummyUserNickname3);
+            var DummyPlayer4 = dbContext.players.First(p => p.Nickname == DummyUserNickname4);
+            var DummyPlayer5 = dbContext.players.First(p => p.Nickname == DummyUserNickname5);
+            var Friendship1 = dbContext.friendships.First(f => f.Sender == DummyPlayer1.UserId && f.Receiver == DummyPlayer2.UserId);
+            var Friendship2 = dbContext.friendships.First(f => f.Sender == DummyPlayer2.UserId && f.Receiver == DummyPlayer4.UserId);
+            var Friendship3 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.UserId && f.Receiver == DummyPlayer1.UserId);
+            var Friendship4 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.UserId && f.Receiver == DummyPlayer5.UserId);
+            dbContext.friendships.Remove(Friendship1);
+            dbContext.friendships.Remove(Friendship2);
+            dbContext.friendships.Remove(Friendship3);
+            dbContext.friendships.Remove(Friendship4);
+            dbContext.players.Remove(DummyPlayer1);
+            dbContext.players.Remove(DummyPlayer2);
+            dbContext.players.Remove(DummyPlayer3);
+            dbContext.players.Remove(DummyPlayer4);
+            dbContext.players.Remove(DummyPlayer5);
+            dbContext.SaveChanges();
         }
 
         [TestMethod]
-        public void TestHashPassword() {
-            var authtenticator = new PrivateType(typeof(PlayerManager));
-            string hashedPassword = authtenticator.InvokeStatic("hashPassword", superPassword) as string;
-            Assert.AreEqual(superPasswordHash, hashedPassword);
+        public void TestCheckPasswordSuccess() {
+            var result = CheckPassword(InsecurePassword, InsecurePasswordHash);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void TestCheckPassword() {
-            var authtenticator = new PrivateType(typeof(PlayerManager));
-            var passwordCheckResult = (bool)authtenticator.InvokeStatic("checkPassword", superPassword, superPasswordHash);
-            Assert.IsTrue(passwordCheckResult);
+        public void TestCheckPasswordFailure() {
+            var result = CheckPassword("wrongpassword", InsecurePasswordHash);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void TestLoginSuccess() {
-            var loginResult = AuthenticatePlayer(authTestsUser, superPassword);
-            Assert.AreEqual(PlayerAuthResult.Success, loginResult);
+        public void TestGetPlayerDataSuccess() {
+            var player = GetPlayerData(DummyUserNickname1);
+            Assert.IsNotNull(player);
         }
 
         [TestMethod]
-        public void TestLoginInvalidCredentials() {
-            string nonexistentUser = "tacosdemango";
-            var loginResult = AuthenticatePlayer(nonexistentUser, superPassword);
-            Assert.AreEqual(PlayerAuthResult.InvalidCredentials, loginResult);
+        public void TestGetPlayerDataFailure() {
+            var player = GetPlayerData("NonExistentUser");
+            Assert.IsNull(player);
         }
 
         [TestMethod]
-        public void TestLoginIncorrectPassword() {
-            string wrongPassword = "wrongPassword";
-            var loginResult = AuthenticatePlayer(authTestsUser, wrongPassword);
-            Assert.AreEqual(PlayerAuthResult.IncorrectPassword, loginResult);
+        public void TestAuthenticatePlayerInvalidCredentials() {
+            var authResult = AuthenticatePlayer("unexistinguser", "wrongpassword");
+            var expectedResult = PlayerAuthResult.InvalidCredentials;
+            Assert.AreEqual(expectedResult, authResult);
         }
 
         [TestMethod]
-        public void TestRegisterSuccess() {
-            string somePassword = "passwd123";
-            var registerResult = RegisterPlayer(registerTestsUser, somePassword, email);
-            Assert.AreEqual(PlayerResgisterResult.Success, registerResult);
+        public void TestAuthenticaPlayerIncorrectPassword() {
+            var authResult = AuthenticatePlayer(DummyUserNickname1, "wrongpassword");
+            var expectedResult = PlayerAuthResult.IncorrectPassword;
+            Assert.AreEqual(expectedResult, authResult);
         }
 
         [TestMethod]
-        public void TestRegisterUserAlreadyExists() {
-            var registerResult = RegisterPlayer(authTestsUser, superPassword, email);
-            Assert.AreEqual(PlayerResgisterResult.PlayerAlreadyExists, registerResult);
+        public void TestAuthenticatePlayerNotVerified() {
+            var authResult = AuthenticatePlayer(DummyUserNickname4, SecurePassword);
+            var expectedResult = PlayerAuthResult.NotVerified;
+            Assert.AreEqual(expectedResult, authResult);
         }
 
         [TestMethod]
-        public void TestUnregisterSuccess() {
-            var unregisterResult = UnregisterPlayer(unregisterTestsUser, superPassword);
-            Assert.AreEqual(PlayerUnregisterResult.Success, unregisterResult);
+        public void TestAuthenticatePlayerSuccess() {
+            var authResult = AuthenticatePlayer(DummyUserNickname2, SecurePassword);
+            var expectedResult = PlayerAuthResult.Success;
+            Assert.AreEqual(expectedResult, authResult);
         }
 
         [TestMethod]
-        public void TestUnregisterUserDoesNotExist() {
-            string nonexistentUser = "tacossinmango";
-            var unregisterResult = UnregisterPlayer(nonexistentUser, superPassword);
-            Assert.AreEqual(PlayerUnregisterResult.PlayerDoesNotExists, unregisterResult);
+        public void TestRegisterPlayerSuccess() {
+            var registerResult = RegisterPlayer(DummyUserNickname3, SecurePassword, Email);
+            var expectedResult = PlayerResgisterResult.Success;
+            Assert.AreEqual(expectedResult, registerResult);
         }
 
         [TestMethod]
-        public void TestUnregisterAuthFailed() {
-            var unregisterResult = UnregisterPlayer(authTestsUser, "wrongPassword");
-            Assert.AreEqual(PlayerUnregisterResult.AuthFailed, unregisterResult);
+        public void TestRegisterPlayerNicknameAlreadyExists() {
+            var registerResult = RegisterPlayer(DummyUserNickname1, SecurePassword, Email);
+            var expectedResult = PlayerResgisterResult.PlayerAlreadyExists;
+            Assert.AreEqual(expectedResult, registerResult);
+        }
+
+        [TestMethod]
+        public void TestRegisterInvalidInputs() {
+            var registerResult = RegisterPlayer("", "", "");
+            var expectedResult = PlayerResgisterResult.InvalidInputs;
+            Assert.AreEqual(expectedResult, registerResult);
+        }
+
+        [TestMethod]
+        public void TestVerifyPlayerSuccess() {
+            var verifyResult = VerifyPlayer(DummyPlayer1.Nickname, SecurePassword, DummyPlayer1.VerificationCode);
+            var expectedResult = PlayerVerificationResult.Success;
+            Assert.AreEqual(expectedResult, verifyResult);
+        }
+
+        [TestMethod]
+        public void TestVerifyPlayerAuthFailer() {
+            var verifyResult = VerifyPlayer(DummyPlayer1.Nickname, "wrongpassword", DummyPlayer1.VerificationCode);
+            var expectedResult = PlayerVerificationResult.AuthFailed;
+            Assert.AreEqual(expectedResult, verifyResult);
+        }
+
+        [TestMethod]
+        public void TestRequestFriendshipSuccess() {
+            var requestResult = RequestFriendship(DummyUserNickname1, DummyUserNickname2);
+            var expectedResult = PlayerFriendRequestResult.Success;
+            Assert.AreEqual(expectedResult, requestResult);
+        }
+
+        [TestMethod]
+        public void TestRequestFriendshipPending() {
+            var requestResult = RequestFriendship(DummyUserNickname2, DummyUserNickname4);
+            var expectedResult = PlayerFriendRequestResult.PendingRequest;
+            Assert.AreEqual(expectedResult, requestResult);
+        }
+
+        public void TestRequestFriendshipAlreadyFriends() {
+            var requestResult = RequestFriendship(DummyUserNickname4, DummyUserNickname5);
+            var expectedResult = PlayerFriendRequestResult.AlreadyFriends;
+            Assert.AreEqual(expectedResult, requestResult);
+        }
+
+        [TestMethod]
+        public void TestAnswerFriendRequestAcceptSuccess() {
+            var requestResult = AnswerFriendshipRequest(DummyUserNickname1, DummyUserNickname4, true);
+            var expectedResult = PlayerFriendshipRequestAnswer.Success;
+            Assert.AreEqual(expectedResult, requestResult);
+        }
+
+        [TestMethod]
+        public void TestGetPlayerFriendsDataSuccess() {
+            var friendsData = GetPlayerFriendsData(DummyUserNickname5);
+            var expectedFriends = 1;
+            Assert.AreEqual(expectedFriends, friendsData.Count);
         }
     }
 }

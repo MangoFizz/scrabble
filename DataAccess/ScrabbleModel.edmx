@@ -15,7 +15,7 @@
     <Key>
       <PropertyRef Name="FriendshipId" />
     </Key>
-    <Property Name="FriendshipId" Type="int" Nullable="false" />
+    <Property Name="FriendshipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Sender" Type="int" Nullable="false" />
     <Property Name="Receiver" Type="int" Nullable="false" />
     <Property Name="Status" Type="smallint" Nullable="false" />
@@ -69,7 +69,7 @@
           <Key>
             <PropertyRef Name="FriendshipId" />
           </Key>
-          <Property Name="FriendshipId" Type="Int32" Nullable="false" />
+          <Property Name="FriendshipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Sender" Type="Int32" Nullable="false" />
           <Property Name="Receiver" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Int16" Nullable="false" />
