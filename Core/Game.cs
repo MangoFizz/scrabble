@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Core {
     public class Game {
         public const int MAX_PLAYERS = 4;
-        public const int MIN_PLAYERS = 1;
+        public const int MIN_PLAYERS = 2;
 
         public enum SupportedLanguage {
             en_US,
@@ -116,6 +116,7 @@ namespace Core {
                         WordsDictionariesCache[Language].Add(normalizedWord);
                     }
                 }
+                WordsDictionariesCache[Language] = lines.ToList();
                 Log.Info(string.Format("Loaded {0} words for language {1}", WordsDictionariesCache[Language].Count, Language));
             }
 
