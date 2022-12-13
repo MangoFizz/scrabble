@@ -218,7 +218,7 @@ namespace Client {
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) {
-            NavigationService.GoBack();
+            App.Current.MainFrame.Content = new MainPage();
             App.Current.CurrentParty = null;
             App.Current.PartyManagerClient.LeaveParty();
         }
