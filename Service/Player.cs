@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -89,6 +90,54 @@ namespace Service {
             var tile = Rack[index];
             Rack[index] = null;
             return tile;
+        }
+
+        public void CreateRack() {
+            if(Rack == null) {
+                Rack = new Game.Tile?[7];
+                var newRack = CurrentParty.Game.TakeFromBag();
+                for(int i = 0; i < newRack.Length; i++) {
+                    Rack[i] = newRack[i];
+                }
+            }
+        }
+
+        public void SendGameUpdate() {
+            var callbackChannel = PartyGameCallbackChannel;
+            if(callbackChannel != null) {
+                callbackChannel.UpdateBoard(CurrentParty.Game.GetBoardJaggedArray());
+                callbackChannel.UpdatePlayerRack(Rack);
+                foreach(var p in CurrentParty.Players) {
+                    callbackChannel.UpdatePlayerScore(p, p.Score);
+                }
+            }
+            else {
+                Log.Warning($"Failed to update player {Nickname}. Player is not in the game (fix me).");
+            }
+        }
+
+        public void RefillRack() {
+            var party = CurrentParty;
+            var usedTiles = UsedRackTiles();
+            var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
+            if(rackRefill.Count == 0 && party.Game.Bag.Count == 0) {
+                party.EndGame();
+                return;
+            }
+            for(var i = 0; i < rackRefill.Count; i++) {
+                for(var j = 0; j < Rack.Length; j++) {
+                    if(Rack[j] == null) {
+                        Rack[j] = rackRefill[i];
+                        break;
+                    }
+                }
+            }
+            PartyGameCallbackChannel.UpdatePlayerRack(Rack);
+        }
+
+        public void FetchFriendList() {
+            var playerFriendsData = PlayerManager.GetPlayerFriendsData(Nickname);
+            Friends = playerFriendsData.Select(data => new Player(data)).ToList();
         }
 
         public void Dispose() {

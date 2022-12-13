@@ -1,8 +1,8 @@
 ﻿using Core;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -16,11 +16,6 @@ namespace Service {
 
     public partial class GameService : IPlayerManager {
         private List<Player> Players = new List<Player>();
-
-        private void FetchPlayerFriendList(Player player) {
-            var playerFriendsData = PlayerManager.GetPlayerFriendsData(player.Nickname);
-            player.Friends = playerFriendsData.Select(data => new Player(data)).ToList();
-        }
 
         private void FetchPlayerFriendsStatus(Player player) {
             for(var i = 0; i < player.Friends.Count; i++) {
@@ -82,7 +77,7 @@ namespace Service {
                 };
                 Players.Add(player);
                 currentCallbackChannel.LoginResponseHandler(authenticationResult, player, player.SessionId);
-                FetchPlayerFriendList(player);
+                player.FetchFriendList();
                 NotifyFriendsPlayerState(player);
             }
             else {
@@ -194,7 +189,7 @@ namespace Service {
             var player = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             if(player != null) {
                 if(!player.IsGuest) {
-                    FetchPlayerFriendList(player);
+                    player.FetchFriendList();
                     FetchPlayerFriendsStatus(player);
                     currentCallbackChannel.GetFriendListResponseHandler(player.Friends.ToArray());
                 }
@@ -289,52 +284,9 @@ namespace Service {
     public partial class GameService : IPartyManager {
         private List<Party> Parties = new List<Party>();
 
-        private void TransferPartyOwnership(Player player, Party party) {
-            if(player.Nickname == party.Leader.Nickname) {
-                if(party.Players.Count() > 0) {
-                    party.Leader = party.Players[0];
-                    foreach(var p in party.Players) {
-                        p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(party.Leader);
-                    }
-                    Log.Info($"Party {party.Id} leader transfered to {party.Leader.Nickname}.");
-                }
-            }
-            else {
-                Log.Warning($"Player {player.Nickname} tried to transfer party ownership but he is not the leader.");
-            }
-        }
-
-        private void SetGameEndTimer(Party party, int timeLimit) {
-            Task.Delay(timeLimit * 60 * 1000).ContinueWith(t => {
-                if(party.Game != null) {
-                    EndGame(party);
-                }
-            });
-            Log.Info($"Game end timer set for party {party.InviteCode} to {timeLimit} minutes.");
-        }
-        
-        private void CreateGame(Party party, Game.SupportedLanguage language, int timeLimit) {
-            var game = new Game(language);
-            party.Game = game;
-            party.TimeLimitMins = timeLimit;
-            foreach(var p in party.Players) {
-                p.PartyManagerCallbackChannel.ReceiveGameStart();
-            }
-            SetGameEndTimer(party, timeLimit);
-        }
-
-        private void JoinPlayerToParty(Player player, Party party) {
-            party.Players.Add(player);
-            player.CurrentParty = party;
-            foreach(var p in party.Players) {
-                p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(player);
-            }
-            Log.Info($"Player {player.Nickname} joined party {party.Id}.");
-        }
-
         private string GenerateInviteCode() {
             var random = new Random();
-            var code = random.Next(0x1000, 0xFFFF).ToString("x2");
+            var code = random.Next(0x1000, 0x10000).ToString("x2");
             if(Parties.Any(p => p.InviteCode == code)) {
                 return GenerateInviteCode();
             }
@@ -383,7 +335,7 @@ namespace Service {
                     if(party != null) {
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
                         currentPlayer.PartyManagerCallbackChannel.AcceptInvitationCallback(party);
-                        JoinPlayerToParty(currentPlayer, party);
+                        party.JoinPlayer(currentPlayer);
                     }
                 }
             }
@@ -453,7 +405,9 @@ namespace Service {
                         foreach(var p in party.Players) {
                             p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                         }
-                        TransferPartyOwnership(player, party);
+                        if(player.Nickname == party.Leader.Nickname) {
+                            party.TransferOwnership(party.Players[0]);
+                        }
                     }
                     else {
                         Parties.Remove(party);
@@ -481,7 +435,7 @@ namespace Service {
                             foreach(var p in party.Players) {
                                 p.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.Success);
                             }
-                            CreateGame(party, language, timeLimitMins);
+                            party.CreateGame(language, timeLimitMins);
                         }
                         else {
                             currentPlayer.PartyManagerCallbackChannel.StartGameCallback(GameStartResult.NotEnoughPlayers);
@@ -594,7 +548,7 @@ namespace Service {
                     if(!party.IsFull()) {
                         currentPlayer.PartyManagerCallbackChannel = currentCallbackChannel;
                         currentCallbackChannel.JoinPartyCallback(JoinPartyResult.Success, party);
-                        JoinPlayerToParty(currentPlayer, party);
+                        party.JoinPlayer(currentPlayer);
                     }
                     else {
                         currentCallbackChannel.JoinPartyCallback(JoinPartyResult.PartyIsFull, null);
@@ -611,93 +565,6 @@ namespace Service {
     }
 
     public partial class GameService : IPartyGame {
-        private bool GamePlayersAreReady(Party party) {
-            foreach(var p in party.Players) {
-                if(p.PartyGameCallbackChannel == null) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private void CreatePlayerRack(Player player) {
-            if(player.Rack == null) {
-                var party = player.CurrentParty;
-                var game = party.Game;
-                player.Rack = new Game.Tile?[7];
-                var newRack = game.TakeFromBag();
-                for(int i = 0; i < newRack.Length; i++) {
-                    player.Rack[i] = newRack[i];
-                }
-            }
-        }
-
-        private void UpdatePlayerGame(Player player) {
-            var callbackChannel = player.PartyGameCallbackChannel;
-            if(callbackChannel != null) {
-                callbackChannel.UpdateBoard(player.CurrentParty.Game.GetBoardJaggedArray());
-                callbackChannel.UpdatePlayerRack(player.Rack);
-                foreach(var p in player.CurrentParty.Players) {
-                    callbackChannel.UpdatePlayerScore(p, p.Score);
-                }
-            }
-            else {
-                Log.Warning($"Failed to update player {player.Nickname}. Player is not in the game (fix me).");
-            }
-        }
-
-        private void UpdatePlayersGame(Party party) {
-            foreach(var player in party.Players) {
-                UpdatePlayerGame(player);
-            }
-        }
-
-        private void RefreshGameTilesLeftCount(Party party) {
-            foreach(var p in party.Players) {
-                if(p.PartyGameCallbackChannel != null) {
-                    p.PartyGameCallbackChannel.UpdateBagTilesLeft(party.Game.Bag.Count);
-                }
-            }
-        }
-
-        private void SetRandomTurn(Party party) {
-            var random = new Random();
-            var randomNumber = random.Next(0, party.Players.Count - 1);
-            party.CurrentPlayerTurn = randomNumber;
-            foreach(var p in party.Players) {
-                p.PartyGameCallbackChannel.UpdatePlayerTurn(party.Players[randomNumber]);
-            }
-        }
-
-        private void EndGame(Party party) {
-            foreach(var p in party.Players) {
-                p.PartyGameCallbackChannel.GameEnd(party);
-                p.PartyGameCallbackChannel = null;
-                p.Rack = null;
-                p.Score = 0;
-            }
-            party.Game = null;
-        }
-
-        private void RefillPlayerRack(Player player) {
-            var party = player.CurrentParty;
-            var usedTiles = player.UsedRackTiles();
-            var rackRefill = party.Game.TakeFromBag(usedTiles).ToList();
-            if(rackRefill.Count == 0 && party.Game.Bag.Count == 0)  {
-                EndGame(party);
-                return;
-            }
-            for(var i = 0; i < rackRefill.Count; i++) {
-                for(var j = 0; j < player.Rack.Length; j++) {
-                    if(player.Rack[j] == null) {
-                        player.Rack[j] = rackRefill[i];
-                        break;
-                    }
-                }
-            }
-            player.PartyGameCallbackChannel.UpdatePlayerRack(player.Rack);
-        }
-
         public void ConnectPartyGame(string playerSessionId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPartyGameCallback>();
             var player = Players.Find(p => p.SessionId == playerSessionId);
@@ -705,11 +572,11 @@ namespace Service {
                 if(player.CurrentParty != null) {
                     player.PartyGameCallbackChannel = currentCallbackChannel;
                     var party = player.CurrentParty;
-                    CreatePlayerRack(player);
-                    UpdatePlayerGame(player);
-                    RefreshGameTilesLeftCount(party);
-                    if(GamePlayersAreReady(party)) {
-                        SetRandomTurn(party);
+                    player.CreateRack();
+                    player.SendGameUpdate();
+                    party.RefreshPlayersTilesLeftCount();
+                    if(party.GamePlayersAreReady()) {
+                        party.SetRandomTurn();
                     }
                     player.TurnPassesCount = 0;
                 }
@@ -727,7 +594,7 @@ namespace Service {
             var currentPlayer = Players.Find(p => p.PartyGameCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
                 if(currentPlayer.CurrentParty != null) {
-                    RefillPlayerRack(currentPlayer);
+                    currentPlayer.RefillRack();
                     var party = currentPlayer.CurrentParty;
                     var nextPlayerTurn = party.NextTurn();
                     currentPlayer.TurnPassesCount = 0;
@@ -753,7 +620,7 @@ namespace Service {
                     var party = currentPlayer.CurrentParty;
                     currentPlayer.TurnPassesCount++;
                     if(party.GameEndByTurnPasses()) {
-                        EndGame(party);
+                        party.EndGame();
                         return;
                     }
                     var nextPlayerTurn = party.NextTurn();
@@ -791,7 +658,7 @@ namespace Service {
                                 currentCallbackChannel.SendInvalidTilePlacingError();
                                 Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile at an invalid position.");
                             }
-                            UpdatePlayersGame(party);
+                            party.UpdatePlayersGame();
                         }
                         else {
                             Log.Warning($"Player {currentPlayer.Nickname} tried to place a tile that doesn't exist in his rack.");

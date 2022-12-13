@@ -45,6 +45,52 @@ namespace Service {
             return Players.Count == Game.MAX_PLAYERS;
         }
 
+        public void SetGameEndTimer(int timeLimit) {
+            TimeLimitMins = timeLimit;
+            Task.Delay(TimeLimitMins * 60 * 1000).ContinueWith(t => {
+                if(Game != null) {
+                    EndGame();
+                }
+            });
+            Log.Info($"Game end timer set for party {InviteCode} to {TimeLimitMins} minutes.");
+        }
+
+        public void JoinPlayer(Player player) {
+            Players.Add(player);
+            player.CurrentParty = this;
+            foreach(var p in Players) {
+                p.PartyManagerCallbackChannel.ReceivePartyPlayerJoin(player);
+            }
+            Log.Info($"Player {player.Nickname} joined party {Id}.");
+        }
+
+        public void SetRandomTurn() {
+            var random = new Random();
+            var randomNumber = random.Next(0, Players.Count);
+            CurrentPlayerTurn = randomNumber;
+            foreach(var p in Players) {
+                p.PartyGameCallbackChannel.UpdatePlayerTurn(Players[randomNumber]);
+            }
+        }
+
+        public void TransferOwnership(Player player) {
+            Leader = player;
+            foreach(var p in Players) {
+                p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(player);
+            }
+            Log.Info($"Party {Id} leader transfered to {player.Nickname}.");
+        }
+
+        public void EndGame() {
+            foreach(var p in Players) {
+                p.PartyGameCallbackChannel.GameEnd(this);
+                p.PartyGameCallbackChannel = null;
+                p.Rack = null;
+                p.Score = 0;
+            }
+            Game = null;
+        }
+
         public bool GameEndByTurnPasses() {
             foreach(var player in Players) {
                 if(player.TurnPassesCount <= MAX_TURN_PASSES) {
@@ -54,10 +100,50 @@ namespace Service {
             return true;
         }
 
+        public bool GamePlayersAreReady() {
+            foreach(var p in Players) {
+                if(p.PartyGameCallbackChannel == null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void UpdatePlayersGame() {
+            foreach(var player in Players) {
+                player.SendGameUpdate();
+            }
+        }
+
+        public void RefreshPlayersTilesLeftCount() {
+            foreach(var p in Players) {
+                if(p.PartyGameCallbackChannel != null) {
+                    p.PartyGameCallbackChannel.UpdateBagTilesLeft(Game.Bag.Count);
+                }
+            }
+        }
+
+        public void CreateGame(Game.SupportedLanguage language, int timeLimit) {
+            Game = new Game(language);
+            TimeLimitMins = timeLimit;
+            foreach(var p in Players) {
+                p.PartyManagerCallbackChannel.ReceiveGameStart();
+            }
+            SetGameEndTimer(timeLimit);
+        }
+
         public void PlayerLeaves(Player player) {
+            bool isPlayerTurn = Game != null && Players[CurrentPlayerTurn] == player;
+            if(isPlayerTurn) {
+                CurrentPlayerTurn = CurrentPlayerTurn % Players.Count;
+            }
+
             Players.Remove(player);
             foreach(var p in Players) {
                 p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
+                if(isPlayerTurn) {
+                    p.PartyGameCallbackChannel.UpdatePlayerTurn(Players[CurrentPlayerTurn]);
+                }
             }
 
             if(Leader == player) {
