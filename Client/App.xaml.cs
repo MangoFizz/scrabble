@@ -236,7 +236,8 @@ namespace Client {
 
         public void Disconnect(DisconnectionReason reason) {
             ResetApp();
-            var loginPage = (LoginPage)MainFrame.Content;
+            var loginPage = new LoginPage();
+            MainWindow.MainFrame.Content = loginPage;
             loginPage.ShowDisconnectMessage(reason);
         }
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Service {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class GameService { 
-        public void Dispose() {
+        public void Shutdown() {
             DisconnectAllPlayerClients();
         }
     }

@@ -1,28 +1,51 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Dispatcher;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime;
+using System.Runtime.InteropServices;
 
 namespace Server {
     internal class Program {
         static void Main(string[] args) {
-            ServiceHost host = new ServiceHost(typeof(Service.GameService));
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
+                Log.Error($"Unhandled exception: {eventArgs.ExceptionObject}");
+            };
 
-            IErrorHandler errorHandler = new ErrorHandler();
-            foreach(ChannelDispatcherBase channelDispatcherBase in host.ChannelDispatchers) {
-                ChannelDispatcher channelDispatcher = channelDispatcherBase as ChannelDispatcher;
-                if(channelDispatcher != null) {
-                    channelDispatcher.ErrorHandlers.Add(errorHandler);
+            while(true) {
+                try {
+                    var service = new Service.GameService();
+                    using(var host = new ServiceHost(service)) {
+                        host.Open();
+                        Log.Info("Service started");
+
+                        ConsoleCloseEvent.Register(() => {
+                            Log.Info("Server is shutting down...");
+                            service.Shutdown();
+                            host.Abort();
+                        });
+
+                        Console.WriteLine("Press any key to stop.");
+                        Console.ReadKey();
+                        
+                        Log.Info("Server is shutting down...");
+                        service.Shutdown();
+                        host.Close();
+                        
+                        break;
+                    }
+                }
+                catch(Exception ex) {
+                    Log.Error($"Exception: {ex.GetType().Name} -> {ex.Message}");
+                    Log.Info("Retrying in 5 seconds...");
+                    System.Threading.Thread.Sleep(5000);
                 }
             }
-
-            host.Open();
-
-            Console.WriteLine("Server is running...");
-            Console.ReadLine();
         }
     }
 }
