@@ -150,7 +150,7 @@
     <None Include="Connected Services\GameService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameService\item41.xsd">
+    <None Include="Connected Services\GameService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">

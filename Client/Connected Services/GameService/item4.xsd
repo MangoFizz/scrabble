@@ -1,10 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
-  <xs:complexType name="ArrayOfNullableOfGame.TileT2tRyUvb">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Core" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Core" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="PlayerManager.PlayerAuthResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="NotVerified" />
+      <xs:enumeration value="InvalidCredentials" />
+      <xs:enumeration value="IncorrectPassword" />
+      <xs:enumeration value="DatabaseError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerManager.PlayerAuthResult" nillable="true" type="tns:PlayerManager.PlayerAuthResult" />
+  <xs:simpleType name="PlayerManager.PlayerVerificationResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="AuthFailed" />
+      <xs:enumeration value="InvalidCode" />
+      <xs:enumeration value="DatabaseError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerManager.PlayerVerificationResult" nillable="true" type="tns:PlayerManager.PlayerVerificationResult" />
+  <xs:simpleType name="PlayerManager.PlayerResgisterResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="PlayerAlreadyExists" />
+      <xs:enumeration value="InvalidInputs" />
+      <xs:enumeration value="DatabaseError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerManager.PlayerResgisterResult" nillable="true" type="tns:PlayerManager.PlayerResgisterResult" />
+  <xs:simpleType name="PlayerManager.PlayerFriendRequestResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success" />
+      <xs:enumeration value="SelfRequest" />
+      <xs:enumeration value="AlreadyFriends" />
+      <xs:enumeration value="PendingRequest" />
+      <xs:enumeration value="SenderPlayerDoesNotExists" />
+      <xs:enumeration value="ReceiverPlayerDoesNotExists" />
+      <xs:enumeration value="DatabaseError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PlayerManager.PlayerFriendRequestResult" nillable="true" type="tns:PlayerManager.PlayerFriendRequestResult" />
+  <xs:complexType name="ArrayOfArrayOfGame.BoardSlot">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" maxOccurs="unbounded" name="Game.Tile" nillable="true" type="q1:Game.Tile" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfNullableOfGame.TileT2tRyUvb" nillable="true" type="tns:ArrayOfNullableOfGame.TileT2tRyUvb" />
+  <xs:element name="ArrayOfArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfArrayOfGame.BoardSlot" />
+  <xs:complexType name="ArrayOfGame.BoardSlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGame.BoardSlot" nillable="true" type="tns:ArrayOfGame.BoardSlot" />
+  <xs:complexType name="Game.BoardSlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bonus" type="tns:Game.BoardSlotBonus" />
+      <xs:element minOccurs="0" name="Tile" nillable="true" type="tns:Game.Tile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Game.BoardSlot" nillable="true" type="tns:Game.BoardSlot" />
+  <xs:simpleType name="Game.BoardSlotBonus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="TripleWord" />
+      <xs:enumeration value="DoubleWord" />
+      <xs:enumeration value="TripleLetter" />
+      <xs:enumeration value="DoubleLetter" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Game.BoardSlotBonus" nillable="true" type="tns:Game.BoardSlotBonus" />
+  <xs:simpleType name="Game.Tile">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">65</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="B">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">66</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="C">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">67</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="D">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">68</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="E">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">69</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="F">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">70</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="G">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">71</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="H">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">72</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="I">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">73</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="J">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">74</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="K">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">75</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="L">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">76</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="M">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">77</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="N">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">78</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="O">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">79</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="P">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">80</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Q">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">81</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="R">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">82</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="S">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">83</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="T">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">84</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="U">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">85</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="V">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">86</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="W">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">87</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="X">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">88</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Y">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">89</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Z">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">90</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ñ">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">209</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Wildcard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Game.Tile" nillable="true" type="tns:Game.Tile" />
+  <xs:simpleType name="Game.SupportedLanguage">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="en_US" />
+      <xs:enumeration value="es_MX" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Game.SupportedLanguage" nillable="true" type="tns:Game.SupportedLanguage" />
 </xs:schema>

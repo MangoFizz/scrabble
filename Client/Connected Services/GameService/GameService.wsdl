@@ -118,11 +118,11 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
-      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
-      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
+      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
+      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPlayerManager_Login_InputMessage">
@@ -209,20 +209,11 @@
   <wsdl:message name="IPartyChat_Say_InputMessage">
     <wsdl:part name="parameters" element="tns:Say" />
   </wsdl:message>
-  <wsdl:message name="IPartyChat_Whisper_InputMessage">
-    <wsdl:part name="parameters" element="tns:Whisper" />
-  </wsdl:message>
   <wsdl:message name="IPartyChat_Receive_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:Receive" />
   </wsdl:message>
   <wsdl:message name="IPartyChat_Receive_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPartyChat_ReceiveWhisper_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveWhisper" />
-  </wsdl:message>
-  <wsdl:message name="IPartyChat_ReceiveWhisper_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveWhisperResponse" />
   </wsdl:message>
   <wsdl:message name="IPartyGame_ConnectPartyGame_InputMessage">
     <wsdl:part name="parameters" element="tns:ConnectPartyGame" />
@@ -467,16 +458,9 @@
     <wsdl:operation name="Say">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Say" message="tns:IPartyChat_Say_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Whisper">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/Whisper" message="tns:IPartyChat_Whisper_InputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="Receive">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyChat/Receive" message="tns:IPartyChat_Receive_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/ReceiveResponse" message="tns:IPartyChat_Receive_InputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ReceiveWhisper">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisper" message="tns:IPartyChat_ReceiveWhisper_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyChat/ReceiveWhisperResponse" message="tns:IPartyChat_ReceiveWhisper_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPartyGame">
@@ -771,23 +755,8 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="Whisper">
-      <soap12:operation soapAction="http://tempuri.org/IPartyChat/Whisper" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
     <wsdl:operation name="Receive">
       <soap12:operation soapAction="http://tempuri.org/IPartyChat/Receive" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ReceiveWhisper">
-      <soap12:operation soapAction="http://tempuri.org/IPartyChat/ReceiveWhisper" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1070,38 +1039,38 @@
   </wsdl:binding>
   <wsdl:service name="GameService">
     <wsdl:port name="NetTcpBinding_IPlayerManager" binding="tns:NetTcpBinding_IPlayerManager">
-      <soap12:address location="net.tcp://localhost:8090/" />
+      <soap12:address location="net.tcp://148.226.81.137:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>BLOO\aiwass</Upn>
+          <Upn>WILT\xjerr</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyChat" binding="tns:NetTcpBinding_IPartyChat">
-      <soap12:address location="net.tcp://localhost:8090/" />
+      <soap12:address location="net.tcp://148.226.81.137:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>BLOO\aiwass</Upn>
+          <Upn>WILT\xjerr</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyGame" binding="tns:NetTcpBinding_IPartyGame">
-      <soap12:address location="net.tcp://localhost:8090/" />
+      <soap12:address location="net.tcp://148.226.81.137:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>BLOO\aiwass</Upn>
+          <Upn>WILT\xjerr</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyManager" binding="tns:NetTcpBinding_IPartyManager">
-      <soap12:address location="net.tcp://localhost:8090/" />
+      <soap12:address location="net.tcp://148.226.81.137:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
+        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>BLOO\aiwass</Upn>
+          <Upn>WILT\xjerr</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

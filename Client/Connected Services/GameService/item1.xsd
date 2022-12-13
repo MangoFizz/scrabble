@@ -1,64 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="Player">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
+  <xs:complexType name="ArrayOfNullableOfGame.TileT2tRyUvb">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Avatar" type="xs:int" />
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="GamesCount" type="xs:int" />
-      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Registered" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Score" type="xs:int" />
-      <xs:element minOccurs="0" name="Status" type="tns:Player.StatusType" />
-      <xs:element minOccurs="0" name="WinsCount" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" maxOccurs="unbounded" name="Game.Tile" nillable="true" type="q1:Game.Tile" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Player" nillable="true" type="tns:Player" />
-  <xs:simpleType name="Player.StatusType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Offline" />
-      <xs:enumeration value="Online" />
-      <xs:enumeration value="InGame" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="Player.StatusType" nillable="true" type="tns:Player.StatusType" />
-  <xs:complexType name="ArrayOfPlayer">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
-  <xs:simpleType name="DisconnectionReason">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="DuplicatePlayerSession" />
-      <xs:enumeration value="ServerShutdown" />
-      <xs:enumeration value="ServerInternalError" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="DisconnectionReason" nillable="true" type="tns:DisconnectionReason" />
-  <xs:complexType name="Party">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="InviteCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Leader" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="Players" nillable="true" type="tns:ArrayOfPlayer" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Party" nillable="true" type="tns:Party" />
-  <xs:simpleType name="JoinPartyResult">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Success" />
-      <xs:enumeration value="PartyNotFound" />
-      <xs:enumeration value="PartyIsFull" />
-      <xs:enumeration value="WhoAreYou" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="JoinPartyResult" nillable="true" type="tns:JoinPartyResult" />
-  <xs:simpleType name="GameStartResult">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Success" />
-      <xs:enumeration value="NotEnoughPlayers" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="GameStartResult" nillable="true" type="tns:GameStartResult" />
+  <xs:element name="ArrayOfNullableOfGame.TileT2tRyUvb" nillable="true" type="tns:ArrayOfNullableOfGame.TileT2tRyUvb" />
 </xs:schema>

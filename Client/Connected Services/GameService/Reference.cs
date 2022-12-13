@@ -853,12 +853,6 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Say")]
         System.Threading.Tasks.Task SayAsync(string message);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Whisper")]
-        void Whisper(Client.GameService.Player receiver, string message);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPartyChat/Whisper")]
-        System.Threading.Tasks.Task WhisperAsync(Client.GameService.Player receiver, string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -866,9 +860,6 @@ namespace Client.GameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyChat/Receive", ReplyAction="http://tempuri.org/IPartyChat/ReceiveResponse")]
         void Receive(Client.GameService.Player sender, string message);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyChat/ReceiveWhisper", ReplyAction="http://tempuri.org/IPartyChat/ReceiveWhisperResponse")]
-        void ReceiveWhisper(Client.GameService.Player sender, string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -913,14 +904,6 @@ namespace Client.GameService {
         
         public System.Threading.Tasks.Task SayAsync(string message) {
             return base.Channel.SayAsync(message);
-        }
-        
-        public void Whisper(Client.GameService.Player receiver, string message) {
-            base.Channel.Whisper(receiver, message);
-        }
-        
-        public System.Threading.Tasks.Task WhisperAsync(Client.GameService.Player receiver, string message) {
-            return base.Channel.WhisperAsync(receiver, message);
         }
     }
     
