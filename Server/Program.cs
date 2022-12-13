@@ -1,14 +1,6 @@
 ﻿using Core;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Dispatcher;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime;
-using System.Runtime.InteropServices;
 
 namespace Server {
     internal class Program {
@@ -25,16 +17,18 @@ namespace Server {
                         Log.Info("Service started");
 
                         ConsoleCloseEvent.Register(() => {
-                            Log.Info("Server is shutting down...");
+                            Log.Info("Service is shutting down...");
                             service.Shutdown();
+                            Log.Info("Aborting service host... ");
                             host.Abort();
                         });
 
                         Console.WriteLine("Press any key to stop.");
                         Console.ReadKey();
                         
-                        Log.Info("Server is shutting down...");
+                        Log.Info("Service is shutting down...");
                         service.Shutdown();
+                        Log.Info("Stopping service host... ");
                         host.Close();
                         
                         break;
