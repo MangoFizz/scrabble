@@ -216,6 +216,9 @@ namespace Client {
 
         public void OnMainWindowClose() {
             if(Player != null) {
+                if(CurrentParty != null) {
+                    PartyManagerClient.LeaveParty();
+                }
                 PlayerManagerClient.Logout();
             }
         }
@@ -312,10 +315,6 @@ namespace Client {
         public void ReceiveInvitation(Player player, string partyId) {
             var notificationsPage = (NotificationSidePage)MainWindow.NotificationsFrame.Content;
             notificationsPage.PushInviteNotification(new PartyInvitationPage(player));
-        }
-
-        public void ReceiveInvitationDecline(Player player) {
-            throw new System.NotImplementedException();
         }
 
         public void ReceivePartyKick(Player player) {

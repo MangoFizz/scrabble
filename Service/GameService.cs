@@ -104,6 +104,7 @@ namespace Service {
             if(player != null) {
                 player.Status = Player.StatusType.Offline;
                 NotifyFriendsPlayerState(player);
+                player.Dispose();
                 Players.Remove(player);
             }
             else {
@@ -398,7 +399,7 @@ namespace Service {
                 var party = player.CurrentParty;
                 if(party != null) {
                     player.CurrentParty = null;
-                    party.Players.Remove(player);
+                    party.PlayerLeaves(player);
                     player.Status = Player.StatusType.Online;
                     NotifyFriendsPlayerState(player);
                     if(party.Players.Count > 0) {

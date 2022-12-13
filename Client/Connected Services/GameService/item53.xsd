@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
-  <xs:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
-  <xs:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -435,22 +435,10 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ReceiveInvitationDecline">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q30:Player" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ReceiveInvitationDeclineResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ReceivePartyPlayerLeave">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q31:Player" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q30:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -462,7 +450,7 @@
   <xs:element name="ReceivePartyPlayerJoin">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q32:Player" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q31:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -474,7 +462,7 @@
   <xs:element name="StartGameCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="result" type="q33:GameStartResult" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="result" type="q32:GameStartResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -496,7 +484,7 @@
   <xs:element name="ReceivePartyKick">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q34:Player" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q33:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -508,7 +496,7 @@
   <xs:element name="ReceivePartyLeaderTransfer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q35:Player" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Service" minOccurs="0" name="player" nillable="true" type="q34:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -532,7 +520,7 @@
   <xs:element name="ReceivePartyLanguageUpdate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" name="language" type="q36:Game.SupportedLanguage" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Core" minOccurs="0" name="language" type="q35:Game.SupportedLanguage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

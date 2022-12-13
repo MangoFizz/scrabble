@@ -67,9 +67,6 @@ namespace Service {
         void AcceptInvitationCallback(Party party);
 
         [OperationContract]
-        void ReceiveInvitationDecline(Player player);
-
-        [OperationContract]
         void ReceivePartyPlayerLeave(Player player);
 
         [OperationContract]

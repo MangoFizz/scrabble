@@ -134,11 +134,21 @@ namespace Service {
 
         public void PlayerLeaves(Player player) {
             bool isPlayerTurn = Game != null && Players[CurrentPlayerTurn] == player;
+
             if(isPlayerTurn) {
-                CurrentPlayerTurn = CurrentPlayerTurn % Players.Count;
+                CurrentPlayerTurn = CurrentPlayerTurn % (Players.Count - 1);
+            }
+            else if(Players.IndexOf(player) < CurrentPlayerTurn) {
+                CurrentPlayerTurn--;
             }
 
             Players.Remove(player);
+
+            if(Players.Count == 1) {
+                EndGame();
+                return;
+            }
+
             foreach(var p in Players) {
                 p.PartyManagerCallbackChannel.ReceivePartyPlayerLeave(player);
                 if(isPlayerTurn) {
@@ -146,7 +156,7 @@ namespace Service {
                 }
             }
 
-            if(Leader == player) {
+            if(Players.Count > 0 && Leader == player) {
                 Leader = Players[0];
                 foreach(var p in Players) {
                     p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(Leader);

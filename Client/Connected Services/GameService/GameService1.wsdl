@@ -4,27 +4,6 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
@@ -33,27 +12,6 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
@@ -62,27 +20,6 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
@@ -91,38 +28,17 @@
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
         <wsaw:UsingAddressing />
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
-      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
-      <xsd:import schemaLocation="http://148.226.81.137:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Core" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Service" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPlayerManager_Login_InputMessage">
@@ -322,12 +238,6 @@
   </wsdl:message>
   <wsdl:message name="IPartyManager_AcceptInvitationCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AcceptInvitationCallbackResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPartyManager_ReceiveInvitationDecline_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveInvitationDecline" />
-  </wsdl:message>
-  <wsdl:message name="IPartyManager_ReceiveInvitationDecline_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveInvitationDeclineResponse" />
   </wsdl:message>
   <wsdl:message name="IPartyManager_ReceivePartyPlayerLeave_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceivePartyPlayerLeave" />
@@ -551,10 +461,6 @@
     <wsdl:operation name="AcceptInvitationCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/AcceptInvitationCallback" message="tns:IPartyManager_AcceptInvitationCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/AcceptInvitationCallbackResponse" message="tns:IPartyManager_AcceptInvitationCallback_InputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ReceiveInvitationDecline">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitationDecline" message="tns:IPartyManager_ReceiveInvitationDecline_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartyManager/ReceiveInvitationDeclineResponse" message="tns:IPartyManager_ReceiveInvitationDecline_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="ReceivePartyPlayerLeave">
       <wsdl:output wsaw:Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave" message="tns:IPartyManager_ReceivePartyPlayerLeave_OutputCallbackMessage" />
@@ -955,15 +861,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ReceiveInvitationDecline">
-      <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceiveInvitationDecline" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ReceivePartyPlayerLeave">
       <soap12:operation soapAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave" style="document" />
       <wsdl:input>
@@ -1039,39 +936,27 @@
   </wsdl:binding>
   <wsdl:service name="GameService">
     <wsdl:port name="NetTcpBinding_IPlayerManager" binding="tns:NetTcpBinding_IPlayerManager">
-      <soap12:address location="net.tcp://148.226.81.137:8090/" />
+      <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyChat" binding="tns:NetTcpBinding_IPartyChat">
-      <soap12:address location="net.tcp://148.226.81.137:8090/" />
+      <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyGame" binding="tns:NetTcpBinding_IPartyGame">
-      <soap12:address location="net.tcp://148.226.81.137:8090/" />
+      <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPartyManager" binding="tns:NetTcpBinding_IPartyManager">
-      <soap12:address location="net.tcp://148.226.81.137:8090/" />
+      <soap12:address location="net.tcp://localhost:8090/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://148.226.81.137:8090/</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>WILT\xjerr</Upn>
-        </Identity>
+        <wsa10:Address>net.tcp://localhost:8090/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

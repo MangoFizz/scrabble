@@ -1105,9 +1105,6 @@ namespace Client.GameService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/AcceptInvitationCallback", ReplyAction="http://tempuri.org/IPartyManager/AcceptInvitationCallbackResponse")]
         void AcceptInvitationCallback(Client.GameService.Party party);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceiveInvitationDecline", ReplyAction="http://tempuri.org/IPartyManager/ReceiveInvitationDeclineResponse")]
-        void ReceiveInvitationDecline(Client.GameService.Player player);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeave", ReplyAction="http://tempuri.org/IPartyManager/ReceivePartyPlayerLeaveResponse")]
         void ReceivePartyPlayerLeave(Client.GameService.Player player);
         
