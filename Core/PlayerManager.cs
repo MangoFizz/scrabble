@@ -155,8 +155,12 @@ namespace Core {
                 }
             }
             catch(Exception e) {
-                Log.Error($"Failed to send verification code email to {player.Nickname}. Email client error ({e.GetType().Name})");
-                throw;
+                if(e is SmtpException || e is InvalidOperationException) {
+                    Log.Error($"Failed to send verification code email to {player.Nickname}. {e.GetType().Name}: {e.Message}");
+                }
+                else {
+                    throw;
+                }
             }
         }
 
@@ -229,7 +233,6 @@ namespace Core {
                     var player = queryResult.First();
                     try {
                         SendVerificationCodeEmail(player);
-                        Log.Info($"Resent verification email for player {nickname}.");
                         return PlayerResendCodeResult.Success;
                     }
                     catch(SmtpException ex) {
