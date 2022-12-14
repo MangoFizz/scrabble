@@ -167,14 +167,10 @@ namespace Client {
                 var onlineFriends = Friends.Where(f => f.Status == Player.StatusType.Online).ToList();
 
                 var invitableFriends = onlineFriends.Where(f => {
-                    if(f.Nickname == party.Leader.Nickname) {
+                    if(party.Players != null && party.Players.Any(p => p.Nickname == f.Nickname)) {
                         return false;
                     }
-
-                    if(party.Players != null && party.Players.Any(p => p.Nickname == f.Nickname)) {
-                        return true;
-                    }
-                    return false;
+                    return true;
                 });
 
                 return invitableFriends.ToList();

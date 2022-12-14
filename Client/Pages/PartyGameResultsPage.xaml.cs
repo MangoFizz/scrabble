@@ -41,7 +41,7 @@ namespace Client.Pages {
         
         private void SetUpPlayersScore() {
             var party = App.Current.CurrentParty;
-            var players = party.Players;
+            var players = App.Current.CurrentParty.Players.OrderByDescending(p => p.Score).ToArray();
 
             Player1Avatar.Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/images/avatars/avatar_{players[0].Avatar}.png"));
             Player1Nickname.Content = players[0].Nickname;
