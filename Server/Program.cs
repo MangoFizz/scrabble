@@ -34,10 +34,21 @@ namespace Server {
                         break;
                     }
                 }
+                catch(AddressAccessDeniedException) {
+                    Log.Error("Access denied. Please run the server as administrator.");
+                    break;
+                }
                 catch(Exception ex) {
-                    Log.Error($"Exception: {ex.GetType().Name} -> {ex.Message}");
-                    Log.Info("Retrying in 5 seconds...");
-                    System.Threading.Thread.Sleep(5000);
+                    if(ex is CommunicationException || ex is InvalidOperationException || ex is TimeoutException) {
+                        Log.Error($"Unhandled exception: {ex}");
+                        Log.Error($"Exception: {ex.GetType().Name} -> {ex.Message}");
+                        Log.Info("Retrying in 5 seconds...");
+                        System.Threading.Thread.Sleep(5000);
+                    }
+                    else {
+                        Log.Error($"Unhandled exception: {ex}");
+                        break;
+                    }
                 }
             }
         }
