@@ -10,6 +10,8 @@ namespace Client {
     public partial class SignUpPage : Page {
         private CodeInputPage CodeInputPage { get; set; }
         
+        private Regex validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
+        
         private void HideTextMessages() {
             nicknameInvalidMessage.Visibility = Visibility.Hidden;
             emailInvalidMessage.Visibility = Visibility.Hidden;
@@ -18,14 +20,8 @@ namespace Client {
             ResultText.Visibility = Visibility.Hidden;
         }
 
-        private bool ValidateInputs() {
+        private bool ValidateNickname() {
             bool isInputValid = true;
-            var validCharactersRegex = new Regex("^[a-zA-Z0-9 ]*$");
-            var passwordValidCharactersRegex = new Regex("^[a-zA-Z0-9!\" \"# $% & '() * +, -. / :; <=>? @ \\ [\\] \\ ^ _` {|} ~]*$");
-            var containNumbersRegex = new Regex(@"(?=.*\d)");
-            var containLowercaseRegex = new Regex(@"(?=.*[a-z])");
-            var containUppercaseRegex = new Regex(@"(?=.*[A-Z])");
-
             if(nicknameTextBox.Text.Length == 0) {
                 nicknameInvalidMessage.Visibility = Visibility.Visible;
                 nicknameInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
@@ -46,7 +42,11 @@ namespace Client {
                 nicknameInvalidMessage.Content = Properties.Resources.COMMON_INVALID_CHARACTERS_LABEL;
                 isInputValid = false;
             }
+            return isInputValid;
+        }
 
+        private bool ValidateEmail() {
+            bool isInputValid = true;
             if(emailTextBox.Text.Length == 0) {
                 emailInvalidMessage.Visibility = Visibility.Visible;
                 emailInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
@@ -59,7 +59,7 @@ namespace Client {
             }
             else {
                 try {
-                    new System.Net.Mail.MailAddress(emailTextBox.Text);
+                    var email = new System.Net.Mail.MailAddress(emailTextBox.Text);
                 }
                 catch(FormatException) {
                     emailInvalidMessage.Visibility = Visibility.Visible;
@@ -67,7 +67,16 @@ namespace Client {
                     isInputValid = false;
                 }
             }
+            return isInputValid;
+        }
 
+        private bool ValidatePassword() {
+            var passwordValidCharactersRegex = new Regex("^[a-zA-Z0-9!\" \"# $% & '() * +, -. / :; <=>? @ \\ [\\] \\ ^ _` {|} ~]*$");
+            var containNumbersRegex = new Regex(@"(?=.*\d)");
+            var containLowercaseRegex = new Regex(@"(?=.*[a-z])");
+            var containUppercaseRegex = new Regex(@"(?=.*[A-Z])");
+            
+            bool isInputValid = true;
             if(passwordTextBox.Password.Length == 0) {
                 passwordInvalidMessage.Visibility = Visibility.Visible;
                 passwordInvalidMessage.Content = Properties.Resources.COMMON_REQUIRED_LABEL;
@@ -103,12 +112,16 @@ namespace Client {
                 ResultText.Content = Properties.Resources.SIGNUP_PASSWORD_NO_NUMBERS;
                 isInputValid = false;
             }
-            else {
-                if(confirmPasswordTextBox.Password.Length > 0 && passwordTextBox.Password != confirmPasswordTextBox.Password) {
-                    ResultText.Visibility = Visibility.Visible;
-                    ResultText.Content = Properties.Resources.SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL;
-                    isInputValid = false;
-                }
+            return isInputValid;
+        }
+
+        private bool ValidateInputs() {
+            bool isInputValid = ValidateNickname() && ValidateEmail() && ValidatePassword();
+
+            if(isInputValid && confirmPasswordTextBox.Password.Length > 0 && passwordTextBox.Password != confirmPasswordTextBox.Password) {
+                ResultText.Visibility = Visibility.Visible;
+                ResultText.Content = Properties.Resources.SIGNUP_PASSWORDS_DO_NOT_MATCH_LABEL;
+                isInputValid = false;
             }
 
             if(confirmPasswordTextBox.Password.Length == 0) {

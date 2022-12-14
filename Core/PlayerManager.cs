@@ -102,12 +102,13 @@ namespace Core {
                 isInputValid = false;
             }
 
+            System.Net.Mail.MailAddress emailAddress;
             if(email.Length == 0 || email.Length > 255) {
                 isInputValid = false;
             }
             else {
                 try {
-                    new System.Net.Mail.MailAddress(email);
+                    emailAddress = new System.Net.Mail.MailAddress(email);
                 }
                 catch(FormatException ex) {
                     Log.Warning($"Invalid email address: {email}. Email format error ({ex.GetType().Name})");
@@ -126,8 +127,7 @@ namespace Core {
         }
 
         public static string GenerateVerificationCode() {
-            var random = new Random();
-            var verificationCode = random.Next(0x1000, 0xFFFF).ToString("x2");
+            var verificationCode = Core.Random.Next(0x1000, 0xFFFF).ToString("x2");
             return verificationCode.ToUpper();
         }
         
@@ -426,13 +426,69 @@ namespace Core {
             try {
                 using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
-                    player.Avatar = avatarId;
-                    Log.Info($"Updated avatar for {playerNickname}.");
-                    context.SaveChanges();
+                    if(player != null) {
+                        player.Avatar = avatarId;
+                        Log.Info($"Updated avatar for {playerNickname}.");
+                        context.SaveChanges();
+                    }
+                    else {
+                        Log.Error($"Failed to update avatar for {playerNickname}. Player does not exists.");
+                    }
                 }
             }
             catch(DbException ex) {
                 Log.Error($"Failed to update avatar for player {playerNickname}. Database error ({ex.GetType().Name})");
+            }
+        }
+
+        public static int SaveGame(string winnerNickname) {
+            try {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
+                    var winner = GetPlayerData(winnerNickname);
+                    if(winner != null) {
+                        var game = new DataAccess.Game() {
+                            WinnerId = winner.PlayerId,
+                            Date = DateTime.Now
+                        };
+                        context.games.Add(game);
+                        context.SaveChanges();
+                        Log.Info($"Saved game for {winnerNickname}.");
+                        return game.GameId;
+                    }
+                    else {
+                        Log.Error($"Failed to save game. Player {winnerNickname} does not exists.");
+                    }
+                    
+                }
+            }
+            catch(DbException ex) {
+                Log.Error($"Failed to save game for player {winnerNickname}. Database error ({ex.GetType().Name})");
+            }
+            return -1;
+        }
+
+        public static void SaveGameResult(string playerNickname, int gameId, int score, int placement) {
+            try {
+                using(ScrabbleEntities context = new ScrabbleEntities()) {
+                    var player = GetPlayerData(playerNickname);
+                    if(player != null) {
+                        var gameResult = new GameResult() {
+                            GameId = gameId,
+                            PlayerId = player.PlayerId,
+                            Score = score,
+                            Placement = placement
+                        };
+                        context.gameResults.Add(gameResult);
+                        context.SaveChanges();
+                        Log.Info($"Saved game result for {playerNickname}.");
+                    }
+                    else {
+                        Log.Error($"Failed to save game result. Player {playerNickname} does not exists.");
+                    }
+                }
+            }
+            catch(DbException ex) {
+                Log.Error($"Failed to save game result for player {playerNickname}. Database error ({ex.GetType().Name})");
             }
         }
     }

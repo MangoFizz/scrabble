@@ -81,7 +81,7 @@
   <xs:element name="UpdatePlayerAvatar">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="newAvatarId" type="xs:short" />
+        <xs:element minOccurs="0" name="avatarId" type="xs:short" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

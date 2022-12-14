@@ -237,14 +237,14 @@ namespace Service {
             }
         }
 
-        public void UpdatePlayerAvatar(short newAvatarId) {
+        public void UpdatePlayerAvatar(short avatarId) {
             var currentCallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerManagerCallback>();
             var currentPlayer = Players.Find(p => p.PlayerManagerCallbackChannel == currentCallbackChannel);
             if(currentPlayer != null) {
                 if(!currentPlayer.IsGuest) {
-                    PlayerManager.UpdatePlayerAvatar(currentPlayer.Nickname, newAvatarId);
-                    currentPlayer.Avatar = newAvatarId;
-                    currentCallbackChannel.UpdatePlayerAvatarCallback(newAvatarId);
+                    PlayerManager.UpdatePlayerAvatar(currentPlayer.Nickname, avatarId);
+                    currentPlayer.Avatar = avatarId;
+                    currentCallbackChannel.UpdatePlayerAvatarCallback(avatarId);
                 }
                 else {
                     Log.Warning("Guest player tried to update its avatar.");
@@ -286,8 +286,7 @@ namespace Service {
         private List<Party> Parties = new List<Party>();
 
         private string GenerateInviteCode() {
-            var random = new Random();
-            var code = random.Next(0x1000, 0x10000).ToString("x2");
+            var code = Core.Random.Next(0x1000, 0x10000).ToString("x2");
             if(Parties.Any(p => p.InviteCode == code)) {
                 return GenerateInviteCode();
             }

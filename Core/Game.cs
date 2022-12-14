@@ -87,7 +87,6 @@ namespace Core {
                 WordsDictionariesCache = new Dictionary<SupportedLanguage, List<string>>();
             }
             if(!WordsDictionariesCache.ContainsKey(Language)) {
-                WordsDictionariesCache[Language] = new List<string>();
                 var dictionaryResourceName = string.Format(Properties.Resources.WORDS_DICTIONARY_NAME_FORMAT, GetLanguageName(Language));
                 var dictionaryResource = Properties.Resources.ResourceManager.GetString(dictionaryResourceName);
                 var lines = dictionaryResource.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -243,9 +242,8 @@ namespace Core {
         }
 
         private void ShuffleBag() {
-            Random random = new Random();
             for(int i = 0; i < Bag.Count; i++) {
-                int randomIndex = random.Next(0, Bag.Count);
+                int randomIndex = Core.Random.Next(0, Bag.Count);
                 Tile tempTile = Bag[i];
                 Bag[i] = Bag[randomIndex];
                 Bag[randomIndex] = tempTile;
@@ -368,7 +366,7 @@ namespace Core {
         public string[] GetSlotTileChains(int x, int y) {
             string leftChain = "";
             for(int i = x - 1; i >= 0; i--) {
-                if(Board[i, y].Tile == null || Board[i, y].Tile == Tile.Wildcard) {
+                if(Board[i, y].Tile == null) {
                     break;
                 }
                 leftChain = ((char)Board[i, y].Tile).ToString() + leftChain;
@@ -376,7 +374,7 @@ namespace Core {
 
             string rightChain = "";
             for(int i = x + 1; i < Board.GetLength(0); i++) {
-                if(Board[i, y].Tile == null || Board[i, y].Tile == Tile.Wildcard) {
+                if(Board[i, y].Tile == null) {
                     break;
                 }
                 rightChain += ((char)Board[i, y].Tile).ToString();
@@ -384,7 +382,7 @@ namespace Core {
 
             string topChain = "";
             for(int i = y - 1; i >= 0; i--) {
-                if(Board[x, i].Tile == null || Board[x, i].Tile == Tile.Wildcard) {
+                if(Board[x, i].Tile == null) {
                     break;
                 }
                 topChain = ((char)Board[x, i].Tile).ToString() + topChain;
@@ -392,7 +390,7 @@ namespace Core {
 
             string bottomChain = "";
             for(int i = y + 1; i < Board.GetLength(1); i++) {
-                if(Board[x, i].Tile == null || Board[x, i].Tile == Tile.Wildcard) {
+                if(Board[x, i].Tile == null) {
                     break;
                 }
                 bottomChain += ((char)Board[x, i].Tile).ToString();

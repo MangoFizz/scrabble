@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Core {
-    public class Log {
+    public static class Log {
         private static string CurrentTime() {
             return DateTime.Now.ToString("HH:mm:ss");
         }

@@ -161,6 +161,27 @@ namespace Client {
             FriendsListBox.Items.Add(border);
         }
 
+        private List<Player> GetOnlineFriends() {
+            var party = App.Current.CurrentParty;
+            if(Friends != null) {
+                var onlineFriends = Friends.Where(f => f.Status == Player.StatusType.Online).ToList();
+
+                var invitableFriends = onlineFriends.Where(f => {
+                    if(f.Nickname == party.Leader.Nickname) {
+                        return false;
+                    }
+
+                    if(party.Players != null && party.Players.Any(p => p.Nickname == f.Nickname)) {
+                        return true;
+                    }
+                    return false;
+                });
+
+                return invitableFriends.ToList();
+            }
+            return new List<Player>();
+        }
+
         public PartyLobbyPage() {
             InitializeComponent();
             
@@ -183,23 +204,7 @@ namespace Client {
             }
 
             if(Friends != null) {
-                var onlineFriends = Friends.Where(f => f.Status == Player.StatusType.Online).ToList();
-
-                onlineFriends = onlineFriends.Where(f => {
-                    if(f.Nickname == party.Leader.Nickname) {
-                        return false;
-                    }
-
-                    if(party.Players != null) {
-                        foreach(var player in party.Players) {
-                            if(f.Nickname == player.Nickname) {
-                                return false;
-                            }
-                        }
-                    }
-
-                    return true;
-                }).ToList();
+                var onlineFriends = GetOnlineFriends();
 
                 if(onlineFriends.Count > 0) {
                     var friendsSubheader = new Label();
@@ -281,7 +286,7 @@ namespace Client {
             throw new NotImplementedException();
         }
 
-        public void UpdatePlayerAvatarCallback(short newAvatarId) {
+        public void UpdatePlayerAvatarCallback(short avatarId) {
             throw new NotImplementedException();
         }
     }

@@ -249,14 +249,14 @@ namespace Client {
             RefreshFriendList();
         }
 
-        public void UpdateFriendStatus(Player player, Player.StatusType status) {
+        public void UpdateFriendStatus(Player friend, Player.StatusType status) {
             if(Friends == null) {
                 Friends = new List<Player>();
             }
 
-            var friend = Friends.Find(x => x.Nickname == player.Nickname);
-            if(friend != null) {
-                friend.Status = status;
+            var localFriend = Friends.Find(x => x.Nickname == friend.Nickname);
+            if(localFriend != null) {
+                localFriend.Status = status;
             }
 
             RefreshFriendList();
@@ -286,7 +286,7 @@ namespace Client {
             throw new NotImplementedException();
         }
 
-        public void UpdatePlayerAvatarCallback(short newAvatarId) {
+        public void UpdatePlayerAvatarCallback(short avatarId) {
             throw new NotImplementedException();
         }
     }

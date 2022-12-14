@@ -670,10 +670,10 @@ namespace Client.GameService {
         System.Threading.Tasks.Task DeclineFriendRequestAsync(string nickname);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar")]
-        void UpdatePlayerAvatar(short newAvatarId);
+        void UpdatePlayerAvatar(short avatarId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlayerManager/UpdatePlayerAvatar")]
-        System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short newAvatarId);
+        System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short avatarId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -829,12 +829,12 @@ namespace Client.GameService {
             return base.Channel.DeclineFriendRequestAsync(nickname);
         }
         
-        public void UpdatePlayerAvatar(short newAvatarId) {
-            base.Channel.UpdatePlayerAvatar(newAvatarId);
+        public void UpdatePlayerAvatar(short avatarId) {
+            base.Channel.UpdatePlayerAvatar(avatarId);
         }
         
-        public System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short newAvatarId) {
-            return base.Channel.UpdatePlayerAvatarAsync(newAvatarId);
+        public System.Threading.Tasks.Task UpdatePlayerAvatarAsync(short avatarId) {
+            return base.Channel.UpdatePlayerAvatarAsync(avatarId);
         }
     }
     

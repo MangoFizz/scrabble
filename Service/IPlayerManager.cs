@@ -51,7 +51,7 @@ namespace Service {
         void DeclineFriendRequest(string nickname);
 
         [OperationContract(IsOneWay = true)]
-        void UpdatePlayerAvatar(short newAvatarId);
+        void UpdatePlayerAvatar(short avatarId);
     }
 
     [ServiceContract]

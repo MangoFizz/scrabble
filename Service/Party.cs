@@ -65,8 +65,7 @@ namespace Service {
         }
 
         public void SetRandomTurn() {
-            var random = new Random();
-            var randomNumber = random.Next(0, Players.Count);
+            var randomNumber = Core.Random.Next(0, Players.Count);
             CurrentPlayerTurn = randomNumber;
             foreach(var p in Players) {
                 p.PartyGameCallbackChannel.UpdatePlayerTurn(Players[randomNumber]);
@@ -162,6 +161,11 @@ namespace Service {
                     p.PartyManagerCallbackChannel.ReceivePartyLeaderTransfer(Leader);
                 }
             }
+        }
+
+        private void SaveResult() {
+            var winner = Players.Max(p => p.Score);
+            
         }
 
         public Party() {

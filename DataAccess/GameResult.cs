@@ -24,7 +24,7 @@ public partial class GameResult
 
     public int GameId { get; set; }
 
-    public int Points { get; set; }
+    public int Score { get; set; }
 
     public int Placement { get; set; }
 
