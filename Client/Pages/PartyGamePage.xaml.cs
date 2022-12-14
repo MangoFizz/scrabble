@@ -468,6 +468,9 @@ namespace Client {
                 CanPlaceTiles = true;
                 TurnStarted = false;
             }
+            else {
+                CanPlaceTiles = false;
+            }
             UpdatePlayerTurnText();
         }
 
