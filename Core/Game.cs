@@ -86,41 +86,14 @@ namespace Core {
             if(WordsDictionariesCache == null) {
                 WordsDictionariesCache = new Dictionary<SupportedLanguage, List<string>>();
             }
-
             if(!WordsDictionariesCache.ContainsKey(Language)) {
                 WordsDictionariesCache[Language] = new List<string>();
                 var dictionaryResourceName = string.Format(Properties.Resources.WORDS_DICTIONARY_NAME_FORMAT, GetLanguageName(Language));
                 var dictionaryResource = Properties.Resources.ResourceManager.GetString(dictionaryResourceName);
                 var lines = dictionaryResource.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                foreach(string line in lines) {
-                    string word = "";
-                    bool wordIsValid = true;
-                    foreach(char c in line.ToUpper()) {
-                        if(!char.IsLetter(c)) {
-                            wordIsValid = false;
-                            break;
-                        }
-
-                        if(!Enum.IsDefined(typeof(Tile), (int)c)) {
-                            wordIsValid = false;
-                            break;
-                        }
-
-                        word += c;
-                    }
-                    if(word.Length == 1) {
-                        wordIsValid = false;
-                    }
-                    if(wordIsValid) {
-                        var normalizedWord = word.Normalize(NormalizationForm.FormD);
-                        WordsDictionariesCache[Language].Add(normalizedWord);
-                    }
-                }
                 WordsDictionariesCache[Language] = lines.ToList();
                 Log.Info(string.Format("Loaded {0} words for language {1}", WordsDictionariesCache[Language].Count, Language));
             }
-
-
             WordsDictionary = WordsDictionariesCache[Language];
         }
 

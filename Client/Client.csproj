@@ -264,10 +264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\fonts\font_tiles.otf" />
-    <None Include="Resources\text\words_en.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\text\words_es.txt" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\GameService\" />
