@@ -456,9 +456,15 @@ namespace Core {
                         return game.GameId;
                     }
                     else {
-                        Log.Error($"Failed to save game. Player {winnerNickname} does not exists.");
+                        var game = new DataAccess.Game() {
+                            WinnerId = null,
+                            Date = DateTime.Now
+                        };
+                        context.games.Add(game);
+                        context.SaveChanges();
+                        Log.Info($"Saved game.");
+                        return game.GameId;
                     }
-                    
                 }
             }
             catch(DbException ex) {

@@ -11,7 +11,11 @@ namespace Core {
             var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[32];
             randomGenerator.GetBytes(data);
-            return BitConverter.ToInt32(data, 0);
+            int number = BitConverter.ToInt32(data, 0);
+            if(number < 0) {
+                number *= -1;
+            }
+            return number;
         }
 
         public static int Next(int min, int max) {

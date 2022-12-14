@@ -81,13 +81,18 @@ namespace Service {
         }
 
         public void EndGame() {
-            foreach(var p in Players) {
-                p.PartyGameCallbackChannel.GameEnd(this);
-                p.PartyGameCallbackChannel = null;
-                p.Rack = null;
-                p.Score = 0;
+            if(Game != null) {
+                SaveResult();
+                foreach(var p in Players) {
+                    p.PartyGameCallbackChannel.GameEnd(this);
+                }
+                foreach(var p in Players) {
+                    p.PartyGameCallbackChannel = null;
+                    p.Rack = null;
+                    p.Score = 0;
+                }
+                Game = null;
             }
-            Game = null;
         }
 
         public bool GameEndByTurnPasses() {
@@ -134,18 +139,22 @@ namespace Service {
         public void PlayerLeaves(Player player) {
             bool isPlayerTurn = Game != null && Players[CurrentPlayerTurn] == player;
 
-            if(isPlayerTurn) {
-                CurrentPlayerTurn = CurrentPlayerTurn % (Players.Count - 1);
-            }
-            else if(Players.IndexOf(player) < CurrentPlayerTurn) {
-                CurrentPlayerTurn--;
+            if(Game != null) {
+                if(isPlayerTurn) {
+                    CurrentPlayerTurn = CurrentPlayerTurn % (Players.Count - 1);
+                }
+                else if(Players.IndexOf(player) < CurrentPlayerTurn) {
+                    CurrentPlayerTurn--;
+                }
             }
 
             Players.Remove(player);
 
-            if(Players.Count == 1) {
-                EndGame();
-                return;
+            if(Game != null) {
+                if(Players.Count == 1) {
+                    EndGame();
+                    return;
+                }
             }
 
             foreach(var p in Players) {
@@ -165,7 +174,12 @@ namespace Service {
 
         private void SaveResult() {
             var winner = Players.Max(p => p.Score);
-            
+            var winnerPlayer = Players.First(p => p.Score == winner);
+            var gameId = PlayerManager.SaveGame(winnerPlayer.Nickname);
+            var placements = Players.OrderByDescending(p => p.Score).ToList();
+            foreach(var player in Players) {
+                PlayerManager.SaveGameResult(player.Nickname, gameId, player.Score, placements.IndexOf(player) + 1);
+            }
         }
 
         public Party() {

@@ -38,7 +38,7 @@
     </Key>
     <Property Name="GameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="WinnerId" Type="int" Nullable="false" />
+    <Property Name="WinnerId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="players">
     <Key>
@@ -86,7 +86,7 @@
           </Key>
           <Property Name="GameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="WinnerId" Type="Int32" Nullable="false" />
+          <Property Name="WinnerId" Type="Int32" Nullable="true" />
         </EntityType>
         <EntityType Name="Player">
           <Key>

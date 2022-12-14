@@ -22,7 +22,7 @@ public partial class Game
 
     public System.DateTime Date { get; set; }
 
-    public int WinnerId { get; set; }
+    public Nullable<int> WinnerId { get; set; }
 
 }
 
