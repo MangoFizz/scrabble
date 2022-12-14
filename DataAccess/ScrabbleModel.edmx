@@ -22,35 +22,29 @@
   </EntityType>
   <EntityType Name="gameResults">
     <Key>
-      <PropertyRef Name="idGameResults" />
-      <PropertyRef Name="playerId" />
-      <PropertyRef Name="gameId" />
-      <PropertyRef Name="points" />
-      <PropertyRef Name="position" />
+      <PropertyRef Name="GameResultId" />
+      <PropertyRef Name="PlayerId" />
+      <PropertyRef Name="GameId" />
     </Key>
-    <Property Name="idGameResults" Type="int" Nullable="false" />
-    <Property Name="playerId" Type="int" Nullable="false" />
-    <Property Name="gameId" Type="int" Nullable="false" />
-    <Property Name="points" Type="int" Nullable="false" />
-    <Property Name="position" Type="int" Nullable="false" />
+    <Property Name="GameResultId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlayerId" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="Points" Type="int" Nullable="false" />
+    <Property Name="Placement" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="games">
     <Key>
-      <PropertyRef Name="idGame" />
-      <PropertyRef Name="duration" />
-      <PropertyRef Name="date" />
-      <PropertyRef Name="idWinner" />
+      <PropertyRef Name="GameId" />
     </Key>
-    <Property Name="idGame" Type="int" Nullable="false" />
-    <Property Name="duration" Type="int" Nullable="false" />
-    <Property Name="date" Type="datetime" Nullable="false" />
-    <Property Name="idWinner" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="WinnerId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="players">
     <Key>
-      <PropertyRef Name="UserId" />
+      <PropertyRef Name="PlayerId" />
     </Key>
-    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nickname" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="Password" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="Avatar" Type="smallint" Nullable="false" DefaultValue="0" />
@@ -74,37 +68,31 @@
           <Property Name="Receiver" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Int16" Nullable="false" />
         </EntityType>
-        <EntityType Name="gameResults">
+        <EntityType Name="GameResult">
           <Key>
-            <PropertyRef Name="idGameResults" />
-            <PropertyRef Name="playerId" />
-            <PropertyRef Name="gameId" />
-            <PropertyRef Name="points" />
-            <PropertyRef Name="position" />
+            <PropertyRef Name="GameResultId" />
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="GameId" />
           </Key>
-          <Property Name="idGameResults" Type="Int32" Nullable="false" />
-          <Property Name="playerId" Type="Int32" Nullable="false" />
-          <Property Name="gameId" Type="Int32" Nullable="false" />
-          <Property Name="points" Type="Int32" Nullable="false" />
-          <Property Name="position" Type="Int32" Nullable="false" />
+          <Property Name="GameResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <Property Name="Placement" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="games">
+        <EntityType Name="Game">
           <Key>
-            <PropertyRef Name="idGame" />
-            <PropertyRef Name="duration" />
-            <PropertyRef Name="date" />
-            <PropertyRef Name="idWinner" />
+            <PropertyRef Name="GameId" />
           </Key>
-          <Property Name="idGame" Type="Int32" Nullable="false" />
-          <Property Name="duration" Type="Int32" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="idWinner" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="WinnerId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
-            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PlayerId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" FixedLength="false" Unicode="false" Nullable="false" MaxLength="255" />
           <Property Name="Avatar" Type="Int16" Nullable="false" DefaultValue="0" />
@@ -117,8 +105,8 @@
         </EntityType>
         <EntityContainer Name="ScrabbleEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="friendships" EntityType="ScrabbleModel.Friendship" />
-          <EntitySet Name="gameResults" EntityType="Self.gameResults" />
-          <EntitySet Name="games" EntityType="Self.games" />
+          <EntitySet Name="gameResults" EntityType="ScrabbleModel.GameResult" />
+          <EntitySet Name="games" EntityType="ScrabbleModel.Game" />
           <EntitySet Name="players" EntityType="ScrabbleModel.Player" />
         </EntityContainer>
       </Schema>
@@ -138,30 +126,29 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="gameResults">
-      <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.gameResults)">
+      <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.GameResult)">
         <MappingFragment StoreEntitySet="gameResults">
-          <ScalarProperty Name="idGameResults" ColumnName="idGameResults" />
-          <ScalarProperty Name="playerId" ColumnName="playerId" />
-          <ScalarProperty Name="gameId" ColumnName="gameId" />
-          <ScalarProperty Name="points" ColumnName="points" />
-          <ScalarProperty Name="position" ColumnName="position" />
+          <ScalarProperty Name="GameResultId" ColumnName="GameResultId" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Placement" ColumnName="Placement" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="games">
-      <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.games)">
+      <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.Game)">
         <MappingFragment StoreEntitySet="games">
-          <ScalarProperty Name="idGame" ColumnName="idGame" />
-          <ScalarProperty Name="duration" ColumnName="duration" />
-          <ScalarProperty Name="date" ColumnName="date" />
-          <ScalarProperty Name="idWinner" ColumnName="idWinner" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="WinnerId" ColumnName="WinnerId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="players">
       <EntityTypeMapping TypeName="IsTypeOf(ScrabbleModel.Player)">
         <MappingFragment StoreEntitySet="players">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
           <ScalarProperty Name="Nickname" ColumnName="Nickname" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Avatar" ColumnName="Avatar" />

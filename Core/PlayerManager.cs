@@ -314,7 +314,7 @@ namespace Core {
                         return PlayerFriendRequestResult.ReceiverPlayerDoesNotExists;
                     }
 
-                    var friendship = context.friendships.FirstOrDefault(f => (f.Sender == player.UserId && f.Receiver == receiverPlayer.UserId) || (f.Sender == receiverPlayer.UserId && f.Receiver == player.UserId));
+                    var friendship = context.friendships.FirstOrDefault(f => (f.Sender == player.PlayerId && f.Receiver == receiverPlayer.PlayerId) || (f.Sender == receiverPlayer.PlayerId && f.Receiver == player.PlayerId));
                     if(friendship != null) {
                         if(friendship.Status == (short)PlayerFriendshipStatus.Pending) {
                             return PlayerFriendRequestResult.PendingRequest;
@@ -326,8 +326,8 @@ namespace Core {
                     }
 
                     friendship = new Friendship() {
-                        Sender = player.UserId,
-                        Receiver = receiverPlayer.UserId,
+                        Sender = player.PlayerId,
+                        Receiver = receiverPlayer.PlayerId,
                         Status = (short)PlayerFriendshipStatus.Pending
                     };
                     context.friendships.Add(friendship);
@@ -355,7 +355,7 @@ namespace Core {
                         return PlayerFriendshipRequestAnswer.SenderPlayerDoesNotExists;
                     }
 
-                    var friendship = context.friendships.FirstOrDefault(f => f.Sender == senderPlayer.UserId && f.Receiver == player.UserId);
+                    var friendship = context.friendships.FirstOrDefault(f => f.Sender == senderPlayer.PlayerId && f.Receiver == player.PlayerId);
                     if(friendship == null) {
                         return PlayerFriendshipRequestAnswer.FriendshipRequestDoesNotExists;
                     }
@@ -382,14 +382,14 @@ namespace Core {
             try {
                 using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
-                    var friendships = context.friendships.Where(f => (f.Sender == player.UserId || f.Receiver == player.UserId) && f.Status == (short)PlayerFriendshipStatus.Accepted).ToList();
+                    var friendships = context.friendships.Where(f => (f.Sender == player.PlayerId || f.Receiver == player.PlayerId) && f.Status == (short)PlayerFriendshipStatus.Accepted).ToList();
                     var friends = new List<Player>();
                     foreach(var friendship in friendships) {
-                        if(friendship.Sender == player.UserId) {
-                            friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Receiver));
+                        if(friendship.Sender == player.PlayerId) {
+                            friends.Add(context.players.FirstOrDefault(p => p.PlayerId == friendship.Receiver));
                         }
                         else {
-                            friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
+                            friends.Add(context.players.FirstOrDefault(p => p.PlayerId == friendship.Sender));
                         }
                     }
                     Log.Info($"Fetched {friends.Count} friends for {playerNickname}.");
@@ -407,10 +407,10 @@ namespace Core {
             try {
                 using(ScrabbleEntities context = new ScrabbleEntities()) {
                     var player = context.players.FirstOrDefault(p => p.Nickname == playerNickname);
-                    var friendships = context.friendships.Where(f => f.Receiver == player.UserId && f.Status == (short)PlayerFriendshipStatus.Pending).ToList();
+                    var friendships = context.friendships.Where(f => f.Receiver == player.PlayerId && f.Status == (short)PlayerFriendshipStatus.Pending).ToList();
                     var friends = new List<Player>();
                     foreach(var friendship in friendships) {
-                        friends.Add(context.players.FirstOrDefault(p => p.UserId == friendship.Sender));
+                        friends.Add(context.players.FirstOrDefault(p => p.PlayerId == friendship.Sender));
                     }
                     Log.Info($"Fetched {friends.Count} friend requests for {playerNickname}.");
                     return friends;

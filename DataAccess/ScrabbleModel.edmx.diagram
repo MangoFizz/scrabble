@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="447eab4374c44d269c3bf0f84d3c1606" Name="Diagram1">
         <EntityTypeShape EntityType="ScrabbleModel.Friendship" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScrabbleModel.gameResults" Width="1.5" PointX="2.625" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScrabbleModel.games" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScrabbleModel.GameResult" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScrabbleModel.Game" Width="1.5" PointX="4.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScrabbleModel.Player" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>

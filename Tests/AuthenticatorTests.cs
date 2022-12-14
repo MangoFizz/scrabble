@@ -17,7 +17,6 @@ namespace Tests {
         private static string DummyUserNickname3 = "DummyUser3";
         private static string DummyUserNickname4 = "DummyUser4";
         private static string DummyUserNickname5 = "tortilla";
-        private static string DummyUserNickname6 = "helado";
         private static string Email = "holamundo@uv.mx";
 
         private static Player DummyPlayer1 { get; set; }
@@ -78,10 +77,10 @@ namespace Tests {
             var DummyPlayer3 = dbContext.players.First(p => p.Nickname == DummyUserNickname3);
             var DummyPlayer4 = dbContext.players.First(p => p.Nickname == DummyUserNickname4);
             var DummyPlayer5 = dbContext.players.First(p => p.Nickname == DummyUserNickname5);
-            var Friendship1 = dbContext.friendships.First(f => f.Sender == DummyPlayer1.UserId && f.Receiver == DummyPlayer2.UserId);
-            var Friendship2 = dbContext.friendships.First(f => f.Sender == DummyPlayer2.UserId && f.Receiver == DummyPlayer4.UserId);
-            var Friendship3 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.UserId && f.Receiver == DummyPlayer1.UserId);
-            var Friendship4 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.UserId && f.Receiver == DummyPlayer5.UserId);
+            var Friendship1 = dbContext.friendships.First(f => f.Sender == DummyPlayer1.PlayerId && f.Receiver == DummyPlayer2.PlayerId);
+            var Friendship2 = dbContext.friendships.First(f => f.Sender == DummyPlayer2.PlayerId && f.Receiver == DummyPlayer4.PlayerId);
+            var Friendship3 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.PlayerId && f.Receiver == DummyPlayer1.PlayerId);
+            var Friendship4 = dbContext.friendships.First(f => f.Sender == DummyPlayer4.PlayerId && f.Receiver == DummyPlayer5.PlayerId);
             dbContext.friendships.Remove(Friendship1);
             dbContext.friendships.Remove(Friendship2);
             dbContext.friendships.Remove(Friendship3);

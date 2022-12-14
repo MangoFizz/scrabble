@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/12/2022 08:02:25
--- Generated from EDMX file: C:\Users\xjerr\source\repos\scrabble99\DataAccess\ScrabbleModel.edmx
+-- Date Created: 12/13/2022 19:07:40
+-- Generated from EDMX file: C:\Users\aiwass\source\repos\scrabble\DataAccess\ScrabbleModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -50,26 +50,25 @@ GO
 
 -- Creating table 'gameResults'
 CREATE TABLE [dbo].[gameResults] (
-    [idGameResults] int  NOT NULL,
-    [playerId] int  NOT NULL,
-    [gameId] int  NOT NULL,
-    [points] int  NOT NULL,
-    [position] int  NOT NULL
+    [GameResultId] int IDENTITY(1,1) NOT NULL,
+    [PlayerId] int  NOT NULL,
+    [GameId] int  NOT NULL,
+    [Points] int  NOT NULL,
+    [Placement] int  NOT NULL
 );
 GO
 
 -- Creating table 'games'
 CREATE TABLE [dbo].[games] (
-    [idGame] int  NOT NULL,
-    [duration] int  NOT NULL,
-    [date] datetime  NOT NULL,
-    [idWinner] int  NOT NULL
+    [GameId] int IDENTITY(1,1) NOT NULL,
+    [Date] datetime  NOT NULL,
+    [WinnerId] int  NOT NULL
 );
 GO
 
 -- Creating table 'players'
 CREATE TABLE [dbo].[players] (
-    [UserId] int IDENTITY(1,1) NOT NULL,
+    [PlayerId] int IDENTITY(1,1) NOT NULL,
     [Nickname] varchar(50)  NOT NULL,
     [Password] varchar(255)  NOT NULL,
     [Avatar] smallint  NOT NULL,
@@ -92,22 +91,22 @@ ADD CONSTRAINT [PK_friendships]
     PRIMARY KEY CLUSTERED ([FriendshipId] ASC);
 GO
 
--- Creating primary key on [idGameResults], [playerId], [gameId], [points], [position] in table 'gameResults'
+-- Creating primary key on [GameResultId], [PlayerId], [GameId] in table 'gameResults'
 ALTER TABLE [dbo].[gameResults]
 ADD CONSTRAINT [PK_gameResults]
-    PRIMARY KEY CLUSTERED ([idGameResults], [playerId], [gameId], [points], [position] ASC);
+    PRIMARY KEY CLUSTERED ([GameResultId], [PlayerId], [GameId] ASC);
 GO
 
--- Creating primary key on [idGame], [duration], [date], [idWinner] in table 'games'
+-- Creating primary key on [GameId] in table 'games'
 ALTER TABLE [dbo].[games]
 ADD CONSTRAINT [PK_games]
-    PRIMARY KEY CLUSTERED ([idGame], [duration], [date], [idWinner] ASC);
+    PRIMARY KEY CLUSTERED ([GameId] ASC);
 GO
 
--- Creating primary key on [UserId] in table 'players'
+-- Creating primary key on [PlayerId] in table 'players'
 ALTER TABLE [dbo].[players]
 ADD CONSTRAINT [PK_players]
-    PRIMARY KEY CLUSTERED ([UserId] ASC);
+    PRIMARY KEY CLUSTERED ([PlayerId] ASC);
 GO
 
 -- --------------------------------------------------

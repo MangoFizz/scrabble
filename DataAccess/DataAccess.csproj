@@ -54,10 +54,10 @@
     <Compile Include="Friendship.cs">
       <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="gameResults.cs">
+    <Compile Include="Game.cs">
       <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="games.cs">
+    <Compile Include="GameResult.cs">
       <DependentUpon>ScrabbleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Player.cs">
